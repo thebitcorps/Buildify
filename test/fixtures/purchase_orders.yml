@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  folio: 1
+  delivery_place: MyString
+  delivery_address: MyString
+  delivery_receiver: MyString
+
+two:
+  folio: 1
+  delivery_place: MyString
+  delivery_address: MyString
+  delivery_receiver: MyString
