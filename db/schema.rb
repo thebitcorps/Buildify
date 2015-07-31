@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731200825) do
+ActiveRecord::Schema.define(version: 20150731222345) do
 
   create_table "constructions", force: :cascade do |t|
     t.string   "title",           limit: 255
@@ -33,10 +33,20 @@ ActiveRecord::Schema.define(version: 20150731200825) do
     t.integer  "purchase_order_id", limit: 4
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
+    t.integer  "material_id",       limit: 4
   end
 
+  add_index "item_materials", ["material_id"], name: "index_item_materials_on_material_id", using: :btree
   add_index "item_materials", ["purchase_order_id"], name: "index_item_materials_on_purchase_order_id", using: :btree
   add_index "item_materials", ["requisition_id"], name: "index_item_materials_on_requisition_id", using: :btree
+
+  create_table "materials", force: :cascade do |t|
+    t.string   "name",         limit: 255
+    t.string   "description",  limit: 255
+    t.string   "measure_unit", limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "purchase_orders", force: :cascade do |t|
     t.integer  "folio",             limit: 4
@@ -56,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150731200825) do
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
 
+  add_foreign_key "item_materials", "materials"
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"
   add_foreign_key "requisitions", "constructions"
