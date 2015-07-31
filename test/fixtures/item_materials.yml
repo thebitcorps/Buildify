@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  requested: 9.99
+  recived: 9.99
+  status: MyString
+  quiantity: 9.99
+  unit_price: 9.99
+  requisition_id: 
+  purchase_order_id: 
+
+two:
+  requested: 9.99
+  recived: 9.99
+  status: MyString
+  quiantity: 9.99
+  unit_price: 9.99
+  requisition_id: 
+  purchase_order_id: 

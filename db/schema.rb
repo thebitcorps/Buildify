@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731200257) do
+ActiveRecord::Schema.define(version: 20150731200825) do
 
   create_table "constructions", force: :cascade do |t|
     t.string   "title",           limit: 255
@@ -23,6 +23,21 @@ ActiveRecord::Schema.define(version: 20150731200257) do
     t.datetime "updated_at",                                 null: false
   end
 
+  create_table "item_materials", force: :cascade do |t|
+    t.decimal  "requested",                     precision: 10
+    t.decimal  "recived",                       precision: 10
+    t.string   "status",            limit: 255
+    t.decimal  "quiantity",                     precision: 10
+    t.decimal  "unit_price",                    precision: 10
+    t.integer  "requisition_id",    limit: 4
+    t.integer  "purchase_order_id", limit: 4
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "item_materials", ["purchase_order_id"], name: "index_item_materials_on_purchase_order_id", using: :btree
+  add_index "item_materials", ["requisition_id"], name: "index_item_materials_on_requisition_id", using: :btree
+
   create_table "purchase_orders", force: :cascade do |t|
     t.integer  "folio",             limit: 4
     t.string   "delivery_place",    limit: 255
@@ -32,16 +47,8 @@ ActiveRecord::Schema.define(version: 20150731200257) do
     t.datetime "updated_at",                    null: false
   end
 
-  create_table "remissions", force: :cascade do |t|
-    t.string   "remission_date",  limit: 255
-    t.integer  "construction_id", limit: 4
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "remissions", ["construction_id"], name: "index_remissions_on_construction_id", using: :btree
-
   create_table "requisitions", force: :cascade do |t|
+    t.integer  "folio",           limit: 4
     t.integer  "construction_id", limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
@@ -49,6 +56,7 @@ ActiveRecord::Schema.define(version: 20150731200257) do
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
 
-  add_foreign_key "remissions", "constructions"
+  add_foreign_key "item_materials", "purchase_orders"
+  add_foreign_key "item_materials", "requisitions"
   add_foreign_key "requisitions", "constructions"
 end
