@@ -3,6 +3,10 @@ class Requisition < ActiveRecord::Base
   has_many :item_materials
 
   def purchase_orders
-  	PurchaseOrder.find item_materials.pluck(:purchase_order_id)
+    PurchaseOrder.find item_materials.pluck(:purchase_order_id)
+  end
+
+  def invoices
+    Invoice.find purchase_orders.map(&:invoice_id)
   end
 end

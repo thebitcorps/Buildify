@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731222345) do
+ActiveRecord::Schema.define(version: 20150801160256) do
 
   create_table "constructions", force: :cascade do |t|
     t.string   "title",           limit: 255
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 20150731222345) do
     t.decimal  "current_amount",              precision: 10
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string   "folio",      limit: 255
+    t.decimal  "amount",                 precision: 10
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "item_materials", force: :cascade do |t|
@@ -55,7 +62,10 @@ ActiveRecord::Schema.define(version: 20150731222345) do
     t.string   "delivery_receiver", limit: 255
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.integer  "invoice_id",        limit: 4
   end
+
+  add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree
 
   create_table "requisitions", force: :cascade do |t|
     t.integer  "folio",           limit: 4
@@ -69,5 +79,6 @@ ActiveRecord::Schema.define(version: 20150731222345) do
   add_foreign_key "item_materials", "materials"
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"
+  add_foreign_key "purchase_orders", "invoices"
   add_foreign_key "requisitions", "constructions"
 end
