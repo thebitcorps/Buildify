@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150801160256) do
+ActiveRecord::Schema.define(version: 20150801222627) do
 
   create_table "constructions", force: :cascade do |t|
     t.string   "title",           limit: 255
@@ -23,12 +23,26 @@ ActiveRecord::Schema.define(version: 20150801160256) do
     t.datetime "updated_at",                                 null: false
   end
 
-  create_table "invoices", force: :cascade do |t|
-    t.string   "folio",      limit: 255
-    t.decimal  "amount",                 precision: 10
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+  create_table "expenses", force: :cascade do |t|
+    t.string   "concept",      limit: 255
+    t.string   "payment_type", limit: 255
+    t.decimal  "amount_paid",              precision: 10
+    t.integer  "invoice_id",   limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
+
+  add_index "expenses", ["invoice_id"], name: "index_expenses_on_invoice_id", using: :btree
+
+  create_table "invoices", force: :cascade do |t|
+    t.string   "folio",       limit: 255
+    t.decimal  "amount",                  precision: 10
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "provider_id", limit: 4
+  end
+
+  add_index "invoices", ["provider_id"], name: "index_invoices_on_provider_id", using: :btree
 
   create_table "item_materials", force: :cascade do |t|
     t.decimal  "requested",                     precision: 10
@@ -55,6 +69,14 @@ ActiveRecord::Schema.define(version: 20150801160256) do
     t.datetime "updated_at",               null: false
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "address",    limit: 255
+    t.string   "telephone",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "purchase_orders", force: :cascade do |t|
     t.integer  "folio",             limit: 4
     t.string   "delivery_place",    limit: 255
@@ -76,6 +98,8 @@ ActiveRecord::Schema.define(version: 20150801160256) do
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
 
+  add_foreign_key "expenses", "invoices"
+  add_foreign_key "invoices", "providers"
   add_foreign_key "item_materials", "materials"
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"

@@ -4,4 +4,5 @@ class ItemMaterial < ActiveRecord::Base
   belongs_to :material
   has_one :invoice, through: :purchase_order
   has_one :construction, through: :requisition
+  has_one :provider, through: :invoice
 end

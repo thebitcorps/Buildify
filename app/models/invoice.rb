@@ -1,5 +1,6 @@
 class Invoice < ActiveRecord::Base
   has_many :purchase_orders
+  belongs_to :provider
 
   def requisitions
     purchase_orders.collect{|purchase_order| purchase_order.requisition}

@@ -1,6 +1,7 @@
 class PurchaseOrder < ActiveRecord::Base
   has_many :item_materials
   belongs_to :invoice
+  has_one :provider, through: :invoice
 
   def requisition
     item_materials.first.requisition if !item_materials.blank?
