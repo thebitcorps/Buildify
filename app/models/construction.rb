@@ -8,4 +8,8 @@ class Construction < ActiveRecord::Base
   def invoices
     Invoice.find purchase_orders.map(&:invoice_id)
   end
+
+  def expenses
+    invoices.collect{|invoice| invoice.expense}.compact
+  end
 end

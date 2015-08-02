@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  concept: MyString
+  status: MyString
+  amount_paid: 9.99
+  payment_type: MyString
+  invoice_id: 
+
+two:
+  concept: MyString
+  status: MyString
+  amount_paid: 9.99
+  payment_type: MyString
+  invoice_id: 
