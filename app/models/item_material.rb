@@ -5,4 +5,6 @@ class ItemMaterial < ActiveRecord::Base
   has_one :invoice, through: :purchase_order
   has_one :construction, through: :requisition
   has_one :provider, through: :invoice
+  has_one :invoice_receipt, through: :purchase_order
+  has_one :expense, through: :invoice
 end

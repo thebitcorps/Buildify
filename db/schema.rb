@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150801235119) do
+ActiveRecord::Schema.define(version: 20150802003601) do
 
   create_table "constructions", force: :cascade do |t|
     t.string   "title",           limit: 255
@@ -32,16 +32,23 @@ ActiveRecord::Schema.define(version: 20150801235119) do
     t.datetime "updated_at",                              null: false
   end
 
+  create_table "invoice_receipts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "invoices", force: :cascade do |t|
-    t.string   "folio",       limit: 255
-    t.decimal  "amount",                  precision: 10
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.integer  "provider_id", limit: 4
-    t.integer  "expense_id",  limit: 4
+    t.string   "folio",              limit: 255
+    t.decimal  "amount",                         precision: 10
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.integer  "provider_id",        limit: 4
+    t.integer  "expense_id",         limit: 4
+    t.integer  "invoice_receipt_id", limit: 4
   end
 
   add_index "invoices", ["expense_id"], name: "index_invoices_on_expense_id", using: :btree
+  add_index "invoices", ["invoice_receipt_id"], name: "index_invoices_on_invoice_receipt_id", using: :btree
   add_index "invoices", ["provider_id"], name: "index_invoices_on_provider_id", using: :btree
 
   create_table "item_materials", force: :cascade do |t|
@@ -99,6 +106,7 @@ ActiveRecord::Schema.define(version: 20150801235119) do
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
 
   add_foreign_key "invoices", "expenses"
+  add_foreign_key "invoices", "invoice_receipts"
   add_foreign_key "invoices", "providers"
   add_foreign_key "item_materials", "materials"
   add_foreign_key "item_materials", "purchase_orders"

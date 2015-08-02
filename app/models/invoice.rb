@@ -2,6 +2,7 @@ class Invoice < ActiveRecord::Base
   has_many :purchase_orders
   belongs_to :provider
   belongs_to :expense
+  belongs_to :invoice_receipt
 
   def requisitions
     purchase_orders.collect{|purchase_order| purchase_order.requisition}

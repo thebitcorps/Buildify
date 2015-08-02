@@ -16,4 +16,8 @@ class Provider < ActiveRecord::Base
   def constructions
     requisitions.collect{|requisition| requisition.construction}.uniq
   end
+
+  def invoice_receipts
+    InvoiceReceipt.find invoice.collect{|invoice| invoice.invoice_receipt_id}
+  end
 end
