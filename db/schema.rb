@@ -13,23 +13,26 @@
 
 ActiveRecord::Schema.define(version: 20150802003601) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "constructions", force: :cascade do |t|
-    t.string   "title",           limit: 255
+    t.string   "title"
     t.date     "start_date"
     t.date     "finish_date"
-    t.decimal  "contract_amount",             precision: 10
-    t.decimal  "current_amount",              precision: 10
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.decimal  "contract_amount"
+    t.decimal  "current_amount"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.string   "concept",      limit: 255
-    t.string   "status",       limit: 255
-    t.decimal  "amount_paid",              precision: 10
-    t.string   "payment_type", limit: 255
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.string   "concept"
+    t.string   "status"
+    t.decimal  "amount_paid"
+    t.string   "payment_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "invoice_receipts", force: :cascade do |t|
@@ -38,13 +41,13 @@ ActiveRecord::Schema.define(version: 20150802003601) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.string   "folio",              limit: 255
-    t.decimal  "amount",                         precision: 10
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.integer  "provider_id",        limit: 4
-    t.integer  "expense_id",         limit: 4
-    t.integer  "invoice_receipt_id", limit: 4
+    t.string   "folio"
+    t.decimal  "amount"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "provider_id"
+    t.integer  "expense_id"
+    t.integer  "invoice_receipt_id"
   end
 
   add_index "invoices", ["expense_id"], name: "index_invoices_on_expense_id", using: :btree
@@ -52,16 +55,16 @@ ActiveRecord::Schema.define(version: 20150802003601) do
   add_index "invoices", ["provider_id"], name: "index_invoices_on_provider_id", using: :btree
 
   create_table "item_materials", force: :cascade do |t|
-    t.decimal  "requested",                     precision: 10
-    t.decimal  "recived",                       precision: 10
-    t.string   "status",            limit: 255
-    t.decimal  "quiantity",                     precision: 10
-    t.decimal  "unit_price",                    precision: 10
-    t.integer  "requisition_id",    limit: 4
-    t.integer  "purchase_order_id", limit: 4
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.integer  "material_id",       limit: 4
+    t.decimal  "requested"
+    t.decimal  "recived"
+    t.string   "status"
+    t.decimal  "quiantity"
+    t.decimal  "unit_price"
+    t.integer  "requisition_id"
+    t.integer  "purchase_order_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "material_id"
   end
 
   add_index "item_materials", ["material_id"], name: "index_item_materials_on_material_id", using: :btree
@@ -69,38 +72,38 @@ ActiveRecord::Schema.define(version: 20150802003601) do
   add_index "item_materials", ["requisition_id"], name: "index_item_materials_on_requisition_id", using: :btree
 
   create_table "materials", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.string   "description",  limit: 255
-    t.string   "measure_unit", limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "name"
+    t.string   "description"
+    t.string   "measure_unit"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "providers", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.string   "address",    limit: 255
-    t.string   "telephone",  limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name"
+    t.string   "address"
+    t.string   "telephone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "purchase_orders", force: :cascade do |t|
-    t.integer  "folio",             limit: 4
-    t.string   "delivery_place",    limit: 255
-    t.string   "delivery_address",  limit: 255
-    t.string   "delivery_receiver", limit: 255
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.integer  "invoice_id",        limit: 4
+    t.integer  "folio"
+    t.string   "delivery_place"
+    t.string   "delivery_address"
+    t.string   "delivery_receiver"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "invoice_id"
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree
 
   create_table "requisitions", force: :cascade do |t|
-    t.integer  "folio",           limit: 4
-    t.integer  "construction_id", limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.integer  "folio"
+    t.integer  "construction_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
