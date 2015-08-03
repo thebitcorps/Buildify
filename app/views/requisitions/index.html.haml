@@ -1,0 +1,13 @@
+%h1= ["Requisiciones para ", @construction.title].join
+%table
+  %tr
+    %th Folio
+    %th Fecha de Creacion
+  - @requisitions.each do |requisition|
+    %tr
+      %td
+        = link_to requisition.folio, requisition_path(requisition)
+      %td
+        = requisition.created_at
+%h3 Nueva requisicion
+= button_to "Crear", requisitions_path(construction_id: @construction)

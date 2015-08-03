@@ -1,0 +1,42 @@
+%h1= link_to @construction.title, construction_path(@construction)
+%h2= ["Requisicion ", @requisition.folio].join
+%h2 Materiales enlistados
+
+= form_for @item_material, url: item_materials_path do |form|
+  = form.hidden_field :construction_id, value: @construction.id
+  = form.hidden_field :requisition_id, value: @requisition.id
+  %table
+    %tr
+      %th Nombre
+      %th Cantidad
+      %th Estado
+      %th Orden de compra
+      %th
+    - @item_materials.each do |item|
+      %tr
+        %td= item.material.name
+        %td= [item.requested, item.material.measure_unit].join(" ")
+        %td= item.status
+        -if !item.purchase_order.nil?
+          %th= link_to item.purchase_order.folio, purchase_order_path(item.purchase_order)
+        -else
+          %th No asignado
+    %tr
+      %td
+        = form.select :material_id, options_from_collection_for_select(@materials, :id, :name)
+      %td
+        = form.text_field :requested
+      %td
+        = form.submit "Agregar"
+
+%h2 Ordenes de compra generadas
+
+%table
+  %tr
+    %th Folio
+  - @purchase_orders.each do |purchase_order|
+    %tr
+      %td= link_to purchase_order.folio, purchase_order_path(purchase_order)
+
+- if !@requisition.item_materials_not_assigned.blank?
+  = button_to "Generar Orden de compra", requisition_generate_purchase_order_path(@requisition)

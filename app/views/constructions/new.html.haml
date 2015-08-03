@@ -1,0 +1,14 @@
+%h2 Nueva obra
+= form_for @construction, url: {action: "create"} do |form|
+  = form.label "Titulo:"
+  = form.text_field :title
+  = form.label "Monto contratado:"
+  = form.text_field :contract_amount
+  = form.label "Monto adelantado:"
+  = form.text_field :current_amount
+  = form.label "Fecha de inicio:"
+  = form.text_field :start_date
+  = form.label "Fecha de finalizacion:"
+  = form.text_field :finish_date
+  %br
+  = form.submit "Crear"

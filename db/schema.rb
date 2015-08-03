@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802003601) do
+ActiveRecord::Schema.define(version: 20150802200708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,11 +43,11 @@ ActiveRecord::Schema.define(version: 20150802003601) do
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
     t.decimal  "amount"
+    t.integer  "invoice_receipt_id"
+    t.integer  "expense_id"
+    t.integer  "provider_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.integer  "provider_id"
-    t.integer  "expense_id"
-    t.integer  "invoice_receipt_id"
   end
 
   add_index "invoices", ["expense_id"], name: "index_invoices_on_expense_id", using: :btree
@@ -58,13 +58,12 @@ ActiveRecord::Schema.define(version: 20150802003601) do
     t.decimal  "requested"
     t.decimal  "recived"
     t.string   "status"
-    t.decimal  "quiantity"
     t.decimal  "unit_price"
     t.integer  "requisition_id"
     t.integer  "purchase_order_id"
+    t.integer  "material_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.integer  "material_id"
   end
 
   add_index "item_materials", ["material_id"], name: "index_item_materials_on_material_id", using: :btree
@@ -92,9 +91,9 @@ ActiveRecord::Schema.define(version: 20150802003601) do
     t.string   "delivery_place"
     t.string   "delivery_address"
     t.string   "delivery_receiver"
+    t.integer  "invoice_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.integer  "invoice_id"
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree

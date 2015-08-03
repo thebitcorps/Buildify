@@ -1,0 +1,7 @@
+%h1= @construction.title
+%h3= "Monto contratado: $" + @construction.contract_amount.to_s
+%h3= "Monto saldado: $" + @construction.current_amount.to_s
+
+%h2 Requisiciones
+= link_to "Ver todas", requisitions_path(construction_id: @construction.id)
+= button_to "Crear", requisitions_path(construction_id: @construction)
