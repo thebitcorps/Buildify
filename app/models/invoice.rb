@@ -1,18 +1,9 @@
 class Invoice < ActiveRecord::Base
-  has_many :purchase_orders
+  has_one :purchase_order
+  has_one :requisition, through: :purchase_order
+  has_one :construction, through: :requisition
+  has_many :item_materials, through: :purchase_order
   belongs_to :provider
   belongs_to :expense
   belongs_to :invoice_receipt
-
-  def requisitions
-    purchase_orders.collect{|purchase_order| purchase_order.requisition}
-  end
-
-  def item_materials
-    purchase_orders.collect{|purchase_order| purchase_order.item_materials}.flatten
-  end
-
-  def constructions
-    requisitions.collect{|requisition| requisition.construction}
-  end
 end

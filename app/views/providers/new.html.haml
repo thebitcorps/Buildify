@@ -1,0 +1,10 @@
+%h2 Nueva proveedor
+= form_for @provider, url: {action: "create"} do |form|
+  = form.label "Nombre:"
+  = form.text_field :name
+  = form.label "Direccion:"
+  = form.text_field :address
+  = form.label "Telefono:"
+  = form.text_field :telephone
+  %br
+  = form.submit "Crear"

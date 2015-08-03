@@ -4,7 +4,7 @@ class CreateExpenses < ActiveRecord::Migration
       t.string :concept
       t.string :status
       t.decimal :amount_paid
-      t.string :payment_type
+      t.string :check_number
 
       t.timestamps null: false
     end

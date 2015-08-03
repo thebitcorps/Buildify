@@ -5,10 +5,6 @@ class Provider < ActiveRecord::Base
     invoices.collect{|invoice| invoice.purchase_orders}.flatten
   end
 
-  def item_materials
-    purchase_orders.collect{|purchase_order| purchase_order.item_materials}.flatten
-  end
-
   def requisitions
     purchase_orders.collect{|purchase_order| purchase_order.requisition}.uniq
   end

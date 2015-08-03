@@ -6,7 +6,7 @@ class Construction < ActiveRecord::Base
   end
 
   def invoices
-    Invoice.find purchase_orders.map(&:invoice_id)
+    Invoice.find purchase_orders.map(&:invoice_id).compact
   end
 
   def expenses

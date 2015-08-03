@@ -5,11 +5,22 @@ class PurchaseOrdersController < ApplicationController
     @item_materials = @purchase_order.item_materials
     @requisition = @purchase_order.requisition
     @construction = @requisition.construction if @requisition
+    @providers = Provider.all
+  end
+
+  def update
+    @purchase_order = PurchaseOrder.find(params[:id])
+    @invoice = @purchase_order.invoice
+    @invoice.provider = Provider.find(provider_params[:provider_id]) if provider_params[:provider_id] != ""
+    @invoice.save
+    if @purchase_order.update(purchase_order_params)
+      redirect_to purchase_order_path(@purchase_order)
+    end
   end
 
   def update_item_materials
     @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
-    @requisition = purchase_order.requisition
+    @requisition = @purchase_order.requisition
     @item_materials_to_remove = material_items_params[:item_materials_attributes].delete_if{|_,v| v["_destroy"] == "0"}.values.map{|h| h[:id]}
     if @purchase_order.update(material_items_params)
       @item_materials = ItemMaterial.find @item_materials_to_remove
@@ -27,10 +38,38 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
+  def generate_invoice_expense
+    @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
+    @amount = 0.0
+    @purchase_order.item_materials.each do |item|
+      @amount += item.unit_price.to_f * item.recived.to_f
+      item.status = 'Facturado'
+    end
+    @invoice = @purchase_order.invoice
+    @invoice.amount = @amount
+    @expense = Expense.new
+    @expense.save
+    @invoice.expense = @expense
+    @invoice.save
+    if @purchase_order.save
+      redirect_to construction_path(@purchase_order.construction)
+    else
+      @expense.destroy
+    end
+  end
+
   private
 
+    def purchase_order_params
+      params.require(:purchase_order).permit(:delivery_place, :delivery_address, :delivery_receiver)
+    end
+
+    def provider_params
+      params.require(:purchase_order).permit(:provider_id)
+    end
+
     def material_items_params
-      params.require(:purchase_order).permit(item_materials_attributes: [:id, :unit_price, :_destroy])
+      params.require(:purchase_order).permit(item_materials_attributes: [:id, :recived, :unit_price, :_destroy])
     end
 
 end

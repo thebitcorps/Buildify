@@ -91,12 +91,14 @@ ActiveRecord::Schema.define(version: 20150802200708) do
     t.string   "delivery_place"
     t.string   "delivery_address"
     t.string   "delivery_receiver"
+    t.integer  "requisition_id"
     t.integer  "invoice_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree
+  add_index "purchase_orders", ["requisition_id"], name: "index_purchase_orders_on_requisition_id", using: :btree
 
   create_table "requisitions", force: :cascade do |t|
     t.integer  "folio"
@@ -114,5 +116,6 @@ ActiveRecord::Schema.define(version: 20150802200708) do
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"
   add_foreign_key "purchase_orders", "invoices"
+  add_foreign_key "purchase_orders", "requisitions"
   add_foreign_key "requisitions", "constructions"
 end

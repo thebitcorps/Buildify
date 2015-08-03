@@ -30,8 +30,14 @@ class RequisitionsController < ApplicationController
     @purchase_order = PurchaseOrder.new
     @purchase_order.folio = @purchase_order_count + 1
     @purchase_order.item_materials<<@requisition.item_materials_not_assigned
+    @purchase_order.requisition = @requisition
+    @invoice = Invoice.new
+    @invoice.save
+    @purchase_order.invoice = @invoice
     if @purchase_order.save
-      redirect_to purchase_order_path(@purchase_order)
+        redirect_to purchase_order_path(@purchase_order)
+    else
+        @invoice.destroy
     end
   end
 

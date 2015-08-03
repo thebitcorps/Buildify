@@ -1,0 +1,15 @@
+%table
+  %tr
+    %th Nombre
+    %th Direccion
+    %th Telefono
+  - @providers.each do |provider|
+    %tr
+      %td
+        = provider.name
+      %td
+        = provider.address
+      %td
+        = provider.telephone
+%h3 Nuevo proveedor
+= button_to "Crear", new_provider_path, method: :get

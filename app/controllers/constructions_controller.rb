@@ -6,6 +6,7 @@ class ConstructionsController < ApplicationController
 
   def show
     @construction = Construction.find(params[:id])
+    @expenses = @construction.expenses
   end
 
   def new
