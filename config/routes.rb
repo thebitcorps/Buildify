@@ -10,4 +10,5 @@ Rails.application.routes.draw do
     patch 'update_item_materials'
     post 'generate_invoice_expense'
   end
+  resources :expenses, only: [:update, :edit, :index]
 end

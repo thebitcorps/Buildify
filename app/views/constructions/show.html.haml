@@ -10,6 +10,7 @@
     %th Concepto
     %th Contra recivo
     %th Fecha de facturacion
+    %th Factura
     %th Importe
     %th Importe acumulado
     %th Nº de cheque
@@ -19,6 +20,7 @@
     %th Acumulado pagado
     %th Saldo
     %th Saldo acumulado
+    %th
   - accumulated_amount = 0
   - accumulated_paid = 0
   - accumulated_balance = 0
@@ -27,18 +29,20 @@
     %tr
       %td= link_to expense.purchase_order.folio, purchase_order_path(expense.purchase_order)
       %td= expense.provider.name
-      %td
-      %td
+      %td= expense.concept
+      %td= expense.invoice.invoice_receipt
       %td= expense.invoice.created_at
+      %td= expense.invoice.folio
       %td= expense.invoice.amount.to_f
       %td= accumulated_amount += expense.invoice.amount.to_f
-      %th
+      %th= expense.check_number
       %th= expense.invoice.created_at
       %th= expense.status
       %th= expense.amount_paid.to_f
       %th= accumulated_paid += expense.amount_paid.to_f
       %th= last_balance = expense.invoice.amount.to_f - expense.amount_paid.to_f
       %th= accumulated_balance += last_balance
+      %td= link_to "Editar", edit_expense_path(expense)
 
 %h2 Requisiciones
 = link_to "Ver todas", requisitions_path(construction_id: @construction.id)
