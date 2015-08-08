@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :item_materials, only: [:create]
   resources :purchase_orders, only: [:update, :show] do
     patch 'update_item_materials'
-    post 'generate_invoice_expense'
   end
   resources :expenses, only: [:update, :edit, :index]
 end

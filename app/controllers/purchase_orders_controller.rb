@@ -38,26 +38,6 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
-  def generate_invoice_expense
-    @purchase_order = PurchaseOrder.find(params[:purchase_order_id])
-    @amount = 0.0
-    @purchase_order.item_materials.each do |item|
-      @amount += item.unit_price.to_f * item.recived.to_f
-      item.status = 'Facturado'
-    end
-    @invoice = @purchase_order.invoice
-    @invoice.amount = @amount
-    @expense = Expense.new
-    @expense.save
-    @invoice.expense = @expense
-    @invoice.save
-    if @purchase_order.save
-      redirect_to construction_path(@purchase_order.construction)
-    else
-      @expense.destroy
-    end
-  end
-
   private
 
     def purchase_order_params
