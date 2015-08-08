@@ -10,9 +10,7 @@ class PurchaseOrdersController < ApplicationController
 
   def update
     @purchase_order = PurchaseOrder.find(params[:id])
-    @invoice = @purchase_order.invoice
-    @invoice.provider = Provider.find(provider_params[:provider_id]) if provider_params[:provider_id] != ""
-    @invoice.save
+    @purchase_order.provider = Provider.find(provider_params[:provider_id]) if provider_params[:provider_id] != ""
     if @purchase_order.update(purchase_order_params)
       redirect_to purchase_order_path(@purchase_order)
     end

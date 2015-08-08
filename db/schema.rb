@@ -37,23 +37,25 @@ ActiveRecord::Schema.define(version: 20150802200708) do
 
   create_table "invoice_receipts", force: :cascade do |t|
     t.integer  "folio"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "provider_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
+
+  add_index "invoice_receipts", ["provider_id"], name: "index_invoice_receipts_on_provider_id", using: :btree
 
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
     t.decimal  "amount"
+    t.date     "reg_date"
     t.integer  "invoice_receipt_id"
     t.integer  "expense_id"
-    t.integer  "provider_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
 
   add_index "invoices", ["expense_id"], name: "index_invoices_on_expense_id", using: :btree
   add_index "invoices", ["invoice_receipt_id"], name: "index_invoices_on_invoice_receipt_id", using: :btree
-  add_index "invoices", ["provider_id"], name: "index_invoices_on_provider_id", using: :btree
 
   create_table "item_materials", force: :cascade do |t|
     t.decimal  "requested"
@@ -83,6 +85,7 @@ ActiveRecord::Schema.define(version: 20150802200708) do
     t.string   "name"
     t.string   "address"
     t.string   "telephone"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -94,11 +97,13 @@ ActiveRecord::Schema.define(version: 20150802200708) do
     t.string   "delivery_receiver"
     t.integer  "requisition_id"
     t.integer  "invoice_id"
+    t.integer  "provider_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree
+  add_index "purchase_orders", ["provider_id"], name: "index_purchase_orders_on_provider_id", using: :btree
   add_index "purchase_orders", ["requisition_id"], name: "index_purchase_orders_on_requisition_id", using: :btree
 
   create_table "requisitions", force: :cascade do |t|
@@ -110,13 +115,14 @@ ActiveRecord::Schema.define(version: 20150802200708) do
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
 
+  add_foreign_key "invoice_receipts", "providers"
   add_foreign_key "invoices", "expenses"
   add_foreign_key "invoices", "invoice_receipts"
-  add_foreign_key "invoices", "providers"
   add_foreign_key "item_materials", "materials"
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"
   add_foreign_key "purchase_orders", "invoices"
+  add_foreign_key "purchase_orders", "providers"
   add_foreign_key "purchase_orders", "requisitions"
   add_foreign_key "requisitions", "constructions"
 end

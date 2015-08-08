@@ -9,5 +9,10 @@ Rails.application.routes.draw do
   resources :purchase_orders, only: [:update, :show] do
     patch 'update_item_materials'
   end
-  resources :expenses, only: [:update, :edit, :index]
+  resources :expenses, only: [:update, :index]
+  resources :invoice_receipts, only: [:create, :show, :update]
+  resources :invoices, only: [:create, :show] do
+    post 'add_purchase_order'
+    post 'remove_purchase_order'
+  end
 end

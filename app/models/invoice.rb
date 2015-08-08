@@ -1,9 +1,8 @@
 class Invoice < ActiveRecord::Base
-  has_one :purchase_order
-  has_one :requisition, through: :purchase_order
-  has_one :construction, through: :requisition
-  has_many :item_materials, through: :purchase_order
-  belongs_to :provider
+  has_many :purchase_orders
   belongs_to :expense
   belongs_to :invoice_receipt
+  has_one :provider, through: :invoice_receipt
+
+  accepts_nested_attributes_for :purchase_orders
 end

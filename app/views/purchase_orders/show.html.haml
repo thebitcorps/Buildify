@@ -40,5 +40,3 @@
           %td= form_item.object.unit_price.to_f * form_item.object.requested.to_f
           %td= form_item.check_box :_destroy
   = form.submit "Actualizar precios y cantidades"
-
-= button_to "Generar factura y enlistar como gasto", purchase_order_generate_invoice_expense_path(@purchase_order)

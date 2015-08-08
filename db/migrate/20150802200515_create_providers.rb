@@ -4,6 +4,7 @@ class CreateProviders < ActiveRecord::Migration
       t.string :name
       t.string :address
       t.string :telephone
+      t.string :email
 
       t.timestamps null: false
     end

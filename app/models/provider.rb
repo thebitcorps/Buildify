@@ -1,8 +1,12 @@
 class Provider < ActiveRecord::Base
-  has_many :invoices
+  has_many :invoices_receipts
+
+  def invoices
+    invoice_receipts.collect{|invoice_receipts| invoice_receipt.invoices}
+  end
 
   def purchase_orders
-    invoices.collect{|invoice| invoice.purchase_orders}.flatten
+    invoices.collect{|invoice| invoice.purchase_orders}
   end
 
   def requisitions
@@ -13,7 +17,4 @@ class Provider < ActiveRecord::Base
     requisitions.collect{|requisition| requisition.construction}.uniq
   end
 
-  def invoice_receipts
-    InvoiceReceipt.find invoice.collect{|invoice| invoice.invoice_receipt_id}
-  end
 end
