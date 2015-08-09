@@ -5,7 +5,7 @@
 %h2 Gastos
 %table
   %tr
-    %th Orden de compra
+    %th Ordenes de compra
     %th Proveedor
     %th Concepto
     %th Contra recivo
@@ -13,36 +13,35 @@
     %th Factura
     %th Importe
     %th Importe acumulado
-    %th Nº de cheque
-    %th Fecha
     %th Estado
     %th Importe pagado
     %th Acumulado pagado
     %th Saldo
     %th Saldo acumulado
-    %th
+    %th Pagos
+    %th Realizar pago
   - accumulated_amount = 0
   - accumulated_paid = 0
   - accumulated_balance = 0
   - last_balance = 0
   - @expenses.each do |expense|
     %tr
-      %td= link_to expense.purchase_order.folio, purchase_order_path(expense.purchase_order)
+      %td
+        - expense.purchase_orders.each do |purchase_order|
+          = link_to purchase_order.folio, purchase_order_path(purchase_order)
       %td= expense.provider.name
-      %td= expense.concept
-      %td= expense.invoice.invoice_receipt
-      %td= expense.invoice.created_at
-      %td= expense.invoice.folio
+      %td= expense.invoice.concept
+      %td= link_to expense.invoice_receipt.folio, invoice_receipt_path(expense.invoice_receipt)
+      %td= expense.invoice.reg_date
+      %td= link_to expense.invoice.folio, invoice_path(expense.invoice)
       %td= expense.invoice.amount.to_f
       %td= accumulated_amount += expense.invoice.amount.to_f
-      %th= expense.check_number
-      %th= expense.invoice.created_at
       %th= expense.status
       %th= expense.amount_paid.to_f
       %th= accumulated_paid += expense.amount_paid.to_f
       %th= last_balance = expense.invoice.amount.to_f - expense.amount_paid.to_f
       %th= accumulated_balance += last_balance
-      %td= link_to "Editar", edit_expense_path(expense)
+      %td
 
 %h2 Requisiciones
 = link_to "Ver todas", requisitions_path(construction_id: @construction.id)

@@ -4,5 +4,11 @@ class Invoice < ActiveRecord::Base
   belongs_to :invoice_receipt
   has_one :provider, through: :invoice_receipt
 
-  accepts_nested_attributes_for :purchase_orders
+  def requisitions
+    Requisition.find purchase_orders.map(&:requisition_id)
+  end
+
+  def constructions
+    Construction.find requisitions.map(&:construction_id)
+  end
 end

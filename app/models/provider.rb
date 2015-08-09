@@ -1,12 +1,9 @@
 class Provider < ActiveRecord::Base
   has_many :invoices_receipts
+  has_many :purchase_orders
 
   def invoices
     invoice_receipts.collect{|invoice_receipts| invoice_receipt.invoices}
-  end
-
-  def purchase_orders
-    invoices.collect{|invoice| invoice.purchase_orders}
   end
 
   def requisitions

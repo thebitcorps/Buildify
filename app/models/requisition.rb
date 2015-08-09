@@ -8,10 +8,6 @@ class Requisition < ActiveRecord::Base
   end
 
   def invoices
-    Invoice.find purchase_orders.map(&:invoice_id)
-  end
-
-  def providers
-    purchase_orders.collect{|purchase_order| purchase_order.provider}.uniq
+    Invoice.find purchase_orders.map(&:invoice_id).compact
   end
 end

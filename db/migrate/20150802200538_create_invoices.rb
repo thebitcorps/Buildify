@@ -2,6 +2,7 @@ class CreateInvoices < ActiveRecord::Migration
   def change
     create_table :invoices do |t|
       t.string :folio
+      t.string :concept
       t.decimal :amount
       t.date :reg_date
       t.references :invoice_receipt, index: true, foreign_key: true

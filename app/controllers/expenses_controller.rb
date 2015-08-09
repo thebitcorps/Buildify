@@ -1,10 +1,7 @@
 class ExpensesController < ApplicationController
 
   def index
-  end
-
-  def edit
-    @expense = Expense.find(params[:id])
+    @expenses = Expense.all
   end
 
   def update

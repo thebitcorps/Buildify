@@ -3,6 +3,9 @@ class InvoicesController < ApplicationController
   def create
     @invoice = Invoice.new(invoice_params)
     @invoice.invoice_receipt = InvoiceReceipt.find(owners_params[:invoice_receipt_id])
+    @expense = Expense.new
+    @expense.save
+    @invoice.expense = @expense
     if @invoice.save
       redirect_to invoice_receipt_path(@invoice.invoice_receipt)
     end
