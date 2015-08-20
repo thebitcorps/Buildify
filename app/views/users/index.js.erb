@@ -1,0 +1,9 @@
+$('#users').html("<%= j( render partial: 'user', collection: @users) %>");
+
+<% if params[:role] ==  'administrator'%>
+    $('#administrators').attr('class', "active");
+    $('#residents').attr('class', '');
+<% else %>
+    $('#administrators').attr('class', '');
+    $('#residents').attr('class', "active");
+<% end %>

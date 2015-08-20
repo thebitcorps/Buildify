@@ -1,10 +1,10 @@
 %h1 Listing users
 
 %ul.nav.nav-tabs
-  %li{class: " #{'active' if params[:role] == 'resident'  or params[:role].nil? }" }
-    = link_to 'Residents',users_path(role: 'resident')
-  %li{class: " #{'active' if params[:role] == 'administrator'}"}
-    = link_to 'Administrators',users_path(role: 'administrator')
+  %li{id: 'residents',class: " #{'active' if params[:role] == 'resident'  or params[:role].nil? }"}
+    = link_to 'Residents',users_path(role: 'resident'),remote: true
+  %li{id: ' administrators',class: " #{'active' if params[:role] == 'administrator'}"}
+    = link_to 'Administrators',users_path(role: 'administrator'),remote: true
 
 %table.table
   %thead

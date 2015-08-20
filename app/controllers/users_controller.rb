@@ -4,7 +4,12 @@ class UsersController < ApplicationController
 
   def index
     # we verify inclusion of role first then metaprograming for choosing the rigth list to show
+    # 's' added for readability in the model methods
     @users = class_eval %Q{User.#{User::ROLES.include?(params[:role]) ? "#{params[:role]}s" : 'residents'}}
+    respond_to do |format|
+      format.html
+      format.js{@users}
+    end
   end
 
   def show
