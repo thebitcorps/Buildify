@@ -26,12 +26,13 @@
           %span.icon-bar
           %span.icon-bar
         %a.navbar-brand(href="#") Buildify
-        .navbar-collapse.collapse.navbar-responsive-collapse
-          %ul.nav.navbar-nav
-            %li= link_to "Link 1", "/path1"
-            %li= link_to "Link 2", "/path2"
-            %li= link_to "Link 3", "/path3"
-            %li= link_to "Link 3", "/path3"
+        -if user_signed_in?
+          %p.navbar-text.navbar-right
+            = current_user.name
+            = link_to 'Logout',destroy_user_session_path, method: :delete
+        - else
+          %p.navbar-text.navbar-right
+            = link_to 'Sign in',new_user_session_path
 
     .container
       .row
