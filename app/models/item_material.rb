@@ -6,5 +6,5 @@ class ItemMaterial < ActiveRecord::Base
   has_one :construction, through: :requisition
   has_one :provider, through: :purchase_order
   has_one :invoice_receipt, through: :invoice
-  has_one :expense, through: :invoice
+  has_one :payment, through: :invoice
 end

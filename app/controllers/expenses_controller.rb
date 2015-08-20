@@ -1,4 +1,0 @@
-class ExpensesController < ApplicationController
-
-
-end

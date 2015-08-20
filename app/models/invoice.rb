@@ -1,14 +1,8 @@
 class Invoice < ActiveRecord::Base
-  has_many :purchase_orders
-  belongs_to :expense
+  has_one :purchase_order
+  has_one :requisition, through: :purchase_order
+  has_one :construction, through: :requisition
+  belongs_to :payment
   belongs_to :invoice_receipt
-  has_one :provider, through: :invoice_receipt
-
-  def requisitions
-    Requisition.find purchase_orders.map(&:requisition_id)
-  end
-
-  def constructions
-    Construction.find requisitions.map(&:construction_id)
-  end
+  belongs_to :provider
 end

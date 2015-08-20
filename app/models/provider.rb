@@ -1,17 +1,7 @@
 class Provider < ActiveRecord::Base
-  has_many :invoices_receipts
-  has_many :purchase_orders
-
-  def invoices
-    invoice_receipts.collect{|invoice_receipts| invoice_receipt.invoices}
-  end
-
-  def requisitions
-    purchase_orders.collect{|purchase_order| purchase_order.requisition}.uniq
-  end
-
-  def constructions
-    requisitions.collect{|requisition| requisition.construction}.uniq
-  end
-
+  has_many :invoices
+  has_many :purchase_orders, through: :invoices
+  has_many :requisitions, through: :purchase_orders
+  has_many :constructions, through: :requisitions
+  has_many :payments, through: :invoices
 end
