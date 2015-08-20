@@ -4,9 +4,10 @@ class CreateInvoices < ActiveRecord::Migration
       t.string :folio
       t.string :concept
       t.decimal :amount
-      t.date :reg_date
+      t.date :invoice_date
       t.references :invoice_receipt, index: true, foreign_key: true
-      t.references :expense, index: true, foreign_key: true
+      t.references :payment, index: true, foreign_key: true
+      t.references :provider, index: true, foreign_key: true
 
       t.timestamps null: false
     end

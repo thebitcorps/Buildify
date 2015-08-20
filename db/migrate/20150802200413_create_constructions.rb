@@ -5,7 +5,6 @@ class CreateConstructions < ActiveRecord::Migration
       t.date :start_date
       t.date :finish_date
       t.decimal :contract_amount
-      t.decimal :current_amount
 
       t.timestamps null: false
     end
