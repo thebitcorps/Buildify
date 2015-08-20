@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :humanize_name ,only: [:create,:update]
 
   def index
-    @users = User.all
+    # we verify inclusion of role first then metaprograming for choosing the rigth list to show
+    @users = class_eval %Q{User.#{User::ROLES.include?(params[:role]) ? "#{params[:role]}s" : 'residents'}}
   end
 
   def show
@@ -44,6 +46,9 @@ class UsersController < ApplicationController
   end
 
   private
+    def humanize_name
+      params[:user][:name] = params[:user][:name].split.map(&:capitalize).join(' ')
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])

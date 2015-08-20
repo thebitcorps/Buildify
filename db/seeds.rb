@@ -1,4 +1,4 @@
-User.create({name: "The bit corps",email: "dev@thebitcorps.com",password: "12345678",password_confirmation: "12345678"})
+User.create({name: "The bit corps",phone: '4498961443',role: 'administrator',email: "dev@thebitcorps.com",password: "12345678",password_confirmation: "12345678"})
 
 
 # Construction.create(title: "Kinder", contract_amount: 4000000)

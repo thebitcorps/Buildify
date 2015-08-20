@@ -1,6 +1,12 @@
 %h1 Listing users
 
-%table
+%ul.nav.nav-tabs
+  %li{class: " #{'active' if params[:role] == 'resident'  or params[:role].nil? }" }
+    = link_to 'Residents',users_path(role: 'resident')
+  %li{class: " #{'active' if params[:role] == 'administrator'}"}
+    = link_to 'Administrators',users_path(role: 'administrator')
+
+%table.table
   %thead
     %tr
       %th Name
@@ -10,17 +16,8 @@
       %th
       %th
       %th
-
-  %tbody
-    - @users.each do |user|
-      %tr
-        %td= user.name
-        %td= user.phone
-        %td= user.email
-        %td= user.role
-        %td= link_to 'Show', user
-        %td= link_to 'Edit', edit_user_path(user)
-        %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+  %tbody#users
+    = render partial: 'user', collection: @users
 
 %br
 
