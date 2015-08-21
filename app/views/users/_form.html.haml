@@ -1,6 +1,6 @@
 =  simple_form_for(@user, html: { class: 'form-horizontal' }) do |f|
   = f.input :name
+  = f.input :email
   = f.input :phone
   = f.input :role,collection: User::ROLES
   = f.button :submit
-  = link_to('Change password',new_user_password_path(@user))
