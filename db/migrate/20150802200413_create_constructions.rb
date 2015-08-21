@@ -5,6 +5,7 @@ class CreateConstructions < ActiveRecord::Migration
       t.date :start_date
       t.date :finish_date
       t.decimal :contract_amount
+      t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
     end

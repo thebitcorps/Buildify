@@ -32,9 +32,12 @@ ActiveRecord::Schema.define(version: 20150820045810) do
     t.date     "start_date"
     t.date     "finish_date"
     t.decimal  "contract_amount"
+    t.integer  "user_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
+
+  add_index "constructions", ["user_id"], name: "index_constructions_on_user_id", using: :btree
 
   create_table "estimates", force: :cascade do |t|
     t.decimal  "amount"
@@ -159,6 +162,7 @@ ActiveRecord::Schema.define(version: 20150820045810) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "billing_adjustments", "payments"
+  add_foreign_key "constructions", "users"
   add_foreign_key "estimates", "constructions"
   add_foreign_key "invoices", "invoice_receipts"
   add_foreign_key "invoices", "payments"
