@@ -1,0 +1,7 @@
+%tr
+  %td= link_to construction.title, construction_path(construction)
+  %td= construction.start_date
+  %td= construction.finish_date
+  %td= construction.contract_amount
+  %td= link_to 'Edit', edit_construction_path(construction)
+  %td= link_to 'Destroy', construction, :method => :delete, :data => { :confirm => 'Esta seguro de que decea eliminar este registro?' }

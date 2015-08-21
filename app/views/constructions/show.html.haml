@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%p
+  %b Nombre:
+  = @construction.title
+%p
+  %b Fecha de inicio:
+  = @construction.start_date
+%p
+  %b Fecha de finalizacion:
+  = @construction.finish_date
+%p
+  %b Monto contratado:
+  = @construction.contract_amount
+
+
+= link_to 'Edit', edit_construction_path(@construction)
+\|
+= link_to 'Back', constructions_path

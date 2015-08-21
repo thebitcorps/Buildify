@@ -1,0 +1,17 @@
+%h1 Obras
+
+%table.table
+  %thead
+    %tr
+      %th Nombre
+      %th Fecha de inicio
+      %th Fecha de finalizacion
+      %th Montro contratado
+      %th
+      %th
+  %tbody#users
+    = render partial: 'construction', collection: @constructions
+
+%br
+
+= link_to 'Nueva obra', new_construction_path

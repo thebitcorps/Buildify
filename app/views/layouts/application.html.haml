@@ -25,7 +25,7 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %a.navbar-brand(href="#") Buildify
+        = link_to 'Buildify', root_path, class: 'navbar-brand' 
         -if user_signed_in?
           %p.navbar-text.navbar-right
             = current_user.name
@@ -44,7 +44,7 @@
             %h3 Sidebar
             %ul.nav.nav-list
               %li.nav-header Sidebar
-              %li= link_to "Link 1", "/path1"
+              %li= link_to "Obras", constructions_path
               %li= link_to "Link 2", "/path2"
               %li= link_to "Link 3", "/path3"
       %footer
