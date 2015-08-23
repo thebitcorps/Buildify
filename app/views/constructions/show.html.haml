@@ -13,6 +13,7 @@
   %b Monto contratado:
   = @construction.contract_amount
 
+= link_to 'Nueva requisicion', new_requisition_path(construction: @construction.id)
 
 = link_to 'Edit', edit_construction_path(@construction)
 \|

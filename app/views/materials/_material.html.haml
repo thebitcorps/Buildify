@@ -1,0 +1,5 @@
+%tr
+  %td=link_to material.name,material
+  %td=material.description
+  %td= link_to 'Edit', edit_material_path(material)
+  %td= link_to 'Destroy', material, :method => :delete, :data => { :confirm => 'Are you sure?' }

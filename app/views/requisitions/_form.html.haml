@@ -1,0 +1,3 @@
+=  simple_form_for(@requisition, html: { class: 'form-horizontal' }) do |f|
+  = f.input :construction_id ,as: :hidden,input_html: {value: @construction.id}
+  = f.submit

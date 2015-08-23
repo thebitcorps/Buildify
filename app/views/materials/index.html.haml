@@ -1,0 +1,17 @@
+%h1 Materials
+
+
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th
+      %th
+  %tbody#materials
+    = render partial: 'material', collection: @materials
+
+%br
+
+= link_to 'New Material', new_material_path

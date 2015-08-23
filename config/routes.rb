@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       patch 'update_password'
     end
   end
+  resources :materials
+  resources :requisitions
   resources :constructions
   root to: "home#index"
 end
