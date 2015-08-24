@@ -6,4 +6,16 @@ class Construction < ActiveRecord::Base
   has_many :invoice_receipts, through: :invoices
   has_many :payments
   has_many :invoiced_payments, through: :invoices, source: :payment
+  paginates_per 10
+
+
+  def self.search(search)
+    return all if search.nil?
+    unless search.empty?
+      where('LOWER(title) LIKE ?',"%#{search}%")
+    else
+      all
+    end
+  end
+
 end

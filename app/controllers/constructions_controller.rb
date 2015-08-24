@@ -3,7 +3,7 @@ class ConstructionsController < ApplicationController
   before_action :humanize_tilte, only: [:create, :update]
 
   def index
-    @constructions = Construction.all
+    @constructions = Construction.search(sanitaze_search).page(params[:page])
   end
 
   def show

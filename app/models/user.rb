@@ -8,14 +8,18 @@ class User < ActiveRecord::Base
   validates :name,:phone,:role, presence: true
 #   validate :phone ,check which regex uses
   validates :role, inclusion: ROLES
+  paginates_per 10
 
+  scope :resident, -> {where role: 'resident'}
+  scope :administrator, -> {where role: 'administrator'}
 
-  def self.administrators
-    where role: 'administrator'
-  end
-
-  def self.residents
-    where role: 'resident'
+  def self.search(search)
+    return all if search.nil?
+    unless search.empty?
+      where('LOWER(name) LIKE ?', "%#{search}%")
+    else
+      all
+    end
   end
 
 

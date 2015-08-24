@@ -3,7 +3,7 @@ class MaterialsController < ApplicationController
   before_action :humanize_material,only: [:create,:update]
 
   def index
-    @materials = Material.all_alphabetical
+    @materials = Material.all_alphabetical.search(sanitaze_search).page(params[:page])
   end
 
   def new

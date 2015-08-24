@@ -1,9 +1,16 @@
 %h1 Listing users
 
+
+= simple_form_for :search,url: users_path(role: 'administrator'),method: :get do |f|
+  = f.input :role,as: :hidden ,id: 'role_input',input_html: { value: @user_list}
+  = f.search_field :search,autofocus: true
+  = f.button :submit
+
+
 %ul.nav.nav-tabs
   %li{id: 'residents',class: " #{'active' if params[:role] == 'resident'  or params[:role].nil? }"}
     = link_to 'Residents',users_path(role: 'resident'),remote: true
-  %li{id: ' administrators',class: " #{'active' if params[:role] == 'administrator'}"}
+  %li{id: 'administrators',class: " #{'active' if params[:role] == 'administrator'}"}
     = link_to 'Administrators',users_path(role: 'administrator'),remote: true
 
 %table.table
@@ -18,6 +25,9 @@
       %th
   %tbody#users
     = render partial: 'user', collection: @users
+#paginate
+  = paginate @users
+
 
 %br
 

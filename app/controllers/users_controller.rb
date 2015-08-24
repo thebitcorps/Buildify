@@ -5,10 +5,17 @@ class UsersController < ApplicationController
   def index
     # we verify inclusion of role first then metaprograming for choosing the rigth list to show
     # 's' added for readability in the model methods
-    @users = class_eval %Q{User.#{User::ROLES.include?(params[:role]) ? "#{params[:role]}s" : 'residents'}}
+
+    if params[:search]
+      params[:role] = User::ROLES.include?(params[:search][:role]) ? "#{params[:search][:role]}" : 'resident'
+    end
+    @user_list = User::ROLES.include?(params[:role]) ? "#{params[:role]}" : 'resident'
+
+
+    @users = (class_eval %Q{User.#{@user_list}}).search(sanitaze_search).page params[:page]
     respond_to do |format|
       format.html
-      format.js{@users}
+      format.js
     end
   end
 

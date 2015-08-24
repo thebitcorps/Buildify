@@ -1,9 +1,13 @@
 $('#users').html("<%= j( render partial: 'user', collection: @users) %>");
+$('#paginate').html("<%= j( paginate @users) %>");
 
-<% if params[:role] ==  'administrator'%>
+$('#search_role').val("<%= @user_list%>");
+<% if @user_list ==  'administrator'%>
     $('#administrators').attr('class', "active");
     $('#residents').attr('class', '');
 <% else %>
-    $('#administrators').attr('class', '');
     $('#residents').attr('class', "active");
+    $('#administrators').attr('class', '');
+
 <% end %>
+window.history.pushState(null, null, "users?role=<%=j @user_list%>");
