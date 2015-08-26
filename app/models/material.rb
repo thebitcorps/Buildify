@@ -1,15 +1,16 @@
 class Material < ActiveRecord::Base
   has_many :item_materials
   paginates_per 10
-  scope :all_alphabetical, -> { all.order("LOWER(name)") }
+  scope :all_alphabetical, -> { all.order("LOWER(name)") } # whats with that statements?
 
   # here could make to the classes that uses search that implement search to try DRYing the code
-  def self.search(search)
-    return all if search.nil?
-    unless search.empty?
-      where('LOWER(name) LIKE ?', "%#{search}%")
-    else
+  # how about a search class?
+  def self.search(query)
+    return all if query.nil?
+    if query.empty?
       all
+    else
+      where('name ilike ?', "%#{query}%")
     end
   end
 

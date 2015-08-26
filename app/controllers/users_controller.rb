@@ -5,14 +5,14 @@ class UsersController < ApplicationController
   def index
     # we verify inclusion of role first then metaprograming for choosing the rigth list to show
     # 's' added for readability in the model methods
-
+    # if the request comes with search, get the role from the search and use it
     if params[:search]
       params[:role] = User::ROLES.include?(params[:search][:role]) ? "#{params[:search][:role]}" : 'resident'
     end
     @user_list = User::ROLES.include?(params[:role]) ? "#{params[:role]}" : 'resident'
 
 
-    @users = (class_eval %Q{User.#{@user_list}}).search(sanitaze_search).page params[:page]
+    @users = (class_eval %Q{User.#{@user_list}}).search(sanitized_search).page params[:page]
     respond_to do |format|
       format.html
       format.js
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url(role: params[:role]), notice: 'User was successfully destroyed.' }
     end
   end
 

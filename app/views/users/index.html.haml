@@ -3,7 +3,7 @@
 
 = simple_form_for :search,url: users_path(role: 'administrator'),method: :get do |f|
   = f.input :role,as: :hidden ,id: 'role_input',input_html: { value: @user_list}
-  = f.search_field :search,autofocus: true
+  = f.search_field :query,autofocus: true
   = f.button :submit
 
 

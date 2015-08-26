@@ -3,7 +3,7 @@ class MaterialsController < ApplicationController
   before_action :humanize_material,only: [:create,:update]
 
   def index
-    @materials = Material.all_alphabetical.search(sanitaze_search).page(params[:page])
+    @materials = Material.all_alphabetical.search(sanitized_search).page(params[:page])
   end
 
   def new
@@ -20,7 +20,7 @@ class MaterialsController < ApplicationController
     @material = Material.new material_params
     respond_to do |format|
       if @material.save!
-        format.html { redirect_to @material, notice: 'Registro de material creado correctamente.'}
+        format.html { redirect_to @material, notice: 'Material creado correctamente.'}
       else
         format.html { render :new }
       end
@@ -30,7 +30,7 @@ class MaterialsController < ApplicationController
   def update
     respond_to do |format|
       if @material.update(material_params)
-        format.html { redirect_to @material, notice: 'Material was successfully updated.' }
+        format.html { redirect_to @material, notice: 'Material actualizado.' }
       else
         format.html { render :edit }
       end
@@ -40,7 +40,7 @@ class MaterialsController < ApplicationController
   def destroy
     @material.destroy
     respond_to do |format|
-      format.html { redirect_to materials_path, notice: 'Material was successfully destroyed.' }
+      format.html { redirect_to materials_path, notice: 'Material eliminado.' }
     end
   end
 

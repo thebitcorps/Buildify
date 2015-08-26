@@ -15,13 +15,21 @@ class Construction < ActiveRecord::Base
   def validate_dates_logic_relation
       errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date
   end
+  
+  def days_passed
+    (DateTime.now.to_date - start_date).to_i
+  end
 
-  def self.search(search)
-    return all if search.nil?
-    unless search.empty?
-      where('LOWER(title) LIKE ?',"%#{search}%")
-    else
+  def available_days
+    (finish_date - start_date).to_i
+  end
+
+  def self.search(query)
+    return all if query.nil?
+    if query.empty?
       all
+    else
+      where("title LIKE ?", "%#{query}%")
     end
   end
 
