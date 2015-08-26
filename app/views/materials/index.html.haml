@@ -1,21 +1,18 @@
-%h1 Materials
-
-
-= simple_form_for :search,url: materials_path,method: :get do |f|
-  = f.search_field :search,autofocus: true
-  = f.button :submit
-
+%h1 Materiales
+= simple_form_for :search, url: materials_path, method: :get do |f|
+  = f.search_field :query, autofocus: true
+  = f.submit 'Buscar'
 
 %table.table
   %thead
     %tr
-      %th Name
-      %th Description
+      %th Nombre
+      %th Descripción
       %th
       %th
   %tbody#materials
-    = render partial: 'material', collection: @materials
+    = render @materials
 = paginate @materials
 %br
 
-= link_to 'New Material', new_material_path
+= link_to 'Nuevo material', new_material_path, class: 'btn btn-primary'
