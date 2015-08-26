@@ -7,14 +7,14 @@
   %b Fecha de inicio:
   = @construction.start_date
 %p
-  %b Fecha de finalizacion:
+  %b Fecha de finalización:
   = @construction.finish_date
 %p
   %b Monto contratado:
   = @construction.contract_amount
 
-= link_to 'Nueva requisicion', new_requisition_path(construction: @construction.id)
+= link_to 'Nueva requisición', new_requisition_path(construction: @construction.id)
 
-= link_to 'Edit', edit_construction_path(@construction)
+= link_to 'Editar', edit_construction_path(@construction)
 \|
-= link_to 'Back', constructions_path
+= link_to 'Regresar', constructions_path
