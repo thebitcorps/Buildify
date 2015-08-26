@@ -3,5 +3,5 @@
   = f.input :start_date, label: 'Fecha de inicio'
   = f.input :finish_date, label: 'Fecha de finalizacion'
   = f.input :contract_amount, label: 'Cantidad contratada'
-  = f.association :resident
+  = f.association :resident, collection: User.resident
   = f.button :submit, value: 'Crear'
