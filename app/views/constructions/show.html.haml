@@ -13,8 +13,6 @@
   %b Monto contratado:
   = @construction.contract_amount
 
-= link_to 'Nueva requisición', new_requisition_path(construction: @construction.id)
-
-= link_to 'Editar', edit_construction_path(@construction)
-\|
-= link_to 'Regresar', constructions_path
+= link_to 'Nueva requisición', new_requisition_path(construction: @construction.id), class: 'btn btn-primary'
+= link_to 'Editar', edit_construction_path(@construction), class: 'btn btn-default'
+= link_to 'Regresar', constructions_path, class: 'btn btn-default'
