@@ -21,7 +21,7 @@ class Construction < ActiveRecord::Base
     if query.empty?
       all
     else
-      where("title ilike ?", "%#{query}%")
+      where("title LIKE ?", "%#{query}%")
     end
   end
 

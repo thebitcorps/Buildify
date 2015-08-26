@@ -32,9 +32,10 @@ ActiveRecord::Schema.define(version: 20150820045810) do
     t.date     "start_date"
     t.date     "finish_date"
     t.decimal  "contract_amount"
+    t.decimal  "estimates_amount", default: 0.0
     t.integer  "user_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "constructions", ["user_id"], name: "index_constructions_on_user_id", using: :btree
@@ -74,7 +75,7 @@ ActiveRecord::Schema.define(version: 20150820045810) do
 
   create_table "item_materials", force: :cascade do |t|
     t.decimal  "requested"
-    t.decimal  "recived"
+    t.decimal  "received"
     t.string   "status"
     t.decimal  "unit_price"
     t.string   "measure_unit"
@@ -100,6 +101,7 @@ ActiveRecord::Schema.define(version: 20150820045810) do
     t.string   "status"
     t.string   "consept"
     t.date     "payment_date"
+    t.decimal  "paid_amount"
     t.integer  "construction_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false

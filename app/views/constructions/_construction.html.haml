@@ -1,12 +1,3 @@
-%tr
-  %td= link_to construction.title, construction_path(construction)
-  %td= link_to construction.resident.name,user_path(construction.resident)
-  %td= construction.start_date
-  %td= construction.finish_date
-  %td= construction.contract_amount
-  %td= link_to 'Edit', edit_construction_path(construction)
-  %td= link_to 'Destroy', construction, :method => :delete, :data => { :confirm => 'Esta seguro de que decea eliminar este registro?' }
-
 %a.list-group-item{:href => "#{construction_path(construction)}"}
   %h5
     %span.label.label-primary.pull-right= ["$", construction.contract_amount].join
