@@ -8,14 +8,14 @@ class Construction < ActiveRecord::Base
   has_many :invoiced_payments, through: :invoices, source: :payment
   paginates_per 10
 
-  validates :title, presence: true
+  validates :title, :resident, presence: true
   validate :validate_dates_logic_relation
   validates :contract_amount, presence: true
 
   def validate_dates_logic_relation
       errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date
   end
-  
+
   def days_passed
     (DateTime.now.to_date - start_date).to_i
   end
