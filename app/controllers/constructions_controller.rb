@@ -1,9 +1,9 @@
 class ConstructionsController < ApplicationController
   before_action :set_construction, only: [:show, :edit, :update, :destroy]
-  before_action :humanize_tilte, only: [:create, :update]
+  before_action :humanize_title, only: [:create, :update]
 
   def index
-    @constructions = Construction.search(sanitaze_search).page(params[:page])
+    @constructions = Construction.search(sanitized_search).page(params[:page])
   end
 
   def show
@@ -35,7 +35,7 @@ class ConstructionsController < ApplicationController
   end
 
   private
-    def humanize_tilte
+    def humanize_title
       params[:construction][:title] = params[:construction][:title].split.map(&:capitalize).join(' ')
     end
 

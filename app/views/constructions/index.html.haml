@@ -1,17 +1,16 @@
 %h1 Obras
 
-
-= simple_form_for :search,url: constructions_path,method: :get do |f|
-  = f.search_field :search,autofocus: true
-  = f.button :submit
+= simple_form_for :search, url: constructions_path, method: :get do |f|
+  = f.search_field :query, autofocus: true
+  = f.submit 'Buscar'
 
 %table.table
   %thead
     %tr
       %th Nombre
       %th Fecha de inicio
-      %th Fecha de finalizacion
-      %th Montro contratado
+      %th Fecha de finalización
+      %th Monto contratado
       %th
       %th
   %tbody#users

@@ -8,13 +8,12 @@ class Construction < ActiveRecord::Base
   has_many :invoiced_payments, through: :invoices, source: :payment
   paginates_per 10
 
-
-  def self.search(search)
-    return all if search.nil?
-    unless search.empty?
-      where('LOWER(title) LIKE ?',"%#{search}%")
-    else
+  def self.search(query)
+    return all if query.nil?
+    if query.empty?
       all
+    else
+      where("title ilike ?", "%#{query}%")
     end
   end
 

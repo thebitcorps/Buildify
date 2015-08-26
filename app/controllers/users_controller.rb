@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user_list = User::ROLES.include?(params[:role]) ? "#{params[:role]}" : 'resident'
 
 
-    @users = (class_eval %Q{User.#{@user_list}}).search(sanitaze_search).page params[:page]
+    @users = (class_eval %Q{User.#{@user_list}}).search(sanitized_search).page params[:page]
     respond_to do |format|
       format.html
       format.js
