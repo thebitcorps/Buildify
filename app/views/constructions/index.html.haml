@@ -2,7 +2,7 @@
 
 = simple_form_for :search, url: constructions_path, method: :get do |f|
   = f.search_field :query, autofocus: true
-  = f.submit 'Buscar', class: 'btn btn-primary'
+  = f.submit 'Buscar', class: 'btn btn-info'
 
 %table.table
   %thead
@@ -18,4 +18,4 @@
 =paginate @constructions
 %br
 
-= link_to 'Nueva obra', new_construction_path
+= link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'

@@ -4,4 +4,4 @@
   = f.input :finish_date, label: 'Fecha de finalización'
   = f.input :contract_amount, label: 'Cantidad contratada'
   = f.association :resident, collection: User.resident
-  = f.button :submit, value: 'Crear'
+  = f.button :submit, value: 'Crear', class: 'btn btn-primary'
