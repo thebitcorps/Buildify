@@ -16,7 +16,7 @@ class ConstructionsController < ApplicationController
   def create
     @construction = Construction.new construction_params
       respond_to do |format|
-        if @construction.save!
+        if @construction.save
           format.html { redirect_to @construction, notice: 'Registro de obra creado correctamente.'}
         else
           format.html { render :new }
