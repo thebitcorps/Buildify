@@ -1,9 +1,15 @@
 %h1 Obras
 
+.row
+  .col-lg-6.pull-right
+    .input-group
+      = simple_form_for :search, url: constructions_path, method: :get do |f|
+        = f.search_field :search, autofocus: true, class: "form-control", placeholder: "Search"
+        %span.input-group-btn
+          = f.submit "Go", class: "btn btn-default"
 
-= simple_form_for :search,url: constructions_path,method: :get do |f|
-  = f.search_field :search,autofocus: true
-  = f.button :submit
+.list-group
+  = render partial: 'construction', collection: @constructions
 
 %table.table
   %thead
@@ -17,7 +23,7 @@
       %th
   %tbody#users
     = render partial: 'construction', collection: @constructions
+
 =paginate @constructions
 %br
-
-= link_to 'Nueva obra', new_construction_path
+= link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'

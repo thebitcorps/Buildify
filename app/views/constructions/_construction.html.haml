@@ -6,3 +6,26 @@
   %td= construction.contract_amount
   %td= link_to 'Edit', edit_construction_path(construction)
   %td= link_to 'Destroy', construction, :method => :delete, :data => { :confirm => 'Esta seguro de que decea eliminar este registro?' }
+
+%a.list-group-item{:href => "#{construction_path(construction)}"}
+  %h5
+    %span.label.label-primary.pull-right= ["$", construction.contract_amount].join
+    %span.pull-right -
+    -if (construction.estimates_amount < construction.contract_amount)
+      - if construction.estimates_amount < construction.contract_amount / 2
+        %span.label.label-danger.pull-right= ["$", construction.estimates_amount].join
+      - else
+        %span.label.label-warning.pull-right= ["$", construction.estimates_amount].join
+    - else
+      %span.label.label-success.pull-right= ["$", construction.estimates_amount].join
+
+  %h3.list-group-item-heading
+    = construction.title
+  .progress
+    - if construction.available_days > construction.days_passed
+      .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", :role => "progressbar", :style => "width: #{persentage_of_number(construction.days_passed, construction.available_days)}%;"}
+        = [construction.days_passed, construction.available_days].join("/") + " Dias"
+    - else
+      .progress-bar.progress-bar-warning{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", :role => "progressbar", :style => "width: 100%;"}
+        = [construction.days_passed, construction.available_days].join("/") + " Dias"
+
