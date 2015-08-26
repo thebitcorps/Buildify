@@ -1,21 +1,16 @@
 %h1 Obras
 
-= simple_form_for :search, url: constructions_path, method: :get do |f|
-  = f.search_field :query, autofocus: true
-  = f.submit 'Buscar', class: 'btn btn-info'
+.row
+  .col-lg-6.pull-right
+    .input-group
+      = simple_form_for :search, url: constructions_path, method: :get do |f|
+        = f.search_field :search, autofocus: true, class: "form-control", placeholder: "Search"
+        %span.input-group-btn
+          = f.submit "Go", class: "btn btn-default"
 
-%table.table
-  %thead
-    %tr
-      %th Nombre
-      %th Fecha de inicio
-      %th Fecha de finalización
-      %th Monto contratado
-      %th
-      %th
-  %tbody#users
-    = render partial: 'construction', collection: @constructions
+.list-group
+  = render partial: 'construction', collection: @constructions
+
 =paginate @constructions
 %br
-
 = link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'

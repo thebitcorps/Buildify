@@ -8,6 +8,14 @@ class Construction < ActiveRecord::Base
   has_many :invoiced_payments, through: :invoices, source: :payment
   paginates_per 10
 
+  def days_passed
+    (DateTime.now.to_date - start_date).to_i
+  end
+
+  def available_days
+    (finish_date - start_date).to_i
+  end
+
   def self.search(query)
     return all if query.nil?
     if query.empty?
