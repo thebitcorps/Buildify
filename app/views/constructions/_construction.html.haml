@@ -1,5 +1,6 @@
 %tr
   %td= link_to construction.title, construction_path(construction)
+  %td= link_to construction.resident.name,user_path(construction.resident)
   %td= construction.start_date
   %td= construction.finish_date
   %td= construction.contract_amount

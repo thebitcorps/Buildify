@@ -2,7 +2,7 @@ class CreateItemMaterials < ActiveRecord::Migration
   def change
     create_table :item_materials do |t|
       t.decimal :requested
-      t.decimal :recived
+      t.decimal :received
       t.string :status
       t.decimal :unit_price
       t.string :measure_unit
