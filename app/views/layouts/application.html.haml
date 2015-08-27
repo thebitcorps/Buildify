@@ -21,31 +21,29 @@
   %body
     .navbar.navbar-default.navbar-static-top
       .container
-        %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
+        %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#main-navbar", "data-toggle" => "collapse", :type => "button"}
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        = link_to 'Buildify', root_path, class: 'navbar-brand' 
-        -if user_signed_in?
-          %p.navbar-text.navbar-right
-            = current_user.name
-            = link_to 'Logout',destroy_user_session_path, method: :delete
-        - else
-          %p.navbar-text.navbar-right
-            = link_to 'Sign in',new_user_session_path
+        = link_to 'Buildify', root_path, class: 'navbar-brand'
+        #main-navbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li= link_to "Obras", constructions_path
+            %li= link_to "Materials", materials_path
+            %li= link_to 'User', users_path
+          -if user_signed_in?
+            %p.navbar-text.navbar-right
+              = current_user.name
+              = link_to 'Logout',destroy_user_session_path, method: :delete
+          - else
+            %p.navbar-text.navbar-right
+              = link_to 'Sign in',new_user_session_path
 
     .container
       .row
-        .col-lg-9
+        .col-lg-12
           = bootstrap_flash
           = yield
-        .col-lg-3
-          .well.sidebar-nav
-            %h3 Sidebar
-            %ul.nav.nav-list
-              %li.nav-header Sidebar
-              %li= link_to "Obras", constructions_path
-              %li= link_to "Materials", materials_path
-              %li= link_to 'User', users_path
+            
       %footer
         %p &copy; Company 2015
