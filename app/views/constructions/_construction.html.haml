@@ -1,17 +1,19 @@
-%a.list-group-item{:href => "#{construction_path(construction)}"}
-  %h5
-    %span.label.label-primary.pull-right= ["$", construction.contract_amount].join
+%a.list-group-item.construction-special-row{:href => "#{construction_path(construction)}"}
+  %h4
+    %span.label.label-primary.pull-right= number_to_currency(construction.contract_amount)
     %span.pull-right -
     -if (construction.estimates_amount < construction.contract_amount)
       - if construction.estimates_amount < construction.contract_amount / 2
-        %span.label.label-danger.pull-right= ["$", construction.estimates_amount].join
+        %span.label.label-danger.pull-right= number_to_currency(construction.estimates_amount)
       - else
-        %span.label.label-warning.pull-right= ["$", construction.estimates_amount].join
+        %span.label.label-warning.pull-right= number_to_currency(construction.estimates_amount)
     - else
-      %span.label.label-success.pull-right= ["$", construction.estimates_amount].join
+      %span.label.label-success.pull-right= number_to_currency(construction.estimates_amount)
 
   %h3.list-group-item-heading
     = construction.title
+    %small
+      = construction.resident.name if !construction.resident.nil?
   .progress
     - if construction.available_days > construction.days_passed
       .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", :role => "progressbar", :style => "width: #{persentage_of_number(construction.days_passed, construction.available_days)}%;"}

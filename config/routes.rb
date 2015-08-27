@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   resources :materials
   resources :requisitions
   resources :constructions
+  resources :estimates
   root to: "home#index"
 end
