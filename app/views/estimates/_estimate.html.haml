@@ -1,0 +1,6 @@
+%tr
+  %td= estimate_counter + 1
+  %td= number_to_currency(estimate.amount)
+  %td= spanish_formated_date(estimate.payment_date, false)
+  %td
+    = link_to 'Remover', estimate_path(estimate), :method => :delete, :data => { :confirm => '¿Esta seguro de que desea remover esta estimacion?' }

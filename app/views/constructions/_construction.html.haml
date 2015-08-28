@@ -2,13 +2,8 @@
   %h4
     %span.label.label-primary.pull-right= number_to_currency(construction.contract_amount)
     %span.pull-right -
-    -if (construction.estimates_amount < construction.contract_amount)
-      - if construction.estimates_amount < construction.contract_amount / 2
-        %span.label.label-danger.pull-right= number_to_currency(construction.estimates_amount)
-      - else
-        %span.label.label-warning.pull-right= number_to_currency(construction.estimates_amount)
-    - else
-      %span.label.label-success.pull-right= number_to_currency(construction.estimates_amount)
+    %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
+      = number_to_currency(construction.estimates_amount)
 
   %h3.list-group-item-heading
     = construction.title

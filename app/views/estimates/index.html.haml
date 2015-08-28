@@ -1,0 +1,16 @@
+.page-header
+  %h1
+    = @construction.title
+    %small Estimaciones
+
+.panel.panel-default
+  %table.table
+    %thead
+      %tr
+        %th #
+        %th Cantidad
+        %th Fecha de pago
+        %th
+    %tbody
+      = render partial: 'estimate', collection: @estimates
+
