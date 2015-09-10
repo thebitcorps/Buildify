@@ -1,0 +1,7 @@
+.nested-fields
+  = f.input :material_id
+  = f.input :requested
+  = f.input :measure_unit
+  -#= f.input :received
+  -#= f.input :status
+  = link_to_remove_association 'remove item material',f,class: 'btn btn-danger'

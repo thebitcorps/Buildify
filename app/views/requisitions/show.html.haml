@@ -1,2 +1,4 @@
 %h1="#{@requisition.construction.title} folio #{@requisition.folio}"
 %h3=@requisition.created_at
+-@requisition.item_materials.each do |item_matarial|
+  =item_matarial.material.name

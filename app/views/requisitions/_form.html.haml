@@ -1,3 +1,10 @@
 =  simple_form_for(@requisition, html: { class: 'form-horizontal' }) do |f|
   = f.input :construction_id ,as: :hidden,input_html: {value: @construction.id}
+  %h3 Materials
+  = f.input  :requisition_date
+  #materials
+    = f.simple_fields_for :item_materials do |item_material|
+      = render partial: 'item_material_fields' ,f: item_material
+    .links
+      = link_to_add_association 'add material', f, :item_materials,class: 'btn btn-primary'
   = f.submit

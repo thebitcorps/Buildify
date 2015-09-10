@@ -4,6 +4,10 @@ class MaterialsController < ApplicationController
 
   def index
     @materials = Material.all_alphabetical.search(sanitized_search).page(params[:page])
+    respond_to do |format|
+      format.html {@materials}
+      format.json { render json: @materials}
+    end
   end
 
   def new
