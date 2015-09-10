@@ -1,12 +1,10 @@
 %p#notice= notice
 
-.row
-  .col-lg-6.pull-right
-    .input-group
-      = simple_form_for :search, url: constructions_path, method: :get do |f|
-        = f.search_field :query, autofocus: true, class: "form-control", placeholder: "Search"
-        %span.input-group-btn
-          = f.submit "Go", class: "btn btn-default"
+= simple_form_for :search, url: constructions_path, method: :get do |f|
+  .col-lg-6
+    = f.search_field :query, autofocus: true, class: "form-control", placeholder: "Search"
+  %span.input-group-btn
+    = f.submit "Go", class: "btn btn-default"
 
 %h1 Obras
 

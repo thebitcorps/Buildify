@@ -1,14 +1,14 @@
 %h1 Materiales
 = simple_form_for :search, url: materials_path, method: :get do |f|
-  = f.search_field :query, autofocus: true
-  = f.submit 'Buscar', class: 'btn btn-info'
+  .col-lg-6
+    = f.search_field :query, autofocus: true, class: "form-control"
+  = f.submit 'Buscar', class: 'btn btn-default'
 
 %table.table
   %thead
     %tr
       %th Nombre
       %th Descripción
-      %th
       %th
   %tbody#materials
     = render @materials

@@ -2,10 +2,12 @@
 
 
 = simple_form_for :search,url: users_path(role: 'administrator'),method: :get do |f|
-  = f.input :role,as: :hidden ,id: 'role_input',input_html: { value: @user_list}
-  = f.search_field :query,autofocus: true
-  = f.button :submit
 
+  = f.input :role,as: :hidden ,id: 'role_input',input_html: { value: @user_list}
+  .col-lg-6
+    = f.search_field :query,autofocus: true,class: 'form-control'
+  = f.button :submit
+%br
 
 %ul.nav.nav-tabs
   %li{id: 'residents',class: " #{'active' if params[:role] == 'resident'  or params[:role].nil? }"}
@@ -21,8 +23,6 @@
       %th Email
       %th Role
       %th
-      %th
-      %th
   %tbody#users
     = render partial: 'user', collection: @users
 #paginate
@@ -31,4 +31,4 @@
 
 %br
 
-= link_to 'New User', new_user_path
+= link_to 'New User', new_user_path, class: 'btn btn-primary'
