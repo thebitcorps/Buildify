@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     @user.password = '12345678'
     @user.password_confirmation = '12345678'
     respond_to do |format|
-      if @user.save!
+      if @user.save
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
         format.html { render :new }

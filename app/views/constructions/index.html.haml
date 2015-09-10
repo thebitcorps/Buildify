@@ -1,4 +1,4 @@
-%h1 Obras
+%p#notice= notice
 
 .row
   .col-lg-6.pull-right
@@ -7,6 +7,8 @@
         = f.search_field :query, autofocus: true, class: "form-control", placeholder: "Search"
         %span.input-group-btn
           = f.submit "Go", class: "btn btn-default"
+
+%h1 Obras
 
 .list-group#constructions
   = render partial: 'construction', collection: @constructions

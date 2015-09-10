@@ -11,6 +11,7 @@ module ApplicationHelper
   end
 
   def persentage_of_number(number, top)
-    100.0 / top * number
+    persentage = 100.0 / top * number
+    persentage > 100.0 ? 100.0 : persentage
   end
 end

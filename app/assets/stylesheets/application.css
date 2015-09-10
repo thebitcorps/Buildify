@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+.header-up
+{
+  margin-top: -30px;
+}
