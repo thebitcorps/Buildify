@@ -4,7 +4,7 @@
     @props.changed  e.target.name,e.target.value
   render: ->
     React.DOM.div
-      className: 'form-group'
+      className: 'form-group col-md-4'
       if @props.label
         React.DOM.label
           className: 'control-label'
@@ -14,6 +14,7 @@
         className: 'form-control'
         placeholder: @props.placeholder
         name: @props.name
+        id: @props.name
         value: @props.value
         onChange: @changed
 

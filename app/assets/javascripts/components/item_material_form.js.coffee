@@ -42,8 +42,8 @@
       ref: name
       name: name
   render: ->
-    React.DOM.form
-      className: 'form-inline'
+    React.DOM.div
+      className: ''
       React.DOM.div
         className: 'form-group typehead'
 #        React.createElement LabelInput,label: 'Material ',name: 'material_id',placeholder: 'Material',changed: @handleInputChange,value: @state.material_id
@@ -57,11 +57,12 @@
           placeholder: 'material'
           ref: 'material'
           name: 'material'
+        React.createElement LabelInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
+        React.createElement LabelInput,label: 'Mesure unit ',name: 'mesure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.mesure_unit
         @hiddenInput 'material_name_hidden'
         @hiddenInput 'material_id_hidden'
 
-        React.createElement LabelInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
-        React.createElement LabelInput,label: 'Mesure unit ',name: 'mesure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.mesure_unit
+
         React.DOM.button
           className: 'btn btn-primary'
           onClick: @handleNew

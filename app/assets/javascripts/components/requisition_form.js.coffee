@@ -41,6 +41,7 @@
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         that.setState errors: XMLHttpRequest.responseText
+        alert XMLHttpRequest.responseText
         return
   render: ->
     React.DOM.div

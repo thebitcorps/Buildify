@@ -1,20 +1,24 @@
 %p#notice= notice
+.jumbotron
+  %h1= @user.name
+  %p
+    %b Phone:
+    = @user.phone
+  %p
+    %b Email:
+    = @user.email
+  %p
+    %b Role:
+    = @user.role
+  = link_to 'Change password',edit_password_users_path,class: 'btn btn-warning' if current_user == @user
 
-%p
-  %b Name:
-  = @user.name
-%p
-  %b Phone:
-  = @user.phone
-%p
-  %b Email:
-  = @user.email
-%p
-  %b Role:
-  = @user.role
+  = link_to 'Edit', edit_user_path(@user),class: 'btn btn-warning'
 
-= link_to 'Change password',edit_password_users_path if current_user == @user
-\|
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
+  = link_to 'Back', users_path,class: 'btn btn-default'
+
+
+%h1=" Obras de #{@user.name}"
+
+.list-group#constructions
+  = render partial: 'constructions/construction', collection: @user.constructions
+
