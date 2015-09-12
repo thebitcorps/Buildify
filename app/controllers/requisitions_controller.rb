@@ -1,6 +1,10 @@
 class RequisitionsController < ApplicationController
   before_action :set_requisition, only: [:show, :edit, :update, :destroy]
-  before_action :set_construction, only: [:new,:edit]
+  before_action :set_construction, only: [:new, :edit]
+
+  def index
+    @requisitions = Requisition.all
+  end
 
   def show
   end
@@ -18,9 +22,9 @@ class RequisitionsController < ApplicationController
     respond_to do |format|
       if @requisition.save
         format.json {render json: @requisition}
-        format.html {redirect_to @requisition ,notice: 'requisition was made:'}
+        format.html {redirect_to @requisition, notice: 'requisition was made'}
       else
-        # bug can't add params for the render maybe redirect
+        # bug can't add params for the render maybe redirect #what?!
         format.json {render json: @requisition.errors.full_messages, status: :unprocessable_entity }
       end
     end
@@ -38,7 +42,7 @@ class RequisitionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def requisition_params
-    params.require(:requisition).permit(:construction_id,:requisition_date,item_materials_attributes: [:material_id,:measure_unit,:requested])
+    params.require(:requisition).permit(:construction_id, :requisition_date, item_materials_attributes: [:material_id, :measure_unit, :requested])
   end
 
 end
