@@ -1,15 +1,15 @@
 %p#notice= notice
 .jumbotron
-  %h1= @user.name
+  %h1
+    = @user.name
+    %small= @user.role
   %p
     %b Phone:
     = @user.phone
   %p
     %b Email:
     = @user.email
-  %p
-    %b Role:
-    = @user.role
+
   = link_to 'Change password',edit_password_users_path,class: 'btn btn-warning' if current_user == @user
 
   = link_to 'Edit', edit_user_path(@user),class: 'btn btn-warning'

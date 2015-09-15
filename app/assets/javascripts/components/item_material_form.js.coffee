@@ -3,37 +3,26 @@
     material_id: ''
     requested: ''
     mesure_unit: ''
-    material_id_hidden: ''
-  componentDidMount: ->
-    $("#material").tokenInput("/materials.json", {
-      crossDomain: false,
-      prePopulate: $("#material").data("pre"),
-      theme: "facebook"
-      queryParam: 'search[query]'
-      tokenLimit: 1
-      onAdd: (item) ->
-        $('#material_id_hidden').val(item.id)
-        $('#material_name_hidden').val item.name
-      onDelete: (item) ->
-        $('#material_id_hidden').val ''
-        $('#material_name_hidden').val ''
-    })
-  caca: (e) ->
-    alert 'caca'
   valid: ->
-    ($('#material_id_hidden').val()) != '' && @state.requested && @state.mesure_unit
+    @state.material_id_hidden && @state.requested && @state.mesure_unit
   handleInputChange: (name,value) ->
     @setState "#{name}": value
   handleNew: (e)->
     e.preventDefault()
     data =
-      material_id: React.findDOMNode(@refs.material_id_hidden).value
-      material_name: React.findDOMNode(@refs.material_name_hidden).value
+      material_id: @state.material_id_hidden
+      material_name: @state.material_name_hidden
       requested: @state.requested
       mesure_unit: @state.mesure_unit
     $("#material").tokenInput('clear')
     @props.handleNewItemMaterial data
     @setState @getInitialState
+  onTokenAdded: (item) ->
+    @setState material_id_hidden: item.id
+    @setState material_name_hidden: item.name
+  removeToken: (item) ->
+    @setState material_id_hidden: ''
+    @setState material_name_hidden: ''
   hiddenInput: (name) ->
     React.DOM.input
       type: 'hidden'
@@ -50,17 +39,10 @@
         React.DOM.label
           className: 'control-label'
           'Material'
-        React.DOM.input
-          type: 'hidden'
-          id: 'material'
-          className: 'form-control'
-          placeholder: 'material'
-          ref: 'material'
-          name: 'material'
+        React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken
         React.createElement LabelInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
         React.createElement LabelInput,label: 'Mesure unit ',name: 'mesure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.mesure_unit
-        @hiddenInput 'material_name_hidden'
-        @hiddenInput 'material_id_hidden'
+
 
 
         React.DOM.button

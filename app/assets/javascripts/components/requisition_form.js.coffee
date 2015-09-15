@@ -50,13 +50,11 @@
       React.createElement LabelInput,label: 'Requisition Date',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.table
-        className: 'table'
+        className: 'table table-striped'
         React.DOM.thead null,
           React.DOM.tr null,
-            React.DOM.th null,'Material'
-            React.DOM.th null,'Requested'
-            React.DOM.th null,'Mesure Unit'
-            React.DOM.th null,''
+            for th,i in ['Material','Requsested','Mesure unit','']
+              React.DOM.th key: i,th
         React.DOM.tbody null,
           for itemMaterial in @state.itemMaterials
             React.createElement ItemMaterial,itemMaterial: itemMaterial,handleDeleteItemMaterial: @deleteItemMaterial,key: itemMaterial.id,handleUpdate: @handleUpdateItemMaterial
