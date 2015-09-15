@@ -21,15 +21,15 @@ class User < ActiveRecord::Base
   validates :role, inclusion: ROLES
   paginates_per 10
 
-  scope :resident, -> {where role: 'resident'}
-  scope :administrator, -> {where role: 'administrator'}
+  scope :resident, -> { where role: 'resident' }
+  scope :administrator, -> { where role: 'administrator' }
 
   def self.search(search)
     return all if search.nil?
-    unless search.empty?
-      where('LOWER(name) LIKE ?', "%#{search}%")
-    else
+    if search.empty?
       all
+    else
+      where('name ilike ?', "%#{search}%")
     end
   end
 end

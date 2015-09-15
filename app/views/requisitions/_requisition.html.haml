@@ -1,0 +1,5 @@
+%tr
+  %td= requisition.id
+  %td= link_to requisition.construction_title, requisition.construction
+  %td= link_to requisition.item_materials.size, nil
+  %td= link_to requisition.invoices.size, nil

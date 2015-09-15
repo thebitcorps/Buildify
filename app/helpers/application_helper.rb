@@ -10,8 +10,8 @@ module ApplicationHelper
     end
   end
 
-  def persentage_of_number(number, top)
-    persentage = 100.0 / top * number
-    persentage > 100.0 ? 100.0 : persentage
+  def percentage_of_number(number, top)
+    percentage = 100.0 / top * number
+    percentage > 100.0 ? 100.0 : percentage
   end
 end

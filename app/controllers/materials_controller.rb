@@ -1,6 +1,6 @@
 class MaterialsController < ApplicationController
   before_action :set_material, only: [:show,:edit,:destroy,:update]
-  before_action :humanize_material,only: [:create,:update]
+  # before_action :humanize_material,only: [:create,:update]
 
   def index
     @materials = Material.all_alphabetical.search(sanitized_search).page(params[:page])
@@ -21,9 +21,9 @@ class MaterialsController < ApplicationController
   end
 
   def create
-    @material = Material.new material_params
+    @material = Material.new(material_params)
     respond_to do |format|
-      if @material.save!
+      if @material.save
         format.html { redirect_to @material, notice: 'Material creado correctamente.'}
       else
         format.html { render :new }
@@ -59,6 +59,6 @@ private
   end
 
   def material_params
-    params.require(:material).permit(:name,:description)
+    params.require(:material).permit(:name, :description)
   end
 end

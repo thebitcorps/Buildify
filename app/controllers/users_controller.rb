@@ -6,6 +6,8 @@ class UsersController < ApplicationController
     # we verify inclusion of role first then metaprograming for choosing the rigth list to show
     # 's' added for readability in the model methods
     # if the request comes with search, get the role from the search and use it
+
+    # I don't know, this kind of logic is for the model. Rob.
     if params[:search]
       params[:role] = User::ROLES.include?(params[:search][:role]) ? "#{params[:search][:role]}" : 'resident'
     end
@@ -32,6 +34,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     # create method for generate password
+    # what?! Rob
     @user.password = '12345678'
     @user.password_confirmation = '12345678'
     respond_to do |format|
@@ -90,6 +93,6 @@ class UsersController < ApplicationController
     end
 
     def password_params
-      params.require(:user).permit(:password,:password_confirmation)
+      params.require(:user).permit(:password, :password_confirmation)
     end
 end
