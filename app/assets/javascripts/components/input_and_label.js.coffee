@@ -1,10 +1,9 @@
 @LabelInput = React.createClass
-
   changed: (e) ->
     @props.changed  e.target.name,e.target.value
   render: ->
     React.DOM.div
-      className: 'form-group col-md-4'
+      className: 'form-group'
       if @props.label
         React.DOM.label
           className: 'control-label'

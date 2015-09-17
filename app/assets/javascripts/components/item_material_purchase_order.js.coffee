@@ -3,24 +3,22 @@
     itemMaterial: @props.itemMaterial
     selected: false
   itemCheck: (e) ->
-    @setState selected: e.target.checked
+    return unless @props.can_select
+    @setState selected: !@state.selected
 #    we send the !@state.selected for some reason in handleSelect the state is no set already
     @props.handleSelect @state.itemMaterial,!@state.selected
   render: ->
-    React.DOM.tr
-      className: "#{'info'  if @state.selected}"
-      React.DOM.td null,
-        React.DOM.input
-          type: 'checkbox'
-          disabled: !@props.can_select
-          onChange: @itemCheck
-      React.DOM.td null,
-        @state.itemMaterial.id
-      React.DOM.td null,
+    React.DOM.a
+      className: "list-group-item #{'active' if @state.selected} #{'disabled' if !@props.can_select}"
+      onClick: @itemCheck
+      React.DOM.h4
+        className: 'list-group-item-heading'
         @state.itemMaterial.material.name
-      React.DOM.td null,
+        React.DOM.div
+          className: 'pull-right'
+          React.DOM.label
+            className: 'label label-default '
+            "#{@state.itemMaterial.requested} #{@state.itemMaterial.mesure_unit}"
+      React.DOM.p
+        className: 'list-group-item-text'
         @state.itemMaterial.material.description
-      React.DOM.td null,
-        @state.itemMaterial.requested
-      React.DOM.td null,
-        @state.itemMaterial.mesure_unit
