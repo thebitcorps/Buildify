@@ -1,50 +1,52 @@
 @PurchaseOrderCreator = React.createClass
   getInitialState: ->
-#    itemMaterials: @props.requisition.item_materials
-    selected: []
-    selecting: true
-    purchaseOrder:
-      itemMaterials: []
-  selectNewItemMaterial: (itemMaterial,is_new)->
-    selected = @state.selected.slice()
-    if is_new
-      selected.push itemMaterial
-    else
-      index = selected.indexOf itemMaterial
-      selected.splice index, 1
-    @setState selected: selected
-    @setState purchaseOrder: {itemMaterials: @state.selected}
+    requisitionItemMaterials: @props.requisition.item_materials
+    purchaseOrderItemsMaterials: []
+  requisitionItemClick: (itemMaterial)->
+    requisiionItems = @state.requisitionItemMaterials.slice()
+    purchaseItems = @state.purchaseOrderItemsMaterials.slice()
+    purchaseItems.push itemMaterial
+    index = requisiionItems.indexOf itemMaterial
+    requisiionItems.splice index, 1
+    @setState requisitionItemMaterials: requisiionItems
+    @setState purchaseOrderItemsMaterials: purchaseItems
 
-#    @handlePurchaseClick()
-  letCreatePurchase: ->
-    @state.selectedItemMaterials == null
-  cancelPurchaseClick: ->
-    @setState selecting: true
-  handlePurchaseClick: ->
-    @setState purchaseOrder: {itemMaterials: @state.selected}
-    @setState selecting: false
+  purchaseItemClick: (itemMaterial)->
+    requisiionItems = @state.requisitionItemMaterials.slice()
+    purchaseItems = @state.purchaseOrderItemsMaterials.slice()
+    requisiionItems.push itemMaterial
+    index = purchaseItems.indexOf itemMaterial
+    purchaseItems.splice index, 1
+    @setState requisitionItemMaterials: requisiionItems
+    @setState purchaseOrderItemsMaterials: purchaseItems
   render: ->
     React.DOM.div
       className: 'purchase_order_creator'
-      React.DOM.ul
-        className: 'list-group'
-        for itemMaterial in @props.requisition.item_materials
-          React.createElement ItemMaterialPurchaseOrder, itemMaterial: itemMaterial,key: itemMaterial.id, handleSelect: @selectNewItemMaterial,can_select: @state.selecting
-      if @state.selecting
-        React.DOM.button
-          className: 'btn btn-primary'
-          onClick: @handlePurchaseClick
-          'Submit'
-      unless @state.selecting
-        React.DOM.button
-          className: 'btn btn-default'
-          onClick: @cancelPurchaseClick
-          'Cancel'
       React.DOM.div
         className: 'purchase-orders'
 #        unless @state.selecting
-        React.createElement PurchaseOrder,purchaseOrder: @state.purchaseOrder,constructionAddress: @props.construction_address,itemMaterials: @state.selected
-
+        React.createElement PurchaseOrderForm,purchaseOrder: @state.purchaseOrder,constructionAddress: @props.construction_address,itemMaterials: @state.selected
+        React.DOM.div
+          className: 'col-md-6'
+          React.DOM.h2 null, 'Requisition'
+          React.DOM.ul
+            className: 'list-group'
+            for itemMaterial in @state.requisitionItemMaterials
+              React.createElement ItemMaterialPurchaseOrder, itemMaterial: itemMaterial,key: itemMaterial.id, handleSelect: @requisitionItemClick,can_select: true
+        React.DOM.div
+          className: 'col-md-6'
+          React.DOM.h2 null, 'Purchase Order'
+          React.DOM.ul
+            className: 'list-group'
+            if @state.purchaseOrderItemsMaterials.length == 0
+              React.DOM.div
+                className: 'panel panel-default'
+                React.DOM.div
+                  className: 'panel-body'
+                  React.DOM.h4 null,
+                    'Click in one item in the requisition items to add'
+            for newItemMaterial in @state.purchaseOrderItemsMaterials
+              React.createElement ItemMaterialPurchaseOrder, itemMaterial: newItemMaterial,key: newItemMaterial.id, handleSelect: @purchaseItemClick,can_select: true
 
 
 
