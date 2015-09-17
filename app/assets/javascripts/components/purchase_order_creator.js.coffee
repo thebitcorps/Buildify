@@ -42,7 +42,9 @@
           'Cancel'
       React.DOM.div
         className: 'purchase-orders'
-        React.createElement PurchaseOrder,itemMaterials: @state.selected
+        unless @state.selecting
+          React.createElement PurchaseOrder,purchaseOrder: @state.purchaseOrder,constructionAddress: @props.construction_address
+
 
 
 

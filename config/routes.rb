@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       patch 'update_password'
     end
   end
+  resources :providers
   resources :purchase_orders
   resources :materials
   resources :requisitions

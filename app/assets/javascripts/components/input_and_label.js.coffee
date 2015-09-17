@@ -10,6 +10,7 @@
           className: 'control-label'
           @props.label
       React.DOM.input
+        disabled: @props.disabled
         type: 'text'
         className: 'form-control'
         placeholder: @props.placeholder

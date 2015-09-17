@@ -25,7 +25,7 @@ class RequisitionsController < ApplicationController
         format.html {redirect_to @requisition, notice: 'requisition was made'}
       else
         # bug can't add params for the render maybe redirect #what?!
-        format.json {render json: @requisition.errors.full_messages, status: :unprocessable_entity }
+        format.json {render json: JSON.parse(@requisition.errors.full_messages.to_json), status: :unprocessable_entity }
       end
     end
   end

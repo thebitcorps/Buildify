@@ -1,11 +1,14 @@
 #component that uses jquery tokenizer for returning data
 #defaultProps
 #@props.componentName: this will be use for creating the nesesary inputs to ake token input work
-#  default 'token-input'
+#                     default 'token-input'
 #@props.url: the path for the post method to use for posting the new item
-# default ''
+#             default ''
 #@props.queryParam: the param to append to the post messsage of the input
-#@props.onAddToken: funtion to notify the paren of the item added the function it recives should have one param this will be the object returned by the query
+#@props.onAddToken: funtion to notify the parent of the item added the function it recives should have one param
+#                   this will be the object returned by the query
+#@props.onRemoveToken: funtion to notify the parent of the item was remove the function it recives should have one param
+#                       this will be the token was removed
 @TokenInput = React.createClass
   getDefaultProps: ->
     componentName: 'token-input'

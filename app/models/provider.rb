@@ -4,4 +4,15 @@ class Provider < ActiveRecord::Base
   has_many :requisitions, through: :purchase_orders
   has_many :constructions, through: :requisitions
   has_many :payments, through: :invoices
+
+  scope :all_alphabetical, -> { all.order("LOWER(name)") }
+
+  def self.search(query)
+    return all if query.nil?
+    if query.empty?
+      all
+    else
+      where('name ilike ?', "%#{query}%")
+    end
+  end
 end

@@ -6,6 +6,7 @@
   getDefaultProps: ->
     itemMaterials: []
     errors: []
+  #funtion for inputs that update the state with a given value and the name of the object in the state
   handleInputChange: (name,value) ->
     @setState "#{name}": value
   handleUpdateItemMaterial: (old,new_item) ->
@@ -37,16 +38,17 @@
       data: {requisition: data}
       dataType: 'JSON'
       success:  ->
+        #update the browers window
         window.location.replace('/constructions/' + that.props.construction_id)
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
-        that.setState errors: XMLHttpRequest.responseText
-        alert XMLHttpRequest.responseText
+        #we parse the responses o errors so we can send a array of errors
+        that.setState errors: $.parseJSON(XMLHttpRequest.responseText)
         return
   render: ->
     React.DOM.div
       className: 'requisition-form'
-#      React.createElement ErrorBox, errorsArray: @state.errors
+      React.createElement ErrorBox, errorsArray: @state.errors
       React.createElement LabelInput,label: 'Requisition Date',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.table
