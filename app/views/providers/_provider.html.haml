@@ -1,0 +1,9 @@
+%tr
+  %td= link_to provider.name, provider
+  %td= provider.address
+  %td= provider.telephone
+  %td= provider.email
+  %td
+    .btn-group
+      = link_to 'Editar', edit_provider_path(provider), class: 'btn btn-warning'
+      = link_to 'Eliminar', provider, :method => :delete, class: 'btn btn-danger', :data => { :confirm => '¿Seguro desea eliminar este proveedor?' }

@@ -30,7 +30,8 @@
         #main-navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li= link_to "Obras", constructions_path
-            %li= link_to "Materials", materials_path
+            %li= link_to "Materiales", materials_path
+            %li= link_to "Proveedores", providers_path
             %li= link_to 'User', users_path
           -if user_signed_in?
             %p.navbar-text.navbar-right

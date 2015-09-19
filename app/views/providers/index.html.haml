@@ -1,0 +1,20 @@
+%h1 Proveedores
+= simple_form_for :search, url: providers_path, method: :get do |f|
+  .col-lg-6
+    = f.search_field :query, autofocus: true, class: "form-control"
+  = f.submit 'Buscar', class: 'btn btn-default'
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Nombre
+      %th Direccion
+      %th Telefono
+      %th Email
+      %th
+  %tbody#providers
+    = render @providers
+= paginate @providers
+%br
+
+= link_to 'Nuevo proveedor', new_provider_path, class: 'btn btn-primary'
