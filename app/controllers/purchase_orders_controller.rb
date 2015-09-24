@@ -1,7 +1,5 @@
 class PurchaseOrdersController < ApplicationController
 
-
-
   def new
     @purchase_oder = PurchaseOrder.new
     requisition = Requisition.find(params[:requisition_id])
@@ -26,6 +24,5 @@ private
   def purchase_order_params
     params.require(:purchase_order).permit(:delivery_place, :delivery_address,:delivery_receiver,:requisition_id,:item_material_ids => [])
   end
-
 
 end

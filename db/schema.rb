@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20150820045810) do
 
   create_table "item_materials", force: :cascade do |t|
     t.decimal  "requested"
-    t.decimal  "received"
+    t.decimal  "recived"
     t.string   "status"
     t.decimal  "unit_price"
     t.string   "measure_unit"
