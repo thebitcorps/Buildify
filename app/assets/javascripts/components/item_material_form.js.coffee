@@ -18,11 +18,9 @@
     @props.handleNewItemMaterial data
     @setState @getInitialState
   onTokenAdded: (item) ->
-    @setState material_id_hidden: item.id
-    @setState material_name_hidden: item.name
+    @setState {material_id_hidden: item.id, material_name_hidden: item.name}
   removeToken: (item) ->
-    @setState material_id_hidden: ''
-    @setState material_name_hidden: ''
+    @setState {material_id_hidden: '',material_name_hidden: ''}
   hiddenInput: (name) ->
     React.DOM.input
       type: 'hidden'

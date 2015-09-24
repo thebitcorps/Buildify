@@ -14,4 +14,13 @@ module ApplicationHelper
     percentage = 100.0 / top * number
     percentage > 100.0 ? 100.0 : percentage
   end
+
+  # put this as application helper to dry code
+  # or should it be in purchase_order.rb and requisition.rb?
+  def self.change_item_material_status(object,new_status)
+    object.item_materials.each do |item_material|
+      item_material.status = new_status
+      item_material.save
+    end
+  end
 end

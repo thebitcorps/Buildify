@@ -7,6 +7,8 @@
     itemMaterials: []
     errors: []
   #funtion for inputs that update the state with a given value and the name of the object in the state
+  valid: ->
+    @state.requisition_date
   handleInputChange: (name,value) ->
     @setState "#{name}": value
   handleUpdateItemMaterial: (old,new_item) ->
@@ -18,7 +20,6 @@
     element.id = @state.itemMaterialsIdCount
     itemMaterials = @state.itemMaterials.slice()
     itemMaterials.push element
-    @setState itemMaterialsIdCount: @state.itemMaterialsIdCount + 1
     @setState itemMaterials: itemMaterials
   deleteItemMaterial: (element) ->
     itemMaterials = @state.itemMaterials.slice()
@@ -43,8 +44,11 @@
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         #we parse the responses o errors so we can send a array of errors
+        if errorThrown == 'Internal Server Error'
+          that.setState errors: ['Internal Server Error']
+          return
         that.setState errors: $.parseJSON(XMLHttpRequest.responseText)
-        return
+
   render: ->
     React.DOM.div
       className: 'requisition-form'
@@ -63,4 +67,5 @@
       React.DOM.button
         className: 'btn btn-primary'
         onClick: @handleSubmit
+        disabled: !@valid()
         'Submit'

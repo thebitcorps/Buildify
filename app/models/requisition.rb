@@ -8,6 +8,7 @@ class Requisition < ActiveRecord::Base
 
   validates :requisition_date ,presence: true
 
+  after_create :change_item_material_pending
   # def self.next_folio(construction_id)
   #   where(construction_id: construction_id).count + 1
   # end
@@ -22,4 +23,11 @@ class Requisition < ActiveRecord::Base
       0
     end
   end
+
+  def change_item_material_pending
+    ApplicationHelper::change_item_material_status self,ItemMaterial::PENDING_STATUS
+  end
+
+
+
 end
