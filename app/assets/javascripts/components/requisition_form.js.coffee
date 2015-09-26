@@ -20,12 +20,12 @@
     element.id = @state.itemMaterialsIdCount
     itemMaterials = @state.itemMaterials.slice()
     itemMaterials.push element
-    @setState itemMaterials: itemMaterials
+    @setState {itemMaterials: itemMaterials,itemMaterialsIdCount: @state.itemMaterialsIdCount + 1 }
   deleteItemMaterial: (element) ->
     itemMaterials = @state.itemMaterials.slice()
     index = itemMaterials.indexOf element
     itemMaterials.splice index,1
-    @setState itemMaterials: itemMaterials
+    @setState {itemMaterials: itemMaterials,itemMaterialsIdCount: @state.itemMaterialsIdCount - 1}
   handleSubmit: (e) ->
     e.preventDefault()
     data =

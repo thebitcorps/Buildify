@@ -4,17 +4,17 @@
     material_name: @props.itemMaterial.material_name
     material_id: @props.itemMaterial.material_id
     requested: @props.itemMaterial.requested
-    mesure_unit: @props.itemMaterial.mesure_unit
+    measure_unit: @props.itemMaterial.measure_unit
   handleDelete: ->
     @props.handleDeleteItemMaterial @props.itemMaterial
   handleInputChange: (name,value) ->
     @setState "#{name}": value
   handleEdit: ->
     new_item =
-      id: @props.itemMaterial.id
-      material_id: @state.material_id
+      id: @state.material_id_hidden
+      material_id: @state.material_id_hidden
       requested: @state.requested
-      mesure_unit: @state.mesure_unit
+      measure_unit: @state.measure_unit
     @props.handleUpdate @props.itemMaterial,new_item
     @setState edit: false
   handleToggle: ->
@@ -26,7 +26,7 @@
       React.DOM.td null,
         React.createElement LabelInput,name: 'requested',value: @state.requested,changed: @handleInputChange
       React.DOM.td null,
-        React.createElement LabelInput,name: 'mesure_unit',changed: @handleInputChange,value: @state.mesure_unit
+        React.createElement LabelInput,name: 'measure_unit',changed: @handleInputChange,value: @state.measure_unit
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-warning'
@@ -38,8 +38,6 @@
           'Cancel'
   renderRow: ->
     React.DOM.tr null,
-#      React.DOM.td null,
-#        @state.material_id
       React.DOM.td null,
         @state.material_name
       React.DOM.td null,

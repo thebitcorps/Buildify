@@ -2,21 +2,22 @@
   getInitialState: ->
     material_id: ''
     requested: ''
-    mesure_unit: ''
+    measure_unit: ''
     units: []
   valid: ->
-    @state.material_id_hidden && @state.requested && @state.mesure_unit
+    @state.material_id_hidden && @state.requested && @state.measure_unit
   handleInputChange: (name,value) ->
     @setState "#{name}": value
   handleSelectChange: (value) ->
-    @setState mesure_unit: value
+    @setState measure_unit: value
   handleNew: (e)->
     e.preventDefault()
     data =
+      id:  @state.material_id_hidden
       material_id: @state.material_id_hidden
       material_name: @state.material_name_hidden
       requested: @state.requested
-      mesure_unit: @state.mesure_unit
+      measure_unit: @state.measure_unit
     $("#material").tokenInput('clear')
     @props.handleNewItemMaterial data
     @setState @getInitialState
@@ -36,8 +37,6 @@
       ref: name
       name: name
 
-
-
   render: ->
     React.DOM.div
       className: ''
@@ -50,7 +49,7 @@
         React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken
         React.createElement LabelInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
 #        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit
-        React.createElement LabelSelect, label: 'Mesure unit',name: 'mesure_unit',options: @state.units,onChanged: @handleSelectChange
+        React.createElement LabelSelect, label: 'Measure unit',name: 'measure_unit',options: @state.units,onChanged: @handleSelectChange
         React.DOM.button
           className: 'btn btn-primary'
           onClick: @handleNew
