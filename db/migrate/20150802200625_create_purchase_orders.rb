@@ -5,6 +5,7 @@ class CreatePurchaseOrders < ActiveRecord::Migration
       t.string :delivery_place
       t.string :delivery_address
       t.string :delivery_receiver
+      t.string :sended, default: false
       t.references :requisition, index: true, foreign_key: true
       t.references :invoice, index: true, foreign_key: true
 
