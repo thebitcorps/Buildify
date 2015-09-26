@@ -20,17 +20,30 @@
         ///////////
   .row.construction_estimates_row
     //// Estimates numbers with buttons
-    %h3.text-center
-      %span{class: "#{amount_color_class(@construction)}"}
-        = number_to_currency(@construction.estimates_amount)
-      %span= "-"
-      %span.text-primary= number_to_currency(@construction.contract_amount)
-      %br
-      .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-        = link_to "Nueva Estimacion", new_estimate_path(construction_id: @construction), {class: "button btn btn-success", type: "button"}
-        = link_to "Ver todas estimaciones", estimates_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
-        = link_to 'Nueva requisición', new_requisition_path(construction: @construction.id), class: 'btn btn-primary'
-        -#= link_to 'Ver todas requisición', requisitions_path(construction: @construction.id), class: 'btn btn-default'
-
+    .col-md-4
+      %h3.text-center
+        %span{class: "#{amount_color_class(@construction)}"}
+          = number_to_currency(@construction.estimates_amount)
+        %span= "-"
+        %span.text-primary= number_to_currency(@construction.contract_amount)
+        %br
+        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
+          = link_to "Nueva Estimacion", new_estimate_path(construction_id: @construction), {class: "btn btn-primary", type: "button"}
+          = link_to "Ver todas", estimates_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
+    //// Requisitions
+    .col-md-4
+      %h3.text-center
+        = @construction.requisitions.count
+        %br
+        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
+          = link_to 'Nueva Requisición', new_requisition_path(construction: @construction.id), {class: "btn btn-primary", type: "button"}
+          = link_to "Ver todas", requisitions_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
+    //// Purchase orders
+    .col-md-4
+      %h3.text-center
+        = @construction.purchase_orders.count
+        %br
+        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
+          = link_to "Ver todas", purchase_orders_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
 
 
