@@ -43,7 +43,7 @@
       React.DOM.td null,
         @state.material_name
       React.DOM.td null,
-        "#{@state.requested} #{@state.mesure_unit}"
+        "#{@state.requested} #{@state.measure_unit}"
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-warning'

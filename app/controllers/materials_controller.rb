@@ -6,7 +6,7 @@ class MaterialsController < ApplicationController
     @materials = Material.all_alphabetical.search(sanitized_search).page(params[:page])
     respond_to do |format|
       format.html {@materials}
-      format.json { render json: @materials, include: :mesure_units}
+      format.json { render json: @materials, include: :measure_units}
     end
   end
 

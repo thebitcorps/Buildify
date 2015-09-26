@@ -23,8 +23,8 @@
   onTokenAdded: (item) ->
 #    alert item.measure_units[0]
     units = [{'display' : '','value': ''}]
-    for mesure_unit in item.mesure_units
-      units.push  {'display' : "#{mesure_unit.unit} | #{mesure_unit.abbreviation}" ,'value': mesure_unit.abbreviation }
+    for measure_unit in item.measure_units
+      units.push  {'display' : "#{measure_unit.unit} | #{measure_unit.abbreviation}" ,'value': measure_unit.abbreviation }
     @setState {material_id_hidden: item.id, material_name_hidden: item.name,units: units}
   removeToken: (item) ->
     @setState {material_id_hidden: '',material_name_hidden: '',units: []}
