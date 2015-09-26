@@ -46,4 +46,5 @@
         .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
           = link_to "Ver todas", purchase_orders_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
 
-
+%h5
+  = @construction.payments.count

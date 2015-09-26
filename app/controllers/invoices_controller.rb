@@ -7,7 +7,20 @@ class InvoicesController < ApplicationController
   def edit
   end
 
-  def upfate
+  def update
+    
+    respond_to do |format|
+      if @invoice.update invoice_params
+        @invoice.build_payment if @invoice.payment == nil && !@invoice.amount.blank?
+        @invoice.payment.amount = @invoice.amount
+        @invoice.payment.payment_date = @invoice.invoice_date
+        @invoice.payment.construction = @invoice.construction
+        @invoice.save
+        format.html { redirect_to @invoice.construction, notice: 'Factura actualizada.' }
+      else
+        format.html { render :edit }
+      end
+    end
   end
 
   private
@@ -17,7 +30,7 @@ class InvoicesController < ApplicationController
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
-  def requisition_params
+  def invoice_params
     params.require(:invoice).permit(:folio, :amount, :invoice_date)
   end
 end

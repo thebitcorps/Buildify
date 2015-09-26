@@ -32,6 +32,5 @@
       = link_to "Editar factura", edit_invoice_path(@invoice)
 - else
   %h3.text-center
-    %small
-      %span.label.label-info
-        @invoice.folio
+    %span.label.label-info
+      = @invoice.folio
