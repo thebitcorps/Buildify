@@ -1,0 +1,7 @@
+%tr
+  %td
+    = link_to item_material.material.name, material_path(item_material.material)
+  %td
+    = [item_material.requested, item_material.measure_unit].join(' ')
+  %td
+    = item_material.status

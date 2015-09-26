@@ -20,7 +20,7 @@ class Requisition < ActiveRecord::Base
     if last_requisition
       last_requisition.folio + 1
     else
-      0
+      1
     end
   end
 

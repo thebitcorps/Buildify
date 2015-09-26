@@ -10,9 +10,14 @@ class PurchaseOrder < ActiveRecord::Base
   accepts_nested_attributes_for :item_materials, reject_if: :all_blank, allow_destroy: true
 
   after_create :change_item_material_pending
+  before_create :set_folio
 
   def change_item_material_pending
     ApplicationHelper::change_item_material_status self,ItemMaterial::AUTHORIZED_STATUS
+  end
+
+  def set_folio
+    self.folio = self.construction.purchase_orders.count + 1
   end
 
 end

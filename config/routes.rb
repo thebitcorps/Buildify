@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   resources :requisitions
   resources :constructions
   resources :estimates
+  resources :invoices
   root to: "home#index"
 end

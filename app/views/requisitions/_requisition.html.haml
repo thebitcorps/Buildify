@@ -12,7 +12,7 @@
           %td
             %h4
               %span.label.label-info
-                = [requisition.requisition_date.year, requisition.folio].join(' - ')
+                = [requisition.requisition_date.year, requisition.folio.to_s.rjust(4, '0')].join(' - ')
           %td
             %h4
               %small

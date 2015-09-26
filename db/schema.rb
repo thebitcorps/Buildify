@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20150926140427) do
 
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
-    t.string   "concept"
     t.decimal  "amount"
     t.date     "invoice_date"
     t.integer  "invoice_receipt_id"
@@ -109,6 +108,7 @@ ActiveRecord::Schema.define(version: 20150926140427) do
   create_table "payments", force: :cascade do |t|
     t.string   "status"
     t.string   "consept"
+    t.decimal  "amount"
     t.date     "payment_date"
     t.decimal  "paid_amount"
     t.integer  "construction_id"
@@ -142,11 +142,11 @@ ActiveRecord::Schema.define(version: 20150926140427) do
     t.string   "delivery_place"
     t.string   "delivery_address"
     t.string   "delivery_receiver"
-    t.string   "sended",            default: "f"
+    t.boolean  "sended",            default: false
     t.integer  "requisition_id"
     t.integer  "invoice_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree

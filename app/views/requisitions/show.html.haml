@@ -4,7 +4,7 @@
     %small
       Requisicion 
       %span.label.label-info
-        = [@requisition.requisition_date.year, @requisition.folio].join(' - ')
+        = [@requisition.requisition_date.year, @requisition.folio.to_s.rjust(4, '0')].join(' - ')
 
 .panel.panel-default
   %table.table
@@ -25,6 +25,7 @@
   %small
     Ordenes de compra
 
-
 .list-group#requisitions
   = render partial: 'purchase_order', collection: @purchase_orders
+
+= link_to 'Nueva Orden de Compra', new_purchase_order_path(requisition_id: @requisition.id), {class: "btn btn-primary", type: "button"}

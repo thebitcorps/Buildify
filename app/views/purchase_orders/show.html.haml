@@ -1,0 +1,37 @@
+.page-header
+  %h1
+    = link_to [@requisition.requisition_date.year, @requisition.folio.to_s.rjust(4, '0')].join(' - '), requisition_path(@requisition)
+    %small
+      Orden 
+      %span.label.label-info
+        = @purchase_order.folio.to_s.rjust(4, '0')
+
+.panel.panel-default
+  %table.table
+    %thead
+      %tr
+        %th
+          Material
+        %th
+          Pedido
+        %th
+          Estado
+    %tbody
+      = render partial: 'item_material', collection: @item_materials
+
+%h1
+  %small
+    Factura
+
+- if @invoice.folio.blank?
+  %h3.text-center
+    %small
+      Esta factura no a sido resivida
+    %br
+    %small
+      = link_to "Editar factura", edit_invoice_path(@invoice)
+- else
+  %h3.text-center
+    %small
+      %span.label.label-info
+        @invoice.folio

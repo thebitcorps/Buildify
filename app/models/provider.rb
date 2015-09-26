@@ -6,7 +6,7 @@ class Provider < ActiveRecord::Base
   has_many :payments, through: :invoices
 
   # validations for provider
-  validates :name,:email,:telephone,:address,presence: true
+  validates :name, :email, :telephone, :address, presence: true
   scope :all_alphabetical, -> { all.order("LOWER(name)") }
 
   def self.search(query)
