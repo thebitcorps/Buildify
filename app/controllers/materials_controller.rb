@@ -6,12 +6,13 @@ class MaterialsController < ApplicationController
     @materials = Material.all_alphabetical.search(sanitized_search).page(params[:page])
     respond_to do |format|
       format.html {@materials}
-      format.json { render json: @materials}
+      format.json { render json: @materials, include: :mesure_units}
     end
   end
 
   def new
     @material = Material.new
+    @mesure_units = MesureUnit.all
   end
 
   def edit
@@ -59,6 +60,6 @@ private
   end
 
   def material_params
-    params.require(:material).permit(:name, :description)
+    params.require(:material).permit(:name, :description,:mesure_unit_ids => [])
   end
 end

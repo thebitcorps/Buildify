@@ -38,14 +38,12 @@
           'Cancel'
   renderRow: ->
     React.DOM.tr null,
-      React.DOM.td null,
-        @state.material_id
+#      React.DOM.td null,
+#        @state.material_id
       React.DOM.td null,
         @state.material_name
       React.DOM.td null,
-        @state.requested
-      React.DOM.td null,
-        @state.mesure_unit
+        "#{@state.requested} #{@state.mesure_unit}"
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-warning'

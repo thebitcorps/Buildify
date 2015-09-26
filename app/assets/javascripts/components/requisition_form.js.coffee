@@ -59,7 +59,7 @@
         className: 'table table-striped'
         React.DOM.thead null,
           React.DOM.tr null,
-            for th,i in ['Material','Requsested','Mesure unit','']
+            for th,i in ['Material','Requsested','']
               React.DOM.th key: i,th
         React.DOM.tbody null,
           for itemMaterial in @state.itemMaterials

@@ -5,6 +5,8 @@ class Provider < ActiveRecord::Base
   has_many :constructions, through: :requisitions
   has_many :payments, through: :invoices
 
+  # validations for provider
+
   scope :all_alphabetical, -> { all.order("LOWER(name)") }
 
   def self.search(query)

@@ -1,5 +1,22 @@
-%h1= @provider.name
-%h3= @provider.address
-%h3= @provider.telephone
-%h3= @provider.email
-= link_to 'Regresar', providers_path, class: 'btn btn-default'
+
+-#%h3= @provider.address
+-#%h3= @provider.telephone
+-#%h3= @provider.email
+
+%p#notice= notice
+.jumbotron
+  %h1
+    = @provider.name
+    -#%small= @user.role
+  -#use icon for better ui experience
+  %p
+    %b Phone:
+    = @provider.telephone
+  %p
+    %b Email:
+    = @provider.email
+
+  = link_to 'Edit', edit_provider_path(@provider),class: 'btn btn-warning'
+
+  = link_to 'Regresar', providers_path, class: 'btn btn-default'
+
