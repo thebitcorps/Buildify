@@ -1,0 +1,19 @@
+%a.list-group-item.construction-special-row{:href => "#{purchase_order_path(purchase_order)}"}
+  .row
+    .col-md-12
+      %h4.pull-right
+        %small
+          -if purchase_order.sended
+            = "Enviada a proveedor"
+          -else
+            = "Pendiente"
+      %table
+        %tr
+          %td
+            %h4
+              %span.label.label-info
+                = purchase_order.folio
+          %td
+            %h4
+              %small
+                = [purchase_order.item_materials.count, " materiales agregados"].join(' ')

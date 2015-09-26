@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20150926140427) do
   create_table "requisitions", force: :cascade do |t|
     t.integer  "folio"
     t.date     "requisition_date"
-    t.boolean  "lock",             default: false
+    t.boolean  "locked",           default: false
     t.integer  "construction_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false

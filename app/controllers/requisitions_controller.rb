@@ -1,12 +1,15 @@
 class RequisitionsController < ApplicationController
   before_action :set_requisition, only: [:show, :edit, :update, :destroy]
-  before_action :set_construction, only: [:new, :edit]
+  before_action :set_construction, only: [:index, :new, :edit]
 
   def index
-    @requisitions = Requisition.all
+    @requisitions = Requisition.where(construction_id: params[:construction_id])
   end
 
   def show
+    @construction = @requisition.construction
+    @item_materials = @requisition.item_materials
+    @purchase_orders = @requisition.purchase_orders
   end
 
   def new
@@ -33,7 +36,7 @@ class RequisitionsController < ApplicationController
   private
 
   def set_construction
-    @construction = Construction.find params[:construction]
+    @construction = Construction.find params[:construction_id]
   end
   # Use callbacks to share common setup or constraints between actions.
   def set_requisition

@@ -1,0 +1,12 @@
+%tr
+  %td
+    = link_to item_material.material.name, material_path(item_material.material)
+  %td
+    = [item_material.requested, item_material.measure_unit].join(' ')
+  %td
+    - if item_material.purchase_order != nil
+      = link_to ["Orden", item_material.purchase_order.folio].join(' - '), purchase_order_path(item_material.purchase_order)
+    - else
+      = "No asignado"
+  %td
+    = item_material.status

@@ -36,7 +36,7 @@
         = @construction.requisitions.count
         %br
         .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-          = link_to 'Nueva Requisición', new_requisition_path(construction: @construction.id), {class: "btn btn-primary", type: "button"}
+          = link_to 'Nueva Requisición', new_requisition_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
           = link_to "Ver todas", requisitions_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
     //// Purchase orders
     .col-md-4

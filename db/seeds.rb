@@ -5,17 +5,17 @@ Construction.create(title: "Kinder", contract_amount: 4000000, start_date: '2015
 Construction.create(title: "Escuela", contract_amount: 4000000, start_date: '2015-04-04', finish_date: '2015-10-16', user_id: User.second.id)
 Construction.create(title: "Prepa", contract_amount: 4000000, start_date: '2015-06-12', finish_date: '2015-11-05', user_id: User.second.id)
 
-MesureUnit.create(unit: 'Metros cuadrados', abbreviation: 'M2')
-MesureUnit.create(unit: 'Kilogramos', abbreviation: 'Kg')
-MesureUnit.create(unit: 'Piezas', abbreviation: 'Pzas')
+MeasureUnit.create(unit: 'Metros cuadrados', abbreviation: 'M2')
+MeasureUnit.create(unit: 'Kilogramos', abbreviation: 'Kg')
+MeasureUnit.create(unit: 'Piezas', abbreviation: 'Pzas')
 
-Material.create(name: "Madera", description: "10x10", mesure_unit_ids: [1])
-Material.create(name: "Madera", description: "20x120", mesure_unit_ids: [1])
-Material.create(name: "Semento", description: "Gris", mesure_unit_ids: [2])
-Material.create(name: "Cal", description: "Blanca", mesure_unit_ids: [2])
-Material.create(name: "Ladrillo", description: "Naranja", mesure_unit_ids: [3])
-Material.create(name: "Tornillo", description: "12", mesure_unit_ids: [3])
-Material.create(name: "Clavo", description: "10", mesure_unit_ids: [2])
+Material.create(name: "Madera", description: "10x10", measure_unit_ids: [1])
+Material.create(name: "Madera", description: "20x120", measure_unit_ids: [1])
+Material.create(name: "Semento", description: "Gris", measure_unit_ids: [2])
+Material.create(name: "Cal", description: "Blanca", measure_unit_ids: [2])
+Material.create(name: "Ladrillo", description: "Naranja", measure_unit_ids: [3])
+Material.create(name: "Tornillo", description: "12", measure_unit_ids: [3])
+Material.create(name: "Clavo", description: "10", measure_unit_ids: [2])
 
 
 Provider.create(name: "Aceros Rodriguez", address: "Calle Falsa #123", telephone: "9-10-10-10", email: "acerosr@correo.com")
