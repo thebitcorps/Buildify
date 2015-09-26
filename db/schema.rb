@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20150926140427) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "mesure_units", force: :cascade do |t|
+  create_table "measure_units", force: :cascade do |t|
     t.string   "unit"
     t.string   "abbreviation"
     t.datetime "created_at",   null: false
@@ -116,15 +116,15 @@ ActiveRecord::Schema.define(version: 20150926140427) do
 
   add_index "payments", ["construction_id"], name: "index_payments_on_construction_id", using: :btree
 
-  create_table "permitted_mesure_units", force: :cascade do |t|
+  create_table "permitted_measure_units", force: :cascade do |t|
     t.integer  "material_id"
-    t.integer  "mesure_unit_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.integer  "measure_unit_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  add_index "permitted_mesure_units", ["material_id"], name: "index_permitted_mesure_units_on_material_id", using: :btree
-  add_index "permitted_mesure_units", ["mesure_unit_id"], name: "index_permitted_mesure_units_on_mesure_unit_id", using: :btree
+  add_index "permitted_measure_units", ["material_id"], name: "index_permitted_measure_units_on_material_id", using: :btree
+  add_index "permitted_measure_units", ["measure_unit_id"], name: "index_permitted_measure_units_on_measure_unit_id", using: :btree
 
   create_table "providers", force: :cascade do |t|
     t.string   "name"
@@ -190,8 +190,8 @@ ActiveRecord::Schema.define(version: 20150926140427) do
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"
   add_foreign_key "payments", "constructions"
-  add_foreign_key "permitted_mesure_units", "materials"
-  add_foreign_key "permitted_mesure_units", "mesure_units"
+  add_foreign_key "permitted_measure_units", "materials"
+  add_foreign_key "permitted_measure_units", "measure_units"
   add_foreign_key "purchase_orders", "invoices"
   add_foreign_key "purchase_orders", "requisitions"
   add_foreign_key "requisitions", "constructions"

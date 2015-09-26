@@ -1,0 +1,23 @@
+%h1 Listing measure_units
+
+%table.table
+  %thead
+    %tr
+      %th Unit
+      %th Abbreviation
+      %th
+      %th
+      %th
+
+  %tbody
+    - @measure_units.each do |measure_unit|
+      %tr
+        %td= measure_unit.unit
+        %td= measure_unit.abbreviation
+        %td= link_to 'Show', measure_unit
+        %td= link_to 'Edit', edit_measure_unit_path(measure_unit)
+        %td= link_to 'Destroy', measure_unit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Mesure unit', new_measure_unit_path

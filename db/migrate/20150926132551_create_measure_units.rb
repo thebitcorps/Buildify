@@ -1,6 +1,6 @@
-class CreateMesureUnits < ActiveRecord::Migration
+class CreateMeasureUnits < ActiveRecord::Migration
   def change
-    create_table :mesure_units do |t|
+    create_table :measure_units do |t|
       t.string :unit
       t.string :abbreviation
 

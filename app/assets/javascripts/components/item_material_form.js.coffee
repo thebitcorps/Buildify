@@ -21,7 +21,7 @@
     @props.handleNewItemMaterial data
     @setState @getInitialState
   onTokenAdded: (item) ->
-#    alert item.mesure_units[0]
+#    alert item.measure_units[0]
     units = [{'display' : '','value': ''}]
     for mesure_unit in item.mesure_units
       units.push  {'display' : "#{mesure_unit.unit} | #{mesure_unit.abbreviation}" ,'value': mesure_unit.abbreviation }
@@ -49,7 +49,7 @@
           'Material'
         React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken
         React.createElement LabelInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
-#        React.createElement LabelInput,label: 'Mesure unit ',name: 'mesure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.mesure_unit
+#        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit
         React.createElement LabelSelect, label: 'Mesure unit',name: 'mesure_unit',options: @state.units,onChanged: @handleSelectChange
         React.DOM.button
           className: 'btn btn-primary'

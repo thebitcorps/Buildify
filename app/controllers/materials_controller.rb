@@ -12,7 +12,7 @@ class MaterialsController < ApplicationController
 
   def new
     @material = Material.new
-    @mesure_units = MesureUnit.all
+    @measure_units = MeasureUnit.all
   end
 
   def edit
@@ -60,6 +60,6 @@ private
   end
 
   def material_params
-    params.require(:material).permit(:name, :description,:mesure_unit_ids => [])
+    params.require(:material).permit(:name, :description,:measure_unit_ids => [])
   end
 end

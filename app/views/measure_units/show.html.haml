@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Unit:
+  = @measure_unit.unit
+%p
+  %b Abbreviation:
+  = @measure_unit.abbreviation
+
+= link_to 'Edit', edit_measure_unit_path(@measure_unit)
+\|
+= link_to 'Back', measure_units_path

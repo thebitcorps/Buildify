@@ -1,26 +1,26 @@
-class MesureUnitsController < ApplicationController
+class MeasureUnitsController < ApplicationController
   before_action :set_mesure_unit, only: [:show, :edit, :update, :destroy]
 
   def index
-    @mesure_units = MesureUnit.all
+    @measure_units = MeasureUnit.all
   end
 
   def show
   end
 
   def new
-    @mesure_unit = MesureUnit.new
+    @measure_unit = MeasureUnit.new
   end
 
   def edit
   end
 
   def create
-    @mesure_unit = MesureUnit.new(mesure_unit_params)
+    @measure_unit = MeasureUnit.new(mesure_unit_params)
 
     respond_to do |format|
-      if @mesure_unit.save
-        format.html { redirect_to @mesure_unit, notice: 'Mesure unit was successfully created.' }
+      if @measure_unit.save
+        format.html { redirect_to @measure_unit, notice: 'Mesure unit was successfully created.' }
       else
         format.html { render :new }
       end
@@ -29,8 +29,8 @@ class MesureUnitsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @mesure_unit.update(mesure_unit_params)
-        format.html { redirect_to @mesure_unit, notice: 'Mesure unit was successfully updated.' }
+      if @measure_unit.update(mesure_unit_params)
+        format.html { redirect_to @measure_unit, notice: 'Mesure unit was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -38,7 +38,7 @@ class MesureUnitsController < ApplicationController
   end
 
   def destroy
-    @mesure_unit.destroy
+    @measure_unit.destroy
     respond_to do |format|
       format.html { redirect_to mesure_units_url, notice: 'Mesure unit was successfully destroyed.' }
       format.json { head :no_content }
@@ -48,11 +48,11 @@ class MesureUnitsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_mesure_unit
-      @mesure_unit = MesureUnit.find(params[:id])
+      @measure_unit = MeasureUnit.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mesure_unit_params
-      params.require(:mesure_unit).permit(:unit, :abbreviation)
+      params.require(:measure_unit).permit(:unit, :abbreviation)
     end
 end

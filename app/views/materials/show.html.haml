@@ -3,7 +3,7 @@
   %h3= @material.description
   %h3 Unidades permitidas:
   %ul
-    - @material.mesure_units.each do |mesure_unit|
+    - @material.measure_units.each do |mesure_unit|
       %li="#{mesure_unit.unit} | #{mesure_unit.abbreviation}"
 
   = link_to 'Editar', edit_material_path(@material), class: 'btn btn-warning'
