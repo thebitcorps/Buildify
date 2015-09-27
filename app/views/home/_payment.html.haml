@@ -1,0 +1,22 @@
+%tr
+  %td
+    - if payment.invoice
+      = link_to payment.invoice.folio, invoice_path(payment.invoice), {class: "button btn-sm btn-info", type: "button"}
+    - else
+      = "NA"
+  %td
+    - if payment.purchase_order
+      = link_to payment.construction.title, construction_path(payment.construction)
+      = link_to payment.purchase_order.folio.to_s.rjust(4, '0'), purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-info", type: "button"}
+    - else
+      = "NA"
+  %td
+    = number_to_currency payment.amount
+  %td
+    = number_to_currency payment.paid_amount.to_f
+  %td
+    = number_to_currency (payment.amount - payment.paid_amount.to_f)
+  %td
+    = link_to payment.billing_adjustments.count, billing_adjustments_path(payment_id: payment.id)
+  %td
+    = link_to "Agregar pago", new_billing_adjustment_path(payment_id: payment.id), {class: "button btn-sm btn-primary", type: "button"}
