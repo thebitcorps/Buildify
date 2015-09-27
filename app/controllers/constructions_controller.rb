@@ -7,6 +7,7 @@ class ConstructionsController < ApplicationController
   end
 
   def show
+    @payments = @construction.payments
   end
 
   def new

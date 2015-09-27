@@ -1,0 +1,16 @@
+.page-header
+  %h1
+    Pagos
+
+.panel.panel-default
+  %table.table
+    %thead
+      %tr
+        %th #
+        %th Cantidad
+        %th Metodo de pago
+        %th Fecha de pago
+        %th
+    %tbody
+      = render partial: 'adjustment', collection: @adjustments
+

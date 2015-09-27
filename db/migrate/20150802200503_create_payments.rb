@@ -5,7 +5,7 @@ class CreatePayments < ActiveRecord::Migration
       t.string :consept
       t.decimal :amount
       t.date :payment_date
-      t.decimal :paid_amount, defaul: 0.0
+      t.decimal :paid_amount, default: 0.0
       t.references :construction, index: true, foreign_key: true
 
       t.timestamps null: false

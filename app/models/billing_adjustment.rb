@@ -1,3 +1,3 @@
 class BillingAdjustment < ActiveRecord::Base
-  belongs_to :payments
+  belongs_to :payment
 end

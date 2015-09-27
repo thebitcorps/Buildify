@@ -110,10 +110,10 @@ ActiveRecord::Schema.define(version: 20150926140427) do
     t.string   "consept"
     t.decimal  "amount"
     t.date     "payment_date"
-    t.decimal  "paid_amount"
+    t.decimal  "paid_amount",     default: 0.0
     t.integer  "construction_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   add_index "payments", ["construction_id"], name: "index_payments_on_construction_id", using: :btree
