@@ -1,12 +1,10 @@
 class MeasureUnitsController < ApplicationController
-  before_action :set_mesure_unit, only: [:show, :edit, :update, :destroy]
+  before_action :set_mesure_unit, only: [ :edit, :update, :destroy]
 
   def index
     @measure_units = MeasureUnit.all
   end
 
-  def show
-  end
 
   def new
     @measure_unit = MeasureUnit.new

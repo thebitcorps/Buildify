@@ -3,7 +3,12 @@ class RequisitionsController < ApplicationController
   before_action :set_construction, only: [:index, :new, :edit]
 
   def index
-    @requisitions = Requisition.where(construction_id: params[:construction_id])
+    @type_list = sanitized_locked_param
+    @requisitions = (class_eval %Q{Requisition.#{@type_list}}).where(construction_id: params[:construction_id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
@@ -17,6 +22,7 @@ class RequisitionsController < ApplicationController
   end
 
   def edit
+
   end
 
   def create
@@ -48,4 +54,8 @@ class RequisitionsController < ApplicationController
     params.require(:requisition).permit(:construction_id, :requisition_date, item_materials_attributes: [:material_id, :measure_unit, :requested])
   end
 
+
+  def sanitized_locked_param
+    ['locked','unlocked'].include?(params[:type_list]) ? params[:type_list] : 'all'
+  end
 end

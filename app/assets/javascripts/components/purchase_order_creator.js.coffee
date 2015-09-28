@@ -17,8 +17,8 @@
     index = purchaseItems.indexOf itemMaterial
     purchaseItems.splice index, 1
     @setState {requisitionItemMaterials: requisiionItems, purchaseOrderItemsMaterials: purchaseItems}
-  addState: (name,value) ->
-    @setState "#{name}": value
+  addState: (toAdd) ->
+    @setState toAdd
   valid: ->
 #    alert @state.provider_id_hidden && @state.provider_name_hidden && @state.provider_address && @state.delivery_address && @state.delivery_type && @state.delivery_receiver
     @state.provider_id_hidden && @state.provider_name_hidden && @state.provider_address && @state.delivery_address && @state.delivery_type && @state.delivery_receiver
@@ -42,9 +42,9 @@
       type: 'POST'
       data: {purchase_order: data}
       dataType: 'JSON'
-      success:  ->
+      success:  (data) ->
         #update the browers window
-        window.location.replace('/' )
+        window.location.replace('/purchase_orders/' + data.id)
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         #we parse the responses o errors so we can send a array of errors

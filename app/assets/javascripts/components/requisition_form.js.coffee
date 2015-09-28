@@ -9,13 +9,16 @@
   #funtion for inputs that update the state with a given value and the name of the object in the state
   valid: ->
     @state.requisition_date
+  # update the state with the name of the input
   handleInputChange: (name,value) ->
     @setState "#{name}": value
+  # finds a change
   handleUpdateItemMaterial: (old,new_item) ->
     index = @state.itemMaterials.indexOf old
     itemMaterials = @state.itemMaterials.slice()
     itemMaterials.splice index,1 , new_item
     @setState itemMaterials: itemMaterials
+  # push a new item material to the stateand add 1 to the count
   addNewItemMaterial: (element)->
     element.id = @state.itemMaterialsIdCount
     itemMaterials = @state.itemMaterials.slice()
@@ -38,9 +41,9 @@
       type: 'POST'
       data: {requisition: data}
       dataType: 'JSON'
-      success:  ->
+      success:  (data)->
         #update the browers window
-        window.location.replace('/constructions/' + that.props.construction_id)
+        window.location.replace('/requisitions/' + data.id)
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         #we parse the responses o errors so we can send a array of errors

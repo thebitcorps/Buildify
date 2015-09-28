@@ -13,6 +13,9 @@ class Requisition < ActiveRecord::Base
   #   where(construction_id: construction_id).count + 1
   # end
 
+  scope :unlocked, -> { where locked: false }
+  scope :locked, -> { where locked: true }
+
   # which is better?
   # los auto incrementos de las DB guardan el último número en una tabla, a lo mejor podermos hacer lo mismo para tantos folios
   def self.next_folio(construction_id)

@@ -3,5 +3,14 @@
     = link_to @construction.title, construction_path(@construction)
     %small Requisiciones
 
+%ul.nav.nav-tabs
+  %li{id: 'unlocked',class: " #{'active' if params[:type_list] == 'unlocked'  or params[:type_list].nil? }"}
+    = link_to 'Pendientes',requisitions_path(type_list: 'unlocked', construction_id: params[:construction_id]),remote: true
+  %li{id: 'locked',class: " #{'active' if params[:type_list] == 'unlocked'}"}
+    = link_to 'Procesadas',requisitions_path(type_list: 'locked', construction_id: params[:construction_id]),remote: true
+
 .list-group#requisitions
   = render partial: 'requisition', collection: @requisitions
+  - if @requisitions.count == 0
+    .well
+      No hay requisiciones

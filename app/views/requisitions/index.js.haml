@@ -1,0 +1,14 @@
+$('#requisitions').html("#{j( render partial: 'requisition', collection: @requisitions )}");
+- if @requisitions.count == 0
+  $('#requisitions').append("<div class='well'> No hay requisiciones</div>")
+
+-#$('#paginate').html("#{j( paginate @requisitions)}");
+
+-#$('#search_role').val("#{@type_list}");
+- if @type_list ==  'locked'
+  $('#locked').attr('class', "active");
+  $('#unlocked').attr('class', '');
+- else
+  $('#unlocked').attr('class', "active");
+  $('#locked').attr('class', '');
+window.history.pushState(null, null, "requisitions?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}");

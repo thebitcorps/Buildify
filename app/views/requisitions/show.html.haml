@@ -25,7 +25,11 @@
   %small
     Ordenes de compra
 
-.list-group#requisitions
+.list-group#purchase_orders
   = render partial: 'purchase_order', collection: @purchase_orders
+  -#maybe an  application partial also with requisition we use the same
+  - if @purchase_orders.count == 0
+    .well
+      No hay ordenes de compra
 
 = link_to 'Nueva Orden de Compra', new_purchase_order_path(requisition_id: @requisition.id), {class: "btn btn-primary", type: "button"}

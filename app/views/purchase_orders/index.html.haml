@@ -3,5 +3,8 @@
     = link_to @construction.title, construction_path(@construction)
     %small Ordenes de compra
 
-.list-group#requisitions
+.list-group#purchase_orders
   = render partial: 'purchase_order', collection: @purchase_orders
+  - if @purchase_orders.count == 0
+    .well
+      No hay ordenes de compra
