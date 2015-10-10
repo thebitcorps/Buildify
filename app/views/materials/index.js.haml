@@ -1,0 +1,2 @@
+$('#materials').html("#{j( render partial: 'material', collection: @materials)}");
+$('#paginate').html("#{j( paginate @materials,theme: 'twitter-bootstrap-3', remote: true)}");

@@ -7,6 +7,7 @@ class MaterialsController < ApplicationController
     respond_to do |format|
       format.html {@materials}
       format.json { render json: @materials, include: :measure_units}
+      format.js {@materials}
     end
   end
 

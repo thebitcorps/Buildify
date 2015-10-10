@@ -15,14 +15,20 @@ class PurchaseOrder < ActiveRecord::Base
   after_create :check_requisition_items
 
   def check_requisition_items
+    items_with_purchase = 0
     self.requisition.item_materials.each do |item_material|
-      if item_material.status == ItemMaterial::PENDING_STATUS
-        self.requisition.locked = false
-        self.requisition.save
-        return
+      if item_material.status == ItemMaterial::AUTHORIZED_STATUS
+        items_with_purchase += 1
+      end
+      if items_with_purchase == 0
+        self.requisition.status = Requisition::PENDING_STATUS
+      elsif items_with_purchase == self.requisition.item_materials.count
+        self.requisition.status = Requisition::LOCKED_STATUS
+      else
+        self.requisition.status = Requisition::PARTIALLY_STATUS
       end
     end
-    self.requisition.locked = true
+
     self.requisition.save
   end
 

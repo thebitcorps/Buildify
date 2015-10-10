@@ -4,6 +4,10 @@ class ConstructionsController < ApplicationController
 
   def index
     @constructions = Construction.search(sanitized_search).page(params[:page])
+    respond_to do |format|
+      format.html {@constructions}
+      format.js {@constructions}
+    end
   end
 
   def show

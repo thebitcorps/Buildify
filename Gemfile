@@ -32,6 +32,7 @@ gem "twitter-bootstrap-rails"
 gem 'devise'
 gem 'simple_form'
 gem 'kaminari'
+gem 'bootstrap-kaminari-views'
 # gem 'cocoon'
 gem 'react-rails', '~> 1.0'
 # Use ActiveModel has_secure_password

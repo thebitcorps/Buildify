@@ -4,7 +4,7 @@ class Provider < ActiveRecord::Base
   has_many :requisitions, through: :purchase_orders
   has_many :constructions, through: :requisitions
   has_many :payments, through: :invoices
-
+  paginates_per 15
   # validations for provider
   validates :name, :email, :telephone, :address, presence: true
   scope :all_alphabetical, -> { all.order("LOWER(name)") }

@@ -13,7 +13,8 @@
         %th
     %tbody#materials
       = render @materials
-  = paginate @materials
+#paginate
+  = paginate @materials,theme: 'twitter-bootstrap-3',remote: true
 %br
 
 = link_to 'Nuevo material', new_material_path, class: 'btn btn-primary'

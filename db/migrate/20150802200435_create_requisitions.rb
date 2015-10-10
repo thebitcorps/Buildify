@@ -3,7 +3,7 @@ class CreateRequisitions < ActiveRecord::Migration
     create_table :requisitions do |t|
       t.integer :folio
       t.date :requisition_date
-      t.boolean :locked, default: false
+      t.string :status, default: 'pending'
       t.references :construction, index: true, foreign_key: true
 
       t.timestamps null: false

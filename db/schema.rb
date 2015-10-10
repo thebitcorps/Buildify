@@ -156,10 +156,10 @@ ActiveRecord::Schema.define(version: 20150926140427) do
   create_table "requisitions", force: :cascade do |t|
     t.integer  "folio"
     t.date     "requisition_date"
-    t.boolean  "locked",           default: false
+    t.string   "status",           default: "pending"
     t.integer  "construction_id"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree

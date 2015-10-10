@@ -58,6 +58,6 @@ class RequisitionsController < ApplicationController
 
 
   def sanitized_locked_param
-    ['locked','unlocked'].include?(params[:type_list]) ? params[:type_list] : 'all'
+    ['locked','partially','pending'].include?(params[:type_list]) ? params[:type_list] : 'all'
   end
 end

@@ -14,7 +14,8 @@
       %th
   %tbody#providers
     = render @providers
-= paginate @providers
+#paginate
+  = paginate @providers,theme: 'twitter-bootstrap-3',remote: true
 %br
 
 = link_to 'Nuevo proveedor', new_provider_path, class: 'btn btn-primary'

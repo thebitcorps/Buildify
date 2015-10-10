@@ -10,7 +10,7 @@
 
 .list-group#constructions
   = render partial: 'construction', collection: @constructions
-
-=paginate @constructions
+#paginate
+  =paginate @constructions,theme: 'twitter-bootstrap-3',remote: true
 %br
 = link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'

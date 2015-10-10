@@ -7,14 +7,22 @@ $('#requisitions').html("#{j( render partial: 'requisition', collection: @requis
 -#$('#search_role').val("#{@type_list}");
 - if @type_list ==  'locked'
   $('#locked').attr('class', "active");
-  $('#unlocked').attr('class', '');
+  $('#pending').attr('class', '');
+  $('#partially').attr('class', '');
   $('#all').attr('class', '');
-- elsif @type_list == 'unlocked'
-  $('#unlocked').attr('class', "active");
-  $('#locked').attr('class', '');
+- elsif @type_list == 'pending'
+  $('#locked').attr('class', "");
+  $('#pending').attr('class', 'active');
+  $('#partially').attr('class', '');
+  $('#all').attr('class', '');
+- elsif @type_list == 'partially'
+  $('#locked').attr('class', "");
+  $('#pending').attr('class', '');
+  $('#partially').attr('class', 'active');
   $('#all').attr('class', '');
 -else
-  $('#unlocked').attr('class', "");
-  $('#locked').attr('class', '');
+  $('#locked').attr('class', "");
+  $('#pending').attr('class', '');
+  $('#partially').attr('class', '');
   $('#all').attr('class', 'active');
 window.history.pushState(null, null, "requisitions?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}");

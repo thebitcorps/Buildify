@@ -1,4 +1,4 @@
-class ProvidersController < ApplicationController
+  class ProvidersController < ApplicationController
   before_action :set_provider, only: [:show,:edit,:destroy,:update]
 
   def index
@@ -6,6 +6,7 @@ class ProvidersController < ApplicationController
     respond_to do |format|
       format.html {@providers}
       format.json { render json: @providers}
+      format.js {@providers}
     end
   end
 
