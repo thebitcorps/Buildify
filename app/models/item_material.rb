@@ -8,9 +8,12 @@ class ItemMaterial < ActiveRecord::Base
   has_one :invoice_receipt, through: :invoice
   has_one :payment, through: :invoice
 
+  validates :requested, numericality: true
+
   PARTIALLY_DELIVERED_STATUS = 'partially'
   DELIVERED_STATUS = 'delivered'
   AUTHORIZED_STATUS = 'authorized'
+  MISSED_STATUS = 'missed'
   PENDING_STATUS = 'pending'
 
   STATUS = [DELIVERED_STATUS,PENDING_STATUS,PARTIALLY_DELIVERED_STATUS,AUTHORIZED_STATUS]

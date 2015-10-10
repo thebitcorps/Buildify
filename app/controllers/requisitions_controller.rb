@@ -14,6 +14,8 @@ class RequisitionsController < ApplicationController
   def show
     @construction = @requisition.construction
     @item_materials = @requisition.item_materials
+    # maybe we should add if here if user resident then return json if no return normal?
+    @item_materials_json = JSON.parse @item_materials.to_json include: [:material]
     @purchase_orders = @requisition.purchase_orders
   end
 

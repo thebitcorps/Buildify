@@ -14,8 +14,8 @@
           "Errores (#{@props.errorsArray.length})"
         React.DOM.div
           className: 'panel-body'
-          for error in @props.errorsArray
-            React.DOM.ul null,
+          for error,index in @props.errorsArray
+            React.DOM.ul key: index,
               React.DOM.li null,
                 error
     else

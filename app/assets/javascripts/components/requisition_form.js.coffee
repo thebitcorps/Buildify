@@ -2,6 +2,8 @@
   getInitialState: ->
     itemMaterials: []
     errors: []
+    #this is for the key props thath react uses for childs views
+    #has the count of item material added to the requisiiton is the sam
     itemMaterialsIdCount: 0
   getDefaultProps: ->
     itemMaterials: []
@@ -24,6 +26,7 @@
     itemMaterials = @state.itemMaterials.slice()
     itemMaterials.push element
     @setState {itemMaterials: itemMaterials,itemMaterialsIdCount: @state.itemMaterialsIdCount + 1 }
+  #finds a given itemMaterial and removes it from the state and refresh the count of item materials
   deleteItemMaterial: (element) ->
     itemMaterials = @state.itemMaterials.slice()
     index = itemMaterials.indexOf element
@@ -31,6 +34,9 @@
     @setState {itemMaterials: itemMaterials,itemMaterialsIdCount: @state.itemMaterialsIdCount - 1}
   handleSubmit: (e) ->
     e.preventDefault()
+    if @state.itemMaterials.length == 0
+      @setState errors: ['You need to select at least one item']
+      return
     data =
       requisition_date: @state.requisition_date
       construction_id: @props.construction_id

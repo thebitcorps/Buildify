@@ -8,7 +8,13 @@ $('#requisitions').html("#{j( render partial: 'requisition', collection: @requis
 - if @type_list ==  'locked'
   $('#locked').attr('class', "active");
   $('#unlocked').attr('class', '');
-- else
+  $('#all').attr('class', '');
+- elsif @type_list == 'unlocked'
   $('#unlocked').attr('class', "active");
   $('#locked').attr('class', '');
+  $('#all').attr('class', '');
+-else
+  $('#unlocked').attr('class', "");
+  $('#locked').attr('class', '');
+  $('#all').attr('class', 'active');
 window.history.pushState(null, null, "requisitions?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}");

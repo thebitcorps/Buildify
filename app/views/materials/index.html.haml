@@ -4,15 +4,16 @@
     = f.search_field :query, autofocus: true, class: "form-control"
   = f.submit 'Buscar', class: 'btn btn-default'
 
-%table.table.table-striped.table-condensed
-  %thead
-    %tr
-      %th Nombre
-      %th Descripción
-      %th
-  %tbody#materials
-    = render @materials
-= paginate @materials
+.panel.panel-default
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th Nombre
+        %th Descripción
+        %th
+    %tbody#materials
+      = render @materials
+  = paginate @materials
 %br
 
 = link_to 'Nuevo material', new_material_path, class: 'btn btn-primary'

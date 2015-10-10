@@ -1,5 +1,5 @@
 class PurchaseOrder < ActiveRecord::Base
-  has_many :item_materials
+  has_many :item_materials,dependent: :destroy
   belongs_to :invoice
   belongs_to :requisition
   has_one :provider, through: :invoice
@@ -11,6 +11,20 @@ class PurchaseOrder < ActiveRecord::Base
 
   after_create :change_item_material_pending
   before_create :set_folio
+
+  after_create :check_requisition_items
+
+  def check_requisition_items
+    self.requisition.item_materials.each do |item_material|
+      if item_material.status == ItemMaterial::PENDING_STATUS
+        self.requisition.locked = false
+        self.requisition.save
+        return
+      end
+    end
+    self.requisition.locked = true
+    self.requisition.save
+  end
 
   def change_item_material_pending
     ApplicationHelper::change_item_material_status self,ItemMaterial::AUTHORIZED_STATUS

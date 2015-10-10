@@ -1,3 +1,7 @@
-%h1 Nueva requisicion
+.page-header
+  %h1
+    = link_to @construction.title, construction_path( @construction)
+    %small
+      Nueva Requisicion
+
 = react_component 'RequisitionForm',{construction_id: params[:construction_id]}
--#= render partial: 'form'

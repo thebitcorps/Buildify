@@ -1,6 +1,6 @@
 class Requisition < ActiveRecord::Base
   belongs_to :construction
-  has_many :purchase_orders
+  has_many :purchase_orders, dependent: :destroy
   has_many :item_materials, dependent: :destroy
   accepts_nested_attributes_for :item_materials, reject_if: :all_blank, allow_destroy: true
   has_many :invoices, through: :purchase_orders
@@ -31,6 +31,13 @@ class Requisition < ActiveRecord::Base
     ApplicationHelper::change_item_material_status self,ItemMaterial::PENDING_STATUS
   end
 
+  def status_color
+    if locked
+      'success'
+    else
+      'info'
+    end
+  end
 
 
 end

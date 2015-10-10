@@ -3,15 +3,12 @@
     .col-md-12
       %h4.pull-right
         %small
-          -if requisition.locked
-            = "Procesada"
-          -else
-            = "Pendiente"
+          = requisition.locked ? 'Procesada' : 'Pendiente'
       %table
         %tr
           %td
             %h4
-              %span.label.label-info
+              %span{class: "label label-#{requisition.status_color}"}
                 = [requisition.requisition_date.year, requisition.folio.to_s.rjust(4, '0')].join(' - ')
           %td
             %h4

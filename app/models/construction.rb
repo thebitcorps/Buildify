@@ -9,7 +9,7 @@ class Construction < ActiveRecord::Base
   has_many :invoiced_payments, through: :invoices, source: :payment
   paginates_per 10
 
-  validates :title, :resident,:contract_amount, presence: true
+  validates :title,:address, :resident,:contract_amount, presence: true
   validate :validate_dates_logic_relation
 
 
