@@ -56,7 +56,7 @@ class Requisition < ActiveRecord::Base
     elsif pending?
       'danger'
     elsif partially?
-      'warrning'
+      'warning'
     else
       'default'
     end

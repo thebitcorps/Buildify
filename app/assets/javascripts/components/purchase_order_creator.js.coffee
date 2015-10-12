@@ -65,6 +65,7 @@
           className: 'col-md-6'
           React.DOM.h2 null, 'Requisition'
           React.DOM.ul
+            style: {cursor: 'pointer'}
             className: 'list-group'
             if @state.requisitionItemMaterials.length == 0
               React.DOM.div
@@ -80,6 +81,7 @@
           className: 'col-md-6'
           React.DOM.h2 null, 'Purchase Order'
           React.DOM.ul
+            style: {cursor: 'pointer'}
             className: 'list-group'
             if @state.purchaseOrderItemsMaterials.length == 0
               React.DOM.div

@@ -5,6 +5,7 @@
     #this is for the key props thath react uses for childs views
     #has the count of item material added to the requisiiton is the sam
     itemMaterialsIdCount: 0
+
   getDefaultProps: ->
     itemMaterials: []
     errors: []
@@ -49,7 +50,7 @@
       dataType: 'JSON'
       success:  (data)->
         #update the browers window
-        window.location.replace('/requisitions/' + data.id)
+        window.location.assign('/requisitions/' + data.id)
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         #we parse the responses o errors so we can send a array of errors
@@ -62,7 +63,7 @@
     React.DOM.div
       className: 'requisition-form'
       React.createElement ErrorBox, errorsArray: @state.errors
-      React.createElement LabelInput,label: 'Requisition Date',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange
+      React.createElement DateInput,label: 'Requisition Date',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.table
         className: 'table table-striped'

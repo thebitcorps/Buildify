@@ -33,7 +33,10 @@ gem 'devise'
 gem 'simple_form'
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
-# gem 'cocoon'
+
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
+
 gem 'react-rails', '~> 1.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
