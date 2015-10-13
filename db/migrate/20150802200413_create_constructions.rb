@@ -5,6 +5,7 @@ class CreateConstructions < ActiveRecord::Migration
       t.date :start_date
       t.date :finish_date
       t.string :address
+      t.string :status, default: 'running'
       t.decimal :contract_amount
       t.decimal :estimates_amount, default: 0.0
       t.boolean :done, default: false

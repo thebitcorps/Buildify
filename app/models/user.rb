@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :constructions
+  has_many :constructions,through: :construction_users
+  has_many :residents, class_name: 'User',through: :construction_users,foreign_key: :user_id,source: :user
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
   validates :role, inclusion: ROLES
   paginates_per 10
 
-  scope :resident, -> { where role: 'resident' }
+  scope :residents, -> { where role: 'resident' }
   scope :administrator, -> { where role: 'administrator' }
 
   def self.search(search)

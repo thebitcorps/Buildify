@@ -1,8 +1,18 @@
+
 =  simple_form_for(@construction, html: { class: 'form-horizontal' }) do |f|
   = f.input :title, label: 'Nombre'
   = f.input :address,label: 'Direccion'
   = f.input :start_date, label: 'Fecha de inicio'
   = f.input :finish_date, label: 'Fecha de finalización'
   = f.input :contract_amount, label: 'Cantidad contratada'
-  = f.association :resident, collection: User.resident
+  -#= f.association :resident, collection: User.resident
+  #construction_users
+    %label.control-label
+      *Residents
+    = f.simple_fields_for :construction_users do |construction_user|
+      = render 'construction_user_fields', f: construction_user
+    .links
+      = link_to_add_association 'add task', f, :construction_users,class: 'btn btn-default'
+  %br
+
   = f.button :submit, value: 'Crear', class: 'btn btn-primary'

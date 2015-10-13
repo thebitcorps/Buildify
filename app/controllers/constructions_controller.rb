@@ -16,6 +16,7 @@ class ConstructionsController < ApplicationController
 
   def new
     @construction = Construction.new
+    @construction.construction_users << ConstructionUser.new(role: ConstructionUser::PRINCIPAL_ROLE)
   end
 
   def create
@@ -51,7 +52,7 @@ class ConstructionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def construction_params
-      params.require(:construction).permit(:title, :start_date, :finish_date, :contract_amount, :user_id)
+      params.require(:construction).permit(:title, :start_date,:address, :finish_date, :contract_amount,construction_users_attributes: [:user_id,:role,:_destroy])
     end
 
 end

@@ -1,9 +1,9 @@
 User.create(name: "The bit corps", phone: '4498961443', role: 'administrator', email: "dev@thebitcorps.com", password: "12345678", password_confirmation: "12345678")
 User.create(name: 'Juan Antonio Cruz de la Rivera', phone: '4498663265', role: 'resident', email: 'resident@correo.com', password: '12345678', password_confirmation: '12345678')
-
-Construction.create(title: "Kinder",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-05-14', finish_date: '2015-12-16', user_id: User.second.id)
-Construction.create(title: "Escuela",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-04-04', finish_date: '2015-10-16', user_id: User.second.id)
-Construction.create(title: "Prepa",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-06-12', finish_date: '2015-11-05', user_id: User.second.id)
+User.create(name: 'Pedro Jose Jimenez de la Rivera', phone: '4498663265', role: 'resident', email: 'resident1@correo.com', password: '12345678', password_confirmation: '12345678')
+Construction.create(title: "Kinder",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-05-14', finish_date: '2015-12-16', resident_ids: [User.second.id])
+Construction.create(title: "Escuela",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-04-04', finish_date: '2015-10-16', resident_ids: [User.second.id])
+Construction.create(title: "Prepa",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-06-12', finish_date: '2015-11-05', resident_ids: [User.second.id])
 
 MeasureUnit.create(unit: 'Metros cuadrados', abbreviation: 'M2')
 MeasureUnit.create(unit: 'Kilogramos', abbreviation: 'Kg')

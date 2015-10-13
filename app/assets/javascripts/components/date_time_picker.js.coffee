@@ -6,6 +6,7 @@
       keepOpen: false
       format: 'DD/MM/YYYY'
       locale: 'es'
+      minDate: moment()
     that = @
     $('#' + "#{@props.name}").on 'dp.change', (e) ->
       that.changed(e)

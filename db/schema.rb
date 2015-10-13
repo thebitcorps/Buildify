@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926140427) do
+ActiveRecord::Schema.define(version: 20151013130452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,20 +27,29 @@ ActiveRecord::Schema.define(version: 20150926140427) do
 
   add_index "billing_adjustments", ["payment_id"], name: "index_billing_adjustments_on_payment_id", using: :btree
 
+  create_table "construction_users", force: :cascade do |t|
+    t.integer  "construction_id"
+    t.integer  "user_id"
+    t.string   "role"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "construction_users", ["construction_id"], name: "index_construction_users_on_construction_id", using: :btree
+  add_index "construction_users", ["user_id"], name: "index_construction_users_on_user_id", using: :btree
+
   create_table "constructions", force: :cascade do |t|
     t.string   "title"
     t.date     "start_date"
     t.date     "finish_date"
     t.string   "address"
+    t.string   "status",           default: "running"
     t.decimal  "contract_amount"
     t.decimal  "estimates_amount", default: 0.0
     t.boolean  "done",             default: false
-    t.integer  "user_id"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
-
-  add_index "constructions", ["user_id"], name: "index_constructions_on_user_id", using: :btree
 
   create_table "estimates", force: :cascade do |t|
     t.decimal  "amount"
@@ -186,7 +195,8 @@ ActiveRecord::Schema.define(version: 20150926140427) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "billing_adjustments", "payments"
-  add_foreign_key "constructions", "users"
+  add_foreign_key "construction_users", "constructions"
+  add_foreign_key "construction_users", "users"
   add_foreign_key "estimates", "constructions"
   add_foreign_key "invoices", "invoice_receipts"
   add_foreign_key "invoices", "payments"

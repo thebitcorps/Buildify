@@ -1,0 +1,4 @@
+.nested-fields
+  = f.association :user, collection: User.residents
+  = f.input :role, collection: ConstructionUser::ROLES
+  = link_to_remove_association "remove resident", f,class: 'btn btn-warning'

@@ -47,7 +47,7 @@
           className: 'control-label'
           'Material'
         React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken
-        React.createElement LabelInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
+        React.createElement NumberInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
 #        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit
         React.createElement LabelSelect, label: 'Measure unit',name: 'measure_unit',options: @state.units,onChanged: @handleSelectChange
         React.DOM.button

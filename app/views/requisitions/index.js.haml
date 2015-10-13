@@ -25,4 +25,5 @@ $('#requisitions').html("#{j( render partial: 'requisition', collection: @requis
   $('#pending').attr('class', '');
   $('#partially').attr('class', '');
   $('#all').attr('class', 'active');
-window.history.pushState(null, null, "requisitions?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}");
+
+window.location.replace("requisitions?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}")
