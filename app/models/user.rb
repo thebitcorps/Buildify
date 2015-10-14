@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :constructions,through: :construction_users
+  has_many :construction_users
   has_many :construction_administrations, class_name: 'Construction',source: :construction,foreign_key: :user_id
   # has_many :residents, class_name: 'User',through: :construction_users,foreign_key: :user_id,source: :user
   has_many :residents, class_name: 'User',through: :construction_users,foreign_key: :user_id,source: :user

@@ -1,9 +1,12 @@
 
 .jumbotron
-  %h1
+  %h2
     = @provider.name
     -#%small= @user.role
   -#use icon for better ui experience
+  %p
+    %b Address:
+    = @provider.address
   %p
     %b Phone:
     = @provider.telephone
