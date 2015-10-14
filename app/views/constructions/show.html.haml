@@ -6,9 +6,9 @@
         .row
           %h1
             = @construction.title
-            %small= link_to @construction.resident.name, user_path(@construction.resident)
+            %small= link_to @construction.manager.name, user_path(@construction.manager)
         .col-md-8.text-center
-          = link_to 'Administrar',constructions_path,class: 'btn btn-primary'
+          = link_to 'Administrar',edit_construction_path(@construction),class: 'btn btn-primary'
         //////////
       .col-md-6
         // Dates and progress bar in days

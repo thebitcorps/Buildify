@@ -8,7 +8,7 @@
   %h3.list-group-item-heading
     = construction.title
     %small
-      = construction.resident.name if !construction.resident.nil?
+      = construction.manager.name if !construction.manager.nil?
   .progress
     - if construction.available_days > construction.days_passed
       .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", :role => "progressbar", :style => "width: #{percentage_of_number(construction.days_passed, construction.available_days)}%;"}

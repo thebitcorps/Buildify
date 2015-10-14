@@ -2,10 +2,14 @@
 =  simple_form_for(@construction, html: { class: 'form-horizontal' }) do |f|
   = f.input :title, label: 'Nombre'
   = f.input :address,label: 'Direccion'
-  = f.input :start_date, label: 'Fecha de inicio'
-  = f.input :finish_date, label: 'Fecha de finalización'
+  .row
+    .col-md-6
+      = f.input :start_date, label: 'Fecha de inicio'
+    .col-md-6
+      = f.input :finish_date, label: 'Fecha de finalización'
   = f.input :contract_amount, label: 'Cantidad contratada'
   -#= f.association :resident, collection: User.resident
+  = f.input :manager,collection: User.residents
   #construction_users
     %label.control-label
       *Residents

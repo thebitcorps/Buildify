@@ -1,6 +1,6 @@
 class Construction < ActiveRecord::Base
-  belongs_to :resident, class_name: 'User', foreign_key: :user_id
-
+  # belongs_to :resident, class_name: 'User', foreign_key: :user_id
+  belongs_to :manager,class_name: 'User', foreign_key: :user_id
   has_many :requisitions
   has_many :purchase_orders, through: :requisitions
   has_many :invoices, through: :purchase_orders
@@ -19,12 +19,9 @@ class Construction < ActiveRecord::Base
   FINISH_STATUS = 'finished'
 
 
-  validates :title,:address,:contract_amount,:construction_users, presence: true
+  validates :title,:address,:contract_amount,:manager, presence: true
   validate :validate_dates_logic_relation
 
-  def resident
-    residents.first
-  end
 
   def validate_dates_logic_relation
       errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date

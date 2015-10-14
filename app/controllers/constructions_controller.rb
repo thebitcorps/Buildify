@@ -16,7 +16,6 @@ class ConstructionsController < ApplicationController
 
   def new
     @construction = Construction.new
-    @construction.construction_users << ConstructionUser.new(role: ConstructionUser::PRINCIPAL_ROLE)
   end
 
   def create
