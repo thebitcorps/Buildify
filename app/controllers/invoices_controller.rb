@@ -8,7 +8,6 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    
     respond_to do |format|
       if @invoice.update invoice_params
         @invoice.build_payment if @invoice.payment == nil && !@invoice.amount.blank?

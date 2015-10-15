@@ -5,9 +5,6 @@
       Requisicion 
       %span{class: "label label-#{@requisition.status_color}"}
         = [@requisition.requisition_date.year, @requisition.folio.to_s.rjust(4, '0')].join(' - ')
-
-
-
 = react_component 'RequisitionArrival',itemMaterials: @item_materials_json
 .panel.panel-default
   %table.table

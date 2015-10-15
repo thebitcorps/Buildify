@@ -1,7 +1,7 @@
 class ItemMaterialsController < ApplicationController
 
+  before_action :set_item_material, only: [ :update, :destroy]
   def update
-    set_item_material
     respond_to do |format|
       if @item_material.update item_material_params
         format.json {render json: @item_material}
@@ -12,12 +12,20 @@ class ItemMaterialsController < ApplicationController
     end
   end
 
+  def destroy
+    @item_material.destroy
+    respond_to do |format|
+      format.json { render json: @item_material.to_json, status: :ok }
+    end
+  end
+
 private
   def set_item_material
     @item_material = ItemMaterial.find(params[:id])
   end
 
+
   def item_material_params
-    params.require(:item_material).permit(:status)
+    params.require(:item_material).permit(:status,:requested,:measure_unit)
   end
 end

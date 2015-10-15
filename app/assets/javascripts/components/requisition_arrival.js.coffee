@@ -8,6 +8,11 @@
         itemMaterial.status = newStatus
         @setState itemMaterials: items
         return
+  removeItemMaterial: (itemMaterial) ->
+    itemMaterials = @state.itemMaterials.slice()
+    index = itemMaterials.indexOf itemMaterial
+    itemMaterials.splice index, 1
+    @setState itemMaterials: itemMaterials
   render: ->
     React.DOM.div
       className: 'requisition-arrival'
@@ -21,4 +26,4 @@
               React.DOM.th key: index,th
           React.DOM.tbody null,
             for itemMaterial in @state.itemMaterials
-              React.createElement ItemMaterialArrival,key: itemMaterial.id,itemMaterial: itemMaterial,itemMaterialChanged: @itemMaterialUpdate
+              React.createElement ItemMaterialArrival,key: itemMaterial.id,itemMaterial: itemMaterial,itemMaterialChanged: @itemMaterialUpdate,handleDelete: @removeItemMaterial

@@ -1,2 +1,9 @@
-%h1 Nueva requisicion
-= render partial: 'form'
+.page-header
+  %h1
+    = link_to @construction.title, construction_path( @construction)
+    %small
+      Editar Requisicion
+      %span{class: "label label-#{@requisition.status_color}"}
+        = [@requisition.requisition_date.year, @requisition.folio.to_s.rjust(4, '0')].join(' - ')
+
+= react_component 'RequisitionForm',{construction_id: params[:construction_id],itemMaterials: @item_materials_json,edit: true}

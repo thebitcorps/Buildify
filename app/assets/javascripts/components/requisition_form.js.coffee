@@ -1,6 +1,6 @@
 @RequisitionForm = React.createClass
   getInitialState: ->
-    itemMaterials: []
+    itemMaterials: @props.itemMaterials
     errors: []
     #this is for the key props thath react uses for childs views
     #has the count of item material added to the requisiiton is the sam
@@ -21,6 +21,7 @@
     itemMaterials = @state.itemMaterials.slice()
     itemMaterials.splice index,1 , new_item
     @setState itemMaterials: itemMaterials
+
   # push a new item material to the stateand add 1 to the count
   addNewItemMaterial: (element)->
     element.id = @state.itemMaterialsIdCount
@@ -63,6 +64,7 @@
     React.DOM.div
       className: 'requisition-form'
       React.createElement ErrorBox, errorsArray: @state.errors
+
       React.createElement DateInput,label: 'Requisition Date',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.table

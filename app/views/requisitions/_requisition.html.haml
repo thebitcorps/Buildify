@@ -3,7 +3,10 @@
     .col-md-12
       %h4.pull-right
         %small
-          = requisition.locked? ? 'Procesada' : 'Pendiente'
+          - if requisition.locked?
+            Procesada
+          - else
+            = distance_of_time_in_words(Time.now , requisition.requisition_date)
       %table
         %tr
           %td

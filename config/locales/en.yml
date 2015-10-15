@@ -20,4 +20,39 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+ datetime:
+  distance_in_words:
+    about_x_hours:
+      one: hace 1 hora
+      other: hace %{count} horas
+    about_x_months:
+      one: alrededor de 1 mes
+      other: alrededor de %{count} meses
+    about_x_years:
+      one: about 1 year
+      other: about %{count} years
+    almost_x_years:
+      one: almost 1 year
+      other: almost %{count} years
+    half_a_minute: half a minute
+    less_than_x_minutes:
+      one: less than a minute
+      other: less than %{count} minutes
+    less_than_x_seconds:
+      one: less than 1 second
+      other: less than %{count} seconds
+    over_x_years:
+      one: over 1 year
+      other: over %{count} years
+    x_days:
+      one: 1 day
+      other: "en %{count} dias"
+    x_minutes:
+      one: 1 minute
+      other: "%{count} minutes"
+    x_months:
+      one: 1 month
+      other: "%{count} months"
+    x_seconds:
+      one: 1 second
+      other: "%{count} seconds"

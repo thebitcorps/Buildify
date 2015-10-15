@@ -1,36 +1,43 @@
 @ItemMaterial = React.createClass
   getInitialState: ->
+    getMaterialName = (props) ->
+      if props.itemMaterial.material_name
+        return props.itemMaterial.material_name
+      else
+        return props.itemMaterial.material.name
     edit: false
-    material_name: @props.itemMaterial.material_name
+    material_name: getMaterialName(@props)
     material_id: @props.itemMaterial.material_id
     requested: @props.itemMaterial.requested
     measure_unit: @props.itemMaterial.measure_unit
+  handleSelectChange: (value) ->
+    @setState measure_unit: value
   handleDelete: ->
     @props.handleDeleteItemMaterial @props.itemMaterial
   handleInputChange: (name,value) ->
     @setState "#{name}": value
-  handleEdit: ->
-    new_item =
-      id: @state.material_id_hidden
-      material_id: @state.material_id_hidden
-      requested: @state.requested
-      measure_unit: @state.measure_unit
-    @props.handleUpdate @props.itemMaterial,new_item
+  handleEdit: (e)->
+    @props.handleUpdate @props.itemMaterial,@state
     @setState edit: false
   handleToggle: ->
     @setState edit: !@state.edit
+  units: ->
+    units = [{'display' : '','value': ''}]
+    for measure_unit in @props.itemMaterial.material.measure_units
+      units.push  {'display' : "#{measure_unit.unit} | #{measure_unit.abbreviation}" ,'value': measure_unit.abbreviation }
+    return units
   renderForm: ->
     React.DOM.tr null,
+      React.DOM.td null,@state.material_name
       React.DOM.td null,
-        React.createElement LabelInput,name: 'material_id',value: @state.material_id,changed: @handleInputChange
+        React.createElement NumberInput,name: 'requested',value: @state.requested,changed: @handleInputChange
       React.DOM.td null,
-        React.createElement LabelInput,name: 'requested',value: @state.requested,changed: @handleInputChange
-      React.DOM.td null,
-        React.createElement LabelInput,name: 'measure_unit',changed: @handleInputChange,value: @state.measure_unit
+        React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
+
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-warning'
-          onClick: @handleEdit
+          onClick: @handleToggle
           'Update'
         React.DOM.a
           className: 'btn btn-default'
@@ -38,10 +45,8 @@
           'Cancel'
   renderRow: ->
     React.DOM.tr null,
-      React.DOM.td null,
-        @state.material_name
-      React.DOM.td null,
-        "#{@state.requested} #{@state.measure_unit}"
+      React.DOM.td null,@state.material_name
+      React.DOM.td null,"#{@state.requested} #{@state.measure_unit}"
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-warning'

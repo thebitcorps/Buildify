@@ -14,7 +14,15 @@
     componentName: 'token-input'
     url: ''
     queryParam: 'search[query]'
+    withDescription: false
   componentDidMount: ->
+    #refactor this so we can include a function that return the element
+    if @props.withDescription
+      formater = (item) ->
+        return "<li> #{item.name} <p> #{item.description} </p> </li>"
+    else
+      formater = (item) ->
+        return "<li> #{item.name}</p> </li>"
     state = @
     $("#" + state.props.componentName).tokenInput(state.props.url, {
       crossDomain: false,
@@ -22,10 +30,14 @@
       theme: "facebook"
       queryParam: state.props.queryParam
       tokenLimit: 1
+      resultsFormatter: formater
       onAdd: (item) ->
         state.props.onAddToken item
       onDelete: (item) ->
         state.props.onRemoveToken item
+
+
+
     })
   render: ->
     React.DOM.div

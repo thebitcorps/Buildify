@@ -1,5 +1,4 @@
 class Construction < ActiveRecord::Base
-  # belongs_to :resident, class_name: 'User', foreign_key: :user_id
   belongs_to :manager,class_name: 'User', foreign_key: :user_id
   has_many :requisitions
   has_many :purchase_orders, through: :requisitions

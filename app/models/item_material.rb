@@ -19,5 +19,12 @@ class ItemMaterial < ActiveRecord::Base
   STATUS = [DELIVERED_STATUS,PENDING_STATUS,PARTIALLY_DELIVERED_STATUS,AUTHORIZED_STATUS]
 
 
+  # def update_purchase_order_status
+  #   return unless purchase_order
+  #   for item_material in purchase_order.item_materials
+  #     if
+  #   end
+  # end
+
 
 end

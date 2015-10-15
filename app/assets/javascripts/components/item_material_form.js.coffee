@@ -3,7 +3,7 @@
     material_id: ''
     requested: ''
     measure_unit: ''
-    units: []
+    material: {measure_units: []}
   valid: ->
     @state.material_id_hidden && @state.requested && @state.measure_unit
   handleInputChange: (name,value) ->
@@ -18,17 +18,20 @@
       material_name: @state.material_name_hidden
       requested: @state.requested
       measure_unit: @state.measure_unit
+      material: @state.material
     $("#material").tokenInput('clear')
     @props.handleNewItemMaterial data
     @setState @getInitialState
   onTokenAdded: (item) ->
 #    alert item.measure_units[0]
-    units = [{'display' : '','value': ''}]
-    for measure_unit in item.measure_units
-      units.push  {'display' : "#{measure_unit.unit} | #{measure_unit.abbreviation}" ,'value': measure_unit.abbreviation }
-    @setState {material_id_hidden: item.id, material_name_hidden: item.name,units: units}
+    @setState {material_id_hidden: item.id, material_name_hidden: item.name,material: item}
   removeToken: (item) ->
-    @setState {material_id_hidden: '',material_name_hidden: '',units: []}
+    @setState {material_id_hidden: '',material_name_hidden: '',material: {measure_units: []}}
+  units: ->
+    units = [{'display' : '','value': ''}]
+    for measure_unit in @state.material.measure_units
+      units.push  {'display' : "#{measure_unit.unit} | #{measure_unit.abbreviation}" ,'value': measure_unit.abbreviation }
+    return units
   hiddenInput: (name) ->
     React.DOM.input
       type: 'hidden'
@@ -46,10 +49,10 @@
         React.DOM.label
           className: 'control-label'
           'Material'
-        React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken
+        React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true
         React.createElement NumberInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
 #        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit
-        React.createElement LabelSelect, label: 'Measure unit',name: 'measure_unit',options: @state.units,onChanged: @handleSelectChange
+        React.createElement LabelSelect, label: 'Measure unit',name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
         React.DOM.button
           className: 'btn btn-primary'
           onClick: @handleNew
