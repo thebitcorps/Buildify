@@ -1,5 +1,5 @@
 class PurchaseOrder < ActiveRecord::Base
-  has_many :item_materials,dependent: :destroy
+  has_many :item_materials
   belongs_to :invoice
   belongs_to :requisition
   has_one :provider, through: :invoice
@@ -30,6 +30,10 @@ class PurchaseOrder < ActiveRecord::Base
     end
 
     self.requisition.save
+  end
+
+  def get_color
+    sended ? 'info' : 'warning'
   end
 
   def change_item_material_pending

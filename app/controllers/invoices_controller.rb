@@ -11,6 +11,8 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       if @invoice.update invoice_params
         @invoice.build_payment if @invoice.payment == nil && !@invoice.amount.blank?
+        #here we have repetition of fields
+        #maybe get this value always from the invoice to prevent repetition
         @invoice.payment.amount = @invoice.amount
         @invoice.payment.payment_date = @invoice.invoice_date
         @invoice.payment.construction = @invoice.construction
@@ -26,6 +28,7 @@ class InvoicesController < ApplicationController
 
   def set_invoice
     @invoice = Invoice.find params[:id]
+    @invoice.status = Invoice::ADDED_STATUS
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

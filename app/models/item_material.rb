@@ -10,10 +10,15 @@ class ItemMaterial < ActiveRecord::Base
 
   validates :requested, numericality: true
 
+  #when the itemMaterial was't fully deliver
   PARTIALLY_DELIVERED_STATUS = 'partially'
+  #when the itemMaterial was delivered complete to construction
   DELIVERED_STATUS = 'delivered'
+  # when the purchse order was for that item is already created
   AUTHORIZED_STATUS = 'authorized'
+  #when the itemMaterial was't deliver to construction
   MISSED_STATUS = 'missed'
+  #the item mateterial is waiting for a purchase order to be generate
   PENDING_STATUS = 'pending'
 
   STATUS = [DELIVERED_STATUS,PENDING_STATUS,PARTIALLY_DELIVERED_STATUS,AUTHORIZED_STATUS]
@@ -25,6 +30,19 @@ class ItemMaterial < ActiveRecord::Base
   #     if
   #   end
   # end
+
+  def get_color
+    
+    if status == PARTIALLY_DELIVERED_STATUS
+      'warning'
+    elsif status == DELIVERED_STATUS
+      'success'
+    elsif status == MISSED_STATUS
+      'danger'
+    else
+      'dafault'
+    end
+  end
 
 
 end

@@ -74,13 +74,14 @@ ActiveRecord::Schema.define(version: 20151014143654) do
 
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
+    t.string   "status",             default: "waiting"
     t.decimal  "amount"
     t.date     "invoice_date"
     t.integer  "invoice_receipt_id"
     t.integer  "payment_id"
     t.integer  "provider_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "invoices", ["invoice_receipt_id"], name: "index_invoices_on_invoice_receipt_id", using: :btree

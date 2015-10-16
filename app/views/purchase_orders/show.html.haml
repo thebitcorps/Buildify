@@ -3,8 +3,13 @@
     = link_to [@requisition.requisition_date.year, @requisition.folio.to_s.rjust(4, '0')].join(' - '), requisition_path(@requisition)
     %small
       Orden 
-      %span.label.label-info
+      %span{class:"label label-#{@purchase_order.get_color}"}
         = @purchase_order.folio.to_s.rjust(4, '0')
+
+
+
+
+
 
 .panel.panel-default
   %table.table
@@ -23,10 +28,10 @@
   %small
     Factura
 
-- if @invoice.folio.blank?
+- if @invoice.waiting?
   %h3.text-center
     %small
-      Esta factura no a sido resivida
+      Esta factura no a sido recibida
     %br
     %small
       = link_to "Editar factura", edit_invoice_path(@invoice)

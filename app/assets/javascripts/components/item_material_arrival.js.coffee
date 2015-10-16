@@ -111,6 +111,7 @@
             React.DOM.a
               href: '/purchase_orders/' + @props.itemMaterial.purchase_order_id
               "Orden - #{@props.itemMaterial.purchase_order_id}"
+        #add prop for the requisition state nly show buttons when requisitons is process
         if @props.itemMaterial.purchase_order_id == null
           React.DOM.td null,
             React.DOM.div className: 'btn-group',
