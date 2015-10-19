@@ -1,4 +1,5 @@
 class RequisitionsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_requisition, only: [:show, :edit, :update, :destroy]
   before_action :set_construction, only: [:index, :new, :edit]
 

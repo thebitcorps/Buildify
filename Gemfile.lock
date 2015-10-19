@@ -157,6 +157,8 @@ GEM
     ref (2.0.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    royce (1.0.6)
+      rails (>= 4.1.4)
     ruby_parser (3.7.0)
       sexp_processor (~> 4.1)
     sass (3.4.16)
@@ -223,6 +225,7 @@ DEPENDENCIES
   pg
   rails (= 4.2.1)
   react-rails (~> 1.0)
+  royce
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   simple_form
@@ -231,3 +234,6 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.10.6

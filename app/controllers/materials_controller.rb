@@ -1,4 +1,5 @@
 class MaterialsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_material, only: [:show,:edit,:destroy,:update]
   # before_action :humanize_material,only: [:create,:update]
 

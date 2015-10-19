@@ -1,4 +1,5 @@
   class ProvidersController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_provider, only: [:show,:edit,:destroy,:update]
 
   def index
