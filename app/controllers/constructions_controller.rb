@@ -1,4 +1,5 @@
 class ConstructionsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_construction, only: [:show, :edit, :update, :destroy]
   # before_action :humanize_title, only: [:create, :update]
 

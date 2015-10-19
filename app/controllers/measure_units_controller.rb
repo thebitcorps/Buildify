@@ -1,4 +1,5 @@
 class MeasureUnitsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_mesure_unit, only: [ :edit, :update, :destroy]
 
   def index
