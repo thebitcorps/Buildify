@@ -10,9 +10,9 @@ class UsersController < ApplicationController
 
     # I don't know, this kind of logic is for the model. Rob.
     if params[:search]
-      params[:role] = User::ROLES.include?(params[:search][:role]) ? "#{params[:search][:role]}" : 'residents'
+      params[:role] = User::ROLES.include?(params[:search][:role]) ? "#{params[:search][:role]}" : 'subordinates'
     end
-    @user_list = User::ROLES.include?(params[:role]) ? "#{params[:role]}" : 'residents'
+    @user_list = User::ROLES.include?(params[:role]) ? "#{params[:role]}" : 'subordinates'
 
 
     @users = (class_eval %Q{User.#{@user_list}}).search(sanitized_search).page params[:page]
