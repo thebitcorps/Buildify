@@ -14,6 +14,10 @@ class PurchaseOrder < ActiveRecord::Base
 
   after_create :check_requisition_items
 
+
+  scope :sent, -> {where sended: true}
+  scope :not_sent, -> {where sended: false}
+
   def check_requisition_items
     items_with_purchase = 0
     self.requisition.item_materials.each do |item_material|

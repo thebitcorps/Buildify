@@ -51,7 +51,7 @@ class ConstructionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def construction_params
-      params.require(:construction).permit(:title, :start_date,:address, :finish_date, :contract_amount,construction_users_attributes: [:user_id,:role,:_destroy])
+      params.require(:construction).permit(:title, :start_date,:address, :status,:finish_date, :contract_amount,construction_users_attributes: [:user_id,:role,:_destroy])
     end
 
 end

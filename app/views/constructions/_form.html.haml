@@ -1,5 +1,7 @@
 
 =  simple_form_for(@construction, html: { class: 'form-horizontal' }) do |f|
+  - if edit
+    = f.input :status,collection: Construction::STATUS_OPTIONS
   = f.input :title, label: 'Nombre'
   = f.input :address,label: 'Direccion'
   .row

@@ -32,7 +32,7 @@ class ItemMaterial < ActiveRecord::Base
   # end
 
   def get_color
-    
+
     if status == PARTIALLY_DELIVERED_STATUS
       'warning'
     elsif status == DELIVERED_STATUS

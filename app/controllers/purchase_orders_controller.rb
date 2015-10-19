@@ -3,8 +3,13 @@ class PurchaseOrdersController < ApplicationController
   before_action :set_requisition, only: [:new]
 
   def index
+    @type_list = sanitized_locked_param
     @construction = Construction.find(params[:construction_id])
-    @purchase_orders = @construction.purchase_orders
+    @purchase_orders = (instance_eval %Q{@construction.purchase_orders.#{@type_list}})
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
@@ -23,7 +28,7 @@ class PurchaseOrdersController < ApplicationController
 
   def create
     @purchase_order = PurchaseOrder.new purchase_order_params
-    @purchase_order.build_invoice
+    @purchase_order.build_invoice provider_id: params[:provider_id]
     respond_to do |format|
       if @purchase_order.save
         format.json {render json: @purchase_order}
@@ -48,4 +53,7 @@ private
     params.require(:purchase_order).permit(:delivery_place, :delivery_address,:delivery_receiver,:requisition_id,:item_material_ids => [])
   end
 
+  def sanitized_locked_param
+    ['sent','not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all'
+  end
 end

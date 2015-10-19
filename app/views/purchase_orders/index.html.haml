@@ -3,6 +3,15 @@
     = link_to @construction.title, construction_path(@construction)
     %small Ordenes de compra
 
+
+%ul.nav.nav-tabs
+  %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
+    = link_to 'Todas',purchase_orders_path(type_list: 'all', construction_id: params[:construction_id]),remote: true
+  %li{id: 'not_sent',class: " #{'active' if params[:type_list] == 'not_sent' }"}
+    = link_to 'Pendientes',purchase_orders_path(type_list: 'not_sent', construction_id: params[:construction_id]),remote: true
+  %li{id: 'sent',class: " #{'active' if params[:type_list] == 'sent'  }"}
+    = link_to 'Enviadas',purchase_orders_path(type_list: 'sent', construction_id: params[:construction_id]),remote: true
+
 .list-group#purchase_orders
   = render partial: 'purchase_order', collection: @purchase_orders
   - if @purchase_orders.count == 0

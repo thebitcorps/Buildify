@@ -40,7 +40,7 @@
     $.ajax
       url: '/purchase_orders.json'
       type: 'POST'
-      data: {purchase_order: data}
+      data: {purchase_order: data,provider_id: @state.provider_id_hidden}
       dataType: 'JSON'
       success:  (data) ->
         #update the browers window

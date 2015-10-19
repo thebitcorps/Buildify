@@ -13,11 +13,13 @@ class Construction < ActiveRecord::Base
   paginates_per 10
 
   # note database default is 'running' not associated with this constant of change change db default also
+  #when construction is in progress
   RUNNING_STATUS = 'running'
   STOPPED_STATUS = 'stopped'
+  #when the construction is successfully finished
   FINISH_STATUS = 'finished'
-
-
+  STATUS_OPTIONS = {'En proceso' => RUNNING_STATUS,'Detenida ' => STOPPED_STATUS,'Termindada' => FINISH_STATUS}
+  STATUS = [RUNNING_STATUS,STOPPED_STATUS,FINISH_STATUS]
   validates :title,:address,:contract_amount,:manager, presence: true
   validate :validate_dates_logic_relation
 
