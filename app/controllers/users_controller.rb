@@ -8,14 +8,13 @@ class UsersController < ApplicationController
     # 's' added for readability in the model methods
     # if the request comes with search, get the role from the search and use it
 
-    # I don't know, this kind of logic is for the model. Rob.
+    # I don't know, this kind of logic is for the model. Rob. 
     if params[:search]
       params[:role] = User::ROLES.include?(params[:search][:role]) ? "#{params[:search][:role]}" : 'subordinates'
     end
-    @user_list = User::ROLES.include?(params[:role]) ? "#{params[:role]}" : 'subordinates'
+    @user_list = User::ROLES.include?(params[:role]) ? "#{params[:role]}" : 'subordinate'
 
-
-    @users = (class_eval %Q{User.#{@user_list}}).search(sanitized_search).page params[:page]
+    @users = (class_eval %Q{User.#{@user_list.pluralize}}).search(sanitized_search).page params[:page]
     respond_to do |format|
       format.html
       format.js
@@ -36,6 +35,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
     # create method for generate password
     # what?! Rob
+    # who?! Omar
     @user.password = '12345678'
     @user.password_confirmation = '12345678'
     respond_to do |format|

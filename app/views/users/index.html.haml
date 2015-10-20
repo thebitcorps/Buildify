@@ -10,11 +10,10 @@
 %br
 
 %ul.nav.nav-tabs
-  %li{id: 'subordinates',class: " #{'active' if params[:role] == 'subordinates'  or params[:role].nil? }"}
-    = link_to 'Subordinados',users_path(role: 'subordinates'),remote: true
+  %li{id: 'subordinates',class: " #{'active' if params[:role] == 'subordinate'  or params[:role].nil? }"}
+    = link_to 'Subordinados', users_path(role: 'subordinate'),remote: true
   %li{id: 'administrators',class: " #{'active' if params[:role] == 'administrator'}"}
     = link_to 'Administradores',users_path(role: 'administrator'),remote: true
-
 %table.table.table-condensed.table-striped
   %thead
     %tr

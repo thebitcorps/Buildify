@@ -1,6 +1,10 @@
-User.create(name: "The bit corps", phone: '4498961443', role: 'administrator', email: "dev@thebitcorps.com", password: "12345678", password_confirmation: "12345678")
-User.create(name: 'Juan Antonio Cruz de la Rivera', phone: '4498663265', role: 'subordinate', email: 'resident@correo.com', password: '12345678', password_confirmation: '12345678')
-User.create(name: 'Pedro Jose Jimenez de la Rivera', phone: '4498663265', role: 'subordinate', email: 'resident1@correo.com', password: '12345678', password_confirmation: '12345678')
+admin = User.create(name: "The bit corps", phone: '4498961443', email: "dev@thebitcorps.com", password: "12345678", password_confirmation: "12345678")
+user1 = User.create(name: 'Juan Antonio Cruz de la Rivera', phone: '4498663265', email: 'resident@correo.com', password: '12345678', password_confirmation: '12345678')
+user2 = User.create(name: 'Pedro Jose Jimenez de la Rivera', phone: '4498663265', email: 'resident1@correo.com', password: '12345678', password_confirmation: '12345678')
+
+admin.administrator!
+user1.subordinate!
+user2.subordinate!
 
 Construction.create(title: "Kinder",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-05-14', finish_date: '2015-12-16', user_id: User.second.id)
 Construction.create(title: "Escuela",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-04-04', finish_date: '2015-10-16', user_id: User.second.id)

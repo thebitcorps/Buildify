@@ -8,4 +8,7 @@ class ApplicationController < ActionController::Base
     return '' if params[:search].nil?
     params[:search][:query].nil? ? '' : params[:search][:query]
   end
+
+  def filter_sub_out
+  end
 end
