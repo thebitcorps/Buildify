@@ -18,3 +18,32 @@
 
   = link_to 'Regresar', providers_path, class: 'btn btn-default'
 
+
+%ul.nav.nav-tabs
+  %li.active
+    %a{"data-toggle" => "tab", :href => "#purchase_orders"} Ordenes decompra
+  %li
+    %a{"data-toggle" => "tab", :href => "#paymets"} Pagos
+.tab-content
+  #purchase_orders.tab-pane.fade.active.in
+    = render partial: 'providers/purchase_order',collection: @provider.purchase_orders
+  #paymets.tab-pane.fade
+    .panel.panel-default
+      %table.table
+        %thead
+          %tr
+            %th
+              Factura
+            %th
+              Orden de compra
+            %th
+              Importe
+            %th
+              Pagado
+            %th
+              Saldo
+            %th
+              Pagos
+            %th
+        %tbody
+          = render partial: 'home/payment', collection: @provider.payments

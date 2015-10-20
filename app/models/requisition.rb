@@ -34,6 +34,10 @@ class Requisition < ActiveRecord::Base
     end
   end
 
+  def self.plural(count)
+    count == 1 ? 'requisicion' : 'requisiciones'
+  end
+
   def change_item_material_pending
     ApplicationHelper::change_item_material_status self,ItemMaterial::PENDING_STATUS
   end

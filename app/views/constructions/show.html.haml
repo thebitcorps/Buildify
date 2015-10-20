@@ -36,7 +36,7 @@
     //// Requisitions
     .col-md-4
       %h3.text-center
-        = @construction.requisitions.count
+        = "#{@construction.requisitions.count } #{Requisition.plural @construction.requisitions.count }"
         %br
         .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
           = link_to 'Nueva Requisición', new_requisition_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
@@ -44,7 +44,7 @@
     //// Purchase orders
     .col-md-4
       %h3.text-center
-        = @construction.purchase_orders.count
+        = "#{@construction.purchase_orders.count} #{PurchaseOrder.plural @construction.purchase_orders.count}"
         %br
         .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
           = link_to "Ver todas", purchase_orders_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
@@ -60,7 +60,7 @@
         %th
           Factura
         %th
-          Ordende compra
+          Orden de compra
         %th
           Importe
         %th

@@ -1,9 +1,14 @@
 %a.list-group-item.construction-special-row{:href => "#{construction_path(construction)}"}
   %h4
-    %span.label.label-primary.pull-right= number_to_currency(construction.contract_amount)
+    %span.label.label-primary.pull-right= "Monto - #{number_to_currency(construction.contract_amount)}"
     %span.pull-right -
     %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
-      = number_to_currency(construction.estimates_amount)
+      = "Estimaciones - #{number_to_currency(construction.estimates_amount)}"
+    -#make method for the expense of construction
+    -#is just an idea so it could be more
+    %span.pull-right -
+    %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
+      = "Gastos - #{number_to_currency(0)}"
 
   %h3.list-group-item-heading
     = construction.title

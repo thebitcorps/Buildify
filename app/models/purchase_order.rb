@@ -18,6 +18,10 @@ class PurchaseOrder < ActiveRecord::Base
   scope :sent, -> {where sended: true}
   scope :not_sent, -> {where sended: false}
 
+  def self.plural(count)
+    count == 1 ? 'orden de compra' : 'ordenes de compra'
+  end
+
   def check_requisition_items
     items_with_purchase = 0
     self.requisition.item_materials.each do |item_material|

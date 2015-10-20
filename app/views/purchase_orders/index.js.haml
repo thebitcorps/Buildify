@@ -1,7 +1,7 @@
 $('#purchase_orders').html("#{j( render partial: 'purchase_order', collection: @purchase_orders )}");
 - if @purchase_orders.count == 0
   $('#purchase_orders').append("<div class='well'> No hay ordenes de compra</div>")
-window.location.replace("purchase_orders?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}")
+-#window.location.replace("purchase_orders?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}")
 -#$('#paginate').html("#{j( paginate @requisitions)}");
 
 -#$('#search_role').val("#{@type_list}");

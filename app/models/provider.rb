@@ -9,6 +9,7 @@ class Provider < ActiveRecord::Base
   validates :name, :email, :telephone, :address, presence: true
   scope :all_alphabetical, -> { all.order("LOWER(name)") }
 
+
   def self.search(query)
     return all if query.nil?
     if query.empty?

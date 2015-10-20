@@ -1,7 +1,7 @@
 %h1 Listing users
 
 
-= simple_form_for :search,url: users_path(role: 'administrator'),method: :get do |f|
+= simple_form_for :search,url: users_path,method: :get do |f|
 
   = f.input :role,as: :hidden ,id: 'role_input',input_html: { value: @user_list}
   .col-lg-6
