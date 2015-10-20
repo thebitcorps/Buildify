@@ -9,4 +9,12 @@ class ApplicationController < ActionController::Base
     return '' if params[:search].nil?
     params[:search][:query].nil? ? '' : params[:search][:query]
   end
+
+  def filter_sub_out
+    if current_user.subordinate?
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'No tiene permisos para acceder esta parte del sito.' }
+      end
+    end
+  end
 end

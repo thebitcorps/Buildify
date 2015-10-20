@@ -4,8 +4,8 @@ $('#paginate').html("#{j( paginate @users)}");
 $('#search_role').val("#{@user_list}");
 - if @user_list ==  'administrator'
   $('#administrators').attr('class', "active");
-  $('#residents').attr('class', '');
+  $('#subordinates').attr('class', '');
 - else
-  $('#residents').attr('class', "active");
+  $('#subordinates').attr('class', "active");
   $('#administrators').attr('class', '');
 -#window.location.replace("users?role=#{j @user_list}");
