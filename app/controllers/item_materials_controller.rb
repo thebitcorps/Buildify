@@ -1,6 +1,8 @@
 class ItemMaterialsController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_item_material, only: [ :update, :destroy]
+  before_action :filter_sub_out
+  
   def update
     respond_to do |format|
       if @item_material.update item_material_params

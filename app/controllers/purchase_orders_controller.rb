@@ -2,6 +2,7 @@ class PurchaseOrdersController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_purchase_order, only: [:show]
   before_action :set_requisition, only: [:new]
+  before_action :filter_sub_out
 
   def index
     @type_list = sanitized_locked_param
