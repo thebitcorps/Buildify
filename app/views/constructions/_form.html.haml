@@ -11,7 +11,7 @@
       = f.input :finish_date, label: 'Fecha de finalización'
   = f.input :contract_amount, label: 'Cantidad contratada'
   -#= f.association :resident, collection: User.resident
-  = f.input :manager,collection: User.residents
+  = f.input :manager,collection: User.all
   #construction_users
     %label.control-label
       *Residents

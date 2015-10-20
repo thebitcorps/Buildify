@@ -24,6 +24,8 @@ class Construction < ActiveRecord::Base
   validate :validate_dates_logic_relation
 
 
+  ROLES = %w[velador ayudante]
+
   def validate_dates_logic_relation
       errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date
   end
