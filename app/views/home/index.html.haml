@@ -1,26 +1,4 @@
-
-%h1
-  %small
-    General
-
-.panel.panel-default
-  %table.table
-    %thead
-      %tr
-        %th
-          Factura
-        %th
-          Ordende compra
-        %th
-          Importe
-        %th
-          Pagado
-        %th
-          Saldo
-        %th
-          Pagos
-        %th
-    %tbody
-      - @acumulated_amount = 0
-      - @acumulated_paid = 0
-      = render partial: 'payment', collection: @payments
+- if current_user.administrator?
+  = render 'administrator_home'
+- else
+  = render 'subordinate_home'
