@@ -1,11 +1,22 @@
 class ConstructionsController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_construction, only: [:show, :edit, :update, :destroy]
-  before_action :filter_sub_out
+  before_action :filter_sub_out, only: [:edit, :update, :destroy]
   # before_action :humanize_title, only: [:create, :update]
 
   def index
-    @constructions = Construction.search(sanitized_search).page(params[:page])
+    if current_user.subordinate?
+      if params[:mode].nil? || params[:mode] == 'own' || params[:search][:mode] == 'own'
+        @constructions =  current_user.construction_administrations.search(sanitized_search).page(params[:page])
+        @mode = :own
+      else
+        @constructions =  current_user.constructions.search(sanitized_search).page(params[:page])
+        @mode = :sub
+      end
+    else
+      @constructions = Construction.search(sanitized_search).page(params[:page])
+      @mode = :all
+    end
     respond_to do |format|
       format.html {@constructions}
       format.js {@constructions}

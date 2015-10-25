@@ -8,7 +8,6 @@ class CreateConstructions < ActiveRecord::Migration
       t.string :status, default: 'running'
       t.decimal :contract_amount
       t.decimal :estimates_amount, default: 0.0
-      t.boolean :done, default: false
       t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false

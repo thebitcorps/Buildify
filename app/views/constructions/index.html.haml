@@ -2,6 +2,7 @@
 
 = simple_form_for :search, url: constructions_path, method: :get do |f|
   .col-lg-6
+    = f.hidden_field :mode, value: @mode
     = f.search_field :query, autofocus: true, class: "form-control", placeholder: "Search"
   %span.input-group-btn
     = f.submit "Go", class: "btn btn-default"
@@ -9,8 +10,13 @@
 %h1 Obras
 
 .list-group#constructions
-  = render partial: 'construction', collection: @constructions
+  - if @mode == :own
+    = render partial: 'construction_own', collection: @constructions
+  - if @mode == :sub
+    = render partial: 'construction_sub', collection: @constructions
+  - if @mode == :all
+    = render partial: 'construction', collection: @constructions
 #paginate
-  =paginate @constructions,theme: 'twitter-bootstrap-3',remote: true
+  = paginate @constructions, theme: 'twitter-bootstrap-3', remote: true
 %br
-= link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'
+= link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary' if current_user.administrator?

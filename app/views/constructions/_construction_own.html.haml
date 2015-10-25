@@ -1,0 +1,8 @@
+.list-group-item
+  %h3.list-group-item-heading
+    = construction_own.title
+    %small
+      = construction_own.manager.name if !construction_own.manager.nil?
+    .btn-group.pull-right{"aria-label" => "...", :role => "group"}
+      = link_to "Requisiciones", requisitions_path(construction_id: construction_own.id, mode: :own), {class: "button btn btn-default", type: "button"}
+      = link_to 'Nueva Requisición', new_requisition_path(construction_id: construction_own.id), {class: "btn btn-primary", type: "button"}

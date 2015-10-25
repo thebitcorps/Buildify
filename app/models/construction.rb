@@ -1,5 +1,5 @@
 class Construction < ActiveRecord::Base
-  belongs_to :manager,class_name: 'User', foreign_key: :user_id
+  belongs_to :manager, class_name: 'User', foreign_key: :user_id
   has_many :requisitions
   has_many :purchase_orders, through: :requisitions
   has_many :invoices, through: :purchase_orders
@@ -8,7 +8,7 @@ class Construction < ActiveRecord::Base
   has_many :estimates
   has_many :invoiced_payments, through: :invoices, source: :payment
   has_many :construction_users, dependent: :destroy
-  has_many :residents, class_name: 'User',through: :construction_users,foreign_key: :user_id,source: :user
+  has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user
   accepts_nested_attributes_for :construction_users, reject_if: :all_blank, allow_destroy: true
   paginates_per 10
 

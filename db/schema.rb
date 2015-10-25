@@ -171,11 +171,13 @@ ActiveRecord::Schema.define(version: 20151019202417) do
     t.date     "requisition_date"
     t.string   "status",           default: "pending"
     t.integer  "construction_id"
+    t.integer  "user_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
+  add_index "requisitions", ["user_id"], name: "index_requisitions_on_user_id", using: :btree
 
   create_table "royce_connector", force: :cascade do |t|
     t.integer  "roleable_id",   null: false
@@ -233,4 +235,5 @@ ActiveRecord::Schema.define(version: 20151019202417) do
   add_foreign_key "purchase_orders", "invoices"
   add_foreign_key "purchase_orders", "requisitions"
   add_foreign_key "requisitions", "constructions"
+  add_foreign_key "requisitions", "users"
 end
