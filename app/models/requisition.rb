@@ -40,7 +40,7 @@ class Requisition < ActiveRecord::Base
   end
 
   def change_item_material_pending
-    ApplicationHelper::change_item_material_status self,ItemMaterial::PENDING_STATUS
+    ApplicationHelper::change_item_material_status self, ItemMaterial::PENDING_STATUS
   end
 
   def locked?

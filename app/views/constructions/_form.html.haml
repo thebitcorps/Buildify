@@ -10,8 +10,7 @@
     .col-md-6
       = f.input :finish_date, label: 'Fecha de finalización'
   = f.input :contract_amount, label: 'Cantidad contratada'
-  -#= f.association :resident, collection: User.resident
-  = f.input :manager,collection: User.all
+  = f.association :manager, collection: User.subordinates
   #construction_users
     %label.control-label
       *Residents
