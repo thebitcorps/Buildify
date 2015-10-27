@@ -1,8 +1,8 @@
 class CreatePayments < ActiveRecord::Migration
   def change
     create_table :payments do |t|
-      t.string :status
-      t.string :consept
+      t.string :status, default: 'due'
+      t.string :concept
       t.decimal :amount
       t.date :payment_date
       t.decimal :paid_amount, default: 0.0

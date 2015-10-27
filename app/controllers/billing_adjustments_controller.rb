@@ -12,12 +12,13 @@ class BillingAdjustmentsController < ApplicationController
 
   def create
     @adjustment = BillingAdjustment.new adjustment_params
+    @payment = @adjustment.payment
     respond_to do |format|
       if @adjustment.save
-        @adjustment.payment.paid_amount += @adjustment.amount
-        @adjustment.payment.save
+        #remember callbacks
         format.html { redirect_to @adjustment.payment.construction, notice: 'Pago realizado a gasto.'}
       else
+
         format.html { render :new }
       end
     end
@@ -25,12 +26,10 @@ class BillingAdjustmentsController < ApplicationController
 
   def destroy
     @adjustment = BillingAdjustment.find(params[:id])
-    @payment = @adjustment.payment
-    @payment.paid_amount -= @adjustment.amount
-    @payment.save
+    #remember callbacks for update payment
     @adjustment.destroy
     respond_to do |format|
-      format.html { redirect_to billing_adjustments_path(payment_id: @payment.id), notice: 'Pago eliminado correctamente.' }
+      format.html { redirect_to billing_adjustments_path(payment_id: @adjustment.payment.id), notice: 'Pago eliminado correctamente.' }
     end
   end
 

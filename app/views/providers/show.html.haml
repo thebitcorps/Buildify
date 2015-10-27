@@ -18,12 +18,15 @@
 
   = link_to 'Regresar', providers_path, class: 'btn btn-default'
 
-
+-#ajax this methods call proper controllers
 %ul.nav.nav-tabs
   %li.active
     %a{"data-toggle" => "tab", :href => "#purchase_orders"} Ordenes decompra
   %li
-    %a{"data-toggle" => "tab", :href => "#paymets"} Pagos
+    %a{"data-toggle" => "tab", :href => "#paymets"} Gastos
+  -#payments for that provider
+  %li
+    %a{"data-toggle" => "tab", :href => "#paymets"} Gastos
 .tab-content
   #purchase_orders.tab-pane.fade.active.in
     = render partial: 'providers/purchase_order',collection: @provider.purchase_orders

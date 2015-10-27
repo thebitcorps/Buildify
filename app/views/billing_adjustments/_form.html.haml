@@ -1,6 +1,6 @@
 =  simple_form_for(@adjustment, html: { class: 'form-horizontal' }) do |f|
   = f.hidden_field :payment_id, value: @payment.id
   = f.input :amount, label: 'Cantidad'
-  = f.input :payment_type, label: 'Tipo de pago'
+  = f.input :payment_type,collection: BillingAdjustment::PAYMENT_TYPES, label: 'Tipo de pago'
   = f.input :adjusment_date, label: 'Fecha de pago'
   = f.button :submit, value: 'Crear', class: 'btn btn-primary'

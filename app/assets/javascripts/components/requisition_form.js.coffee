@@ -68,7 +68,7 @@
       React.createElement DateInput,label: 'Requisition Date',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.table
-        className: 'table table-striped'
+        className: 'table table-striped table-hover'
         React.DOM.thead null,
           React.DOM.tr null,
             for th,i in ['Material','Requsested','']

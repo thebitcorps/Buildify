@@ -2,7 +2,8 @@
 .jumbotron
   %h2
     = @user.name
-    %small= @user.role
+    -##refactor for showing spanish role
+    %small= @user.role_list[0]
   %p
     %b Phone:
     = @user.phone
