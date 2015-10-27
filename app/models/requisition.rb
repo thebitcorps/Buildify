@@ -6,13 +6,14 @@ class Requisition < ActiveRecord::Base
 
 
   belongs_to :construction
+  belongs_to :creator, class_name: 'User', foreign_key: :user_id
   has_many :purchase_orders, dependent: :destroy
   has_many :item_materials, dependent: :destroy
   accepts_nested_attributes_for :item_materials, reject_if: :all_blank, allow_destroy: true
   has_many :invoices, through: :purchase_orders
   delegate :title, to: :construction, prefix: true
 
-  validates :requisition_date ,presence: true
+  validates :requisition_date, presence: true
 
   after_create :change_item_material_pending
   # def self.next_folio(construction_id)
@@ -39,7 +40,7 @@ class Requisition < ActiveRecord::Base
   end
 
   def change_item_material_pending
-    ApplicationHelper::change_item_material_status self,ItemMaterial::PENDING_STATUS
+    ApplicationHelper::change_item_material_status self, ItemMaterial::PENDING_STATUS
   end
 
   def locked?
@@ -65,6 +66,5 @@ class Requisition < ActiveRecord::Base
       'default'
     end
   end
-
 
 end

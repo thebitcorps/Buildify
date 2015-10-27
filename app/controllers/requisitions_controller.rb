@@ -2,7 +2,6 @@ class RequisitionsController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_requisition, only: [:show, :edit, :update, :destroy]
   before_action :set_construction, only: [:index, :new, :edit]
-  before_action :filter_sub_out, only: [:index]
 
   def index
     @type_list = sanitized_locked_param
@@ -32,6 +31,7 @@ class RequisitionsController < ApplicationController
   def create
     @requisition = Requisition.new requisition_params
     @requisition.folio = Requisition.next_folio @requisition.construction_id
+    @requisition.creator = current_user
     respond_to do |format|
       if @requisition.save
         format.json {render json: @requisition}

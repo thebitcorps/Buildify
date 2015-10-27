@@ -41,6 +41,7 @@ class UsersController < ApplicationController
     @user.password_confirmation = '12345678'
     respond_to do |format|
       if @user.save
+        @user.add_role role_param
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
         format.html { render :new }
@@ -91,7 +92,11 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :phone, :email, :role)
+      params.require(:user).permit(:name, :phone, :email)
+    end
+
+    def role_param
+      params.permit(:role)[:role]
     end
 
     def password_params

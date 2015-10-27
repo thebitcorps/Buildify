@@ -1,7 +1,7 @@
 %tr
   %td
     - if payment.invoice
-      = link_to payment.invoice.folio, invoice_path(payment.invoice), {class: "button btn-sm btn-info", type: "button"}
+      = link_to payment.invoice.folio, invoice_path(payment.invoice), {class: "button btn-sm btn-#{payment.get_color}", type: "button"}
     - else
       = "NA"
   %td
@@ -15,7 +15,7 @@
   %td
     = number_to_currency payment.paid_amount.to_f
   %td
-    = number_to_currency (payment.amount - payment.paid_amount.to_f)
+    = number_to_currency (payment.remaining)
   %td
     = link_to payment.billing_adjustments.count, billing_adjustments_path(payment_id: payment.id)
   %td
