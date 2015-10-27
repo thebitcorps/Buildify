@@ -1,9 +1,14 @@
 .page-header
   %h1
-    Pagos
+    = link_to @payment.construction.title, construction_path(@payment.construction)
+    %small
+      Pagos Factura -
+      = link_to @payment.invoice.folio,invoice_path(@payment.invoice.folio),class: 'btn btn-info'
+
+
 
 .panel.panel-default
-  %table.table
+  %table.table.table-hover
     %thead
       %tr
         %th #

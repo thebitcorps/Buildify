@@ -15,9 +15,9 @@
     %thead
       %tr
         %th
-          Material
+          Cantidad
         %th
-          Pedido
+          Concepto
         %th
           Estado
     %tbody
@@ -35,6 +35,5 @@
     %small
       = link_to "Editar factura", edit_invoice_path(@invoice)
 - else
-  %h3.text-center
-    %span.label.label-info
-      = @invoice.folio
+  -#first idea suggestions?: llamas
+  = render partial: 'invoices/invoice',locals: {invoice: @invoice}
