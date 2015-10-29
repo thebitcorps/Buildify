@@ -10,8 +10,8 @@
     = link_to 'Pendientes',requisitions_path(type_list: 'pending', construction_id: params[:construction_id]),remote: true
   %li{id: 'partially',class: " #{'active' if params[:type_list] == 'partially'}"}
     = link_to 'Parcialmente',requisitions_path(type_list: 'partially', construction_id: params[:construction_id]),remote: true
-  %li{id: 'locked',class: " #{'active' if params[:type_list] == 'unlocked'}"}
-    = link_to 'Procesadas',requisitions_path(type_list: 'locked', construction_id: params[:construction_id]),remote: true
+  %li{id: 'complete',class: " #{'active' if params[:type_list] == 'complete'}"}
+    = link_to 'Completas',requisitions_path(type_list: 'complete', construction_id: params[:construction_id]),remote: true
 
 .list-group#requisitions
   = render partial: 'requisition', collection: @requisitions

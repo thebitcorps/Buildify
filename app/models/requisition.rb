@@ -1,9 +1,8 @@
 class Requisition < ActiveRecord::Base
 
-  LOCKED_STATUS = 'locked'
+  COMPLETE_STATUS = 'complete'
   PENDING_STATUS = 'pending'
   PARTIALLY_STATUS = 'partially'
-
 
   belongs_to :construction
   belongs_to :creator, class_name: 'User', foreign_key: :user_id
@@ -22,7 +21,7 @@ class Requisition < ActiveRecord::Base
 
   scope :partially, -> {where status: PARTIALLY_STATUS}
   scope :pending, -> { where status: PENDING_STATUS }
-  scope :locked, -> { where status: LOCKED_STATUS }
+  scope :complete, -> { where status: COMPLETE_STATUS }
 
   # which is better?
   # los auto incrementos de las DB guardan el último número en una tabla, a lo mejor podermos hacer lo mismo para tantos folios
@@ -43,8 +42,8 @@ class Requisition < ActiveRecord::Base
     ApplicationHelper::change_item_material_status self, ItemMaterial::PENDING_STATUS
   end
 
-  def locked?
-    status == LOCKED_STATUS
+  def complete?
+    status == COMPLETE_STATUS
   end
 
   def pending?
@@ -56,7 +55,7 @@ class Requisition < ActiveRecord::Base
   end
 
   def status_color
-    if locked?
+    if complete?
       'success'
     elsif pending?
       'danger'
