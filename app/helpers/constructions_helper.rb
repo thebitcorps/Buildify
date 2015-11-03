@@ -1,5 +1,6 @@
 module ConstructionsHelper
 
+
   def day_color(date)
     return 'default' if date == nil
     today = Date.today
@@ -31,6 +32,20 @@ module ConstructionsHelper
       "label-success"
     end
   end
+
+  def expenses_amount_tag(construction)
+    expenses =  construction.expenses
+    if expenses <= construction.contract_amount / 2
+      'label-success'
+    elsif expenses > construction.contract_amount / 2
+      'label-warning'
+    else
+      'label-danger'
+    end
+
+  end
+
+
 
   def amount_color_class(construction)
     if construction.estimates_amount < construction.contract_amount

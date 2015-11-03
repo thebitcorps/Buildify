@@ -52,6 +52,43 @@
 %h1
   %small
     Gastos
+-#    just an idea nedd more ideas or suggestions - Llamas
+.row
+  - expenses = @construction.expenses
+  - paid = @construction.paid
+  .col-md-3
+    .panel.panel-warning
+      .panel-heading
+        Se a gastado
+      .panel-body
+        = number_to_currency expenses
+  .col-md-3
+    .panel.panel-success
+      .panel-heading
+        Se a pagodo
+      .panel-body
+        = number_to_currency paid
+  .col-md-3
+    .panel.panel-danger
+      .panel-heading
+        Se debe
+      .panel-body
+        = number_to_currency expenses - paid
+  .col-md-3
+    .panel.panel-info
+      .panel-heading
+        Se a cobrado
+      .panel-body
+        = number_to_currency @construction.estimates_amount
+%ul.nav.nav-tabs
+  %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
+    = link_to 'Todos',payments_path(type_list: 'all', construction_id: params[:id]),remote: true
+  %li{id: Payment::DUE_STATUS,class: " #{'active' if params[:type_list] == Payment::DUE_STATUS}"}
+    = link_to 'Pendientes',payments_path(type_list: Payment::DUE_STATUS, construction_id: params[:id]),remote: true
+  %li{id: Payment::PARTIALLY_DUE_STATUS,class: " #{'active' if params[:type_list] == Payment::PARTIALLY_DUE_STATUS}"}
+    = link_to 'Parcialmente',payments_path(type_list: Payment::PARTIALLY_DUE_STATUS, construction_id: params[:id]),remote: true
+  %li{id: Payment::PAID_STATUS,class: " #{'active' if params[:type_list] == Payment::PAID_STATUS}"}
+    = link_to 'Procesadas',payments_path(type_list: Payment::PAID_STATUS, construction_id: params[:id]),remote: true
 
 .panel.panel-default
   %table.table.table-hover
@@ -70,7 +107,6 @@
         %th
           Pagos
         %th
-    %tbody
-      - @acumulated_amount = 0
-      - @acumulated_paid
+    %tbody#payments
+
       = render partial: 'payment', collection: @payments

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :materials
   resources :requisitions
   resources :constructions
+  resources :payments
   resources :estimates
   resources :invoices
   resources :billing_adjustments

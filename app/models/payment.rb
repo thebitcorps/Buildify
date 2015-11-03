@@ -11,6 +11,7 @@ class Payment < ActiveRecord::Base
   DUE_STATUS = 'due'
   PARTIALLY_DUE_STATUS = 'partially'
   PAID_STATUS = 'paid'
+  STATUS = [DUE_STATUS,PARTIALLY_DUE_STATUS,PAID_STATUS]
 
   scope :due, -> {where status:  DUE_STATUS}
   scope :partially, -> {where status:  PARTIALLY_DUE_STATUS}

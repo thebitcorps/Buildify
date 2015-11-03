@@ -7,8 +7,8 @@
     -#make method for the expense of construction
     -#is just an idea so it could be more
     %span.pull-right -
-    %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
-      = "Gastos - #{number_to_currency(0)}"
+    %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
+      = "Gastos - #{number_to_currency(construction.expenses)}"
 
   %h3.list-group-item-heading
     = construction.title

@@ -40,6 +40,7 @@ class PurchaseOrder < ActiveRecord::Base
     self.requisition.save
   end
 
+  # change this to helper
   def get_color
     sended ? 'info' : 'warning'
   end

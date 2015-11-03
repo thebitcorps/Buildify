@@ -54,7 +54,7 @@ class Requisition < ActiveRecord::Base
   def partially?
     status == PARTIALLY_STATUS
   end
-
+  # change this to helper
   def status_color
     if locked?
       'success'

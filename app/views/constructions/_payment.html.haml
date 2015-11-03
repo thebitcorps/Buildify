@@ -1,7 +1,8 @@
-%tr
+-#maybe change the hole column color insted of the folio label? : llamas
+%tr{class:"#{payment.get_color}"}
   %td
     - if payment.invoice
-      = link_to payment.invoice.folio, invoice_path(payment.invoice), {class: "button btn-sm btn-#{payment.get_color}", type: "button"}
+      = link_to payment.invoice.folio, invoice_path(payment.invoice), {class: "button btn-sm btn-info", type: "button"}
     - else
       = "NA"
   %td

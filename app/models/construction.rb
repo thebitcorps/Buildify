@@ -26,6 +26,19 @@ class Construction < ActiveRecord::Base
 
   ROLES = %w[velador ayudante]
 
+  def expenses
+    payments.sum :amount
+  end
+
+  def paid
+    payments.sum :paid_amount
+  end
+
+  def balance
+    expenses - paid
+  end
+
+
   def validate_dates_logic_relation
       errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date
   end
