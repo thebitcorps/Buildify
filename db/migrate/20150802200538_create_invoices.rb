@@ -5,7 +5,6 @@ class CreateInvoices < ActiveRecord::Migration
       t.string :status, default: 'waiting'
       t.decimal :amount
       t.date :invoice_date
-      t.references :invoice_receipt, index: true, foreign_key: true
       t.references :payment, index: true, foreign_key: true
       t.references :provider, index: true, foreign_key: true
 
