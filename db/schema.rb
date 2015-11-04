@@ -46,10 +46,9 @@ ActiveRecord::Schema.define(version: 20151019202417) do
     t.string   "status",           default: "running"
     t.decimal  "contract_amount"
     t.decimal  "estimates_amount", default: 0.0
-    t.boolean  "done",             default: false
+    t.integer  "user_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
-    t.integer  "user_id"
   end
 
   add_index "constructions", ["user_id"], name: "index_constructions_on_user_id", using: :btree
@@ -66,10 +65,10 @@ ActiveRecord::Schema.define(version: 20151019202417) do
 
   create_table "invoice_receipts", force: :cascade do |t|
     t.integer  "folio"
-    t.boolean  "delivered",    default: false
+    t.string   "status",       default: "empty"
     t.integer  "receipt_date"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -156,11 +155,11 @@ ActiveRecord::Schema.define(version: 20151019202417) do
     t.string   "delivery_place"
     t.string   "delivery_address"
     t.string   "delivery_receiver"
-    t.boolean  "sended",            default: false
+    t.string   "status",            default: "pending"
     t.integer  "requisition_id"
     t.integer  "invoice_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree

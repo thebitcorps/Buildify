@@ -24,6 +24,7 @@ class Construction < ActiveRecord::Base
   validate :validate_dates_logic_relation
 
 
+  scope :running, ->{where status: RUNNING_STATUS}
   ROLES = %w[velador ayudante]
 
   def expenses

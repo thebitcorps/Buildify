@@ -17,7 +17,7 @@
           className: 'pull-right'
           React.DOM.label
             className: 'label label-primary '
-            "#{@state.itemMaterial.requested} #{@state.itemMaterial.mesure_unit}"
+            "#{@state.itemMaterial.requested} #{@state.itemMaterial.measure_unit}"
       React.DOM.p
         className: 'list-group-item-text'
         @state.itemMaterial.material.description

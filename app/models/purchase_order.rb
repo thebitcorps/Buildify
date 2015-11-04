@@ -5,7 +5,7 @@ class PurchaseOrder < ActiveRecord::Base
   has_one :provider, through: :invoice
   has_one :construction, through: :requisition
   # what does this mean?
-  has_one :apyment, through: :invoice
+  has_one :payment, through: :invoice
   has_one :invoice_receipt, through: :invoice
   accepts_nested_attributes_for :item_materials, reject_if: :all_blank, allow_destroy: true
 
@@ -25,19 +25,26 @@ class PurchaseOrder < ActiveRecord::Base
   def check_requisition_items
     items_with_purchase = 0
     self.requisition.item_materials.each do |item_material|
-      if item_material.status == ItemMaterial::AUTHORIZED_STATUS
+      # count item materials that has assing to a purchase order
+      if item_material.status != ItemMaterial::PENDING_STATUS
         items_with_purchase += 1
-      end
-      if items_with_purchase == 0
-        self.requisition.status = Requisition::PENDING_STATUS
-      elsif items_with_purchase == self.requisition.item_materials.count
-        self.requisition.status = Requisition::LOCKED_STATUS
-      else
-        self.requisition.status = Requisition::PARTIALLY_STATUS
       end
     end
 
+    if items_with_purchase == 0
+      self.requisition.status = Requisition::PENDING_STATUS
+    elsif items_with_purchase == self.requisition.item_materials.count
+      self.requisition.status = Requisition::LOCKED_STATUS
+    else
+      self.requisition.status = Requisition::PARTIALLY_STATUS
+    end
+
+
     self.requisition.save
+  end
+
+  def sended
+    status == 'pending'
   end
 
   # change this to helper

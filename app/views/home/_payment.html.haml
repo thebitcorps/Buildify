@@ -1,6 +1,7 @@
 %tr
   %td
     - if payment.invoice
+      = link_to payment.invoice.provider.name, provider_path(payment.invoice.provider)
       = link_to payment.invoice.folio, invoice_path(payment.invoice), {class: "button btn-sm btn-#{payment.get_color}", type: "button"}
     - else
       = "NA"
