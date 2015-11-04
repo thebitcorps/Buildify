@@ -22,11 +22,8 @@
     = f.simple_fields_for :construction_users do |construction_user|
       = render 'construction_user_fields', f: construction_user
     .links
-<<<<<<< HEAD
       = link_to_add_association 'Agregar ayudante', f, :construction_users,class: 'btn btn-default'
-=======
-      = link_to_add_association 'add task', f, :construction_users, class: 'btn btn-default'
->>>>>>> c518f4e0017d7544e57da25727c123dd4873ecef
+
   %br
 
   = f.button :submit, value: 'Crear', class: 'btn btn-primary'
