@@ -5,23 +5,23 @@ $('#requisitions').html("#{j( render partial: 'requisition', collection: @requis
 -#$('#paginate').html("#{j( paginate @requisitions)}");
 
 -#$('#search_role').val("#{@type_list}");
-- if @type_list ==  'locked'
-  $('#locked').attr('class', "active");
+- if @type_list ==  'complete'
+  $('#complete').attr('class', "active");
   $('#pending').attr('class', '');
   $('#partially').attr('class', '');
   $('#all').attr('class', '');
 - elsif @type_list == 'pending'
-  $('#locked').attr('class', "");
+  $('#complete').attr('class', "");
   $('#pending').attr('class', 'active');
   $('#partially').attr('class', '');
   $('#all').attr('class', '');
 - elsif @type_list == 'partially'
-  $('#locked').attr('class', "");
+  $('#complete').attr('class', "");
   $('#pending').attr('class', '');
   $('#partially').attr('class', 'active');
   $('#all').attr('class', '');
 -else
-  $('#locked').attr('class', "");
+  $('#complete  ').attr('class', "");
   $('#pending').attr('class', '');
   $('#partially').attr('class', '');
   $('#all').attr('class', 'active');

@@ -3,7 +3,7 @@
     .col-md-12
       %h4.pull-right
         %small
-          -if purchase_order.sended
+          -if purchase_order.completed?
             = "Enviada a proveedor"
           -else
             = "Pendiente"

@@ -14,9 +14,11 @@ class PurchaseOrder < ActiveRecord::Base
 
   after_create :check_requisition_items
 
+  COMPLETE_STATUS = 'complete'
+  UNCOMPLETED_STATUS = 'pending'
 
-  scope :sent, -> {where sended: true}
-  scope :not_sent, -> {where sended: false}
+  scope :sent, -> {where status: COMPLETE_STATUS}
+  scope :not_sent, -> {where status: UNCOMPLETED_STATUS}
 
   def self.plural(count)
     count == 1 ? 'orden de compra' : 'ordenes de compra'
@@ -43,13 +45,14 @@ class PurchaseOrder < ActiveRecord::Base
     self.requisition.save
   end
 
-  def sended
-    status == 'pending'
+  def completed?
+    status == COMPLETE_STATUS
   end
+
 
   # change this to helper
   def get_color
-    sended ? 'info' : 'warning'
+    completed? ? 'info' : 'warning'
   end
 
   def change_item_material_pending
