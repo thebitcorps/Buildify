@@ -3,7 +3,7 @@
     .col-md-12
       %h4.pull-right
         %small
-          - if requisition.locked?
+          - if requisition.complete? || requisition.partially?
             Procesada
           - else
             = distance_of_time_in_words(Time.now , requisition.requisition_date)

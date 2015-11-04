@@ -1,7 +1,7 @@
 class ConstructionsController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_construction, only: [:show, :edit, :update, :destroy]
-  before_action :filter_sub_out, only: [:edit, :update, :destroy]
+  before_action :filter_sub_out, only: [:show, :edit, :update, :destroy]
   # before_action :humanize_title, only: [:create, :update]
 
   def index
@@ -61,7 +61,6 @@ class ConstructionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_construction
       @construction = Construction.find(params[:id])
-      filter_sub_out if @construction.manager != current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

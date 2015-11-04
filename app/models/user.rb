@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :construction_administrations, class_name: 'Construction', source: :construction, foreign_key: :user_id
   has_many :administrated_requisitions, through: :construction_administrations, source: :requisitions
   has_many :requisitions
+
   # Not sure about this
   #has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user
 

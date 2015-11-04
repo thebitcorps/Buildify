@@ -6,12 +6,21 @@
 %ul.nav.nav-tabs
   %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
     = link_to 'Todos',requisitions_path(type_list: 'all', construction_id: params[:construction_id]),remote: true
+<<<<<<< HEAD
   %li{id: 'pending',class: " #{'active' if params[:type_list] == Requisition::PENDING_STATUS }"}
     = link_to 'Pendientes',requisitions_path(type_list: Requisition::PENDING_STATUS, construction_id: params[:construction_id]),remote: true
   %li{id: 'partially',class: " #{'active' if params[:type_list] == Requisition::PARTIALLY_STATUS}"}
     = link_to 'Parcialmente',requisitions_path(type_list: Requisition::PARTIALLY_STATUS, construction_id: params[:construction_id]),remote: true
   %li{id: 'locked',class: " #{'active' if params[:type_list] == Requisition::LOCKED_STATUS}"}
     = link_to 'Procesadas',requisitions_path(type_list: Requisition::LOCKED_STATUS, construction_id: params[:construction_id]),remote: true
+=======
+  %li{id: 'pending',class: " #{'active' if params[:type_list] == 'pending' }"}
+    = link_to 'Pendientes',requisitions_path(type_list: 'pending', construction_id: params[:construction_id]),remote: true
+  %li{id: 'partially',class: " #{'active' if params[:type_list] == 'partially'}"}
+    = link_to 'Parcialmente',requisitions_path(type_list: 'partially', construction_id: params[:construction_id]),remote: true
+  %li{id: 'complete',class: " #{'active' if params[:type_list] == 'complete'}"}
+    = link_to 'Completas',requisitions_path(type_list: 'complete', construction_id: params[:construction_id]),remote: true
+>>>>>>> c518f4e0017d7544e57da25727c123dd4873ecef
 
 .list-group#requisitions
   = render partial: 'requisition', collection: @requisitions
