@@ -19,6 +19,18 @@ class User < ActiveRecord::Base
   validates :phone, format: { with: %r{\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d\Z}i, message: 'Teléfono inválido' }
   paginates_per 10
 
+  def partial_requisitions
+    requisitions.where status: Requisition::PARTIALLY_STATUS
+  end
+
+  def pending_requisitions
+    requisitions.where status: Requisition::PENDING_STATUS
+  end
+
+  def complete_requisitions
+    requisitions.where status: Requisition::COMPLETE_STATUS
+  end
+
   def self.search(search)
     return all if search.nil?
     if search.empty?

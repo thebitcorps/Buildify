@@ -36,7 +36,7 @@ class PurchaseOrder < ActiveRecord::Base
     if items_with_purchase == 0
       self.requisition.status = Requisition::PENDING_STATUS
     elsif items_with_purchase == self.requisition.item_materials.count
-      self.requisition.status = Requisition::LOCKED_STATUS
+      self.requisition.status = Requisition::COMPLETE_STATUS
     else
       self.requisition.status = Requisition::PARTIALLY_STATUS
     end

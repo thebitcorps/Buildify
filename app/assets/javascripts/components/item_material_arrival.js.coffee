@@ -7,6 +7,7 @@
     requested_new: @props.itemMaterial.requested
     measure_unit: @props.itemMaterial.measure_unit
     measure_unit_new: ''
+    administrator: @props.administrator
   getUnitsOptions: (measures)->
     units = [{'display' : '','value': ''}]
     for measure_unit in measures
@@ -85,8 +86,11 @@
         return
   nameLink: (itemMaterial)->
     React.DOM.td null,
-      React.DOM.a
-        href: '/materials/' + itemMaterial.material.id
+      if @props.administrator
+        React.DOM.a
+          href: '/materials/' + itemMaterial.material.id
+          itemMaterial.material.name
+      else
         itemMaterial.material.name
 
   render: ->
@@ -108,8 +112,11 @@
           if @props.itemMaterial.purchase_order_id == null
             'No asignado'
           else
-            React.DOM.a
-              href: '/purchase_orders/' + @props.itemMaterial.purchase_order_id
+            if @state.administrator
+              React.DOM.a
+                href: '/purchase_orders/' + @props.itemMaterial.purchase_order_id
+                "Orden - #{@props.itemMaterial.purchase_order_id}"
+            else
               "Orden - #{@props.itemMaterial.purchase_order_id}"
         #add prop for the requisition state nly show buttons when requisitons is process
         if @props.itemMaterial.purchase_order_id == null
@@ -119,8 +126,9 @@
               React.DOM.a {className: 'btn btn-danger',onClick: @handleDelete},'Borrar'
         else
           React.DOM.td null,
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'delivered',changed: @radioChanged,checked: @state.status == 'delivered'
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'partially',changed: @radioChanged,checked: @state.status == 'partially'
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'missed',changed: @radioChanged,checked: @state.status == 'missed'
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'authorized',changed: @radioChanged,checked: @state.status == 'authorized'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'Por llegar',changed: @radioChanged,checked: @state.status == 'authorized'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'Entregado',changed: @radioChanged,checked: @state.status == 'delivered'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @radioChanged,checked: @state.status == 'partially'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'No entregado',changed: @radioChanged,checked: @state.status == 'missed'
+
 

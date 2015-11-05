@@ -1,11 +1,15 @@
 .page-header
   %h1
-    = link_to @construction.title, construction_path(@construction)
+    - if current_user.administrator?
+      = link_to @construction.title, construction_path(@construction)
+    - else
+      = link_to @construction.title, constructions_path(mode: :own)
     %small
-      Requisicion 
+      Requisicion
       %span{class: "label label-#{@requisition.status_color}"}
         = [@requisition.requisition_date.year, @requisition.folio.to_s.rjust(4, '0')].join(' - ')
-= react_component 'RequisitionArrival',itemMaterials: @item_materials_json
+
+  = react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?
 
 - if current_user.administrator?
   %h1

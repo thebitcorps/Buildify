@@ -4,8 +4,30 @@ class RequisitionsController < ApplicationController
   before_action :set_construction, only: [:index, :new, :edit]
 
   def index
-    @type_list = sanitized_locked_param
-    @requisitions = (class_eval %Q{Requisition.#{@type_list}}).where(construction_id: params[:construction_id])
+    if current_user.subordinate?
+      if params[:mode] == 'sub'
+        @type_list = sanitized_locked_param
+        if @type_list == 'partially'
+          @requisitions =  current_user.partial_requisitions.where(construction_id: params[:construction_id])
+        else
+          if @type_list == 'complete'
+            @requisitions = current_user.complete_requisitions.where(construction_id: params[:construction_id])
+          else
+            if @type_list == 'pending'
+              @requisitions = current_user.pending_requisitions.where(construction_id: params[:construction_id])
+            else
+              @requisitions = current_user.requisitions.where(construction_id: params[:construction_id])
+            end
+          end
+        end
+        @mode = 'sub'
+      else
+        filter_sub_out
+      end
+    else
+      @requisitions = (class_eval %Q{Requisition.#{@type_list}}).where(construction_id: params[:construction_id])
+    end
+
     respond_to do |format|
       format.html
       format.js
