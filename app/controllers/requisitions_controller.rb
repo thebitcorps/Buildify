@@ -4,9 +4,9 @@ class RequisitionsController < ApplicationController
   before_action :set_construction, only: [:index, :new, :edit]
 
   def index
+    @type_list = sanitized_locked_param
     if current_user.subordinate?
       if params[:mode] == 'sub'
-        @type_list = sanitized_locked_param
         if @type_list == 'partially'
           @requisitions =  current_user.partial_requisitions.where(construction_id: params[:construction_id])
         else
@@ -22,14 +22,13 @@ class RequisitionsController < ApplicationController
         end
         @mode = 'sub'
       else
-        filter_sub_out
+        @requisitions = (class_eval %Q{Requisition.#{@type_list}}).where(construction_id: params[:construction_id])
       end
     else
       @requisitions = (class_eval %Q{Requisition.#{@type_list}}).where(construction_id: params[:construction_id])
     end
-
     respond_to do |format|
-      format.html
+      format.html {@requisition}
       format.js
     end
   end
