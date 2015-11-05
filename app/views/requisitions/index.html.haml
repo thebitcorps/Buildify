@@ -1,17 +1,17 @@
 .page-header
   %h1
-    = link_to @construction.title, construction_path(@construction)
+    = link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
     %small Requisiciones
 
 %ul.nav.nav-tabs
   %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
-    = link_to 'Todos',requisitions_path(type_list: 'all', construction_id: params[:construction_id]),remote: true
-  %li{id: 'pending',class: " #{'active' if params[:type_list] == 'pending' }"}
-    = link_to 'Pendientes',requisitions_path(type_list: 'pending', construction_id: params[:construction_id]),remote: true
-  %li{id: 'partially',class: " #{'active' if params[:type_list] == 'partially'}"}
-    = link_to 'Parcialmente',requisitions_path(type_list: 'partially', construction_id: params[:construction_id]),remote: true
-  %li{id: 'complete',class: " #{'active' if params[:type_list] == 'complete'}"}
-    = link_to 'Completas',requisitions_path(type_list: 'complete', construction_id: params[:construction_id]),remote: true
+    = link_to 'Todos', requisitions_path(type_list: 'all', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+  %li{id: 'pending', class: " #{'active' if params[:type_list] == 'pending' }"}
+    = link_to 'Pendientes', requisitions_path(type_list: 'pending', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+  %li{id: 'partially', class: " #{'active' if params[:type_list] == 'partially'}"}
+    = link_to 'Parcialmente', requisitions_path(type_list: 'partially', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+  %li{id: 'complete', class: " #{'active' if params[:type_list] == 'complete'}"}
+    = link_to 'Completas', requisitions_path(type_list: 'complete', construction_id: params[:construction_id],  mode: params[:mode]), remote: true
 
 
 .list-group#requisitions

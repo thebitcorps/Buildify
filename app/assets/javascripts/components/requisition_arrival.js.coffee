@@ -1,6 +1,7 @@
 @RequisitionArrival = React.createClass
   getInitialState: ->
     itemMaterials: @props.itemMaterials
+    administrator: @props.administrator
   itemMaterialUpdate: (itemId,newStatus)->
     items = @state.itemMaterials.slice()
     for itemMaterial in items
@@ -22,8 +23,8 @@
           className: 'table'
           React.DOM.thead null,
             #maye remove the Estado th and left only the actions
-            for th,index in ['Material','Pedido','Orden de Compra','Actions']
-              React.DOM.th key: index,th
+            for th,index in ['Material','Pedido','Orden de Compra','Estado del producto']
+              React.DOM.th key: index, th
           React.DOM.tbody null,
             for itemMaterial in @state.itemMaterials
-              React.createElement ItemMaterialArrival,key: itemMaterial.id,itemMaterial: itemMaterial,itemMaterialChanged: @itemMaterialUpdate,handleDelete: @removeItemMaterial
+              React.createElement ItemMaterialArrival, key: itemMaterial.id, itemMaterial: itemMaterial, itemMaterialChanged: @itemMaterialUpdate, administrator: @state.administrator, handleDelete: @removeItemMaterial

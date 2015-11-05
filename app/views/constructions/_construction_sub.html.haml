@@ -1,5 +1,8 @@
-%a.list-group-item.construction-special-row
+.list-group-item
   %h3.list-group-item-heading
     = construction_sub.title
     %small
       = construction_sub.manager.name if !construction_sub.manager.nil?
+    .btn-group.pull-right{"aria-label" => "...", :role => "group"}
+      = link_to "Mis requisiciones", requisitions_path(construction_id: construction_sub.id, mode: :sub), {class: "button btn btn-default", type: "button"}
+      = link_to 'Nueva Requisición', new_requisition_path(construction_id: construction_sub.id), {class: "btn btn-primary", type: "button"}

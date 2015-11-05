@@ -21,7 +21,7 @@ class ItemMaterial < ActiveRecord::Base
   #the item mateterial is waiting for a purchase order to be generate
   PENDING_STATUS = 'pending'
 
-  STATUS = [DELIVERED_STATUS,PENDING_STATUS,PARTIALLY_DELIVERED_STATUS,AUTHORIZED_STATUS]
+  STATUS = [DELIVERED_STATUS, PENDING_STATUS, PARTIALLY_DELIVERED_STATUS, AUTHORIZED_STATUS]
 
 
   # def update_purchase_order_status
