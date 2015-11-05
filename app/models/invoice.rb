@@ -25,7 +25,7 @@ class Invoice < ActiveRecord::Base
 
 
   def set_purchase_order_sent
-    purchase_order.status = PurchaseOrder::COMPLETE_STATUS 
+    purchase_order.status = PurchaseOrder::COMPLETE_STATUS
     purchase_order.save
   end
 

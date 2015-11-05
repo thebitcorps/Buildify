@@ -7,7 +7,7 @@ user1.subordinate!
 user2.subordinate!
 
 Construction.create(title: "Kinder",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-05-14', finish_date: '2015-12-16', user_id: User.second.id)
-Construction.create(title: "Escuela",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-04-04', finish_date: '2015-10-30', user_id: User.second.id)
+Construction.create(title: "Escuela",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-04-04', finish_date: '2015-11-30', user_id: User.second.id)
 Construction.create(title: "Prepa",address: 'Calle #123', contract_amount: 4000000, start_date: '2015-06-12', finish_date: '2015-11-05', user_id: User.second.id)
 
 MeasureUnit.create(unit: 'Metros cuadrados', abbreviation: 'M2')
