@@ -1,21 +1,21 @@
 %h1 Listing measure_units
-
-%table.table.table-condensed
-  %thead
-    %tr
-      %th Unit
-      %th Abbreviation
-      %th
-
-  %tbody
-    - @measure_units.each do |measure_unit|
+.table-responsive
+  %table.table.table-condensed
+    %thead
       %tr
-        %td= measure_unit.unit
-        %td= measure_unit.abbreviation
-        %td
-          .btn-group
-            = link_to 'Edit', edit_measure_unit_path(measure_unit),class: 'btn btn-warning'
-            = link_to 'Destroy', measure_unit, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
+        %th Unit
+        %th Abbreviation
+        %th
+
+    %tbody
+      - @measure_units.each do |measure_unit|
+        %tr
+          %td= measure_unit.unit
+          %td= measure_unit.abbreviation
+          %td
+            .btn-group
+              = link_to 'Edit', edit_measure_unit_path(measure_unit),class: 'btn btn-warning'
+              = link_to 'Destroy', measure_unit, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
 
 
 %br

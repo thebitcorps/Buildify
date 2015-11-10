@@ -92,22 +92,23 @@
     = link_to 'Procesadas',payments_path(type_list: Payment::PAID_STATUS, construction_id: params[:id]),remote: true
 
 .panel.panel-default
-  %table.table.table-hover.table-responsive
-    %thead
-      %tr
-        %th
-          Factura
-        %th
-          Orden de compra
-        %th
-          Importe
-        %th
-          Pagado
-        %th
-          Saldo
-        %th
-          Pagos
-        %th
-    %tbody#payments
+  .table-responsive
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+            Factura
+          %th
+            Orden de compra
+          %th
+            Importe
+          %th
+            Pagado
+          %th
+            Saldo
+          %th
+            Pagos
+          %th
+      %tbody#payments
 
-      = render partial: 'payment', collection: @payments
+        = render partial: 'payment', collection: @payments

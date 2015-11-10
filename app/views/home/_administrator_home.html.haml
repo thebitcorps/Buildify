@@ -3,23 +3,24 @@
     General
 
 .panel.panel-default
-  %table.table.table-hover.table-responsive
-    %thead
-      %tr
-        %th
-          Factura
-        %th
-          Ordende compra
-        %th
-          Importe
-        %th
-          Pagado
-        %th
-          Saldo
-        %th
-          Pagos
-        %th
-    %tbody
-      - @acumulated_amount = 0
-      - @acumulated_paid = 0
-      = render partial: 'payment', collection: @payments
+  .table-responsive
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+            Factura
+          %th
+            Ordende compra
+          %th
+            Importe
+          %th
+            Pagado
+          %th
+            Saldo
+          %th
+            Pagos
+          %th
+      %tbody
+        - @acumulated_amount = 0
+        - @acumulated_paid = 0
+        = render partial: 'payment', collection: @payments

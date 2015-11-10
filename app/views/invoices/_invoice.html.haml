@@ -27,20 +27,21 @@
         %span.pull-right
           Fecha:
           = invoice.invoice_date
-    %table.table.table-hover.table-responsive
-      %thead
-        %tr
-          %th
-            Cantidad
-          %th
-            Unidad
-          %th
-            Concepto
-          %th
-            Status  de entrega
-      %tbody
-        -#create proper item_material partial for displaying in invoice
-        = render partial: 'invoices/item_material', collection: @invoice.purchase_order.item_materials
+    .table-responsive
+      %table.table.table-hover.table-responsive
+        %thead
+          %tr
+            %th
+              Cantidad
+            %th
+              Unidad
+            %th
+              Concepto
+            %th
+              Status  de entrega
+        %tbody
+          -#create proper item_material partial for displaying in invoice
+          = render partial: 'invoices/item_material', collection: @invoice.purchase_order.item_materials
   .panel-footer
     ,
     .pull-right

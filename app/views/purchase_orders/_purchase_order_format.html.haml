@@ -27,18 +27,19 @@
           Fecha:
           -#= purchase_order.invoice_date
   .panel.panel-default
-    %table.table.table-hover.table-responsive
-      %thead
-        %tr
-          %th
-            Cantidad
-          %th
-            Unidad
-          %th
-            Concepto
-          %th
-            Precio unitario
-      %tbody
-        = render partial: 'item_material', collection: @item_materials
+    .table-responsive
+      %table.table.table-hover
+        %thead
+          %tr
+            %th
+              Cantidad
+            %th
+              Unidad
+            %th
+              Concepto
+            %th
+              Precio unitario
+        %tbody
+          = render partial: 'item_material', collection: @item_materials
 
 

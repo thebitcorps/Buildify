@@ -4,15 +4,15 @@
     = f.search_field :query, autofocus: true, class: "form-control"
   = f.submit 'Buscar', class: 'btn btn-default'
 
-
-%table.table.table-striped.table-condensed.table-hover
-  %thead
-    %tr
-      %th Nombre
-      %th Descripción
-      %th
-  %tbody#materials
-    = render @materials
+.table-responsive
+  %table.table.table-striped.table-condensed.table-hover
+    %thead
+      %tr
+        %th Nombre
+        %th Descripción
+        %th
+    %tbody#materials
+      = render @materials
 #paginate
   = paginate @materials,theme: 'twitter-bootstrap-3',remote: true
 %br
