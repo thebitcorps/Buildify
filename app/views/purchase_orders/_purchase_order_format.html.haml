@@ -1,11 +1,10 @@
--#first idea could be better need suggestions : Llamas
-.panel.panel-primary
+.panel.panel-success
   .panel-heading
-    %h3 Contrarecibo
+    %h3 Orden de compra
     Madereria y Construcciones Allpino Sa de Cv
     .pull-right
       Folio:
-      = invoice.folio
+      = purchase_order.folio
   .panel-body
     %p
       %b Direccion
@@ -22,11 +21,12 @@
       MCA-990225-MJ0
     %h3
       %p
-        %b Recibimos de:
-        = invoice.provider.name
+        %b Para :
+        = purchase_order.provider.name
         %span.pull-right
           Fecha:
-          = invoice.invoice_date
+          -#= purchase_order.invoice_date
+  .panel.panel-default
     %table.table.table-hover.table-responsive
       %thead
         %tr
@@ -37,12 +37,8 @@
           %th
             Concepto
           %th
-            Status  de entrega
+            Precio unitario
       %tbody
-        -#create proper item_material partial for displaying in invoice
-        = render partial: 'invoices/item_material', collection: @invoice.purchase_order.item_materials
-  .panel-footer
-    ,
-    .pull-right
-      %b Total:
-      = number_to_currency invoice.amount
+        = render partial: 'item_material', collection: @item_materials
+
+

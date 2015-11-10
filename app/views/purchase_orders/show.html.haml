@@ -10,18 +10,7 @@
 
 %p
   %h2= link_to @purchase_order.provider.name,provider_path(@purchase_order.provider)
-.panel.panel-default
-  %table.table
-    %thead
-      %tr
-        %th
-          Cantidad
-        %th
-          Concepto
-        %th
-          Estado
-    %tbody
-      = render partial: 'item_material', collection: @item_materials
+= render :partial => 'purchase_order_format',locals: {purchase_order: @purchase_order}
 
 %h1
   %small
