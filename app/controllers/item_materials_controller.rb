@@ -28,6 +28,6 @@ private
 
 
   def item_material_params
-    params.require(:item_material).permit(:status,:requested,:measure_unit)
+    params.require(:item_material).permit(:status,:requested,:measure_unit,:received)
   end
 end

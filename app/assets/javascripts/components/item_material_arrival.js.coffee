@@ -3,6 +3,7 @@
     status: @props.itemMaterial.status
     rowColor: @getRowColor @props.itemMaterial.status
     edit: false
+    received: ''
     requested: @props.itemMaterial.requested
     requested_new: @props.itemMaterial.requested
     measure_unit: @props.itemMaterial.measure_unit
@@ -62,9 +63,32 @@
         return
     @setState {requested: @state.requested_new,edit: false,measure_unit: @state.measure_unit_new,measure_unit_new: ''}
   valid: ->
-    if @state.measure_unit_new
-      return true
-    false
+    @state.measure_unit_new ? true : false
+  validPartiallyArrive: ->
+    @state.received ? true : false
+  partiallyRadioChange:(name,value) ->
+#    @setState {status: value,rowColor: @getRowColor(value)}
+#    @props.itemMaterialChanged name,value
+    $("#" + @props.itemMaterial.id).modal()
+  partiallyArriveSave: ->
+    that= @
+    id =  that.props.itemMaterial.id
+    $.ajax
+      type: 'PUT'
+      url: '/item_materials/'+ id
+      data: {item_material: {received: @state.received,status: 'partially'}}
+      dataType: 'JSON'
+      success:  (data) ->
+        that.setState {status: 'partially',rowColor: that.getRowColor('partially')}
+        $("#" + that.props.itemMaterial.id).modal('hide')
+      error: (XMLHttpRequest, textStatus, errorThrown) ->
+        #we parse the responses o errors so we can send a array of errors
+        if errorThrown == 'Internal Server Error'
+          that.setState errors: ['Internal Server Error']
+          return
+        that.setState errors: $.parseJSON(XMLHttpRequest.responseText)
+        return
+
   radioChanged: (name,value) ->
     @setState {status: value,rowColor: @getRowColor(value)}
     @props.itemMaterialChanged name,value
@@ -92,6 +116,9 @@
           itemMaterial.material.name
       else
         itemMaterial.material.name
+  closeModal: ->
+    $("#" + @props.itemMaterial.id).modal('hide')
+    @setState received: ''
 
   render: ->
     if @state.edit
@@ -128,7 +155,39 @@
           React.DOM.td null,
             React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'Por llegar',changed: @radioChanged,checked: @state.status == 'authorized'
             React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'Entregado',changed: @radioChanged,checked: @state.status == 'delivered'
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @radioChanged,checked: @state.status == 'partially'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @partiallyRadioChange,checked: @state.status == 'partially'
             React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'No entregado',changed: @radioChanged,checked: @state.status == 'missed'
 
-
+        React.DOM.div
+          id: @props.itemMaterial.id
+          tabIndex: '-1'
+          role: 'modal'
+          className: 'modal-dialog modal fade'
+          React.DOM.div
+            className: 'modal-content'
+            React.DOM.div
+              className: 'modal-header'
+              React.DOM.h4 null,'Cuanto Llego'
+            React.DOM.div
+              className: 'modal-body'
+              React.createElement LabelInput,name: 'received',changed: @handleInputChange,disabled: true,value: "#{@props.itemMaterial.requested } #{@props.itemMaterial.measure_unit}",label: 'Se pidio:'
+              React.DOM.label className: 'form-group','Llego:'
+              React.DOM.div
+                className: 'row'
+                React.DOM.div
+                  className: 'col-md-10'
+                  React.createElement NumberInput,name: 'received',value: @state.received,changed: @handleInputChange
+                React.DOM.div
+                  className: 'col-md-2'
+                React.DOM.label className: 'form-group',@props.itemMaterial.measure_unit
+            React.DOM.div
+              className: 'modal-footer'
+              React.DOM.button
+                className: 'btn btn-primary'
+                onClick: @partiallyArriveSave
+                disabled: !@validPartiallyArrive()
+                'Guardar'
+              React.DOM.button
+                className: 'btn btn-default'
+                onClick: @closeModal
+                'cancelar'

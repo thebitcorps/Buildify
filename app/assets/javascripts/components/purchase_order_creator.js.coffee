@@ -76,7 +76,7 @@
                     'No more requisition items to add'
             for itemMaterial in @state.requisitionItemMaterials
               if itemMaterial.status == 'pending'
-                React.createElement ItemMaterialPurchaseOrder, itemMaterial: itemMaterial,key: itemMaterial.id, handleSelect: @requisitionItemClick,can_select: true
+                React.createElement ItemMaterialPurchaseOrder, itemMaterial: itemMaterial,key: itemMaterial.id, handleSelect: @requisitionItemClick,can_select: true,can_split: true
         React.DOM.div
           className: 'col-md-6'
           React.DOM.h2 null, 'Purchase Order'

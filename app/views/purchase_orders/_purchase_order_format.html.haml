@@ -1,10 +1,12 @@
 .panel.panel-success
   .panel-heading
     %h3 Orden de compra
-    Madereria y Construcciones Allpino Sa de Cv
-    .pull-right
-      Folio:
-      = purchase_order.folio
+    .row
+      .col-md-4
+        Madereria y Construcciones Allpino Sa de Cv
+      .col-md-3.col-md-offset-5
+        Folio:
+        = purchase_order.folio
   .panel-body
     %p
       %b Direccion

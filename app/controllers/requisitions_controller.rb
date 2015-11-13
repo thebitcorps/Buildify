@@ -8,6 +8,8 @@ class RequisitionsController < ApplicationController
     if current_user.subordinate?
       if params[:mode] == 'sub'
         if @type_list == 'partially'
+          # i think this is more readable and also this could be done with metaprogramin in less lines
+          # @requisitions =  current_user.requisitions.partially(params[:construction_id])
           @requisitions =  current_user.partial_requisitions.where(construction_id: params[:construction_id])
         else
           if @type_list == 'complete'

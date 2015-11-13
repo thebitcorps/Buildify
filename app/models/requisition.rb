@@ -20,6 +20,7 @@ class Requisition < ActiveRecord::Base
   # end
 
   scope :partially, -> {where status: PARTIALLY_STATUS}
+  scope :partially, ->(construction_id) {where status: PARTIALLY_STATUS,construction_id: construction_id}
   scope :pending, -> { where status: PENDING_STATUS }
   scope :complete, -> { where status: COMPLETE_STATUS }
 

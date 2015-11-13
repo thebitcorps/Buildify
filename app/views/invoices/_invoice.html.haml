@@ -2,10 +2,12 @@
 .panel.panel-primary
   .panel-heading
     %h3 Contrarecibo
-    Madereria y Construcciones Allpino Sa de Cv
-    .pull-right
-      Folio:
-      = invoice.folio
+    .row
+      .col-md-4
+        Madereria y Construcciones Allpino Sa de Cv
+      .col-md-3.col-md-offset-5
+        Folio:
+        = invoice.folio
   .panel-body
     %p
       %b Direccion

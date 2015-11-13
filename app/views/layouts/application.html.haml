@@ -32,16 +32,16 @@
             - if current_user.administrator?
               %ul.nav.navbar-nav
                 %li= link_to "Obras", constructions_path
-                %li= link_to "Materiales", materials_path
                 %li= link_to "Proveedores", providers_path
                 %li= link_to 'User', users_path
+
                 %li.dropdown
                   %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                     Others
                     %span.caret
                   %ul.dropdown-menu
-                    %li
-                      = link_to 'Unidades', measure_units_path
+                    %li= link_to "Materiales", materials_path
+                    %li= link_to 'Unidades', measure_units_path
             - else # Subordinate Navbar
               %ul.nav.navbar-nav
                 %li.dropdown
