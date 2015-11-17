@@ -67,15 +67,17 @@
 
       React.createElement DateInput,label: 'Requisition Date',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
-      React.DOM.table
-        className: 'table table-striped table-hover'
-        React.DOM.thead null,
-          React.DOM.tr null,
-            for th,i in ['Material','Requsested','']
-              React.DOM.th key: i,th
-        React.DOM.tbody null,
-          for itemMaterial in @state.itemMaterials
-            React.createElement ItemMaterial,itemMaterial: itemMaterial,handleDeleteItemMaterial: @deleteItemMaterial,key: itemMaterial.id,handleUpdate: @handleUpdateItemMaterial
+      React.DOM.div
+        className: 'table-responsive '
+        React.DOM.table
+          className: 'table table-striped table-hover'
+          React.DOM.thead null,
+            React.DOM.tr null,
+              for th,i in ['Material','Requsested','']
+                React.DOM.th key: i,th
+          React.DOM.tbody null,
+            for itemMaterial in @state.itemMaterials
+              React.createElement ItemMaterial,itemMaterial: itemMaterial,handleDeleteItemMaterial: @deleteItemMaterial,key: itemMaterial.id,handleUpdate: @handleUpdateItemMaterial
       React.DOM.button
         className: 'btn btn-primary'
         onClick: @handleSubmit

@@ -3,7 +3,7 @@
     status: @props.itemMaterial.status
     rowColor: @getRowColor @props.itemMaterial.status
     edit: false
-    received: ''
+    received: @props.itemMaterial.received
     requested: @props.itemMaterial.requested
     requested_new: @props.itemMaterial.requested
     measure_unit: @props.itemMaterial.measure_unit
@@ -127,8 +127,9 @@
         React.DOM.td null , React.createElement NumberInput,name: 'requested_new',value: @state.requested_new,changed: @handleInputChange
         React.DOM.td null ,React.createElement LabelSelect,name: 'measure_unit_new',options: @getUnitsOptions(@props.itemMaterial.material.measure_units),onChanged: @handleSelectChange
         React.DOM.td null ,
-          React.DOM.a {className: 'btn btn-primary',onClick: @handleSubmit,disabled: !@valid()},'Guardar'
-          React.DOM.a {className: 'btn btn-default',onClick: @handleToggle},'Cancelar'
+          React.DOM.div className: 'btn-group',
+            React.DOM.a {className: 'btn btn-primary',onClick: @handleSubmit,disabled: !@valid()},'Guardar'
+            React.DOM.a {className: 'btn btn-default',onClick: @handleToggle},'Cancelar'
 
     else
       React.DOM.tr className: @state.rowColor,
@@ -136,6 +137,7 @@
         React.DOM.td null,
           @state.requested + ' ' + @state.measure_unit
         React.DOM.td null,
+          #if no purchase order have been generate we show proper message
           if @props.itemMaterial.purchase_order_id == null
             'No asignado'
           else
@@ -146,18 +148,20 @@
             else
               "Orden - #{@props.itemMaterial.purchase_order_id}"
         #add prop for the requisition state nly show buttons when requisitons is process
+        #here we can edit the item material
         if @props.itemMaterial.purchase_order_id == null
           React.DOM.td null,
             React.DOM.div className: 'btn-group',
               React.DOM.a {className: 'btn btn-warning',onClick: @handleToggle},'Editar'
               React.DOM.a {className: 'btn btn-danger',onClick: @handleDelete},'Borrar'
         else
+#          |||||||||Purchase order already generated here we  select the arrival status
           React.DOM.td null,
             React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'Por llegar',changed: @radioChanged,checked: @state.status == 'authorized'
             React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'Entregado',changed: @radioChanged,checked: @state.status == 'delivered'
             React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @partiallyRadioChange,checked: @state.status == 'partially'
             React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'No entregado',changed: @radioChanged,checked: @state.status == 'missed'
-
+#        ||||||||||MODAL|||||||
         React.DOM.div
           id: @props.itemMaterial.id
           tabIndex: '-1'
@@ -170,24 +174,24 @@
               React.DOM.h4 null,'Cuanto Llego'
             React.DOM.div
               className: 'modal-body'
-              React.createElement LabelInput,name: 'received',changed: @handleInputChange,disabled: true,value: "#{@props.itemMaterial.requested } #{@props.itemMaterial.measure_unit}",label: 'Se pidio:'
-              React.DOM.label className: 'form-group','Llego:'
-              React.DOM.div
-                className: 'row'
+              React.DOM.label className: 'form-group','Se pidio:'
                 React.DOM.div
-                  className: 'col-md-10'
+                  className: 'input-group '
+                  React.createElement LabelInput,name: 'received',changed: @handleInputChange,disabled: true,value: "#{@props.itemMaterial.requested }"
+                  React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
+                React.DOM.label className: 'form-group','Llego:'
+                React.DOM.div
+                  className: 'input-group '
                   React.createElement NumberInput,name: 'received',value: @state.received,changed: @handleInputChange
-                React.DOM.div
-                  className: 'col-md-2'
-                React.DOM.label className: 'form-group',@props.itemMaterial.measure_unit
-            React.DOM.div
-              className: 'modal-footer'
-              React.DOM.button
-                className: 'btn btn-primary'
-                onClick: @partiallyArriveSave
-                disabled: !@validPartiallyArrive()
-                'Guardar'
-              React.DOM.button
-                className: 'btn btn-default'
-                onClick: @closeModal
-                'cancelar'
+                  React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
+              React.DOM.div
+                className: 'modal-footer'
+                React.DOM.button
+                  className: 'btn btn-primary'
+                  onClick: @partiallyArriveSave
+                  disabled: !@validPartiallyArrive()
+                  'Guardar'
+                React.DOM.button
+                  className: 'btn btn-default'
+                  onClick: @closeModal
+                  'cancelar'
