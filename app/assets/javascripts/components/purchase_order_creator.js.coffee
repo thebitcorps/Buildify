@@ -3,20 +3,22 @@
     requisitionItemMaterials: @props.requisition.item_materials
     purchaseOrderItemsMaterials: []
     errors: []
+  insertToArray: (item,array) ->
+    newArray = array.slice()
+    newArray.push item
+    return newArray
   requisitionItemClick: (itemMaterial)->
+    purchaseOrderItemsMaterials = React.addons.update(@state.purchaseOrderItemsMaterials, { $push: [itemMaterial] })
     requisiionItems = @state.requisitionItemMaterials.slice()
-    purchaseItems = @state.purchaseOrderItemsMaterials.slice()
-    purchaseItems.push itemMaterial
     index = requisiionItems.indexOf itemMaterial
     requisiionItems.splice index, 1
-    @setState {requisitionItemMaterials: requisiionItems, purchaseOrderItemsMaterials: purchaseItems}
+    @setState {requisitionItemMaterials: requisiionItems, purchaseOrderItemsMaterials: purchaseOrderItemsMaterials}
   purchaseItemClick: (itemMaterial)->
-    requisiionItems = @state.requisitionItemMaterials.slice()
+    requisitionItemMaterials = React.addons.update(@state.requisitionItemMaterials, { $push: [itemMaterial] })
     purchaseItems = @state.purchaseOrderItemsMaterials.slice()
-    requisiionItems.push itemMaterial
     index = purchaseItems.indexOf itemMaterial
     purchaseItems.splice index, 1
-    @setState {requisitionItemMaterials: requisiionItems, purchaseOrderItemsMaterials: purchaseItems}
+    @setState {requisitionItemMaterials: requisitionItemMaterials, purchaseOrderItemsMaterials: purchaseItems}
   addState: (toAdd) ->
     @setState toAdd
   valid: ->
@@ -48,30 +50,66 @@
           return
         that.setState errors: $.parseJSON(XMLHttpRequest.responseText)
         return
+  submitItemMaterialDivide: ->
+    that = @
+    $.ajax
+      url: '/item_materials'
+      type: 'POST'
+      data: item_material: @state.newItemMaterial
+      dataType: 'JSON'
+      success:  (data) ->
+        #update the browers window
+        purchaseOrderItemsMaterials = React.addons.update(that.state.purchaseOrderItemsMaterials, { $push: [data] })
+        that.setState purchaseOrderItemsMaterials:  purchaseOrderItemsMaterials
+        return
+      error: (XMLHttpRequest, textStatus, errorThrown) ->
+        #we parse the responses o errors so we can send a array of errors
+        if errorThrown == 'Internal Server Error'
+          that.setState errors: ['Internal Server Error']
+          return
+        that.setState errors: $.parseJSON(XMLHttpRequest.responseText)
+        return
+    $.ajax
+      url: '/item_materials/'+ @state.dividerItemMaterial.id
+      type: 'PUT'
+      data: item_material: {requested: @state.dividerItemMaterial.requested}
+      dataType: 'JSON'
+      error: (XMLHttpRequest, textStatus, errorThrown) ->
+        #we parse the responses o errors so we can send a array of errors
+        if errorThrown == 'Internal Server Error'
+          that.setState errors: ['Internal Server Error']
+          return
+        that.setState errors: $.parseJSON(XMLHttpRequest.responseText)
+    $("#modal").modal('hide')
   promptItemMaterialDivider: (itemMaterial) ->
-#    newItemMaterial = itemMaterial
-#    newItemMaterial.requested = 0
     newItemMaterial = {material: {}}
     newItemMaterial.material.name = itemMaterial.material.name
     newItemMaterial.measure_unit = itemMaterial.measure_unit
     newItemMaterial.material.description = itemMaterial.material.description
-    newItemMaterial.material_id = itemMaterial.material
+    newItemMaterial.material_id = itemMaterial.material_id
+    newItemMaterial.requisition_id = itemMaterial.requisition_id
+    newItemMaterial.status = itemMaterial.status
     newItemMaterial.requested = 0
     @setState {dividerItemMaterial: itemMaterial,newItemMaterial: newItemMaterial}
     $("#modal").modal()
   updateRequested: (itemMaterial,operation)->
     itemMaterial.requested = operation(itemMaterial.requested)
     return itemMaterial
+
   substractRequestedToNew: ->
     @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial,(a)-> return parseInt(a) + 1),newItemMaterial: @updateRequested(@state.newItemMaterial,(a)-> return a - 1)}
   addRequestedToNew: ->
     @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial,(a)-> return parseInt(a) - 1),newItemMaterial: @updateRequested(@state.newItemMaterial,(a)-> return a + 1)}
   closeModal: ->
-
-#    a = parseInt(@state.dividerItemMaterial.requested) + @state.newItemMaterial.requested
     b =  @state.newItemMaterial.requested
     @setState dividerItemMaterial: @updateRequested(@state.dividerItemMaterial,(a)-> return parseInt(a) + b)
-    $("#modal").modal('hide')
+
+  lessThaZeroOldItem: ->
+    if @state.dividerItemMaterial
+      return @state.dividerItemMaterial.requested == 0
+  lessThaZeroNewItem: ->
+    if @state.newItemMaterial
+      return @state.newItemMaterial.requested == 0
   render: ->
     React.DOM.div
       className: 'purchase_order_creator'
@@ -101,11 +139,11 @@
 #              React.DOM.p
               React.DOM.div
                 className: 'row text-center'
-                React.DOM.button {className: 'btn btn-primary ' ,onClick: @addRequestedToNew,disabled: !@},'+'
+                React.DOM.button {className: 'btn btn-primary ' ,onClick: @addRequestedToNew,disabled: @lessThaZeroOldItem()},'+'
 #                React.DOM.p
                 React.DOM.div
                   className: 'row text-center'
-                  React.DOM.button {className: 'btn btn-default',onClick: @substractRequestedToNew},'-'
+                  React.DOM.button {className: 'btn btn-default',onClick: @substractRequestedToNew,disabled: @lessThaZeroNewItem()},'-'
             React.DOM.div
               className: 'col-md-5'
               React.DOM.ul
@@ -117,8 +155,8 @@
             className: 'modal-footer'
             React.DOM.button
               className: 'btn btn-primary'
-#              onClick: @partiallyArriveSave
-#              disabled: !@validPartiallyArrive()
+              onClick: @submitItemMaterialDivide
+              disabled: @lessThaZeroNewItem() || @lessThaZeroOldItem()
               'Guardar'
             React.DOM.button
               className: 'btn btn-default'

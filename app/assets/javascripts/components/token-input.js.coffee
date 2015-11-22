@@ -35,15 +35,13 @@
         state.props.onAddToken item
       onDelete: (item) ->
         state.props.onRemoveToken item
-
-
-
     })
   render: ->
     React.DOM.div
-      className: 'token-input'
+      className: 'form-group token-input '
       React.DOM.input
         type: 'text'
+        className: 'form-control'
         id: @props.componentName
         placeholder: @props.componentName
         ref: @props.componentName

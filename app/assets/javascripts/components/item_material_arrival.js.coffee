@@ -80,6 +80,8 @@
       dataType: 'JSON'
       success:  (data) ->
         that.setState {status: 'partially',rowColor: that.getRowColor('partially')}
+        #function that updat the item material in the parent
+        that.props.itemMaterialChanged that.props.itemMaterial.id,'partially',that.state.received
         $("#" + that.props.itemMaterial.id).modal('hide')
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         #we parse the responses o errors so we can send a array of errors
@@ -90,16 +92,21 @@
         return
 
   radioChanged: (name,value) ->
-    @setState {status: value,rowColor: @getRowColor(value)}
-    @props.itemMaterialChanged name,value
+    received = ''
+    if value == 'delivered'
+      received = @props.itemMaterial.requested
+    else if value == 'missed'
+      received = '0'
     that= @
     id =  that.props.itemMaterial.id
     $.ajax
       type: 'PUT'
       url: '/item_materials/'+ id
-      data: {item_material: {status: value}}
+      data: {item_material: {status: value,  received: received}}
       dataType: 'JSON'
       success:  (data) ->
+        that.setState {status: value,rowColor: that.getRowColor(value),received: received}
+        that.props.itemMaterialChanged name,value,received
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         #we parse the responses o errors so we can send a array of errors
@@ -118,8 +125,7 @@
         itemMaterial.material.name
   closeModal: ->
     $("#" + @props.itemMaterial.id).modal('hide')
-    @setState received: ''
-
+    @setState received: @props.received
   render: ->
     if @state.edit
       React.DOM.tr null,
@@ -130,7 +136,6 @@
           React.DOM.div className: 'btn-group',
             React.DOM.a {className: 'btn btn-primary',onClick: @handleSubmit,disabled: !@valid()},'Guardar'
             React.DOM.a {className: 'btn btn-default',onClick: @handleToggle},'Cancelar'
-
     else
       React.DOM.tr className: @state.rowColor,
         @nameLink(@props.itemMaterial)
@@ -155,43 +160,45 @@
               React.DOM.a {className: 'btn btn-warning',onClick: @handleToggle},'Editar'
               React.DOM.a {className: 'btn btn-danger',onClick: @handleDelete},'Borrar'
         else
-#          |||||||||Purchase order already generated here we  select the arrival status
-          React.DOM.td null,
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'Por llegar',changed: @radioChanged,checked: @state.status == 'authorized'
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'Entregado',changed: @radioChanged,checked: @state.status == 'delivered'
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @partiallyRadioChange,checked: @state.status == 'partially'
-            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'No entregado',changed: @radioChanged,checked: @state.status == 'missed'
-#        ||||||||||MODAL|||||||
-        React.DOM.div
-          id: @props.itemMaterial.id
-          tabIndex: '-1'
-          role: 'modal'
-          className: 'modal-dialog modal fade'
           React.DOM.div
-            className: 'modal-content'
+            clasName: ''
+#         |||||||||Purchase order already generated here we  select the arrival status
+            React.DOM.td null,
+              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'Por llegar',changed: @radioChanged,checked: @state.status == 'authorized'
+              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'Entregado',changed: @radioChanged,checked: @state.status == 'delivered'
+              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @partiallyRadioChange,checked: @state.status == 'partially'
+              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'No entregado',changed: @radioChanged,checked: @state.status == 'missed'
+#        ||||||||||MODAL|||||||
             React.DOM.div
-              className: 'modal-header'
-              React.DOM.h4 null,'Cuanto Llego'
-            React.DOM.div
-              className: 'modal-body'
-              React.DOM.label className: 'form-group','Se pidio:'
-                React.DOM.div
-                  className: 'input-group '
-                  React.createElement LabelInput,name: 'received',changed: @handleInputChange,disabled: true,value: "#{@props.itemMaterial.requested }"
-                  React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
-                React.DOM.label className: 'form-group','Llego:'
-                React.DOM.div
-                  className: 'input-group '
-                  React.createElement NumberInput,name: 'received',value: @state.received,changed: @handleInputChange
-                  React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
+              id: @props.itemMaterial.id
+              tabIndex: '-1'
+              role: 'modal'
+              className: 'modal-dialog modal fade'
               React.DOM.div
-                className: 'modal-footer'
-                React.DOM.button
-                  className: 'btn btn-primary'
-                  onClick: @partiallyArriveSave
-                  disabled: !@validPartiallyArrive()
-                  'Guardar'
-                React.DOM.button
-                  className: 'btn btn-default'
-                  onClick: @closeModal
-                  'cancelar'
+                className: 'modal-content'
+                React.DOM.div
+                  className: 'modal-header'
+                  React.DOM.h4 null,'Cuanto Llego'
+                React.DOM.div
+                  className: 'modal-body'
+                  React.DOM.label className: 'form-group','Se pidio:'
+                    React.DOM.div
+                      className: 'input-group '
+                      React.createElement LabelInput,name: 'received',changed: @handleInputChange,disabled: true,value: "#{@props.itemMaterial.requested }"
+                      React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
+                    React.DOM.label className: 'form-group','Llego:'
+                    React.DOM.div
+                      className: 'input-group '
+                      React.createElement NumberInput,name: 'received',value: @state.received,changed: @handleInputChange
+                      React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
+                  React.DOM.div
+                    className: 'modal-footer'
+                    React.DOM.button
+                      className: 'btn btn-primary'
+                      onClick: @partiallyArriveSave
+                      disabled: !@validPartiallyArrive()
+                      'Guardar'
+                    React.DOM.button
+                      className: 'btn btn-default'
+                      onClick: @closeModal
+                      'cancelar'

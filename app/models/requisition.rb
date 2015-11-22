@@ -19,8 +19,8 @@ class Requisition < ActiveRecord::Base
   #   where(construction_id: construction_id).count + 1
   # end
 
-  scope :partially, -> {where status: PARTIALLY_STATUS}
-  scope :partially, ->(construction_id) {where status: PARTIALLY_STATUS,construction_id: construction_id}
+
+  scope :partially, ->(construction_id=nil) {where status: PARTIALLY_STATUS,construction_id: construction_id}
   scope :pending, -> { where status: PENDING_STATUS }
   scope :complete, -> { where status: COMPLETE_STATUS }
 

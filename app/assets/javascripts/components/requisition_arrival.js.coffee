@@ -2,11 +2,12 @@
   getInitialState: ->
     itemMaterials: @props.itemMaterials
     administrator: @props.administrator
-  itemMaterialUpdate: (itemId,newStatus)->
+  itemMaterialUpdate: (itemId,newStatus,received)->
     items = @state.itemMaterials.slice()
     for itemMaterial in items
       if itemMaterial.id == parseInt itemId,10
         itemMaterial.status = newStatus
+        itemMaterial.received = received
         @setState itemMaterials: items
         return
   removeItemMaterial: (itemMaterial) ->
