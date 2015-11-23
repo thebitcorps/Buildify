@@ -10,9 +10,13 @@ Rails.application.routes.draw do
 
   resources :item_materials
   resources :providers
-  resources :purchase_orders
+  resources :purchase_orders do
+    get 'document', on: :member, defaults: { format: 'pdf' }
+  end
   resources :materials
-  resources :requisitions
+  resources :requisitions do
+    get 'document', on: :member, defaults: { format: 'pdf' }
+  end
   resources :constructions
   resources :payments
   resources :estimates

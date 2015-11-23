@@ -1,6 +1,6 @@
 class PurchaseOrdersController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_purchase_order, only: [:show]
+  before_action :set_purchase_order, only: [:show, :document]
   before_action :set_requisition, only: [:new]
   before_action :filter_sub_out
 
@@ -19,6 +19,9 @@ class PurchaseOrdersController < ApplicationController
     @item_materials = @purchase_order.item_materials
     @requisition = @purchase_order.requisition
     @invoice = @purchase_order.invoice
+  end
+
+  def document
   end
 
   def new

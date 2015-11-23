@@ -1,6 +1,6 @@
 class RequisitionsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_requisition, only: [:show, :edit, :update, :destroy]
+  before_action :set_requisition, only: [:show, :document, :edit, :update, :destroy]
   before_action :set_construction, only: [:index, :new, :edit]
 
   def index
@@ -41,6 +41,9 @@ class RequisitionsController < ApplicationController
     # maybe we should add if here if user resident then return json if no return normal?
     @item_materials_json = JSON.parse @requisition.item_materials.to_json( :include => {:material => {:include => :measure_units}})
     @purchase_orders = @requisition.purchase_orders
+  end
+
+  def document
   end
 
   def new
