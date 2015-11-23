@@ -35,6 +35,10 @@ class Requisition < ActiveRecord::Base
     end
   end
 
+  def formated_folio
+    construction.title[0] + folio.to_s.rjust(4, '0') + "-" + requisition_date.year.to_s
+  end
+
   def self.plural(count)
     count == 1 ? 'requisicion' : 'requisiciones'
   end

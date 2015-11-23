@@ -7,7 +7,7 @@
     %small
       Requisicion
       %span{class: "label label-#{@requisition.status_color}"}
-        = [@requisition.requisition_date.year, @requisition.folio.to_s.rjust(4, '0')].join(' - ')
+        = @requisition.formated_folio
 
   = react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?
 

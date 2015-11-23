@@ -24,7 +24,7 @@ date_title_cell.style inline_format: true, align: :center, padding: [5, 0, 0, 0]
 construction_cell = pdf.make_cell content: "<b>#{@requisition.construction.title}</b>"
 construction_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: [:left]
 
-folio_cell = pdf.make_cell content: "<b>#{@requisition.folio}</b>"
+folio_cell = pdf.make_cell content: "<b>#{@requisition.formated_folio}</b>"
 folio_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: []
 
 date_cell = pdf.make_cell content: "<b>#{spanish_formated_date @requisition.requisition_date, false}</b>"
@@ -54,7 +54,7 @@ items_inf_cell = pdf.make_cell content: "<b>#{@requisition.item_materials.count}
 items_inf_cell.style inline_format: true, align: :center, border_lines: [:dashed, :solid, :solid, :solid], size: 10
 
 inf_cell = pdf.make_cell content: "#{!@requisition.pending? ? "*Esta requisición ya ha sido procesada, y se han generado las órdenes de compra correspondientes." : "Esta requisición esta esperando ha ser procesada."}"
-inf_cell.style inline_format: true, align: :center, border_lines: [:dashed, :solid, :solid, :solid], size: 10
+inf_cell.style inline_format: true, align: :center, size: 10
 
 
 pdf.table [[items_inf_cell], [inf_cell]], width: pdf.bounds.width
