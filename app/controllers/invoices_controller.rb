@@ -1,12 +1,15 @@
 class InvoicesController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_invoice, only: [:show, :edit, :update]
+  before_action :set_invoice, only: [:show, :document, :edit, :update]
   before_action :filter_sub_out
 
   def show
   end
 
   def edit
+  end
+
+  def document
   end
 
   def update

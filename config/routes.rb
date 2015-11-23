@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   resources :constructions
   resources :payments
   resources :estimates
-  resources :invoices
+  resources :invoices do
+    get 'document', on: :member, defaults: { format: 'pdf' }
+  end
   resources :billing_adjustments
   root to: "home#index"
 end
