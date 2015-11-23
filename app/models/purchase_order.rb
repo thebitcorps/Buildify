@@ -24,6 +24,10 @@ class PurchaseOrder < ActiveRecord::Base
     count == 1 ? 'orden de compra' : 'ordenes de compra'
   end
 
+  def formated_folio
+    requisition.folio.to_s + construction.title[0] + folio.to_s.rjust(4, '0')
+  end
+
   def check_requisition_items
     items_with_purchase = 0
     self.requisition.item_materials.each do |item_material|

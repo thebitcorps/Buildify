@@ -12,7 +12,7 @@
           %td
             %h4
               %span{class: "label label-#{purchase_order.get_color}"}
-                = purchase_order.folio.to_s.rjust(4, '0')
+                = purchase_order.formated_folio
           %td
             %h4
               %small

@@ -12,7 +12,7 @@
           %td
             %h4
               %span{class: "label label-#{requisition.status_color}"}
-                = [requisition.requisition_date.year, requisition.folio.to_s.rjust(4, '0')].join(' - ')
+                = requisition.formated_folio
           %td
             %h4
               %small
