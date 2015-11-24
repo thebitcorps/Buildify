@@ -2,10 +2,9 @@ require "prawn/measurement_extensions"
 
 pdf = Prawn::Document.new
 
-
-logo_cell = pdf.make_cell image: "#{Rails.root}/app/assets/images/allpino_logo.png", image_width: 50, borders: [:left, :top, :bottom]
-head_cell = pdf.make_cell content: "<b>Madereria y Construcciones Allpino S.A De C.V</b><br>Agustin Yañez 141-1 PB Fracc. Villas De La Universidad Aguascalientes, Ags. México"
-head_cell.style inline_format: true, align: :center, padding: [15, 0, 0, 0], borders: [:top, :bottom, :right]
+logo_cell = pdf.make_cell image: "#{Rails.root}/app/assets/images/allpino_logo.png", image_width: 80, borders: [:left, :top]
+head_cell = pdf.make_cell content: "<b>Madereria y Construcciones Allpino S.A De C.V</b><br>Agustin Yañez 141-1 PB Fracc. Villas De La Universidad<br>C.P. 20029 Aguascalientes, Ags. México<br>Tel. y Fax: 01-449-914-93-88<br>E-mail: allpino_cotizaciones@yahoo.com"
+head_cell.style inline_format: true, align: :left, padding: [15, 15, 15, 0], borders: [:top, :right], size: 10
 pdf.table [[logo_cell, head_cell]], width: pdf.bounds.width
 
 title_cell = pdf.make_cell content: "<b>Requisición</b>"
