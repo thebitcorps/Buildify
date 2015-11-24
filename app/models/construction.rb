@@ -39,8 +39,6 @@ class Construction < ActiveRecord::Base
     expenses - paid
   end
 
-
-
   def pending_requisitions(user = nil)
     if user.nil?
       requisitions.where status: Requisition::PENDING_STATUS

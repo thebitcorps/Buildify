@@ -13,7 +13,7 @@
             = link_to purchase_order.construction.title,construction_path(purchase_order.construction)
             %h4{style: ' display: inline-block;'}
               %span{class: "label label-#{purchase_order.get_color}"}
-                = purchase_order.folio.to_s.rjust(4, '0')
+                = purchase_order.formated_folio
           %td
             %h4
               %small
