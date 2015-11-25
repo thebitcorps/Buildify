@@ -1,22 +1,39 @@
-
-.jumbotron
-  %h2
+.page-header
+  %h1
     = @provider.name
-    -#%small= @user.role
-  -#use icon for better ui experience
-  %p
-    %b Address:
-    = @provider.address
-  %p
-    %b Phone:
-    = @provider.telephone
-  %p
-    %b Email:
-    = @provider.email
+    = link_to 'Administrar', edit_provider_path(@provider), class: 'btn btn-primary btn-sm'
+  .row
+    .col-md-4
+      %h3.text-center
+        %small= @provider.address
+    .col-md-4
+      %h3.text-center
+        %small= "Tel: " + @provider.telephone
+    .col-md-4
+      %h3.text-center
+        %small= "Email: " + @provider.telephone
 
-  = link_to 'Edit', edit_provider_path(@provider),class: 'btn btn-warning'
-
-  = link_to 'Regresar', providers_path, class: 'btn btn-default'
+.row
+  - expenses = @provider.expenses
+  - paid = @provider.paid
+  .col-md-4
+    .panel.panel-warning
+      .panel-heading
+        Se le a comprado
+      .panel-body
+        = number_to_currency expenses
+  .col-md-4
+    .panel.panel-success
+      .panel-heading
+        Se le ha pagado
+      .panel-body
+        = number_to_currency paid
+  .col-md-4
+    .panel.panel-danger
+      .panel-heading
+        Se le debe
+      .panel-body
+        = number_to_currency expenses - paid
 
 -#ajax this methods call proper controllers
 %ul.nav.nav-tabs

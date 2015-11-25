@@ -1,26 +1,27 @@
 .page-header
+  %ol.breadcrumb
+    %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
+    %li= link_to "Requisiciones", requisitions_path(construction_id: @construction.id)
+    %li.active Requisición
   %h1
-    - if current_user.administrator?
-      = link_to @construction.title, construction_path(@construction)
-    - else
-      = link_to @construction.title, constructions_path(mode: :own)
     %small
-      Requisicion
+      Requisición
       %span{class: "label label-#{@requisition.status_color}"}
         = @requisition.formated_folio
 
-  = react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?
+= react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?
 
-- if current_user.administrator?
-  %h1
-    %small
-      Ordenes de compra
+.page-header
+  - if current_user.administrator?
+    %h1
+      %small
+        Ordenes de compra
 
-  .list-group#purchase_orders
-    = render partial: 'purchase_orders/purchase_order', collection: @purchase_orders
-    -#maybe an  application partial also with requisition we use the same
-    - if @purchase_orders.count == 0
-      .well
-        No hay ordenes de compra
+.list-group#purchase_orders
+  = render partial: 'purchase_orders/purchase_order', collection: @purchase_orders
+  -#maybe an  application partial also with requisition we use the same
+  - if @purchase_orders.count == 0
+    .well
+      No hay ordenes de compra
 
-  = link_to 'Nueva Orden de Compra', new_purchase_order_path(requisition_id: @requisition.id), {class: "btn btn-primary", type: "button"}
+= link_to 'Nueva Orden', new_purchase_order_path(requisition_id: @requisition.id), {class: "btn btn-primary", type: "button"}

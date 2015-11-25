@@ -1,28 +1,62 @@
 .page-header
+  %ol.breadcrumb
+    %li= link_to @requisition.construction.title, construction_path(@requisition.construction)
+    %li= link_to "Requisiciones", requisitions_path(construction_id: @requisition.construction.id)
+    %li= link_to @requisition.formated_folio, requisition_path(@requisition)
+    %li Orden de Compra
   %h1
-    = link_to @requisition.formated_folio, requisition_path(@requisition)
     %small
-      Orden 
-      %span{class:"label label-#{@purchase_order.get_color}"}
+      Orden de Compra 
+      %span{class: "label label-#{@purchase_order.get_color}"}
         = @purchase_order.formated_folio
+  .row
+    .col-md-4
+      %h3.text-center
+        %small
+          %b
+            Proveedor
+        %br
+        %small
+          = @purchase_order.provider.name
+    .col-md-4
+      %h3.text-center
+        %small
+          %b
+            Fecha de emición
+        %br
+        %small
+          = spanish_formated_date @purchase_order.created_at, false
+    .col-md-4
+      - if @invoice.waiting?
+        %h3.text-center
+          %small
+            Esta factura no ha sido recibida
+          %br
+          %small
+            = link_to "Editar factura", edit_invoice_path(@invoice)
+      - else
+        -# Second idea just pass the link to anctions, this view keeps purchase order stuff
+        %h3.text-center
+          %small
+            %b
+              Factura
+          %br
+          %small
+            = link_to @invoice.folio, document_invoice_path(@invoice), {class: "button btn-sm btn-info", type: "button"}
+            = link_to "Administrar", edit_invoice_path(@invoice)
 
-
-
-%p
-  %h2= link_to @purchase_order.provider.name,provider_path(@purchase_order.provider)
-= render :partial => 'purchase_order_format',locals: {purchase_order: @purchase_order}
-
-%h1
-  %small
-    Factura
-
-- if @invoice.waiting?
-  %h3.text-center
-    %small
-      Esta factura no a sido recibida
-    %br
-    %small
-      = link_to "Editar factura", edit_invoice_path(@invoice)
-- else
-  -#first idea suggestions?: llamas
-  = render partial: 'invoices/invoice',locals: {invoice: @invoice}
+.panel.panel-default
+  .table-responsive
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+            Cantidad
+          %th
+            Unidad
+          %th
+            Material
+          %th
+            Precio unitario
+      %tbody
+        = render partial: 'item_material', collection: @item_materials
