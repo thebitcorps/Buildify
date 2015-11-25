@@ -81,15 +81,7 @@
         Se a cobrado
       .panel-body
         = number_to_currency @construction.estimates_amount
-%ul.nav.nav-tabs
-  %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
-    = link_to 'Todos',payments_path(type_list: 'all', construction_id: params[:id]),remote: true
-  %li{id: Payment::DUE_STATUS,class: " #{'active' if params[:type_list] == Payment::DUE_STATUS}"}
-    = link_to 'Pendientes',payments_path(type_list: Payment::DUE_STATUS, construction_id: params[:id]),remote: true
-  %li{id: Payment::PARTIALLY_DUE_STATUS,class: " #{'active' if params[:type_list] == Payment::PARTIALLY_DUE_STATUS}"}
-    = link_to 'Parcialmente',payments_path(type_list: Payment::PARTIALLY_DUE_STATUS, construction_id: params[:id]),remote: true
-  %li{id: Payment::PAID_STATUS,class: " #{'active' if params[:type_list] == Payment::PAID_STATUS}"}
-    = link_to 'Procesadas',payments_path(type_list: Payment::PAID_STATUS, construction_id: params[:id]),remote: true
+= render :partial => 'payment_tabs'
 
 .panel.panel-default
   .table-responsive

@@ -11,15 +11,41 @@ class Payment < ActiveRecord::Base
   DUE_STATUS = 'due'
   PARTIALLY_DUE_STATUS = 'partially'
   PAID_STATUS = 'paid'
-  STATUS = [DUE_STATUS,PARTIALLY_DUE_STATUS,PAID_STATUS]
-
-  scope :due, -> {where status:  DUE_STATUS}
-  scope :partially, -> {where status:  PARTIALLY_DUE_STATUS}
-  scope :paid, -> {where status:  PAID_STATUS}
+  STATUS = [DUE_STATUS,PARTIALLY_DUE_STATUS,PAID_STATUS,'all_construction']
 
   # after_save :change_status_from_remaining!
+  def self.all_construction(construction_id=nil)
+    if construction_id
+      where construction_id: construction_id
+    else
+      all
+    end
+  end
 
+  def self.paid(construction_id=nil)
+    if construction_id
+      where status:  PAID_STATUS,construction_id: construction_id
+    else
+      where status:  PAID_STATUS
+    end
+  end
 
+  def self.partially(construction_id=nil)
+
+    if construction_id
+      where status:  PARTIALLY_DUE_STATUS,construction_id: construction_id
+    else
+      where status:  PARTIALLY_DUE_STATUS
+    end
+  end
+
+  def self.due(construction_id=nil)
+    if construction_id
+      where status:  DUE_STATUS,construction_id: construction_id
+    else
+      where status:  DUE_STATUS
+    end
+  end
 
   def get_color
     if status == PAID_STATUS

@@ -103,7 +103,7 @@
   closeModal: ->
     b =  @state.newItemMaterial.requested
     @setState dividerItemMaterial: @updateRequested(@state.dividerItemMaterial,(a)-> return parseInt(a) + b)
-
+    $("#modal").modal('hide')
   lessThaZeroOldItem: ->
     if @state.dividerItemMaterial
       return @state.dividerItemMaterial.requested == 0

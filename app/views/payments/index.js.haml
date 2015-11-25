@@ -5,19 +5,19 @@ $('#payments').html("#{j (render partial: 'constructions/payment',collection: @p
   $('#due').attr('class', "active");
   $('#paid').attr('class', '');
   $('#partially').attr('class', '');
-  $('#all').attr('class', '');
+  $('#all_construction').attr('class', '');
 - elsif @type_list == Payment::PAID_STATUS
   $('#due').attr('class', "");
   $('#paid').attr('class', 'active');
   $('#partially').attr('class', '');
-  $('#all').attr('class', '');
+  $('#all_construction').attr('class', '');
 - elsif @type_list == Payment::PARTIALLY_DUE_STATUS
   $('#due').attr('class', "");
   $('#paid').attr('class', '');
   $('#partially').attr('class', 'active');
-  $('#all').attr('class', '');
+  $('#all_construction').attr('class', '');
 -else
   $('#due').attr('class', "");
-  $('#pending').attr('class', '');
+  $('#paid').attr('class', '');
   $('#partially').attr('class', '');
-  $('#all').attr('class', 'active');
+  $('#all_construction').attr('class', 'active');
