@@ -1,7 +1,7 @@
 class Material < ActiveRecord::Base
   has_many :item_materials
   paginates_per 30
-  has_many :permitted_measure_units
+  has_many :permitted_measure_units,dependent: :destroy
   has_many :measure_units, through: :permitted_measure_units
   scope :all_alphabetical, -> { all.order("LOWER(name)") } # whats with that statements?
   validates :name,:description,:measure_units ,presence: true
