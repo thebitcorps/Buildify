@@ -1,6 +1,6 @@
 class Material < ActiveRecord::Base
   has_many :item_materials
-  paginates_per 10
+  paginates_per 30
   has_many :permitted_measure_units
   has_many :measure_units, through: :permitted_measure_units
   scope :all_alphabetical, -> { all.order("LOWER(name)") } # whats with that statements?
