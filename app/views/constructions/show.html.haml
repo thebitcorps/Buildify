@@ -5,7 +5,7 @@
         // Construction Name and resident
         .row
           %h1
-            = @construction.title
+            =  @construction.title.humanize
             %small= link_to @construction.manager.name, user_path(@construction.manager)
         .col-md-8.text-center
           = link_to 'Administrar',edit_construction_path(@construction),class: 'btn btn-primary'
@@ -61,25 +61,25 @@
   .col-md-3
     .panel.panel-warning
       .panel-heading
-        Se a gastado
+        Gastos de obra
       .panel-body
         = number_to_currency expenses
   .col-md-3
     .panel.panel-success
       .panel-heading
-        Se a pagodo
+        Pagos de obra
       .panel-body
         = number_to_currency paid
   .col-md-3
     .panel.panel-danger
       .panel-heading
-        Se debe
+        Saldo de obra
       .panel-body
         = number_to_currency expenses - paid
   .col-md-3
     .panel.panel-info
       .panel-heading
-        Se a cobrado
+        Estimaciones
       .panel-body
         = number_to_currency @construction.estimates_amount
 = render :partial => 'payment_tabs'
