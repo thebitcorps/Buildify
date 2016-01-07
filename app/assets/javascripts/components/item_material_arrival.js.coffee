@@ -1,4 +1,5 @@
 @ItemMaterialArrival = React.createClass
+  displayName: 'Item Material Arraval'
   getInitialState: ->
     status: @props.itemMaterial.status
     rowColor: @getRowColor @props.itemMaterial.status
@@ -120,9 +121,9 @@
       if @props.administrator
         React.DOM.a
           href: '/materials/' + itemMaterial.material.id
-          itemMaterial.material.name
+          itemMaterial.material.name + ' ' + itemMaterial.material.description
       else
-        itemMaterial.material.name
+        itemMaterial.material.name + ' ' + itemMaterial.material.description
   closeModal: ->
     $("#" + @props.itemMaterial.id).modal('hide')
     @setState received: @props.received

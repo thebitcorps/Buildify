@@ -20,7 +20,7 @@ class MeasureUnitsController < ApplicationController
 
     respond_to do |format|
       if @measure_unit.save
-        format.html { redirect_to @measure_unit, notice: 'Mesure unit was successfully created.' }
+        format.html { redirect_to measure_units_path, notice: 'Mesure unit was successfully created.' }
       else
         format.html { render :new }
       end
