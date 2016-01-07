@@ -13,7 +13,7 @@ class Material < ActiveRecord::Base
     if query.empty?
       all
     else
-      where('name ilike ?', "%#{query}%")
+      where('name ilike ? OR description ilike ?' , "%#{query}%","%#{query}%")
     end
   end
 
