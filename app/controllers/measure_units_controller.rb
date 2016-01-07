@@ -40,7 +40,7 @@ class MeasureUnitsController < ApplicationController
   def destroy
     @measure_unit.destroy
     respond_to do |format|
-      format.html { redirect_to mesure_units_url, notice: 'Mesure unit was successfully destroyed.' }
+      format.html { redirect_to measure_units_path, notice: 'Mesure unit was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
