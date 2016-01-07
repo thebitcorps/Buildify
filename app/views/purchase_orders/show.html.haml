@@ -9,6 +9,7 @@
       Orden de Compra 
       %span{class: "label label-#{@purchase_order.get_color}"}
         = @purchase_order.formated_folio
+    = link_to image_tag('pdf-icon.png',class: 'pdf-icon'),document_purchase_order_path(@requisition)
   .row
     .col-md-4
       %h3.text-center
