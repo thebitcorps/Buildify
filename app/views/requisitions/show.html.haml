@@ -8,6 +8,7 @@
       Requisición
       %span{class: "label label-#{@requisition.status_color}"}
         = @requisition.formated_folio
+      = link_to image_tag('pdf-icon.png',class: 'pdf-icon'),document_purchase_order_path(@requisition)
 
 = react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?
 
