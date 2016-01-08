@@ -57,7 +57,7 @@ private
   end
 
   def provider_params
-    params.require(:provider).permit(:name, :address, :telephone, :email)
+    params.require(:provider).permit(:name, :zipcode, :neighborhood, :number, :city , :street, :telephone, :email)
   end
 
 end

@@ -6,7 +6,7 @@
     %li Orden de Compra
   %h1
     %small
-      Orden de Compra 
+      Orden de Compra
       %span{class: "label label-#{@purchase_order.get_color}"}
         = @purchase_order.formated_folio
     = link_to image_tag('pdf-icon.png',class: 'pdf-icon'),document_purchase_order_path(@requisition)
@@ -43,7 +43,8 @@
               Factura
           %br
           %small
-            = link_to @invoice.folio, document_invoice_path(@invoice), {class: "button btn-sm btn-info", type: "button"}
+
+            = link_to image_tag('pdf-icon.png',class: 'pdf-icon'), document_invoice_path(@invoice)
             = link_to "Administrar", edit_invoice_path(@invoice)
 
 .panel.panel-default

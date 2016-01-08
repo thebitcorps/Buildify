@@ -5,7 +5,16 @@
   .row
     .col-md-4
       %h3.text-center
-        %small= @provider.address
+        %small
+          = @provider.street
+          %br
+          = @provider.neighborhood
+          %br
+          = "##{@provider.number}"
+          %br
+          = @provider.city
+          %br
+          = "C.P #{@provider.zipcode}"
     .col-md-4
       %h3.text-center
         %small= "Tel: " + @provider.telephone

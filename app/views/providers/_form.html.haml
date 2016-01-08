@@ -1,6 +1,10 @@
 =  simple_form_for(@provider, html: { class: 'form-horizontal' }) do |f|
   = f.input :name, label: 'Nombre'
-  = f.input :address, label: 'Direccion'
-  = f.input :telephone, label: 'Telefono'
+  = f.input :telephone,label: 'Telefono'
+  = f.input :street,label: 'Calle'
+  = f.input :number,label: 'Numero de edificio'
+  = f.input :neighborhood,label: 'Colonia'
+  = f.input :city,label: 'Ciudad'
+  = f.input :zipcode, label: 'Codigo Postal'
   = f.input :email, label: 'Email'
   = f.submit 'Crear', class: 'btn btn-primary'

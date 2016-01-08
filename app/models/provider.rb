@@ -6,7 +6,7 @@ class Provider < ActiveRecord::Base
   has_many :payments, through: :invoices
   paginates_per 15
   # validations for provider
-  validates :name, :email, :telephone, :address, presence: true
+  validates :name, :number, :neighborhood, :city, :street, :zipcode, :email, :telephone, presence: true
   scope :all_alphabetical, -> { all.order("LOWER(name)") }
 
   def expenses
@@ -28,5 +28,9 @@ class Provider < ActiveRecord::Base
     else
       where('name ilike ?', "%#{query}%")
     end
+  end
+
+  def address
+    "#{street} ##{number},#{neighborhood},#{city} C.P #{zipcode}"
   end
 end
