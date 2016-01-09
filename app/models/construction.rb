@@ -6,6 +6,7 @@ class Construction < ActiveRecord::Base
   has_many :invoice_receipts, through: :invoices
   has_many :payments
   has_many :estimates
+  has_many :extensions
   has_many :invoiced_payments, through: :invoices, source: :payment
   has_many :construction_users, dependent: :destroy
   has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user

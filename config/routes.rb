@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :extensions
   resources :measure_units
   devise_for :users
   resources :users do

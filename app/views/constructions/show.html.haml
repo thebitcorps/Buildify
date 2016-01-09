@@ -31,8 +31,8 @@
         %span.text-primary= number_to_currency(@construction.contract_amount)
         %br
         .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-          = link_to "Nueva Estimacion", new_estimate_path(construction_id: @construction), {class: "btn btn-primary", type: "button"}
-          = link_to "Ver todas", estimates_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
+          = link_to "Nueva Extencion", new_extension_path(construction_id: @construction), {class: "btn btn-primary", type: "button"}
+          = link_to "Ver todas", extensions_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
     //// Requisitions
     .col-md-4
       %h3.text-center

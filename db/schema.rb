@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160108012103) do
+ActiveRecord::Schema.define(version: 20160108164430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(version: 20160108012103) do
   end
 
   add_index "estimates", ["construction_id"], name: "index_estimates_on_construction_id", using: :btree
+
+  create_table "extensions", force: :cascade do |t|
+    t.date     "date"
+    t.integer  "construction_id"
+    t.decimal  "amount"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "extensions", ["construction_id"], name: "index_extensions_on_construction_id", using: :btree
 
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
@@ -216,6 +226,7 @@ ActiveRecord::Schema.define(version: 20160108012103) do
   add_foreign_key "construction_users", "users"
   add_foreign_key "constructions", "users"
   add_foreign_key "estimates", "constructions"
+  add_foreign_key "extensions", "constructions"
   add_foreign_key "invoices", "payments"
   add_foreign_key "invoices", "providers"
   add_foreign_key "item_materials", "materials"

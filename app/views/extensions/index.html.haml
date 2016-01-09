@@ -1,0 +1,23 @@
+%h1
+  Extensiones de contrato para
+  = link_to @construction.title ,construction_path(@construction)
+.table-responsive
+  %table.table.table-striped.table-condensed.table-hover
+    %thead
+      %tr
+        %th Fecha
+        %th Cantidad
+        %th
+
+    %tbody
+      - @extensions.each do |extension|
+        %tr
+          %td= extension.date
+          %td= extension.amount
+          %td
+            .btn-group
+              = link_to 'Edit', edit_extension_path(extension),class: 'btn btn-warning'
+              = link_to 'Destroy', extension, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
+
+
+

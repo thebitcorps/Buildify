@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Date:
+  = @extension.date
+%p
+  %b Construction:
+  = @extension.construction
+%p
+  %b Amount:
+  = @extension.amount
+
+= link_to 'Edit', edit_extension_path(@extension)
+\|
+= link_to 'Back', extensions_path
