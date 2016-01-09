@@ -64,6 +64,14 @@ class Construction < ActiveRecord::Base
     end
   end
 
+  def invoiced_purchases_orders
+    purchase_orders.select { |po| !po.invoice.waiting?}
+  end
+
+  def uninvoiced_purchases_orders
+    purchase_orders.select { |po| po.invoice.waiting?}
+  end
+
 
   def validate_dates_logic_relation
       errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date

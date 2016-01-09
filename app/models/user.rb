@@ -19,8 +19,6 @@ class User < ActiveRecord::Base
   validates :phone, format: { with: %r{\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d\Z}i, message: 'Teléfono inválido' }
   paginates_per 10
 
-
-
   def partial_requisitions
     requisitions.where status: Requisition::PARTIALLY_STATUS
   end

@@ -6,9 +6,7 @@
         %small
           administrada por 
           = link_to @construction.manager.name, user_path(@construction.manager)
-          .pull-right
-            = construction_spanish_status(@construction)
-            = link_to 'Administrar',edit_construction_path(@construction),class: 'btn btn-default'
+          //= link_to 'Administrar',edit_construction_path(@construction),class: 'btn btn-default'
   .row
     .col-lg-12
       .progress.cons-st-prog
@@ -26,99 +24,118 @@
           = spanish_formated_date(@construction.finish_date, false)
 .page-header
   .row
-    .col-md-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Contrato
-        %span.text-muted
-          %strong
-            = number_to_currency(@construction.contract_amount)
-    .col-md-4
+    .col-sm-4
       %h4.text-center.cons-inf-title
         %span.text-muted
           Extensión
         %span.text-muted
           %strong
-            "Falta metodo"
+            Falta metodo
             // = number_to_currency(@construction.extensions_amount)
-      %h5.text-center.cons-inf-title
+      %h5.text-center.cons-inf-title-sub
         %span.text-muted
           = link_to @construction.extensions.count, extensions_path(construction_id: @construction)
           Extensiones,
           = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
-    .col-md-4
+    .col-sm-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Contrato
+        %span.text-muted
+          %strong
+            Falta metodo
+            //= number_to_currency(@construction.contract_extended_amount)
+      %h5.text-center.cons-inf-title-sub
+        %span.text-muted
+          Contrato original
+        %span.text-muted
+          %strong
+            = number_to_currency(@construction.contract_amount)
+    .col-sm-4
       %h4.text-center.cons-inf-title
         %span.text-muted
           Estimación
         %span.text-muted
           %strong
             = number_to_currency(@construction.estimates_amount)
-      %h5.text-center.cons-inf-title
+      %h5.text-center.cons-inf-title-sub
         %span.text-muted
           = link_to @construction.estimates.count, estimates_path(construction_id: @construction)
           Estimaciones,
           = link_to "Agregar nueva", new_estimate_path(construction_id: @construction)
-
-
 .page-header
-  .row.construction_estimates_row
-    //// Estimates numbers with buttons
-    .col-md-4
-      %h3.text-center
-        %span{class: "#{amount_color_class(@construction)}"}
-          = number_to_currency(@construction.estimates_amount)
-        %span= "-"
-        %span.text-primary= number_to_currency(@construction.contract_amount)
-        %br
-        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-          = link_to "Nueva Extencion", new_extension_path(construction_id: @construction), {class: "btn btn-primary", type: "button"}
-          = link_to "Ver todas", extensions_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
-    //// Requisitions
-    .col-md-4
-      %h3.text-center
-        = "#{@construction.requisitions.count } #{Requisition.plural @construction.requisitions.count }"
-        %br
-        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-          = link_to 'Nueva Requisición', new_requisition_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
-          = link_to "Ver todas", requisitions_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
-    //// Purchase orders
-    .col-md-4
-      %h3.text-center
-        = "#{@construction.purchase_orders.count} #{PurchaseOrder.plural @construction.purchase_orders.count}"
-        %br
-        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-          = link_to "Ver todas", purchase_orders_path(construction_id: @construction), {class: "button btn btn-default", type: "button"}
-
-%h1
-  %small
-    Gastos
--#    just an idea nedd more ideas or suggestions - Llamas
-.row
-  -#don't know if this two variables is the better way - llamas
-  -# Ofcurse it is - David
   - expenses = @construction.expenses
   - paid = @construction.paid
-  .col-md-3
-    .panel.panel-warning
-      .panel-heading
-        Gastos de obra
-      .panel-body
-        = number_to_currency expenses
-  .col-md-3
-    .panel.panel-success
-      .panel-heading
-        Pagos de obra
-      .panel-body
-        = number_to_currency paid
-  .col-md-3
-    .panel.panel-danger
-      .panel-heading
-        Saldo de obra
-      .panel-body
-        = number_to_currency expenses - paid
-  .col-md-3
-    .panel.panel-info
-      .panel-heading
-        Estimaciones
-      .panel-body
-        = number_to_currency @construction.estimates_amount
+  .row
+    .col-sm-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Gasto total
+        %span.text-muted
+          %strong
+            = number_to_currency expenses
+    .col-sm-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Pago total
+        %span.text-muted
+          %strong
+            = number_to_currency paid
+    .col-sm-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Saldo
+        %span.text-muted
+          %strong
+            = number_to_currency expenses - paid
+.page-header
+  .row
+    .col-sm-6
+      %h4.text-center.cons-inf-title
+        %span.text-success
+          = @construction.partial_requisitions.count + @construction.complete_requisitions.count
+        %span.text-muted
+          = link_to "Requisiciones", requisitions_path(construction_id: @construction)
+          procesadas
+      %h5.text-center.cons-inf-title
+        %span.text-warning
+          = @construction.pending_requisitions.count
+        %span.text-muted
+          Requisiciones pendientes
+    .col-sm-6
+      %h4.text-center.cons-inf-title
+        %span.text-success
+          = @construction.invoiced_purchases_orders.count
+        %span.text-muted
+          = link_to "Ordenes de compra", purchase_orders_path(construction_id: @construction)
+          facturadas
+      %h5.text-center.cons-inf-title
+        %span.text-warning
+          = @construction.pending_requisitions.count
+        %span.text-muted
+          Ordenes de compra sin facturar
+
+%h3.text-center.text-muted
+  Gastos
+
+= render :partial => 'payment_tabs'
+.panel.panel-default
+  .table-responsive
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+            Factura
+          %th
+            Orden de compra
+          %th
+            Importe
+          %th
+            Pagado
+          %th
+            Saldo
+          %th
+            Pagos
+          %th
+      %tbody#payments
+        = render partial: 'payment', collection: @payments
