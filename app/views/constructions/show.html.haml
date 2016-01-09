@@ -1,26 +1,66 @@
 .page-header
-  .page-header
-    .row
-      .col-md-6
-        // Construction Name and resident
-        .row
-          %h1
-            =  @construction.title.humanize
-            %small= link_to @construction.manager.name, user_path(@construction.manager)
-        .col-md-8.text-center
-          = link_to 'Administrar',edit_construction_path(@construction),class: 'btn btn-primary'
-        //////////
-      .col-md-6
-        // Dates and progress bar in days
-        %h3.text-center
-          %small= "Desde " +  spanish_formated_date(@construction.start_date, false)
-        .progress
-          - if @construction.available_days > @construction.days_passed
-            .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", role: "progressbar", style: "width: #{percentage_of_number(@construction.days_passed, @construction.available_days)}%;", class: "#{days_bar_tag_class(@construction)}"}
-              = [@construction.days_passed, @construction.available_days].join("/") + " Dias"
-        %h3.text-center.construction-special-date
-          %small= "Termina " +  spanish_formated_date(@construction.finish_date, false)
-        ///////////
+  .row
+    .col-lg-12
+      %h3
+        =  @construction.title
+        %small
+          administrada por 
+          = link_to @construction.manager.name, user_path(@construction.manager)
+          .pull-right
+            = construction_spanish_status(@construction)
+            = link_to 'Administrar',edit_construction_path(@construction),class: 'btn btn-default'
+  .row
+    .col-lg-12
+      .progress.cons-st-prog
+        - if @construction.available_days > @construction.days_passed
+          .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", role: "progressbar", style: "width: #{percentage_of_number(@construction.days_passed, @construction.available_days)}%;", class: "#{days_bar_tag_class(@construction)}"}
+            //= [@construction.days_passed, @construction.available_days].join("/") + " Dias"
+      %h6.text-center.construction-special-date
+        %span.text-muted
+          = "Desde "
+        %span.text-info
+          = spanish_formated_date(@construction.start_date, false)
+        %span.text-muted
+          = " hasta "
+        %span.text-info
+          = spanish_formated_date(@construction.finish_date, false)
+.page-header
+  .row
+    .col-md-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Contrato
+        %span.text-muted
+          %strong
+            = number_to_currency(@construction.contract_amount)
+    .col-md-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Extensión
+        %span.text-muted
+          %strong
+            "Falta metodo"
+            // = number_to_currency(@construction.extensions_amount)
+      %h5.text-center.cons-inf-title
+        %span.text-muted
+          = link_to @construction.extensions.count, extensions_path(construction_id: @construction)
+          Extensiones,
+          = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
+    .col-md-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Estimación
+        %span.text-muted
+          %strong
+            = number_to_currency(@construction.estimates_amount)
+      %h5.text-center.cons-inf-title
+        %span.text-muted
+          = link_to @construction.estimates.count, estimates_path(construction_id: @construction)
+          Estimaciones,
+          = link_to "Agregar nueva", new_estimate_path(construction_id: @construction)
+
+
+.page-header
   .row.construction_estimates_row
     //// Estimates numbers with buttons
     .col-md-4
@@ -82,26 +122,3 @@
         Estimaciones
       .panel-body
         = number_to_currency @construction.estimates_amount
-= render :partial => 'payment_tabs'
-
-.panel.panel-default
-  .table-responsive
-    %table.table.table-hover
-      %thead
-        %tr
-          %th
-            Factura
-          %th
-            Orden de compra
-          %th
-            Importe
-          %th
-            Pagado
-          %th
-            Saldo
-          %th
-            Pagos
-          %th
-      %tbody#payments
-
-        = render partial: 'payment', collection: @payments

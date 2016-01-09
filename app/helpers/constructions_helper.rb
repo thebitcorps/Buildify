@@ -1,5 +1,6 @@
 module ConstructionsHelper
 
+  @@spanish_status = {'running' => 'En proceso', 'stopped' => 'Detenida ', 'finished' => 'Termindada'}
 
   def day_color(date)
     return 'default' if date == nil
@@ -45,8 +46,6 @@ module ConstructionsHelper
 
   end
 
-
-
   def amount_color_class(construction)
     if construction.estimates_amount < construction.contract_amount
       if construction.estimates_amount < construction.contract_amount / 2
@@ -58,4 +57,9 @@ module ConstructionsHelper
       "text-success"
     end
   end
+
+  def construction_spanish_status(construction)
+    @@spanish_status[construction.status]
+  end
+
 end
