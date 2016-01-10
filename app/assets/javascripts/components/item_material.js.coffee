@@ -1,4 +1,5 @@
 @ItemMaterial = React.createClass
+  displayName: 'Item material'
   getInitialState: ->
     getMaterialName = (props) ->
       if props.itemMaterial.material_name

@@ -1,4 +1,5 @@
 @LabelInput = React.createClass
+  displayName: 'Label input'
   changed: (e) ->
     @props.changed  e.target.name,e.target.value
   render: ->

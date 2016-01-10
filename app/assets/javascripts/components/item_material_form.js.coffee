@@ -1,4 +1,5 @@
 @ItemMaterialForm = React.createClass
+  displayName: 'Item material form'
   getInitialState: ->
     material_id: ''
     requested: ''
@@ -48,13 +49,13 @@
 #        React.createElement LabelInput,label: 'Material ',name: 'material_id',placeholder: 'Material',changed: @handleInputChange,value: @state.material_id
         React.DOM.label
           className: 'control-label'
-          'Material'
+          'Buscador de material'
         React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true
-        React.createElement NumberInput,label: 'Requested ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
+        React.createElement NumberInput,label: 'Cantidad requerida ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
 #        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit
-        React.createElement LabelSelect, label: 'Measure unit',name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
+        React.createElement LabelSelect, label: 'Unidad del material',name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
         React.DOM.button
           className: 'btn btn-primary'
           onClick: @handleNew
           disabled: !@valid()
-          'Submit'
+          'Agregar material a la requisicion'

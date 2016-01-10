@@ -10,6 +10,7 @@
 #@props.onRemoveToken: funtion to notify the parent of the item was remove the function it recives should have one param
 #                       this will be the token was removed
 @TokenInput = React.createClass
+  displayName: 'Token input'
   getDefaultProps: ->
     componentName: 'token-input'
     url: ''

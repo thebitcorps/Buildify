@@ -1,4 +1,5 @@
 @PurchaseOrderForm = React.createClass
+  displayName: 'Purchase order form'
   getInitialState: ->
     purchaseOrder: @props.purchaseOrder
   onTokenAdded: (item) ->
@@ -31,7 +32,8 @@
       className: 'purchase-order'
       React.DOM.div
         className: 'purchase-form'
+        React.DOM.label {className: ''},'Proveedor'
         React.createElement TokenInput,componentName: 'provider',url: '/providers.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken
-        React.createElement LabelSelect, label: 'Delivery type',name: 'delivery_place',options: [{'display' : '','value': ''},{'display' : 'Ship','value' : 'ship'},{'display' : 'Pick up', 'value' : 'pick_up'}],onChanged: @changeDeliveryType
-        React.createElement LabelInput, label: 'Delivery Address', name: 'delivery_address',changed: @handleInputChange, disabled: true, value: @state.delivery_address
-        React.createElement LabelInput, label: 'Delivery recveiver', name: 'delivery_receiver', changed: @handleInputChange
+        React.createElement LabelSelect, label: 'Tipo de entrega',name: 'delivery_place',options: [{'display' : '','value': ''},{'display' : 'Ship','value' : 'ship'},{'display' : 'Pick up', 'value' : 'pick_up'}],onChanged: @changeDeliveryType
+        React.createElement LabelInput, label: 'Direccion de entrega', name: 'delivery_address',changed: @handleInputChange, disabled: true, value: @state.delivery_address
+        React.createElement LabelInput, label: 'Nombre del recibidor', name: 'delivery_receiver', changed: @handleInputChange

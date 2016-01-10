@@ -29,7 +29,7 @@ class ExtensionsController < ApplicationController
   def update
     respond_to do |format|
       if @extension.update(extension_params)
-        format.html { redirect_to @extension, notice: 'Extension was successfully updated.' }
+        format.html { redirect_to extensions_path(construction_id: @extension.construction_id), notice: 'Extension was successfully updated.' }
       else
         format.html { render :edit }
       end

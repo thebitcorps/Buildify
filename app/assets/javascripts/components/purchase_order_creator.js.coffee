@@ -1,4 +1,5 @@
 @PurchaseOrderCreator = React.createClass
+  displayName: 'Purchase order creator'
   getInitialState: ->
     requisitionItemMaterials: @props.requisition.item_materials
     purchaseOrderItemsMaterials: []
@@ -170,7 +171,7 @@
         #||||||||UNselected ItemMaterials|||||||||||||
         React.DOM.div
           className: 'col-md-6'
-          React.DOM.h2 null, 'Requisition'
+          React.DOM.h2 null, 'Materiales de la requisicion'
           React.DOM.ul
             style: {cursor: 'pointer'}
             className: 'list-group'
@@ -180,14 +181,14 @@
                 React.DOM.div
                   className: 'panel-body'
                   React.DOM.h4 null,
-                    'No more requisition items to add'
+                    'No hay materiales para agregar'
             for itemMaterial in @state.requisitionItemMaterials
               if itemMaterial.status == 'pending'
                 React.createElement ItemMaterialPurchaseOrder, itemMaterial: itemMaterial,key: itemMaterial.id, handleSelect: @requisitionItemClick,can_select: true,can_split: true,divideItemMaterial: @promptItemMaterialDivider
         #|||||||Selected ItemMaterials||||||||||||
         React.DOM.div
           className: 'col-md-6'
-          React.DOM.h2 null, 'Purchase Order'
+          React.DOM.h2 null, 'Materiales de la nueva orden de compra'
           React.DOM.ul
             style: {cursor: 'pointer'}
             className: 'list-group'
@@ -197,7 +198,7 @@
                 React.DOM.div
                   className: 'panel-body'
                   React.DOM.h4 null,
-                    'Click in one item in the requisition items to add'
+                    'Dar click en los materiales de la requisicion para agregar a la orden'
             for newItemMaterial in @state.purchaseOrderItemsMaterials
               React.createElement ItemMaterialPurchaseOrder, itemMaterial: newItemMaterial,key: newItemMaterial.id, handleSelect: @purchaseItemClick,can_select: true
       React.DOM.div

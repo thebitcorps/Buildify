@@ -2,6 +2,7 @@
 #Props
 #@props.errorArray: list of error for displaying in a single array
 @ErrorBox = React.createClass
+  displayName: 'Error box'
   getDefaultProps: ->
     errosArray: []
   render: ->
