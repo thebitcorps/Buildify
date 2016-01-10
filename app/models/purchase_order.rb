@@ -11,7 +11,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   after_create :change_item_material_pending
   before_create :set_folio
-  before_save humanize_receiver
+  before_save :humanize_receiver
 
   after_create :check_requisition_items
 
