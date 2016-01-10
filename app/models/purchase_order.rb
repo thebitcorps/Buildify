@@ -11,6 +11,7 @@ class PurchaseOrder < ActiveRecord::Base
 
   after_create :change_item_material_pending
   before_create :set_folio
+  before_save :humanize_receiver
 
   after_create :check_requisition_items
 
@@ -19,6 +20,10 @@ class PurchaseOrder < ActiveRecord::Base
 
   scope :sent, -> {where status: COMPLETE_STATUS}
   scope :not_sent, -> {where status: UNCOMPLETED_STATUS}
+
+  def humanize_receiver
+    self.delivery_receiver = delivery_receiver.humanize
+  end
 
   def self.plural(count)
     count == 1 ? 'orden de compra' : 'ordenes de compra'

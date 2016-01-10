@@ -24,7 +24,7 @@ class Payment < ActiveRecord::Base
 
   def self.paid(construction_id=nil)
     if construction_id
-      where status:  PAID_STATUS,construction_id: construction_id
+      where status:  PAID_STATUS, construction_id: construction_id
     else
       where status:  PAID_STATUS
     end
@@ -33,7 +33,7 @@ class Payment < ActiveRecord::Base
   def self.partially(construction_id=nil)
 
     if construction_id
-      where status:  PARTIALLY_DUE_STATUS,construction_id: construction_id
+      where status:  PARTIALLY_DUE_STATUS, construction_id: construction_id
     else
       where status:  PARTIALLY_DUE_STATUS
     end
@@ -41,7 +41,7 @@ class Payment < ActiveRecord::Base
 
   def self.due(construction_id=nil)
     if construction_id
-      where status:  DUE_STATUS,construction_id: construction_id
+      where status:  DUE_STATUS, construction_id: construction_id
     else
       where status:  DUE_STATUS
     end

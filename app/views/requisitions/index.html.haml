@@ -3,7 +3,10 @@
     %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
     %li.active Requisiciones
   %h1
-    %small Requisiciones
+    %small
+      Requisiciones
+      .pull-right
+        = link_to 'Nueva requisicion', new_requisition_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
 
 %ul.nav.nav-tabs
   %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}

@@ -22,7 +22,9 @@ class Construction < ActiveRecord::Base
   STATUS_OPTIONS = {'En proceso' => RUNNING_STATUS,'Detenida ' => STOPPED_STATUS,'Termindada' => FINISH_STATUS}
   STATUS = [RUNNING_STATUS,STOPPED_STATUS,FINISH_STATUS]
   validates :title,:address,:contract_amount,:manager, presence: true
+
   validate :validate_dates_logic_relation
+  validates :contract_amount, numericality: true
 
 
   scope :running, ->{where status: RUNNING_STATUS}
@@ -62,6 +64,14 @@ class Construction < ActiveRecord::Base
     else
       requisitions.where status: Requisition::COMPLETE_STATUS, user_id: user.id
     end
+  end
+
+  def invoiced_purchases_orders
+    purchase_orders.select { |po| !po.invoice.waiting?}
+  end
+
+  def uninvoiced_purchases_orders
+    purchase_orders.select { |po| po.invoice.waiting?}
   end
 
 
