@@ -4,7 +4,8 @@
   .form-inputs
     = f.input :date
     = f.input :construction_id,as: :hidden, input_html: { value: params[:construction_id] }
-    = f.input :amount
+    = f.label 'Amount'
+    $ #{f.input_field :amount}
 
   .form-actions
     = f.button :submit
