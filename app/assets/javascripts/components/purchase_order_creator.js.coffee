@@ -23,7 +23,6 @@
   addState: (toAdd) ->
     @setState toAdd
   valid: ->
-#    alert @state.provider_id_hidden && @state.provider_name_hidden && @state.provider_address && @state.delivery_address && @state.delivery_type && @state.delivery_receiver
     @state.provider_id_hidden && @state.provider_name_hidden && @state.provider_address && @state.delivery_address && @state.delivery_type && @state.delivery_receiver
   handlePurchaseOrderSubmit: ->
 #   if item material is 0 dont let permit

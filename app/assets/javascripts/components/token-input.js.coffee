@@ -9,6 +9,7 @@
 #                   this will be the object returned by the query
 #@props.onRemoveToken: funtion to notify the parent of the item was remove the function it recives should have one param
 #                       this will be the token was removed
+#@props.withDescription: will format li result item iwth description with the response
 @TokenInput = React.createClass
   displayName: 'Token input'
   getDefaultProps: ->

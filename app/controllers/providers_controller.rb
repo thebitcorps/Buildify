@@ -7,7 +7,7 @@
     @providers = Provider.all_alphabetical.search(sanitized_search).page(params[:page])
     respond_to do |format|
       format.html {@providers}
-      format.json { render json: @providers}
+      format.json { render :index}
       format.js {@providers}
     end
   end
