@@ -10,7 +10,8 @@
       %tr
         %th Clave
         %th Descripción
-        %th
+        - if current_user.administrator?
+          %th
     %tbody#materials
       = render @materials
 #paginate

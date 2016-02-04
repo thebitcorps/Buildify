@@ -1,7 +1,8 @@
 %tr
   %td= link_to material.name,material
   %td= material.description
-  %td
-    .btn-group
-      = link_to 'Editar', edit_material_path(material), class: 'btn btn-warning'
-      = link_to 'Eliminar', material, :method => :delete, class: 'btn btn-danger', :data => { :confirm => '¿Seguro desea eliminar este material?' }
+  - if current_user.administrator?
+    %td
+      .btn-group
+        = link_to 'Editar', edit_material_path(material), class: 'btn btn-warning'
+        = link_to 'Eliminar', material, :method => :delete, class: 'btn btn-danger', :data => { :confirm => '¿Seguro desea eliminar este material?' }

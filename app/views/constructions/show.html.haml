@@ -63,31 +63,7 @@
           = link_to @construction.estimates.count, estimates_path(construction_id: @construction)
           Estimaciones,
           = link_to "Agregar nueva", new_estimate_path(construction_id: @construction)
-.page-header
-  - expenses = @construction.expenses
-  - paid = @construction.paid
-  .row
-    .col-sm-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Gasto total
-        %span.text-muted
-          %strong
-            = number_to_currency expenses
-    .col-sm-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Pago total
-        %span.text-muted
-          %strong
-            = number_to_currency paid
-    .col-sm-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Saldo
-        %span.text-muted
-          %strong
-            = number_to_currency expenses - paid
+= render :partial => 'balance',locals: {expenses: @construction.expenses,paid: @construction.paid}
 .page-header
   .row
     .col-sm-6

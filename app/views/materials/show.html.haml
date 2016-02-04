@@ -7,6 +7,6 @@
       %li="#{mesure_unit.unit} | #{mesure_unit.abbreviation}"
 
 
-  = link_to 'Nuevo material',new_material_path,class: 'btn btn-primary'
-  = link_to 'Editar', edit_material_path(@material), class: 'btn btn-warning'
+  = link_to 'Nuevo material',new_material_path,class: 'btn btn-primary'  if current_user.administrator?
+  = link_to 'Editar', edit_material_path(@material), class: 'btn btn-warning'  if current_user.administrator?
   = link_to 'Regresar', materials_path, class: 'btn btn-default'

@@ -1,0 +1,23 @@
+.page-header
+  .row
+    .col-sm-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Gasto total
+        %span.text-muted
+          %strong
+            = number_to_currency expenses
+    .col-sm-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Pago total
+        %span.text-muted
+          %strong
+            = number_to_currency paid
+    .col-sm-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Saldo
+        %span.text-muted
+          %strong
+            = number_to_currency expenses - paid
