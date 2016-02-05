@@ -30,12 +30,11 @@
           Extensión
         %span.text-muted
           %strong
-            Falta metodo
-            // = number_to_currency(@construction.extensions_amount)
+            = number_to_currency(@construction.extensions_amount)
       %h5.text-center.cons-inf-title-sub
         %span.text-muted
-          = link_to @construction.extensions.count, extensions_path(construction_id: @construction)
-          Extensiones,
+          = link_to "#{@construction.extensions.count} Extensiones,", extensions_path(construction_id: @construction)
+
           = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
     .col-sm-4
       %h4.text-center.cons-inf-title
@@ -43,8 +42,7 @@
           Contrato
         %span.text-muted
           %strong
-            Falta metodo
-            //= number_to_currency(@construction.contract_extended_amount)
+            = number_to_currency(@construction.total_budget)
       %h5.text-center.cons-inf-title-sub
         %span.text-muted
           Contrato original

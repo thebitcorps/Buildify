@@ -42,6 +42,18 @@ class Construction < ActiveRecord::Base
     expenses - paid
   end
 
+  def extensions_amount
+    budget  = 0
+    self.extensions.each do |extension|
+      budget += extension.amount
+    end
+    budget
+  end
+
+  def total_budget
+    extensions_amount + contract_amount
+  end
+
   def pending_requisitions(user = nil)
     if user.nil?
       requisitions.where status: Requisition::PENDING_STATUS

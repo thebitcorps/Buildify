@@ -13,11 +13,15 @@
       - @extensions.each do |extension|
         %tr
           %td= extension.date
-          %td= extension.amount
+          %td=number_to_currency extension.amount
           %td
             .btn-group
               = link_to 'Edit', edit_extension_path(extension),class: 'btn btn-warning'
               = link_to 'Destroy', extension, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
+-if @construction.extensions.empty?
+  .well
+    No se han introducido extensiones
+
 
 
 

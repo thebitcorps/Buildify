@@ -21,7 +21,7 @@
 .list-group#purchase_orders
   = render partial: 'purchase_orders/purchase_order', collection: @purchase_orders
   -#maybe an  application partial also with requisition we use the same
-  - if @purchase_orders.count == 0
+  - if @purchase_orders.empty?
     .well
       No hay ordenes de compra
 

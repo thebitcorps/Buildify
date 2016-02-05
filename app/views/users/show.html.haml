@@ -21,9 +21,14 @@
 
 .list-group#constructions
   = render partial: 'constructions/construction', collection: @user.construction_administrations
+  - if @user.construction_administrations.empty?
+    .well
+      No a administrado obras
 
-
-%h2=" Obras que participo"
+%h2 Obras que a apoyado
 .list-group#constructions
   = render partial: 'constructions/construction', collection: @user.constructions
-
+  - if @user.constructions.empty?
+    .well
+      No a apoyado obras
+%br

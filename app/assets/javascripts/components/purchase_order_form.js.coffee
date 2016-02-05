@@ -33,6 +33,6 @@
         className: 'purchase-form'
         React.DOM.label {className: ''},'Proveedor'
         React.createElement TokenInput,componentName: 'provider',url: '/providers.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true
-        React.createElement LabelSelect, label: 'Tipo de entrega',name: 'delivery_place',options: [{'display' : '','value': ''},{'display' : 'Ship','value' : 'ship'},{'display' : 'Pick up', 'value' : 'pick_up'}],onChanged: @changeDeliveryType
+        React.createElement LabelSelect, label: 'Tipo de entrega',name: 'delivery_place',options: [{'display' : '','value': ''},{'display' : 'Se enviara a obra','value' : 'ship'},{'display' : 'Ir a recoger', 'value' : 'pick_up'}],onChanged: @changeDeliveryType
         React.createElement LabelInput, label: 'Direccion de entrega', name: 'delivery_address',changed: @handleInputChange, disabled: true, value: @state.delivery_address
         React.createElement LabelInput, label: 'Nombre del recibidor', name: 'delivery_receiver', changed: @handleInputChange
