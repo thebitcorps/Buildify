@@ -4,7 +4,7 @@ class MeasureUnitsController < ApplicationController
   before_action :filter_sub_out
 
   def index
-    @measure_units = MeasureUnit.all
+    @measure_units = MeasureUnit.all.order(:unit)
   end
 
 

@@ -1,7 +1,7 @@
 class ItemMaterialsController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_item_material, only: [ :update, :destroy]
-  before_action :filter_sub_out
+  before_action :filter_sub_out, except: [:update]
 
 
   def create
