@@ -15,7 +15,7 @@ class ConstructionsController < ApplicationController
         @mode = :sub
       end
     else
-      @constructions = Construction.search(sanitized_search).page(params[:page])
+      @constructions = instance_eval("Construction.search(sanitized_search).page(params[:page]).#{sanitize_status}")
       @mode = :all
     end
     respond_to do |format|
@@ -54,6 +54,15 @@ class ConstructionsController < ApplicationController
   end
 
   private
+    def sanitize_status
+      params[:status] = 'running' if params[:status].nil?
+      if Construction::STATUS.include? params[:status].to_sym
+        params[:status]
+      else
+        'running'
+      end
+    end
+
     def humanize_title
       params[:construction][:title] = params[:construction][:title].split.map(&:capitalize).join(' ')
     end

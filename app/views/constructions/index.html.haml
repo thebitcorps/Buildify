@@ -9,6 +9,12 @@
 
 %h1 Obras
 
+%ul.nav.nav-tabs
+  %li{class: "#{'active' if params[:status] == 'running'}",id: 'running'}
+    = link_to 'En curso',constructions_path(status: :running),remote: true
+  %li{class: "#{'active' if params[:status] == 'finished'}",id: 'finished'}
+    = link_to 'Terminadas',constructions_path(status: :finished),remote: true
+
 .list-group#constructions
   - if @mode == :own
     = render partial: 'construction_own', collection: @constructions

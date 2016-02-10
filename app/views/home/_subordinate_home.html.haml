@@ -24,3 +24,27 @@
         %br
         .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
           = link_to "Ver todas", constructions_path(mode: :sub), {class: "button btn btn-default", type: "button"}
+-#TODO change the response payment
+= render :partial => 'constructions/payment_tabs'
+.panel.panel-default
+  .table-responsive
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+            Factura
+          %th
+            Ordende compra
+          %th
+            Importe
+          %th
+            Pagado
+          %th
+            Saldo
+          %th
+            Pagos
+          %th
+      %tbody#payments
+        - @acumulated_amount = 0
+        - @acumulated_paid = 0
+        = render partial: 'payment', collection: @payments
