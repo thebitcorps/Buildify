@@ -55,7 +55,7 @@ class ConstructionsController < ApplicationController
 
   private
     def sanitize_status
-      params[:status] = 'running' if params[:status].nil?
+      return 'all' if params[:status].nil? or params[:status].to_sym == :all
       if Construction::STATUS.include? params[:status].to_sym
         params[:status]
       else

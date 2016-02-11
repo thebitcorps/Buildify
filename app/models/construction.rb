@@ -25,9 +25,9 @@ class Construction < ActiveRecord::Base
   validates :contract_amount, numericality: true
 
 
-  scope :running, ->{where status: :running}
-  scope :stopped, ->{where status: :stopped}
-  scope :finished, ->{where status: :finished}
+  scope :running, ->{(where status: :running).order(created_at: :asc)}
+  scope :stopped, ->{(where status: :stopped).order(created_at: :asc)}
+  scope :finished, ->{(where status: :finished).order(created_at: :asc)}
   ROLES = %w[velador ayudante]
 
   def expenses

@@ -1,8 +1,15 @@
 - if params[:status] == 'running'
   $('#running').attr('class', "active");
   $('#finished').attr('class', "");
-- if params[:status] == 'finished'
+  $('#all').attr('class', "");
+- elsif params[:status] == 'finished'
   $('#running').attr('class', "");
   $('#finished').attr('class', "active");
+  $('#all').attr('class', "");
+-else
+  $('#running').attr('class', "");
+  $('#finished').attr('class', "");
+  $('#all').attr('class', "active");
+
 $('#constructions').html("#{j( render partial: 'construction', collection: @constructions)}");
 $('#paginate').html("#{j( paginate @constructions,theme: 'twitter-bootstrap-3', remote: true)}");
