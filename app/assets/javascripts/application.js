@@ -19,5 +19,6 @@
 //= require moment
 //= require moment/es
 //= require bootstrap-datetimepicker
+//= require jquery.tokeninput
 //= require cocoon
 //= require_tree .
