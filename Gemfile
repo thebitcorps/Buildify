@@ -17,7 +17,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '3.2.0'
 gem 'rails_12factor', group: :production
 
 gem 'devise'
