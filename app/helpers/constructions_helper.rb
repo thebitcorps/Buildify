@@ -35,6 +35,7 @@ module ConstructionsHelper
   end
 
   def expenses_amount_tag(construction)
+    construction.contract_amount = 1 if construction.contract_amount.nil?
     expenses =  construction.expenses
     if expenses <= construction.contract_amount / 2
       'label-success'
@@ -62,4 +63,12 @@ module ConstructionsHelper
     @@spanish_status[construction.status]
   end
 
+
+  def construction_or_office_path(construction)
+    if construction.office?
+      office_path(construction)
+    else
+      construction_path(construction)
+    end
+  end
 end

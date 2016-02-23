@@ -11,19 +11,20 @@ class Requisition < ActiveRecord::Base
   accepts_nested_attributes_for :item_materials, reject_if: :all_blank, allow_destroy: true
   has_many :invoices, through: :purchase_orders
   delegate :title, to: :construction, prefix: true
-
+  ##################  VALIDATIONS   ##################
   validates :requisition_date, presence: true
-
+  ##################  Callbacks   ##################
   after_create :change_item_material_pending
   # def self.next_folio(construction_id)
   #   where(construction_id: construction_id).count + 1
   # end
 
-
+  ##################  Scopes   ##################
   scope :partially, ->(construction_id=nil) {where status: PARTIALLY_STATUS,construction_id: construction_id}
   scope :pending, -> { where status: PENDING_STATUS }
   scope :complete, -> { where status: COMPLETE_STATUS }
 
+  ##################  Methods   ##################
   # which is better?
   # los auto incrementos de las DB guardan el último número en una tabla, a lo mejor podermos hacer lo mismo para tantos folios
   def self.next_folio(construction_id)

@@ -8,19 +8,20 @@ class PurchaseOrder < ActiveRecord::Base
   has_one :payment, through: :invoice
   has_one :invoice_receipt, through: :invoice
   accepts_nested_attributes_for :item_materials, reject_if: :all_blank, allow_destroy: true
-
+  ##################  Callbacks   ##################
   after_create :change_item_material_pending
   before_create :set_folio
   before_save :humanize_receiver
-
   after_create :check_requisition_items
 
+  ##################     ##################
   COMPLETE_STATUS = 'complete'
   UNCOMPLETED_STATUS = 'pending'
-
+  ##################  Scopes   ##################
   scope :sent, -> {where status: COMPLETE_STATUS}
   scope :not_sent, -> {where status: UNCOMPLETED_STATUS}
 
+  ##################  Methods   ##################
   def humanize_receiver
     self.delivery_receiver = delivery_receiver.humanize
   end

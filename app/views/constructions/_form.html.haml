@@ -1,5 +1,6 @@
 
 =  simple_form_for(@construction, html: { class: 'form-horizontal' }) do |f|
+  -#local variable if the @construction is in editing form
   - if edit
     %h3 Estado de obra
     = f.input :status,collection: Construction::STATUS_OPTIONS

@@ -1,19 +1,22 @@
-%a.list-group-item.construction-special-row{:href => "#{construction_path(construction)}"}
+
+%a.list-group-item.construction-special-row{:href => "#{construction_or_office_path construction}"}
   %h4
-    %span.label.label-primary.pull-right= "Monto - #{number_to_currency(construction.contract_amount)}"
-    %span.pull-right -
-    %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
-      = "Estimaciones - #{number_to_currency(construction.estimates_amount)}"
-    -#make method for the expense of construction
-    -#is just an idea so it could be more
-    %span.pull-right -
+    -#only show constructnions
+    - unless construction.office?
+      %span.label.label-primary.pull-right= "Monto - #{number_to_currency(construction.contract_amount)}"
+      %span.pull-right -
+      %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
+        = "Estimaciones - #{number_to_currency(construction.estimates_amount)}"
+      -#make method for the expense of construction
+      -#is just an idea so it could be more
+      %span.pull-right -
     %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
       = "Gastos - #{number_to_currency(construction.expenses)}"
 
   %h3.list-group-item-heading
     = construction.title
     %small
-      = construction.manager.name if !construction.manager.nil?
+      = construction.manager.name unless construction.manager.nil?
   .progress
     - if construction.available_days > construction.days_passed
       .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", :role => "progressbar", :style => "width: #{percentage_of_number(construction.days_passed, construction.available_days)}%;"}

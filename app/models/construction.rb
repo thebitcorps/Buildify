@@ -18,18 +18,35 @@ class Construction < ActiveRecord::Base
   # when the construction is successfully finished
   STATUS_OPTIONS = {'En proceso' => :running,'Detenida ' => :stopped,'Termindada' => :finished}
   STATUS = [:running,:stopped,:finished]
+  ROLES = %w[velador ayudante]
 
-  validates :title,:address,:contract_amount,:manager, presence: true
-
+  ##################  VALIDATIONS   ##################
+  validate :validate_field
   validate :validate_dates_logic_relation
-  validates :contract_amount, numericality: true
+  validate :validate_contract_amount
 
+  def validate_contract_amount
+    # skip validations if is and office object
+    return if type == 'Office'
+    validates :contract_amount, numericality: true
+  end
 
+  def validate_field
+    # skip validations if is and office object
+    return if type == 'Office'
+    validates :title,:address,:contract_amount,:manager, presence: true
+  end
+
+  def validate_dates_logic_relation
+    errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date
+  end
+  ##################  SCOPES   ##################
   scope :running, ->{(where status: :running).order(created_at: :asc)}
   scope :stopped, ->{(where status: :stopped).order(created_at: :asc)}
   scope :finished, ->{(where status: :finished).order(created_at: :asc)}
-  ROLES = %w[velador ayudante]
+  scope :all_constructions,-> {(where type: nil).order(created_at: :asc)}
 
+  ##################  METHODS   ##################
   def expenses
     payments.sum :amount
   end
@@ -86,10 +103,10 @@ class Construction < ActiveRecord::Base
     purchase_orders.select { |po| po.invoice.waiting?}
   end
 
-
-  def validate_dates_logic_relation
-      errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date
+  def office?
+    type == 'Office'
   end
+
 
   def days_passed
     (DateTime.now.to_date - start_date).to_i

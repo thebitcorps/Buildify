@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :offices
+
   resources :extensions
   resources :measure_units
   devise_for :users
