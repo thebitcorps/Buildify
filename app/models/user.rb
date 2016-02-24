@@ -41,4 +41,13 @@ class User < ActiveRecord::Base
       where('name ilike ?', "%#{search}%")
     end
   end
+
+  # we dont let users have multiples role
+  # maybe we could change so users can have multiple roles? atte llamas
+  def change_role(role)
+    role_list.each do |old_role|
+      remove_role old_role
+    end
+    add_role role
+  end
 end

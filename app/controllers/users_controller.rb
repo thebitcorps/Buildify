@@ -51,6 +51,7 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
+      @user.change_role role_param
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
@@ -92,7 +93,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :phone, :email,:status)
+      params.require(:user).permit(:name, :phone, :email)
     end
 
     def role_param
