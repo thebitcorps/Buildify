@@ -21,24 +21,40 @@ class Construction < ActiveRecord::Base
   ROLES = %w[velador ayudante]
 
   ##################  VALIDATIONS   ##################
-  validate :validate_field
+  # validate :validate_field
+  validate :validate_fields
   validate :validate_dates_logic_relation
   validate :validate_contract_amount
+
 
   def validate_contract_amount
     # skip validations if is and office object
     return if type == 'Office'
-    validates :contract_amount, numericality: true
+    unless (true if Float(contract_amount) rescue false)
+      errors.add(:contract_amount,'no es numerico.')
+    end
   end
 
-  def validate_field
+  def validate_fields
     # skip validations if is and office object
     return if type == 'Office'
-    validates :title,:address,:contract_amount,:manager, presence: true
+    [:title,:address].each do |field|
+      if self[field].empty?
+        errors.add(field,'no puede estar vacio.')
+      end
+    end
+    # cheack for bigdecimal and assosiation for nil? value
+    [:contract_amount,:manager].each do |field|
+      if instance_eval "self.#{field}.nil?"
+        errors.add(field,'no puede estar vacio.')
+      end
+    end
   end
 
+
+
   def validate_dates_logic_relation
-    errors.add(:finish_date, "Finish date must be greater than start date") if finish_date < start_date
+    errors.add(:finish_date, 'Finish date must be greater than start date') if finish_date < start_date
   end
   ##################  SCOPES   ##################
   scope :running, ->{(where status: :running).order(created_at: :asc)}

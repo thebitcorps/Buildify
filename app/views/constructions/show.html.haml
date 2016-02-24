@@ -1,27 +1,4 @@
-.page-header
-  .row
-    .col-lg-12
-      %h3
-        =  @construction.title
-        %small
-          administrada por 
-          = link_to @construction.manager.name, user_path(@construction.manager)
-          //= link_to 'Administrar',edit_construction_path(@construction),class: 'btn btn-default'
-  .row
-    .col-lg-12
-      .progress.cons-st-prog
-        - if @construction.available_days > @construction.days_passed
-          .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{}", role: "progressbar", style: "width: #{percentage_of_number(@construction.days_passed, @construction.available_days)}%;", class: "#{days_bar_tag_class(@construction)}"}
-            //= [@construction.days_passed, @construction.available_days].join("/") + " Dias"
-      %h6.text-center.construction-special-date
-        %span.text-muted
-          = "Desde "
-        %span.text-info
-          = spanish_formated_date(@construction.start_date, false)
-        %span.text-muted
-          = " hasta "
-        %span.text-info
-          = spanish_formated_date(@construction.finish_date, false)
+= render :partial => 'show_header',locals: {construction: @construction}
 .page-header
   .row
     .col-sm-4

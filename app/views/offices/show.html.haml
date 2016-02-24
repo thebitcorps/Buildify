@@ -1,3 +1,2 @@
-%h1=@office.title
-=@office.start_date
-=@office.finish_date
+= render partial: 'constructions/show_header',locals: {construction: @office}
+= render :partial => 'constructions/balance',locals: {expenses: @office.expenses,paid: @office.paid}

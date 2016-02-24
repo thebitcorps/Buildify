@@ -27,4 +27,6 @@
 #paginate
   = paginate @constructions, theme: 'twitter-bootstrap-3', remote: true
 %br
-= link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary' if current_user.administrator?
+-if current_user.administrator?
+  = link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'
+  = link_to 'Nueva Oficina', new_office_path, class: 'btn btn-primary'
