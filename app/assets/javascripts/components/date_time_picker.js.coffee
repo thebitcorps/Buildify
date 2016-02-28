@@ -6,7 +6,7 @@
       keepOpen: false
       format: 'DD/MM/YYYY'
       locale: 'es'
-      minDate: moment()
+      minDate: moment().subtract(1, 'weeks');
     that = @
     $('#' + "#{@props.name}").on 'dp.change', (e) ->
       that.changed(e)
