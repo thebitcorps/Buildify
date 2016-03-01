@@ -1,12 +1,12 @@
-%h1 Listing users
+%h1 Usuarios
 
 
-= simple_form_for :search,url: users_path,method: :get do |f|
+= simple_form_for :search,url: users_path,method: :get,remote: true do |f|
 
   = f.input :role,as: :hidden ,id: 'role_input',input_html: { value: @user_list}
   .col-lg-6
-    = f.search_field :query,autofocus: true,class: 'form-control'
-  = f.button :submit
+    = f.search_field :query,autofocus: true,class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
+  = f.submit 'Buscar',class: 'btn btn-default',id: 'submit'
 %br
 
 %ul.nav.nav-tabs

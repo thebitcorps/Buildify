@@ -1,8 +1,8 @@
 %h1 Proveedores
-= simple_form_for :search, url: providers_path, method: :get do |f|
+= simple_form_for :search, url: providers_path, method: :get,remote: true  do |f|
   .col-lg-6
-    = f.search_field :query, autofocus: true, class: "form-control"
-  = f.submit 'Buscar', class: 'btn btn-default'
+    = f.search_field :query, autofocus: true, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
+  = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
 .table-responsive
   %table.table.table-striped.table-condensed
     %thead
