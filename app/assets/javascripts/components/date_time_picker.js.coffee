@@ -16,6 +16,7 @@
   render: ->
     React.DOM.div
       className: 'form-group'
+      style: {position: 'relative'}
       if @props.label
         React.DOM.label
           className: 'control-label'

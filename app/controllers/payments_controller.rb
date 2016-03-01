@@ -10,8 +10,23 @@ class PaymentsController < ApplicationController
 
   end
 
+  def create
+    @payment = Payment.new payment_params
+    respond_to do |format|
+      if @payment.save
+         format.json{ render :show ,status: :ok, location: @payment }
+      else
+        format.json{render json: @payment.errors.full_message.to_json,status: :unprocessable_entity}
+      end
+    end
+  end
+
   private
+  def payment_params
+    params.require(:payment).permit(:amount,:concept,:payment_date,:construction_id,:paid_amount,:status)
+  end
+
   def sanitized_type_list
-    Payment::STATUS.include?(params[:type_list]) ? params[:type_list] : 'all'
+    Payment::STATUS.include?(params[:type_list]) ? params[:type_list] : 'all_construction'
   end
 end

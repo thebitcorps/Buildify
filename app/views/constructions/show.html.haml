@@ -68,7 +68,7 @@
 
 %h3.text-center.text-muted
   Gastos
-  %button{onclick: 'ReactDOM.render(React.createElement(Modal,{body: React.createElement(PaymentForm)}),document.getElementById("mod"));',class: 'btn btn-primary'}
+  %button{onclick: "ReactDOM.render(React.createElement(PaymentModal,{construction_id: #{@construction.id}}),document.getElementById('mod'));",class: 'btn btn-primary'}
     Gastos sin requisicion
 
 = render :partial => 'payment_tabs'

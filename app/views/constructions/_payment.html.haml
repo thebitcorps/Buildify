@@ -10,7 +10,7 @@
     - if payment.purchase_order
       = link_to payment.purchase_order.formated_folio, purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-#{payment.purchase_order.get_color}", type: "button"}
     - else
-      = "NA"
+      = payment.concept
   %td
     = number_to_currency payment.amount
   %td

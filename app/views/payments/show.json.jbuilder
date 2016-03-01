@@ -1,0 +1,1 @@
+json.extract! @payment, :id, :amount,:concept,:payment_date,:construction_id,:paid_amount

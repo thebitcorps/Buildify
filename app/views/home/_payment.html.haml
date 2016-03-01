@@ -10,7 +10,7 @@
       = link_to payment.construction.title, construction_path(payment.construction)
       = link_to payment.purchase_order.folio.to_s.rjust(4, '0'), purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-info", type: "button"}
     - else
-      = "NA"
+      = payment.concept
   %td
     = number_to_currency payment.amount
   %td

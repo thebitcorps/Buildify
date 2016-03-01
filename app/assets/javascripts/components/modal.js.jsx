@@ -17,7 +17,8 @@ var Modal = React.createClass({
         this.modal.modal();
         this.modal.on('hidden.bs.modal',function(){
             ReactDOM.unmountComponentAtNode(document.getElementById('mod'));
-        });
+            this.props.modalClose();
+        }.bind(this));
     },
 
     render: function() {

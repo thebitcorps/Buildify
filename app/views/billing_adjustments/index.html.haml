@@ -3,7 +3,10 @@
     = link_to @payment.construction.title, construction_path(@payment.construction)
     %small
       Pagos Factura -
-      = link_to @payment.invoice.folio,invoice_path(@payment.invoice),class: 'btn btn-info'
+      - if @payment.invoice
+        = link_to @payment.invoice.folio,invoice_path(@payment.invoice),class: 'btn btn-info'
+      - else
+        Gasto sin factura
 
 
 
