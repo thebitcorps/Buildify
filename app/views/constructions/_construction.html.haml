@@ -10,6 +10,10 @@
       -#make method for the expense of construction
       -#is just an idea so it could be more
       %span.pull-right -
+    - if construction.office?
+      %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
+        = "Gastos del mes- Pendiente"
+      %span.pull-right -
     %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
       = "Gastos - #{number_to_currency(construction.expenses)}"
 

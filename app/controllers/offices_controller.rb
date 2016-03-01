@@ -3,6 +3,7 @@ class OfficesController < ApplicationController
   before_action :set_office, only: [:show, :edit, :update, :destroy]
 
   def show
+    @payments = @office.payments
   end
 
   def edit

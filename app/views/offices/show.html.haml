@@ -1,2 +1,3 @@
 = render partial: 'constructions/show_header',locals: {construction: @office}
-= render :partial => 'constructions/balance',locals: {expenses: @office.expenses,paid: @office.paid}
+= render partial: 'constructions/balance',locals: {expenses: @office.expenses,paid: @office.paid}
+= render partial: 'constructions/payments_part'

@@ -66,30 +66,6 @@
         %span.text-muted
           Ordenes de compra sin facturar
 
-%h3.text-center.text-muted
-  Gastos
-  %button{onclick: "ReactDOM.render(React.createElement(PaymentModal,{construction_id: #{@construction.id}}),document.getElementById('mod'));",class: 'btn btn-primary'}
-    Gastos sin requisicion
 
-= render :partial => 'payment_tabs'
-.panel.panel-default
-  .table-responsive
-    %table.table.table-hover
-      %thead
-        %tr
-          %th
-            Factura
-          %th
-            Orden de compra
-          %th
-            Importe
-          %th
-            Pagado
-          %th
-            Saldo
-          %th
-            Pagos
-          %th
-      %tbody#payments
-        = render partial: 'payment', collection: @payments
-#mod
+
+= render :partial => 'payments_part'
