@@ -1,4 +1,3 @@
-
 =  simple_form_for(@construction, html: { class: 'form-horizontal' }) do |f|
   -#local variable if the @construction is in editing form
   - if edit
@@ -10,9 +9,12 @@
   = f.input :address,label: 'Direccion'
   .row
     .col-md-6
+      -#= f.input :start_date, label: 'Fecha de inicio',:as => :date_picker
       = f.input :start_date, label: 'Fecha de inicio'
     .col-md-6
-      = f.input :finish_date, label: 'Fecha de finalización'
+      -#check if datepicker is proper for this form
+      -#= f.input :finish_date, label: 'Fecha de finalización',:as => :date_picker
+      = f.input :finish_date, label: 'Fecha de finalización',:as => :date_picker
   = f.input :contract_amount, label: 'Cantidad contratada'
   = f.association :manager, collection: User.subordinates
   %hr

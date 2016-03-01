@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/zpaulovics/datetimepicker-rails.git
+  revision: 36d21cec5da7f5b214925804f60e63c61c747023
+  specs:
+    datetimepicker-rails (4.7.16)
+      momentjs-rails (>= 2.9.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -47,8 +54,6 @@ GEM
     bootstrap-kaminari-views (0.0.5)
       kaminari (>= 0.13)
       rails (>= 3.1)
-    bootstrap3-datetimepicker-rails (4.15.35)
-      momentjs-rails (>= 2.8.1)
     builder (3.2.2)
     byebug (8.2.2)
     cocoon (1.2.7)
@@ -232,10 +237,10 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-kaminari-views
-  bootstrap3-datetimepicker-rails (~> 4.15.35)
   byebug
   cocoon
   coffee-rails (~> 4.1.0)
+  datetimepicker-rails!
   devise
   haml-rails
   jbuilder (~> 2.0)

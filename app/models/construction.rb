@@ -89,25 +89,25 @@ class Construction < ActiveRecord::Base
 
   def pending_requisitions(user = nil)
     if user.nil?
-      requisitions.where status: Requisition::PENDING_STATUS
+      requisitions.where status: :pending
     else
-      requisitions.where status: Requisition::PENDING_STATUS, user_id: user.id
+      requisitions.where status: :pending, user_id: user.id
     end
   end
 
   def partial_requisitions(user = nil)
     if user.nil?
-      requisitions.where status: Requisition::PARTIALLY_STATUS
+      requisitions.where status: :partially
     else
-      requisitions.where status: Requisition::PARTIALLY_STATUS, user_id: user.id
+      requisitions.where status: :partially, user_id: user.id
     end
   end
 
   def complete_requisitions(user = nil)
     if user.nil?
-      requisitions.where status: Requisition::COMPLETE_STATUS
+      requisitions.where status: :complete
     else
-      requisitions.where status: Requisition::COMPLETE_STATUS, user_id: user.id
+      requisitions.where status: :complete, user_id: user.id
     end
   end
 

@@ -1,5 +1,5 @@
 =  simple_form_for(@estimate, html: { class: 'form-horizontal' }) do |f|
   = f.hidden_field :construction_id, value: @estimate.construction.id
   = f.input :amount, label: 'Cantidad'
-  = f.input :payment_date, label: 'Fecha de pago'
+  = f.input :payment_date, label: 'Fecha de pago',:as => :date_picker,id: 'datetimepicker'
   = f.button :submit, value: 'Crear', class: 'btn btn-primary'

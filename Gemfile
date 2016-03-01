@@ -16,8 +16,8 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem "less-rails"
-gem "twitter-bootstrap-rails", '3.2.0'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails', '3.2.0'
 gem 'rails_12factor', group: :production
 
 gem 'devise'
@@ -26,7 +26,9 @@ gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 
 gem 'momentjs-rails', '>= 2.9.0'
-gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
+
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails'
+
 gem 'cocoon'
 gem 'react-rails', '~> 1.0'
 

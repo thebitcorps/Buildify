@@ -63,8 +63,8 @@ var PaymentForm = React.createClass({
            <div className="row">
                <div className="col-sm-6">
                    {this.titleElement('Agregar pagos')}
-                   <LabelInput name="concept" label="Concepto" changed={this.inputChange} value={this.state.concept} />
-                   <LabelInput name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
+                   <LabelInput  name="concept" label="Concepto" changed={this.inputChange} value={this.state.concept} />
+                   <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
                    <DateInput name="payment_date" label="Fecha del gasto" changed={this.inputChange} value={this.state.payment_date}/>
                    <CheckboxInput name="paid_amount" changed={this.inputChange} label="Ya fue liquidado" checked={this.state.paid_amount}/>
                         {/*TODO provider input*/}
