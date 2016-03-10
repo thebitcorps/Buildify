@@ -103,22 +103,36 @@ review_empty_cell.style inline_format: true, align: :center, borders: [:top], bo
 auth_empty_cell = pdf.make_cell content: "Autorizó:"
 auth_empty_cell.style inline_format: true, align: :center, borders: [:right, :top], border_widths: [2, 2, 2, 2], height: 50, size: 11
 
+pdf.table [[made_empty_cell, request_empty_cell, review_empty_cell, auth_empty_cell]], width: pdf.bounds.width
+
 f1 = pdf.make_cell content: ""
-f1.style borders: [:left, :bottom], border_widths: [2, 2, 2, 2], size: 11, width: 10
+f1.style borders: [:left, :bottom], border_widths: [2, 2, 2, 2], width:10
 made_cell = pdf.make_cell content: "AVMM"
 made_cell.style inline_format: true, align: :center, borders: [:bottom, :top], border_widths: [1, 2, 2, 2], size: 11
 f2 = pdf.make_cell content: ""
-f2.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width: 10
-
-made_t_cell = [[f1, made_cell]]
+f2.style borders: [:bottom], border_widths: [2, 2, 2, 2], width:5
 
 f3 = pdf.make_cell content: ""
-f3.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11
+f3.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width:5
 request_cell = pdf.make_cell content: "AVMM"
 request_cell.style inline_format: true, align: :center, borders: [:bottom, :top], border_widths: [1, 2, 2, 2], size: 11
 f4 = pdf.make_cell content: ""
-f4.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11
+f4.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width:5
 
-pdf.table [[made_empty_cell, request_empty_cell, review_empty_cell, auth_empty_cell], [made_t_cell]], width: pdf.bounds.width
+f5 = pdf.make_cell content: ""
+f5.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width:5
+review_cell = pdf.make_cell content: "RLLV"
+review_cell.style inline_format: true, align: :center, borders: [:bottom, :top], border_widths: [1, 2, 2, 2], size: 11
+f6 = pdf.make_cell content: ""
+f6.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width:5
+
+f7 = pdf.make_cell content: ""
+f7.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width:5
+auth_cell = pdf.make_cell content: "RGLLL"
+auth_cell.style inline_format: true, align: :center, borders: [:bottom, :top], border_widths: [1, 2, 2, 2], size: 11
+f8 = pdf.make_cell content: ""
+f8.style borders: [:bottom, :right], border_widths: [2, 2, 2, 2], size: 11, width:10
+
+pdf.table [[f1, made_cell, f2, f3, request_cell, f4, f5, review_cell, f6, f7, auth_cell, f8]], width: pdf.bounds.width
 
 pdf.render
