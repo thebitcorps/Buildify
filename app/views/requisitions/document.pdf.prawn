@@ -5,7 +5,7 @@ pdf = Prawn::Document.new(:page_layout => :landscape)
 logo_cell = pdf.make_cell image: "#{Rails.root}/app/assets/images/allpino_logo_80px.png"
 logo_cell.style borders: [], image_width: 55, width: 150, padding: [15, 0, -20, 10]
 title_cell = pdf.make_cell content: "Requisición de Compra"
-title_cell.style inline_format: true, align: :left, padding: [35, 0, 0, 0], borders: [], size: 25
+title_cell.style inline_format: true, align: :left, padding: [35, 0, 0, 0], borders: [], size: 20
 
 pdf.table [[logo_cell, title_cell]], width: pdf.bounds.width
 

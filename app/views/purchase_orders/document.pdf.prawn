@@ -1,126 +1,53 @@
 require "prawn/measurement_extensions"
-pdf = Prawn::Document.new
+pdf = Prawn::Document.new(:page_layout => :landscape)
 
-logo_cell = pdf.make_cell image: "#{Rails.root}/app/assets/images/allpino_logo.png", image_width: 80, borders: [:left, :top]
+logo_cell = pdf.make_cell image: "#{Rails.root}/app/assets/images/allpino_logo_80px.png"
+logo_cell.style borders: [], image_width: 55, width: 150, padding: [15, 0, -20, 10]
+title_cell = pdf.make_cell content: "Orden de Compra"
+title_cell.style inline_format: true, align: :left, padding: [35, 0, 0, 0], borders: [], size: 20
+
+pdf.table [[logo_cell, title_cell]], width: pdf.bounds.width
+
 head_cell = pdf.make_cell content: "<b>Madereria y Construcciones Allpino S.A De C.V</b><br>Agustin Yañez 141-1 PB Fracc. Villas De La Universidad<br>C.P. 20029 Aguascalientes, Ags. México<br>Tel. y Fax: 01-449-914-93-88<br>E-mail: allpino_cotizaciones@yahoo.com"
-head_cell.style inline_format: true, align: :left, padding: [15, 15, 15, 0], borders: [:top, :right], size: 10
-pdf.table [[logo_cell, head_cell]], width: pdf.bounds.width
+head_cell.style inline_format: true, align: :left, padding: [5, 0, 0, 0], borders: [], size: 11
 
-title_cell = pdf.make_cell content: "<b>Orden de  Compra</b>"
-title_cell.style inline_format: true, align: :center, padding: [5, 0, 5, 0], borders: [:top, :left, :right]
-pdf.table [[title_cell]], width: pdf.bounds.width
+date_cell = pdf.make_cell content: "<b>Fecha:</b>"
+date_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
+date_data_cell = pdf.make_cell content: "#{spanish_formated_date @purchase_order.created_at, false}"
+date_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
 
-provider_title_cell = pdf.make_cell content: "Proveedor"
-provider_title_cell.style inline_format: true, align: :center, padding: [5, 0, 5, 0], borders: [:left], size: 10
+folio_cell = pdf.make_cell content: "<b>Orden de Compra N°:</b>"
+folio_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
+folio_data_cell = pdf.make_cell content: "<b>#{@purchase_order.formated_folio}</b>"
+folio_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, :text_color => "2A718C", padding: [2, 5, 2, 5]
 
-provider_cell = pdf.make_cell content: "<b>#{@purchase_order.provider.name}</b>"
-provider_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: [:left], size: 10
+deliver_cell = pdf.make_cell content: "<b>Requisición N°:</b>"
+deliver_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
+deliver_data_cell = pdf.make_cell content: "<b>#{@purchase_order.requisition.formated_folio}</b>"
+deliver_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, :text_color => "2A718C", padding: [2, 5, 2, 5]
 
-delivery_a_title_cell = pdf.make_cell content: "#{@purchase_order.delivery_place == 'ship' ? "Se envía a la obra en" : "Se recoge con proveedor en"}"
-delivery_a_title_cell.style inline_format: true, align: :center, padding: [5, 0, 5, 0], borders: [], size: 10
+construction_cell = pdf.make_cell content: "<b>Obra:</b>"
+construction_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
+construction_data_cell = pdf.make_cell content: "#{@purchase_order.construction.title.length > 50 ? @purchase_order.construction.title[0..50].gsub(/\s\w+\s*$/,'...') : @purchase_order.construction.title}"
+construction_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
 
-delivery_a_cell = pdf.make_cell content: "<b>#{@purchase_order.delivery_address}</b>"
-delivery_a_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: [], size: 10
+inf_cell = pdf.make_cell [[date_cell, date_data_cell], [folio_cell, folio_data_cell], [deliver_cell, deliver_data_cell], [construction_cell, construction_data_cell]]
+inf_cell.style inline_format: true, align: :center, borders: [:right, :top, :bottom, :left], border_widths: [2, 2, 2, 2], size: 12
 
-delivery_r_title_cell = pdf.make_cell content: "Persona Autorizada"
-delivery_r_title_cell.style inline_format: true, align: :center, padding: [5, 0, 5, 0], borders: [:right], size: 10
+pdf.table [[head_cell, inf_cell]], width: pdf.bounds.width
 
-delivery_r_cell = pdf.make_cell content: "<b>#{@purchase_order.delivery_receiver}</b>"
-delivery_r_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: [:right], size: 10
+pdf.move_down 10
 
-pdf.table [	[provider_title_cell, delivery_a_title_cell, delivery_r_title_cell],
-			[provider_cell, delivery_a_cell, delivery_r_cell]], width: pdf.bounds.width
+provider_cell = pdf.make_cell content: "<b>Proveedor:</b>"
+provider_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
+provider_data_cell = pdf.make_cell content: "#{@purchase_order.provider.name}"
+provider_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
 
-construction_title_cell = pdf.make_cell content: "Obra"
-construction_title_cell.style inline_format: true, align: :center, padding: [5, 0, 5, 0], borders: [:left], size: 10
+deliver_inf_cell = pdf.make_cell content: "<b>Entregar:</b>"
+deliver_inf_cell.style inline_format: true, align: :left, borders: [], size: 12, padding: [2, 5, 2, 5]
+deliver_inf_data_cell = pdf.make_cell content: "#{@purchase_order.delivery_address}"
+deliver_inf_data_cell.style inline_format: true, align: :left, borders: [], size: 12, padding: [2, 5, 2, 5]
 
-requisition_title_cell = pdf.make_cell content: "Requisición"
-requisition_title_cell.style inline_format: true, align: :center, padding: [5, 0, 5, 0], borders: [], size: 10
-
-folio_title_cell = pdf.make_cell content: "Folio de orden"
-folio_title_cell.style inline_format: true, align: :center, padding: [5, 0, 0, 0], borders: [], size: 10
-
-date_title_cell = pdf.make_cell content: "Fecha de emisión"
-date_title_cell.style inline_format: true, align: :center, padding: [5, 0, 0, 0], borders: [:right], size: 10
-
-construction_cell = pdf.make_cell content: "<b>#{@purchase_order.construction.title}</b>"
-construction_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: [:left]
-
-requisition_cell = pdf.make_cell content: "<b>#{@purchase_order.requisition.formated_folio}</b>"
-requisition_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: []
-
-folio_cell = pdf.make_cell content: "<b>#{@purchase_order.formated_folio}</b>"
-folio_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: []
-
-date_cell = pdf.make_cell content: "<b>#{spanish_formated_date @purchase_order.created_at, false}</b>"
-date_cell.style inline_format: true, align: :center, padding: [0, 0, 5, 0], borders: [:right]
-
-pdf.table [	[construction_title_cell, requisition_title_cell, folio_title_cell, date_title_cell],
-			[construction_cell, requisition_cell, folio_cell, date_cell]], width: pdf.bounds.width
-
-items_title = pdf.make_cell content: "<b>Artículo</b>"
-items_title.style inline_format: true, align: :center, borders: [:left, :top], border_lines: [:dashed, :solid, :solid, :solid], size: 10
-items_title2 = pdf.make_cell content: "<b>Cantidad</b>"
-items_title2.style inline_format: true, align: :center, borders: [:top], border_lines: [:dashed, :solid, :solid, :solid], size: 10
-items_title3 = pdf.make_cell content: "<b>Precio Unidad</b>"
-items_title3.style inline_format: true, align: :center, borders: [:top], border_lines: [:dashed, :solid, :solid, :solid], size: 10
-items_title4 = pdf.make_cell content: "<b>Total</b>"
-items_title4.style inline_format: true, align: :center, borders: [:right, :top], border_lines: [:dashed, :solid, :solid, :solid], size: 10
-
-
-headers = [items_title, items_title2, items_title3, items_title4]
-items_table = [headers]
-
-total_amount = 0
-
-@purchase_order.item_materials.each_with_index do |item, index|
-	item_cell = pdf.make_cell content: "#{item.material.name}"
-	item_cell.style inline_format: true, padding: [5, 5, 5, 20], align: :left, borders: [:left]
-	
-	item_q_cell = pdf.make_cell content: "#{item.requested} #{item.measure_unit}"
-	item_q_cell.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: []
-
-	item_u_cell = pdf.make_cell content: "#{item.unit_price == nil ? "N/A" : number_to_currency(item.unit_price)}"
-	item_u_cell.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: []
-
-	item_t_cell = pdf.make_cell content: "#{item.unit_price == nil ? "N/A" : number_to_currency(item.unit_price * item.requested)}"
-	item_t_cell.style inline_format: true, padding: [5, 20, 5, 5], align: :right, borders: [:right]
-
-	total_amount += item.unit_price == nil ? 0 : item.unit_price * item.requested
-
-	items_table<<[item_cell, item_q_cell, item_u_cell, item_t_cell]
-end
-
-pdf.table items_table, width: pdf.bounds.width
-
-items_inf_cell = pdf.make_cell content: "<b>#{@purchase_order.item_materials.count}</b> artículos enlistados"
-items_inf_cell.style inline_format: true, align: :center, borders: [:left, :top, :bottom], border_lines: [:dashed, :solid, :solid, :solid], size: 10, padding: [5, 5, 20, 5]
-
-total_title_cell = pdf.make_cell content: "<b>Total:</b>"
-total_title_cell.style inline_format: true, align: :right, borders: [:top, :bottom], border_lines: [:dashed, :solid, :solid, :solid], padding: [5, 5, 20, 5]
-
-total_cell = pdf.make_cell content: "<b>#{total_amount == 0 ? "N/A" : (number_to_currency total_amount)}</b>"
-total_cell.style inline_format: true, align: :right, borders: [:top, :bottom, :right], border_lines: [:dashed, :solid, :solid, :solid], padding: [5, 20, 20, 5]
-
-pdf.table [[items_inf_cell, total_title_cell, total_cell]], width: pdf.bounds.width
-
-middle_cell = pdf.make_cell content: ""
-middle_cell.style borders: [:top, :left, :right], padding: [20, 20, 20, 20]
-pdf.table [[middle_cell]], width: pdf.bounds.width
-
-paga_cell_1 = pdf.make_cell content: ""
-paga_cell_1.style borders: [:left, :bottom]
-paga_cell_2 = pdf.make_cell content: ""
-paga_cell_2.style borders: [:bottom]
-paga_cell_3 = pdf.make_cell content: ""
-paga_cell_3.style borders: [:right, :bottom]
-
-requested_cell = pdf.make_cell content: "Solicitó"
-requested_cell.style align: :center, borders: [:top, :bottom], border_lines: [:dashed, :solid, :solid, :solid], size: 10
-
-autorized_cell = pdf.make_cell content: "Autoizó"
-autorized_cell.style align: :center, borders: [:top, :bottom], border_lines: [:dashed, :solid, :solid, :solid], size: 10
-
-pdf.table [[paga_cell_1, requested_cell, paga_cell_2, autorized_cell, paga_cell_3]], width: pdf.bounds.width
+pdf.table [[provider_cell, provider_data_cell], [deliver_inf_cell, deliver_inf_data_cell]], width: pdf.bounds.width
 
 pdf.render
