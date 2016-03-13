@@ -14,22 +14,22 @@ head_cell.style inline_format: true, align: :left, padding: [5, 0, 0, 0], border
 
 date_cell = pdf.make_cell content: "<b>Fecha:</b>"
 date_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, padding: [2, 5, 2, 5]
-date_data_cell = pdf.make_cell content: "#{spanish_formated_date @requisition.requisition_date, false}"
+date_data_cell = pdf.make_cell content: "#{spanish_formated_date @invoice.invoice_date, false}"
 date_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, padding: [2, 5, 2, 5]
 
-folio_cell = pdf.make_cell content: "<b>Requisición N°:</b>"
+folio_cell = pdf.make_cell content: "<b>Contra Recibo N°:</b>"
 folio_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, padding: [2, 5, 2, 5]
-folio_data_cell = pdf.make_cell content: "<b>#{@requisition.formated_folio}</b>"
+folio_data_cell = pdf.make_cell content: "<b>#{@invoice.receipt_folio}</b>"
 folio_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, :text_color => "2A718C", padding: [2, 5, 2, 5]
 
-deliver_cell = pdf.make_cell content: "<b>Tiempo de entrega:</b>"
+deliver_cell = pdf.make_cell content: "<b>Recibimos de:</b>"
 deliver_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, padding: [2, 5, 2, 5]
-deliver_data_cell = pdf.make_cell content: "<b></b>"
+deliver_data_cell = pdf.make_cell content: "<b>#{@invoice.provider.name}</b>"
 deliver_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, padding: [2, 5, 2, 5]
 
 construction_cell = pdf.make_cell content: "<b>Obra:</b>"
 construction_cell.style inline_format: true, align: :left, borders: [], size: 11, padding: [2, 5, 2, 5]
-construction_data_cell = pdf.make_cell content: "#{@requisition.construction.title[0..55].gsub(/\s\w+\s*$/,'...')}"
+construction_data_cell = pdf.make_cell content: "#{@invoice.construction.title[0..55].gsub(/\s\w+\s*$/,'...')}"
 construction_data_cell.style inline_format: true, align: :left, borders: [], size: 11, padding: [2, 5, 2, 5]
 
 inf_cell = pdf.make_cell [[date_cell, date_data_cell], [folio_cell, folio_data_cell], [deliver_cell, deliver_data_cell], [construction_cell, construction_data_cell]]
