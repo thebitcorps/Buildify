@@ -3,7 +3,6 @@ class Invoice < ActiveRecord::Base
   has_one :requisition, through: :purchase_order
   has_one :construction, through: :requisition
   belongs_to :payment
-  belongs_to :invoice_receipt
   belongs_to :provider
   #status when the invoice is create in db
   WAITING_STATUS = 'waiting'
@@ -23,8 +22,8 @@ class Invoice < ActiveRecord::Base
     self.status == WAITING_STATUS
   end
 
-  def reseipt_folio
-    #requisition.folio.to_s + construction.title[0] + folio.to_s.rjust(4, '0')
+  def receipt_folio
+    purchase_order.folio.to_s + construction.title[0..2].upcase + id.to_s.rjust(4, '0')
   end
 
   def set_purchase_order_sent

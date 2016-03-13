@@ -37,7 +37,7 @@ class Requisition < ActiveRecord::Base
   end
 
   def formated_folio
-    construction.title[0] + folio.to_s.rjust(4, '0') + "-" + requisition_date.year.to_s
+    construction.id.to_s + construction.title[0..2].upcase + folio.to_s.rjust(4, '0') + "-" + requisition_date.year.to_s
   end
 
   def self.plural(count)
