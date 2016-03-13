@@ -39,6 +39,6 @@ class BillingAdjustmentsController < ApplicationController
     end
 
     def adjustment_params
-      params.require(:billing_adjustment).permit(:amount, :payment_type, :adjusment_date, :payment_id)
+      params.require(:billing_adjustment).permit(:amount, :payment_type, :adjustment_date, :payment_id)
     end
 end
