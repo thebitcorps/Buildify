@@ -67,10 +67,8 @@ items_title4 = pdf.make_cell content: "<b>P Unitario</b>"
 items_title4.style inline_format: true, align: :center, borders: [:top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10
 items_title5 = pdf.make_cell content: "<b>Importe</b>"
 items_title5.style inline_format: true, align: :center, borders: [:top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10
-items_title6 = pdf.make_cell content: "<b>Factura</b>"
-items_title6.style inline_format: true, align: :center, borders: [:top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10
 
-rows = [[items_title, items_title2, items_title3, items_title4, items_title5, items_title6]]
+rows = [[items_title, items_title2, items_title3, items_title4, items_title5]]
 
 items_title = pdf.make_cell content: ""
 items_title.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10
@@ -82,10 +80,8 @@ items_title4 = pdf.make_cell content: ""
 items_title4.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10
 items_title5 = pdf.make_cell content: ""
 items_title5.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10
-items_title6 = pdf.make_cell content: ""
-items_title6.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10
 
-rows<<[items_title, items_title2, items_title3, items_title4, items_title5, items_title6]
+rows<<[items_title, items_title2, items_title3, items_title4, items_title5]
 
 total = 0
 
@@ -97,13 +93,11 @@ total = 0
 	item_u_cell.style inline_format: true, padding: [2, 2, 2, 2], align: :center, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10
 	item_cell = pdf.make_cell content: "#{item.material.name} / #{item.material.description}"
 	item_cell.style inline_format: true, padding: [2, 2, 2, 5], align: :left, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10
-	item_part = pdf.make_cell content: "#{"$" + item.unit_price.to_s}"
+	item_part = pdf.make_cell content: "#{item.unit_price != nil ? (number_to_currency item.unit_price) : "$"}"
 	item_part.style inline_format: true, padding: [2, 5, 2, 2], align: :right, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10
-	item_obs = pdf.make_cell content: "#{item.unit_price != nil ? "$" + (item.requested * item.unit_price).to_s : "$"}"
+	item_obs = pdf.make_cell content: "#{item.unit_price != nil ? (number_to_currency item.requested * item.unit_price) : "$"}"
 	item_obs.style inline_format: true, padding: [2, 5, 2, 2], align: :right, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10
-	item_invoice = pdf.make_cell content: ""
-	item_invoice.style inline_format: true, padding: [2, 2, 2, 2], align: :left, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10
-	rows<<[item_q_cell, item_u_cell, item_cell, item_part, item_obs, item_invoice]
+	rows<<[item_q_cell, item_u_cell, item_cell, item_part, item_obs]
 end
 
 items_title6 = pdf.make_cell content: ""
@@ -114,12 +108,10 @@ items_title8 = pdf.make_cell content: ""
 items_title8.style inline_format: true, align: :center, borders: [:top], border_widths: [2, 2, 2, 2], size: 10, padding: [2, 2, 2, 2]
 items_title9 = pdf.make_cell content: "<b>Total:</b>"
 items_title9.style inline_format: true, align: :center, borders: [:top, :right, :left, :bottom], border_widths: [2, 2, 2, 2], size: 10, padding: [2, 2, 2, 2]
-items_title10 = pdf.make_cell content: "$#{total != 0 ? total : ""}"
+items_title10 = pdf.make_cell content: "#{total != 0 ? (number_to_currency total) : "$"}"
 items_title10.style inline_format: true, align: :right, borders: [:top, :right, :bottom], border_widths: [2, 2, 2, 2], size: 10, padding: [2, 5, 2, 2]
-items_title11 = pdf.make_cell content: ""
-items_title11.style inline_format: true, align: :center, borders: [:top], border_widths: [2, 2, 2, 2], size: 10, padding: [2, 2, 2, 2]
 
-rows<<[items_title6, items_title7, items_title8, items_title9, items_title10, items_title11]
+rows<<[items_title6, items_title7, items_title8, items_title9, items_title10]
 
 pdf.table rows, width: pdf.bounds.width
 
