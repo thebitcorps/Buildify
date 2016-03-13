@@ -10,22 +10,20 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+ *= require bootstrap_and_overrides
  *= require_self
-
 
  *= require bootstrap-datetimepicker
  */
 
-.header-up
-{
+.header-up{
   margin-top: -30px;
 }
 
-
-.badge-info {
-    background-color: #269abc;
+.badge-info{
+  background-color: #269abc;
 }
+
 .pdf-icon{
-    width: 30px;
+  width: 30px;
 }

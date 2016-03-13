@@ -1,17 +1,19 @@
 .page-header
-  .page-header
-    .row
-      .col-md-6
-        .row
-          %h1
-            = 'Bienvenido'
-            %small= link_to current_user.name, user_path(current_user)
-      .col-md-6
-        %h3.text-center
-          %small= "Hoy " +  spanish_formated_date(Date.today, false)
+  .row
+    .col-md-6
+      .row
+        %h6
+          = 'Bienvenido'
+          = link_to current_user.name, user_path(current_user)
+    .col-md-6
+      .row
+        %h6.pull-right
+          = ["Hoy es", spanish_formated_date(Date.today, false)].join(" ")
 
-= render :partial => 'constructions/balance',locals: {expenses: @balance[:expenses],paid: @balance[:paid]}
-= render :partial => 'constructions/payment_tabs'
+= render partial: 'constructions/balance', locals: {expenses: @balance[:expenses], paid: @balance[:paid]}
+%hr
+%h4 Facturas
+= render partial: 'constructions/payment_tabs'
 .panel.panel-default
   .table-responsive
     %table.table.table-hover
@@ -20,7 +22,7 @@
           %th
             Factura
           %th
-            Ordende compra
+            Orden de compra
           %th
             Importe
           %th
@@ -31,6 +33,5 @@
             Pagos
           %th
       %tbody#payments
-        - @acumulated_amount = 0
-        - @acumulated_paid = 0
+        - @acumulated_amount, @acumulated_paid = 0 # por que está esto aquí?
         = render partial: 'payment', collection: @payments

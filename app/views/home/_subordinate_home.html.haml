@@ -1,29 +1,28 @@
 .page-header
-  .page-header
-    .row
-      .col-md-6
-        .row
-          %h1 
-            = 'Bienvenido'
-            %small= link_to current_user.name, user_path(current_user)
-      .col-md-6
-        %h3.text-center
-          %small= "Miembro desde " +  spanish_formated_date(current_user.created_at, false)
   .row
     .col-md-6
-      %h3.text-center
-        = current_user.construction_administrations.count
-        = ' Obras administradas'
-        %br
-        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-          = link_to "Ver todas", constructions_path(mode: :own), {class: "button btn btn-default", type: "button"}
+      .row
+        %h1 
+          = 'Bienvenido'
+          %small= link_to current_user.name, user_path(current_user)
     .col-md-6
       %h3.text-center
-        = current_user.constructions.count
-        = ' Obras apoyadas'
-        %br
-        .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
-          = link_to "Ver todas", constructions_path(mode: :sub), {class: "button btn btn-default", type: "button"}
+        %small= ["Miembro desde ", spanish_formated_date(current_user.created_at, false)].join(" ")
+.row
+  .col-md-6
+    %h3.text-center
+      = current_user.construction_administrations.count
+      = ' Obras administradas'
+      %br
+      .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
+        = link_to "Ver todas", constructions_path(mode: :own), {class: "button btn btn-default", type: "button"}
+  .col-md-6
+    %h3.text-center
+      = current_user.constructions.count
+      = ' Obras apoyadas'
+      %br
+      .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
+        = link_to "Ver todas", constructions_path(mode: :sub), {class: "button btn btn-default", type: "button"}
 -#TODO change the response payment
 = render :partial => 'constructions/payment_tabs'
 .panel.panel-default
