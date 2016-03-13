@@ -4,13 +4,15 @@
       = link_to payment.invoice.provider.name, provider_path(payment.invoice.provider) #mutherfucker, this violates demeter's 
       = link_to payment.invoice.folio, invoice_path(payment.invoice), {class: "button btn-sm btn-info", type: "button"}
     - else
-      Caja chica
+      = payment.concept
   %td
+    = link_to payment.construction.title, construction_path(payment.construction)
     - if payment.purchase_order
-      = link_to payment.construction.title, construction_path(payment.construction)
       = link_to payment.purchase_order.folio.to_s.rjust(4, '0'), purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-info", type: "button"}
     - else
-      = payment.concept
+      %span.button.btn-sm.btn-info
+        Caja chica
+
   %td
     = number_to_currency payment.amount
   %td
@@ -20,4 +22,5 @@
   %td
     = link_to payment.billing_adjustments.count, billing_adjustments_path(payment_id: payment.id)
   %td
-    = link_to "Agregar pago", new_billing_adjustment_path(payment_id: payment.id), {class: "btn btn-sm btn-primary", type: "button"}
+    %button{onclick: "ReactDOM.render(React.createElement(BillingAdjusmentApp,{payment_id: #{payment.id}}),document.getElementById('billing'));",class: 'btn btn-primary'}
+      Agregar pago

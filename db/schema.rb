@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223154815) do
+ActiveRecord::Schema.define(version: 20160313140947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,13 @@ ActiveRecord::Schema.define(version: 20160223154815) do
   create_table "billing_adjustments", force: :cascade do |t|
     t.decimal  "amount"
     t.string   "payment_type"
-    t.date     "adjusment_date"
+    t.date     "adjustment_date"
     t.integer  "payment_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "folio"
+    t.string   "check_number"
+    t.string   "account"
   end
 
   add_index "billing_adjustments", ["payment_id"], name: "index_billing_adjustments_on_payment_id", using: :btree

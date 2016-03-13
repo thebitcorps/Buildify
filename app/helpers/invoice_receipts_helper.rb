@@ -1,2 +1,0 @@
-module InvoiceReceiptsHelper
-end

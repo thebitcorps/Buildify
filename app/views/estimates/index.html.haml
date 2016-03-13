@@ -1,7 +1,12 @@
 .page-header
+  %ol.breadcrumb
+    %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
+    %li.active Estimaciones
   %h1
-    = @construction.title
-    %small Estimaciones
+    %small
+      Extensiones
+      .pull-right
+        = link_to 'Nueva estimacion', new_estimate_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
 
 .panel.panel-default
   .table-responsive

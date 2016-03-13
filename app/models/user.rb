@@ -36,9 +36,9 @@ class User < ActiveRecord::Base
   def self.search(search)
     return all if search.nil?
     if search.empty?
-      all
+      all.order(name: :asc)
     else
-      where('name ilike ?', "%#{search}%")
+      where('name ilike ?', "%#{search}%").order(name: :asc)
     end
   end
 

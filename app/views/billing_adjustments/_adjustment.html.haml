@@ -2,6 +2,6 @@
   %td= adjustment_counter + 1
   %td= number_to_currency(adjustment.amount)
   %td= adjustment.payment_type
-  %td= spanish_formated_date(adjustment.adjusment_date, false)
+  %td= spanish_formated_date(adjustment.adjustment_date, false)
   %td
     = link_to 'Remover', billing_adjustment_path(adjustment), :method => :delete, :data => { :confirm => '¿Esta seguro de que desea remover este pago?' }

@@ -37,7 +37,6 @@ var PaymentForm = React.createClass({
         });
 
     },
-
     paymentElement: function(heading,text,amount,key){
         return (<a className="list-group-item" key={key}>
             <h4 className="list-group-item-heading">
@@ -61,7 +60,7 @@ var PaymentForm = React.createClass({
         }
        return (
            <div className="row">
-               <div className="col-sm-6">
+               <div className="col-sm-6" ref="a">
                    {this.titleElement('Agregar pagos')}
                    <LabelInput  name="concept" label="Concepto" changed={this.inputChange} value={this.state.concept} />
                    <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
@@ -74,7 +73,7 @@ var PaymentForm = React.createClass({
                </div>
                <div className="col-sm-6">
                     {this.titleElement('Pagos agregados $' + paymentsAcummulate)}
-                   <div className="list-group"  style={{height: 'calc(80vh - 212px)',overflowY: 'auto'}}>
+                   <div className="list-group"  style={{height: '290px  ',overflowY: 'auto'}}>
                         {this.state.payments.map(function(item,index){
                             return this.paymentElement( item.concept, item.payment_date,item.amount,index)
                             }.bind(this))

@@ -4,7 +4,7 @@ var PaymentModal = React.createClass({
       var child = <PaymentForm construction_id={this.props.construction_id}/>;
       return (
         <div>
-            <Modal body={child} modalClose={this.updateBroswer}/>
+            <Modal body={child} modalClose={this.updateBroswer} title="Nuevo Gasto"/>
         </div>
       );
   },
@@ -14,7 +14,6 @@ var PaymentModal = React.createClass({
             url: '/payments/',
             data: {construction_id: this.props.construction_id},
             success: function(data){
-                console.log(data);
                 eval(data);
             }.bind(this),
             error: function(xhr, status, err) {

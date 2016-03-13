@@ -43,7 +43,7 @@ class Construction < ActiveRecord::Base
         errors.add(field,'no puede estar vacio.')
       end
     end
-    # cheack for bigdecimal and assosiation for nil? value
+    # check for bigdecimal and assosiation for nil? value
     [:contract_amount,:manager].each do |field|
       if instance_eval "self.#{field}.nil?"
         errors.add(field,'no puede estar vacio.')
@@ -135,9 +135,9 @@ class Construction < ActiveRecord::Base
   def self.search(query)
     return all if query.nil?
     if query.empty?
-      all
+      all.order(title: :asc)
     else
-      where("title ilike ?", "%#{query}%")
+      where("title ilike ?", "%#{query}%").order(title: :asc)
     end
   end
 
