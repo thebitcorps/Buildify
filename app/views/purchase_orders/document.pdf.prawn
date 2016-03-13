@@ -125,6 +125,13 @@ pdf.table rows, width: pdf.bounds.width
 
 pdf.move_down 5.mm
 
+high_inf_cell = pdf.make_cell content: "*Los dias de pago y revisión son los dias <b>lunes</b> de <b>9am</b> a <b>1pm</b>"
+high_inf_cell.style inline_format: true, align: :center, borders: [:top, :right, :bottom, :left], border_widths: [2, 2, 2, 2], size: 10, padding: [5, 5, 5, 5]
+
+pdf.table [[high_inf_cell]], width: pdf.bounds.width
+
+pdf.move_down 2.mm
+
 made_empty_cell = pdf.make_cell content: "Elaboró:"
 made_empty_cell.style inline_format: true, align: :center, borders: [:left, :top], border_widths: [2, 2, 2, 2], height: 50, size: 11
 request_empty_cell = pdf.make_cell content: "Solicitó:"
