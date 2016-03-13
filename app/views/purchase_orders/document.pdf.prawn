@@ -39,15 +39,21 @@ pdf.table [[head_cell, inf_cell]], width: pdf.bounds.width
 pdf.move_down 10
 
 provider_cell = pdf.make_cell content: "<b>Proveedor:</b>"
-provider_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
+provider_cell.style inline_format: true, align: :left, borders: [:bottom, :top, :left], border_widths: [2, 1, 1, 2], size: 12, padding: [2, 5, 2, 5], width: 150
 provider_data_cell = pdf.make_cell content: "#{@purchase_order.provider.name}"
-provider_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 12, padding: [2, 5, 2, 5]
+provider_data_cell.style inline_format: true, align: :left, borders: [:bottom, :top, :right], border_widths: [2, 2, 1, 1], size: 12, padding: [2, 5, 2, 5]
 
-deliver_inf_cell = pdf.make_cell content: "<b>Entregar:</b>"
-deliver_inf_cell.style inline_format: true, align: :left, borders: [], size: 12, padding: [2, 5, 2, 5]
-deliver_inf_data_cell = pdf.make_cell content: "#{@purchase_order.delivery_address}"
-deliver_inf_data_cell.style inline_format: true, align: :left, borders: [], size: 12, padding: [2, 5, 2, 5]
+deliver_inf_cell = pdf.make_cell content: "<b>Entregar a:</b>"
+deliver_inf_cell.style inline_format: true, align: :left, borders: [:bottom, :left], border_widths: [1, 1, 1, 2], size: 12, padding: [2, 5, 2, 5], width: 150
+deliver_inf_data_cell = pdf.make_cell content: "#{@purchase_order.delivery_receiver}"
+deliver_inf_data_cell.style inline_format: true, align: :left, borders: [:bottom, :right], border_widths: [1, 2, 1, 1], size: 12, padding: [2, 5, 2, 5]
 
-pdf.table [[provider_cell, provider_data_cell], [deliver_inf_cell, deliver_inf_data_cell]], width: pdf.bounds.width
+deliver_address_cell = pdf.make_cell content: "<b>#{@purchase_order.delivery_place != "pick_up" ? "Recoger con proveedor:" : "Enviar a obra:"}</b>"
+deliver_address_cell.style inline_format: true, align: :left, borders: [:bottom, :left], border_widths: [1, 1, 2, 2], size: 12, padding: [2, 5, 2, 5], width: 150
+deliver_address_data_cell = pdf.make_cell content: "#{@purchase_order.delivery_address}"
+deliver_address_data_cell.style inline_format: true, align: :left, borders: [:bottom, :right], border_widths: [1, 2, 2, 1], size: 12, padding: [2, 5, 2, 5]
+
+
+pdf.table [[provider_cell, provider_data_cell], [deliver_inf_cell, deliver_inf_data_cell], [deliver_address_cell, deliver_address_data_cell]], width: pdf.bounds.width
 
 pdf.render
