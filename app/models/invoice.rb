@@ -23,6 +23,9 @@ class Invoice < ActiveRecord::Base
     self.status == WAITING_STATUS
   end
 
+  def reseipt_folio
+    #requisition.folio.to_s + construction.title[0] + folio.to_s.rjust(4, '0')
+  end
 
   def set_purchase_order_sent
     purchase_order.status = PurchaseOrder::COMPLETE_STATUS
