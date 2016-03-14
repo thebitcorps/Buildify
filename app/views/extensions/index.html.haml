@@ -1,6 +1,12 @@
-%h1
-  Extensiones de contrato para
-  = link_to @construction.title ,construction_path(@construction)
+.page-header
+  %ol.breadcrumb
+    %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
+    %li.active Extensiones
+  %h1
+    %small
+      Extensiones
+      .pull-right
+        = link_to 'Nueva extension', new_extension_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
 .table-responsive
   %table.table.table-striped.table-condensed.table-hover
     %thead
@@ -16,7 +22,7 @@
           %td=number_to_currency extension.amount
           %td
             .btn-group
-              = link_to 'Edit', edit_extension_path(extension),class: 'btn btn-warning'
+              = link_to 'Edit', edit_extension_path(extension,construction_id: extension.construction_id),class: 'btn btn-warning'
               = link_to 'Destroy', extension, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
 -if @construction.extensions.empty?
   .well

@@ -9,4 +9,6 @@
     -#$ #{f.input_field :amount}
 
   .form-actions
-    = f.button :submit
+    = f.button :submit,class: 'btn btn-primary'
+    = link_to 'Cancelar', extensions_path(construction_id: params[:construction_id]),class: 'btn btn-default'
+

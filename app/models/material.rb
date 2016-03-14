@@ -13,7 +13,7 @@ class Material < ActiveRecord::Base
     if query.empty?
       all
     else
-      where('name ilike ? OR description ilike ?' , "%#{query}%","%#{query}%")
+      where('name ilike ? OR description ilike ?' , "%#{query}%","%#{query}%").order(name: :asc)
     end
   end
 
