@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20160313140947) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "folio"
-    t.string   "check_number"
+    t.string   "reference"
     t.string   "account"
   end
 

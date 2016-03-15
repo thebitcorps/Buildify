@@ -3,7 +3,8 @@
     $('#' + "#{@props.name}").datetimepicker
       daysOfWeekDisabled: [ 0 ]
       showTodayButton: true
-      keepOpen: false
+      keepOpen: true
+      defaultDate: moment()
       format: 'DD/MM/YYYY'
       locale: 'es'
       minDate: moment().subtract(1, 'weeks');

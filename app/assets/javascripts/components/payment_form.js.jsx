@@ -41,7 +41,7 @@ var PaymentForm = React.createClass({
         return (<a className="list-group-item" key={key}>
             <h4 className="list-group-item-heading">
                 {heading}
-                <div className="pull-right"><label className="label label-primary "> $ {amount} </label></div>
+                <div className="pull-right"><label className="label label-primary "> $ {parseFloat(amount).formatMoney(2)} </label></div>
             </h4>
             <p className="list-group-item-text">{text}</p>
 
@@ -61,7 +61,7 @@ var PaymentForm = React.createClass({
        return (
            <div className="row">
                <div className="col-sm-6" ref="a">
-                   {this.titleElement('Agregar pagos')}
+                   {this.titleElement('Agregar gasto')}
                    <LabelInput  name="concept" label="Concepto" changed={this.inputChange} value={this.state.concept} />
                    <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
                    <DateInput name="payment_date" label="Fecha del gasto" changed={this.inputChange} value={this.state.payment_date}/>
@@ -72,7 +72,7 @@ var PaymentForm = React.createClass({
 
                </div>
                <div className="col-sm-6">
-                    {this.titleElement('Pagos agregados $' + paymentsAcummulate)}
+                    {this.titleElement('Gastos agregados $' + parseInt(paymentsAcummulate).formatMoney(2))}
                    <div className="list-group"  style={{height: '290px  ',overflowY: 'auto'}}>
                         {this.state.payments.map(function(item,index){
                             return this.paymentElement( item.concept, item.payment_date,item.amount,index)

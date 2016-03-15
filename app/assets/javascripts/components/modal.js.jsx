@@ -7,7 +7,7 @@ var Modal = React.createClass({
         close: React.PropTypes.element
     },
     getDefaultProps: function(){
-        return {name: 'modal',number: '0',parentNode: 'mod'}
+        return {name: 'modal',number: '0',parentNode: 'mod',modalClose: function(){}}
     },
     closeModal: function() {
         this.modal.modal('hide');

@@ -4,6 +4,11 @@ class BillingAdjustmentsController < ApplicationController
 
   def index
     @adjustments = @payment.billing_adjustments
+    respond_to do |format|
+      format.html {}
+      format.json {render :index}
+    end
+
   end
 
   def new
@@ -17,9 +22,10 @@ class BillingAdjustmentsController < ApplicationController
       if @adjustment.save
         #remember callbacks
         format.html { redirect_to @adjustment.payment.construction, notice: 'Pago realizado a gasto.'}
+        format.json{ render :show ,status: :ok, location: @adjustment }
       else
-
         format.html { render :new }
+        format.json { render json: JSON.parse(@adjustment.errors.full_messages.to_json), status: :unprocessable_entity}
       end
     end
   end
@@ -39,6 +45,6 @@ class BillingAdjustmentsController < ApplicationController
     end
 
     def adjustment_params
-      params.require(:billing_adjustment).permit(:amount, :payment_type, :adjustment_date, :payment_id)
+      params.require(:billing_adjustment).permit(:amount, :payment_type, :adjustment_date, :payment_id,:reference,:account,:folio)
     end
 end

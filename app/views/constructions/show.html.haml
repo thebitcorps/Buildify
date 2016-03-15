@@ -12,7 +12,7 @@
         %span.text-muted
           = link_to "#{@construction.extensions.count} Extensiones,", extensions_path(construction_id: @construction)
 
-          = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
+          = link_to "Agregar nueva", new_extension_path(construction_id: @construction),class: 'btn btn-primary'
     .col-sm-4
       %h4.text-center.cons-inf-title
         %span.text-muted
@@ -35,9 +35,8 @@
             = number_to_currency(@construction.estimates_amount)
       %h5.text-center.cons-inf-title-sub
         %span.text-muted
-          = link_to @construction.estimates.count, estimates_path(construction_id: @construction)
-          Estimaciones,
-          = link_to "Agregar nueva", new_estimate_path(construction_id: @construction)
+          = link_to "#{@construction.estimates.count} Estimaciones", estimates_path(construction_id: @construction)
+          = link_to "Agregar nueva", new_estimate_path(construction_id: @construction),class: 'btn btn-primary'
 = render :partial => 'balance',locals: {expenses: @construction.expenses,paid: @construction.paid}
 .page-header
   .row
