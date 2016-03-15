@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
-  ROLES = ['administrator','subordinate']
+  ROLES = ['administrator','subordinate','secretary']
   royce_roles ROLES
 
   validates :name, :phone, :email, presence: true

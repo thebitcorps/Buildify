@@ -1,4 +1,6 @@
 - if current_user.administrator?
   = render 'administrator_home'
-- else
+- elsif current_user.subordinate?
   = render 'subordinate_home'
+- elsif current_user.secretary?
+  = render 'secretary_home'

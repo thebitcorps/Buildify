@@ -1,58 +1,63 @@
 = render :partial => 'show_header',locals: {construction: @construction}
-.page-header
-  .row
-    .col-sm-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Extensión
-        %span.text-muted
-          %strong
-            = number_to_currency(@construction.extensions_amount)
-      %h5.text-center.cons-inf-title-sub
-        %span.text-muted
-          = link_to "#{@construction.extensions.count} Extensiones,", extensions_path(construction_id: @construction)
+- unless current_user.secretary?
+  .page-header
+    .row
+      .col-sm-4
+        %h4.text-center.cons-inf-title
+          %span.text-muted
+            Extensión
+          %span.text-muted
+            %strong
+              = number_to_currency(@construction.extensions_amount)
+        %h5.text-center.cons-inf-title-sub
+          %span.text-muted
+            = link_to "#{@construction.extensions.count} Extensiones,", extensions_path(construction_id: @construction)
 
-          = link_to "Agregar nueva", new_extension_path(construction_id: @construction),class: 'btn btn-primary'
-    .col-sm-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Contrato
-        %span.text-muted
-          %strong
-            = number_to_currency(@construction.total_budget)
-      %h5.text-center.cons-inf-title-sub
-        %span.text-muted
-          Contrato original
-        %span.text-muted
-          %strong
-            = number_to_currency(@construction.contract_amount)
-    .col-sm-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Estimación
-        %span.text-muted
-          %strong
-            = number_to_currency(@construction.estimates_amount)
-      %h5.text-center.cons-inf-title-sub
-        %span.text-muted
-          = link_to "#{@construction.estimates.count} Estimaciones", estimates_path(construction_id: @construction)
-          = link_to "Agregar nueva", new_estimate_path(construction_id: @construction),class: 'btn btn-primary'
-= render :partial => 'balance',locals: {expenses: @construction.expenses,paid: @construction.paid}
+
+            = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
+      .col-sm-4
+        %h4.text-center.cons-inf-title
+          %span.text-muted
+            Contrato
+          %span.text-muted
+            %strong
+              = number_to_currency(@construction.total_budget)
+        %h5.text-center.cons-inf-title-sub
+          %span.text-muted
+            Contrato original
+          %span.text-muted
+            %strong
+              = number_to_currency(@construction.contract_amount)
+      .col-sm-4
+        %h4.text-center.cons-inf-title
+          %span.text-muted
+            Estimación
+          %span.text-muted
+            %strong
+              = number_to_currency(@construction.estimates_amount)
+        %h5.text-center.cons-inf-title-sub
+          %span.text-muted
+            = link_to @construction.estimates.count, estimates_path(construction_id: @construction)
+            Estimaciones,
+            = link_to "Agregar nueva", new_estimate_path(construction_id: @construction)
+- unless current_user.secretary?
+  = render :partial => 'balance',locals: {expenses: @construction.expenses,paid: @construction.paid}
 .page-header
   .row
-    .col-sm-6
-      %h4.text-center.cons-inf-title
-        %span.text-success
-          = @construction.partial_requisitions.count + @construction.complete_requisitions.count
-        %span.text-muted
-          = link_to "Requisiciones", requisitions_path(construction_id: @construction)
-          procesadas
-      %h5.text-center.cons-inf-title
-        %span.text-warning
-          = @construction.pending_requisitions.count
-        %span.text-muted
-          Requisiciones pendientes
-    .col-sm-6
+    - unless current_user.secretary?
+      .col-sm-6
+        %h4.text-center.cons-inf-title
+          %span.text-success
+            = @construction.partial_requisitions.count + @construction.complete_requisitions.count
+          %span.text-muted
+            = link_to "Requisiciones", requisitions_path(construction_id: @construction)
+            procesadas
+        %h5.text-center.cons-inf-title
+          %span.text-warning
+            = @construction.pending_requisitions.count
+          %span.text-muted
+            Requisiciones pendientes
+    %div{:class=> ("col-sm-6" unless current_user.secretary?)}
       %h4.text-center.cons-inf-title
         %span.text-success
           = @construction.invoiced_purchases_orders.count

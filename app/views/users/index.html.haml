@@ -1,34 +1,31 @@
 %h1 Usuarios
-
-
-= simple_form_for :search,url: users_path,method: :get,remote: true do |f|
-
-  = f.input :role,as: :hidden ,id: 'role_input',input_html: { value: @user_list}
+= simple_form_for :search, url: users_path, method: :get, remote: true do |f|
+  = f.input :role, as: :hidden , id: 'role_input', input_html: {value: @user_list}
   .col-lg-6
-    = f.search_field :query,autofocus: true,class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
-  = f.submit 'Buscar',class: 'btn btn-default',id: 'submit'
-%br
+    = f.search_field :query, autofocus: true, class: 'form-control', onkeyup: "$('#submit').click();", autocomplete: 'off'
+  = f.submit 'Buscar', class: 'btn btn-default', id: 'submit'
+%hr
 
 %ul.nav.nav-tabs
-  %li{id: 'subordinates',class: " #{'active' if params[:role] == 'subordinate'  or params[:role].nil? }"}
-    = link_to 'Subordinados', users_path(role: 'subordinate'),remote: true
-  %li{id: 'administrators',class: " #{'active' if params[:role] == 'administrator'}"}
-    = link_to 'Administradores',users_path(role: 'administrator'),remote: true
+  %li{id: 'subordinates', class: "#{'active' if params[:role] == 'subordinate'  or params[:role].nil? }"}
+    = link_to 'Subordinados', users_path(role: 'subordinate'), remote: true
+  %li{id: 'administrators', class: " #{'active' if params[:role] == 'administrator'}"}
+    = link_to 'Administradores',users_path(role: 'administrator'), remote: true
+  %li{id: 'secretaries', class: "#{'active' if params[:role] == 'secretary'}"}
+    = link_to
 .table-responsive
   %table.table.table-condensed.table-striped.table-hover
     %thead
       %tr
-        %th Name
-        %th Phone
+        %th Nombre
+        %th Teléfono
         %th Email
-        %th Role
+        %th Rol
         %th
     %tbody#users
       = render partial: 'user', collection: @users
 #paginate
   = paginate @users
-
-
 %br
 
-= link_to 'New User', new_user_path, class: 'btn btn-primary'
+= link_to 'Nuevo usuario', new_user_path, class: 'btn btn-primary'

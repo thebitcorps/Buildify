@@ -1,34 +1,34 @@
-.jumbotron
-  %h2
-    = @user.name
-    -##refactor for showing spanish role
-    %small= @user.role_list[0]
-  %p
-    %b Phone:
-    = @user.phone
-  %p
-    %b Email:
-    = @user.email
+.col-xs-12
+  .row
+    %h4
+      = @user.name
+      -##refactor for showing spanish role
+      %span.text-muted
+        = @user.role_list.join(", ")
+    %p
+      = [@user.phone, @user.email].join(", ") # un decorador para el telefono
 
-  = link_to 'Change password',edit_password_users_path,class: 'btn btn-warning' if current_user == @user
+    = link_to 'Cambiar contraseña', edit_password_users_path, class: 'btn btn-warning' if current_user == @user
+    = link_to 'Editar', edit_user_path(@user), class: 'btn btn-warning'
+    / # = link_to 'Atrás', users_path, class: 'btn btn-default'
 
-  = link_to 'Edit', edit_user_path(@user),class: 'btn btn-warning'
+  - unless current_user.secretary?
+    .row
+      %h5
+        ="Obras que administro #{@user.name}"
 
-  = link_to 'Back', users_path,class: 'btn btn-default'
+    .row
+      .list-group#constructions
+        - if @user.construction_administrations.empty?
+          .well
+            No ha administrado obras
+        - else
+          = render partial: 'constructions/construction', collection: @user.construction_administrations
 
-
-%h2=" Obras que administro #{@user.name}"
-
-.list-group#constructions
-  = render partial: 'constructions/construction', collection: @user.construction_administrations
-  - if @user.construction_administrations.empty?
-    .well
-      No a administrado obras
-
-%h2 Obras que a apoyado
-.list-group#constructions
-  = render partial: 'constructions/construction', collection: @user.constructions
-  - if @user.constructions.empty?
-    .well
-      No a apoyado obras
-%br
+      %h5 Obras que ha apoyado
+      .list-group#constructions
+        - if @user.constructions.empty?
+          .well
+            No ha apoyado obras
+        - else
+          = render partial: 'constructions/construction', collection: @user.constructions

@@ -14,7 +14,7 @@
             %li= link_to 'Usuarios', users_path
             %li= link_to "Materiales", materials_path
             %li= link_to 'Unidades', measure_units_path
-        - else # Subordinate Navbar
+        - elsif current_user.subordinate? # Subordinate Navbar
           %ul.nav.navbar-nav
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -36,6 +36,10 @@
                   = link_to 'Procesadas', constructions_path(mode: :sub)
             %li
               = link_to 'Materiales',materials_path
+        - elsif current_user.secretary?
+          %ul.nav.navbar-nav
+            %li= link_to "Obras", constructions_path(status: :running)
+            %li= link_to "Proveedores", providers_path
         %p.navbar-text.navbar-right
           = current_user.name
           = link_to 'Salir',destroy_user_session_path, method: :delete
