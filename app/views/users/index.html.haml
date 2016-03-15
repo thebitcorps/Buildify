@@ -11,6 +11,8 @@
     = link_to 'Subordinados', users_path(role: 'subordinate'), remote: true
   %li{id: 'administrators', class: " #{'active' if params[:role] == 'administrator'}"}
     = link_to 'Administradores',users_path(role: 'administrator'), remote: true
+  %li{id: 'secretaries', class: "#{'active' if params[:role] == 'secretary'}"}
+    = link_to
 .table-responsive
   %table.table.table-condensed.table-striped.table-hover
     %thead

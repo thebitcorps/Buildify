@@ -17,4 +17,12 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def filter_sec_out
+    if current_user.secretary?
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'No tiene permisos para acceder esta parte del sito.' }
+      end
+    end
+  end
 end

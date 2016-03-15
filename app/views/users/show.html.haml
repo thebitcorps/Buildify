@@ -12,22 +12,23 @@
     = link_to 'Editar', edit_user_path(@user), class: 'btn btn-warning'
     / # = link_to 'Atrás', users_path, class: 'btn btn-default'
 
-  .row
-    %h5
-      ="Obras que administro #{@user.name}"
+  - unless current_user.secretary?
+    .row
+      %h5
+        ="Obras que administro #{@user.name}"
 
-  .row
-    .list-group#constructions
-      - if @user.construction_administrations.empty?
-        .well
-          No ha administrado obras
-      - else
-        = render partial: 'constructions/construction', collection: @user.construction_administrations
+    .row
+      .list-group#constructions
+        - if @user.construction_administrations.empty?
+          .well
+            No ha administrado obras
+        - else
+          = render partial: 'constructions/construction', collection: @user.construction_administrations
 
-    %h5 Obras que ha apoyado
-    .list-group#constructions
-      - if @user.constructions.empty?
-        .well
-          No ha apoyado obras
-      - else
-        = render partial: 'constructions/construction', collection: @user.constructions
+      %h5 Obras que ha apoyado
+      .list-group#constructions
+        - if @user.constructions.empty?
+          .well
+            No ha apoyado obras
+        - else
+          = render partial: 'constructions/construction', collection: @user.constructions
