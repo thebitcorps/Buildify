@@ -3,6 +3,6 @@
   %td= user.phone
   %td= user.email
   %td
-    .btn.btn-group
+    .btn-group
       = link_to 'Editar', edit_user_path(user), class: 'btn btn-warning'
       = link_to 'Borrar', user_path(user), class: 'btn btn-danger', method: :delete, data: { :confirm => '¿Estás seguro?' }

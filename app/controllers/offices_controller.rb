@@ -1,6 +1,8 @@
 class OfficesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_office, only: [:show, :edit, :update, :destroy]
+  before_filter :filter_sec_out
+  before_action :filter_sub_out
 
   def show
     @payments = @office.payments

@@ -2,7 +2,7 @@
   .row
     .col-md-6
       .row
-        %h1 
+        %h5
           = 'Hola'
           %small= link_to current_user.name, user_path(current_user)
     .col-md-6
@@ -27,7 +27,7 @@
 = render :partial => 'constructions/payment_tabs'
 .panel.panel-default
   .table-responsive
-    %table.table..table-stripped.table-hover
+    %table.table.table-stripped.table-hover
       %thead
         %tr
           %th

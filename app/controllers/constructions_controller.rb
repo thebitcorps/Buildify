@@ -2,7 +2,7 @@ class ConstructionsController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_construction, only: [:show, :edit, :update, :destroy]
   before_action :filter_sub_out, only: [:show, :edit, :update, :destroy]
-  before_action :filter_sec_out, only: [:create, :edit, :update, :destroy]
+  before_action :filter_sec_out, only: [:new, :edit, :update, :destroy]
   # before_action :humanize_title, only: [:create, :update]
 
   def index

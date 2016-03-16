@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :humanize_name ,only: [:create,:update]
   before_action :filter_sub_out
+  before_action :filter_sec_out, except: [:index]
 
   def index
     # we verify inclusion of role first then metaprograming for choosing the rigth list to show
