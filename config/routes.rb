@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :offices
+  resources :offices, only: [:new, :create, :show, :edit, :update]
 
   resources :extensions
   resources :measure_units

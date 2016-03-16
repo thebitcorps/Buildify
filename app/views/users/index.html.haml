@@ -27,5 +27,5 @@
 #paginate
   = paginate @users
 %br
-
-= link_to 'Nuevo usuario', new_user_path, class: 'btn btn-primary'
+-if current_user.administrator?
+  = link_to 'Nuevo usuario', new_user_path, class: 'btn btn-primary'

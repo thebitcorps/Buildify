@@ -2,7 +2,8 @@
   .row
     .col-md-6.col-xs-12
       .row
-        %h6
+        %h5
+
           = 'Hola'
           = link_to current_user.name, user_path(current_user)
     .col-md-6.col-xs-12
@@ -25,6 +26,7 @@
       %br
       .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
         = link_to "Ver todas", constructions_path(mode: :sub), {class: "button btn btn-default", type: "button"}
+
 
 %ul.nav.nav-tabs
   %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}

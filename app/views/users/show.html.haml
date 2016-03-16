@@ -9,7 +9,7 @@
       = [@user.phone, @user.email].join(", ") # un decorador para el telefono
 
     = link_to 'Cambiar contraseña', edit_password_users_path, class: 'btn btn-warning' if current_user == @user
-    = link_to 'Editar', edit_user_path(@user), class: 'btn btn-warning'
+    = link_to 'Editar', edit_user_path(@user), class: 'btn btn-info'
     / # = link_to 'Atrás', users_path, class: 'btn btn-default'
 
   - unless current_user.secretary?

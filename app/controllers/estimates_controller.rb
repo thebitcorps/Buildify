@@ -2,6 +2,7 @@ class EstimatesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_construction, only: [:new, :index]
   before_action :filter_sub_out
+  before_action :filter_sec_out
 
   def index
     @estimates = @construction.estimates
