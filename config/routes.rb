@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :offices, except: [:index]
-  get 'offices', to: redirect("/")
+  resources :offices, only: [:new, :create, :show, :edit, :update]
 
   resources :extensions
   resources :measure_units

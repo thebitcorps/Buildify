@@ -4,6 +4,10 @@ class OfficesController < ApplicationController
   before_action :filter_sec_out
   before_action :filter_sub_out
 
+  def new
+    @office = Office.new
+  end
+
   def show
     @payments = @office.payments
   end
@@ -26,17 +30,14 @@ class OfficesController < ApplicationController
     else
       render :edit
     end
-
   end
 
-  def new
-    @office = Office.new
-  end
   private
   def set_office
     @office = Office.find params[:id]
   end
+
   def office_params
-    params.require(:office).permit(:start_date,:finish_date)
+    params.require(:office).permit(:start_date, :finish_date)
   end
 end
