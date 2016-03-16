@@ -1,9 +1,14 @@
 class HomeController < ApplicationController
   before_filter :authenticate_user!
   def index
-    @constructions = Construction.running
-    @payments = Payment.all
-    @balance = get_expenses(@constructions)
+    if current_user.administrator?
+      @constructions = Construction.running
+      @payments = Payment.all
+      @balance = get_expenses(@constructions)
+    elsif current_user.subordinate?
+      @requisitions = current_user.requisitions
+    end
+
   end
   private
   # method that extract all the expenses from the given construction array

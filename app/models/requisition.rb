@@ -20,9 +20,32 @@ class Requisition < ActiveRecord::Base
   # end
 
   ##################  Scopes   ##################
-  scope :partially, ->(construction_id=nil) {where status: PARTIALLY_STATUS,construction_id: construction_id}
-  scope :pending, -> { where status: PENDING_STATUS }
-  scope :complete, -> { where status: COMPLETE_STATUS }
+  # scope :partially, ->(construction_id=nil) { where status: PARTIALLY_STATUS,construction_id: construction_id}
+  def self.partially(construction_id=nil)
+    requisitions_with_construction :partially,construction_id
+  end
+  def self.pending(construction_id=nil)
+    requisitions_with_construction :pending,construction_id
+  end
+  def self.complete(construction_id=nil)
+    requisitions_with_construction :complete,construction_id
+  end
+
+  def self.all_with_conctruction(construction_id=nil)
+    query = all
+    unless construction_id.nil?
+      query = query.where construction_id: construction_id
+    end
+    query
+  end
+
+  def self.requisitions_with_construction(status,construction_id)
+    query = where status: status
+    unless construction_id.nil?
+      query = query.where construction_id: construction_id
+    end
+    query
+  end
 
   ##################  Methods   ##################
   # which is better?

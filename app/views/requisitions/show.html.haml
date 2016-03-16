@@ -12,17 +12,18 @@
 
 = react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?
 
-.page-header
-  - if current_user.administrator?
-    %h1
-      %small
-        Ordenes de compra
+-if current_user.administrator?
+  .page-header
+    - if current_user.administrator?
+      %h1
+        %small
+          Ordenes de compra
 
-.list-group#purchase_orders
-  = render partial: 'purchase_orders/purchase_order', collection: @purchase_orders
-  -#maybe an  application partial also with requisition we use the same
-  - if @purchase_orders.empty?
-    .well
-      No hay ordenes de compra
+  .list-group#purchase_orders
+    = render partial: 'purchase_orders/purchase_order', collection: @purchase_orders
+    -#maybe an  application partial also with requisition we use the same
+    - if @purchase_orders.empty?
+      .well
+        No hay ordenes de compra
 
-= link_to 'Nueva Orden', new_purchase_order_path(requisition_id: @requisition.id), {class: "btn btn-primary", type: "button"}
+  = link_to 'Nueva Orden', new_purchase_order_path(requisition_id: @requisition.id), {class: "btn btn-primary", type: "button"}

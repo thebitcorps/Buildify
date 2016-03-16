@@ -1,48 +1,46 @@
 .page-header
   .row
-    .col-md-6
+    .col-md-6.col-xs-12
       .row
-        %h1 
+        %h6
           = 'Hola'
-          %small= link_to current_user.name, user_path(current_user)
-    .col-md-6
-      %h3.text-center
-        %small= ["Miembro desde ", spanish_formated_date(current_user.created_at, false)].join(" ")
+          = link_to current_user.name, user_path(current_user)
+    .col-md-6.col-xs-12
+      .row
+        %h6.pull-right
+          = ["Hoy es", spanish_formated_date(Date.today, false)].join(" ")
+
 .row
   .col-md-6
-    %h3.text-center
+    %h4.text-center
       = current_user.construction_administrations.count
       = ' Obras administradas'
       %br
       .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
         = link_to "Ver todas", constructions_path(mode: :own), {class: "button btn btn-default", type: "button"}
   .col-md-6
-    %h3.text-center
+    %h4.text-center
       = current_user.constructions.count
       = ' Obras apoyadas'
       %br
       .btn-group.fix-estimates-buttons{"aria-label" => "...", :role => "group"}
         = link_to "Ver todas", constructions_path(mode: :sub), {class: "button btn btn-default", type: "button"}
--#TODO change the response payment
-= render :partial => 'constructions/payment_tabs'
-.panel.panel-default
-  .table-responsive
-    %table.table..table-stripped.table-hover
-      %thead
-        %tr
-          %th
-            Factura
-          %th
-            Orden de compra
-          %th
-            Importe
-          %th
-            Pagado
-          %th
-            Saldo
-          %th
-            Pagos
-          %th
-      %tbody#payments
-        - @acumulated_amount, @acumulated_paid = 0
-        = render partial: 'payment', collection: @payments
+
+%ul.nav.nav-tabs
+  %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
+    = link_to 'Todos', requisitions_path(type_list: 'all', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+  %li{id: 'pending', class: " #{'active' if params[:type_list] == 'pending' }"}
+    = link_to 'Pendientes', requisitions_path(type_list: 'pending', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+  %li{id: 'partially', class: " #{'active' if params[:type_list] == 'partially'}"}
+    = link_to 'Parcialmente', requisitions_path(type_list: 'partially', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+  %li{id: 'complete', class: " #{'active' if params[:type_list] == 'complete'}"}
+    = link_to 'Completas', requisitions_path(type_list: 'complete', construction_id: params[:construction_id],  mode: params[:mode]), remote: true
+
+
+.list-group#requisitions
+  = render partial: 'requisitions/requisition', collection: @requisitions
+  - if @requisitions.count == 0
+    .well
+      No hay requisiciones
+
+

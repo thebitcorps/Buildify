@@ -11,5 +11,12 @@
   $('#finished').attr('class', "");
   $('#all').attr('class', "active");
 
-$('#constructions').html("#{j( render partial: 'construction', collection: @constructions)}");
+- if @mode == :own
+  $('#constructions').html("#{j( render partial: 'construction_own', collection: @constructions)}");
+- if @mode == :sub
+  $('#constructions').html("#{j( render partial: 'construction_sub', collection: @constructions)}");
+- if @mode == :all
+  $('#constructions').html("#{j( render partial: 'construction', collection: @constructions)}");
+
+
 $('#paginate').html("#{j( paginate @constructions,theme: 'twitter-bootstrap-3', remote: true)}");

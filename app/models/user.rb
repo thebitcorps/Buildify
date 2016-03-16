@@ -21,16 +21,22 @@ class User < ActiveRecord::Base
 
   before_save name.humanize
 
-  def partial_requisitions
-    requisitions.where status: Requisition::PARTIALLY_STATUS
+  def partial_requisitions(construction_id=nil)
+    get_requisitions :partially,construction_id
   end
 
-  def pending_requisitions
-    requisitions.where status: Requisition::PENDING_STATUS
+  def pending_requisitions(construction_id=nil)
+    get_requisitions :pending,construction_id
+
   end
 
-  def complete_requisitions
-    requisitions.where status: Requisition::COMPLETE_STATUS
+  def complete_requisitions(construction_id=nil)
+    get_requisitions :complete,construction_id
+  end
+  def get_requisitions(status,construction_id)
+    requisitions = self.requisitions.where status: status
+    requisitions = requisitions.where construction_id: construction_id unless construction_id.nil?
+    requisitions
   end
 
   def self.search(search)

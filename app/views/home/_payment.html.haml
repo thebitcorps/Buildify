@@ -1,6 +1,6 @@
 %tr{class: "#{payment.get_color}"}
   %td
-    - if payment.invoice 
+    - if payment.invoice
       = link_to payment.invoice.provider.name, provider_path(payment.invoice.provider)
       = link_to payment.invoice.folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info", type: "button"}
     - else
