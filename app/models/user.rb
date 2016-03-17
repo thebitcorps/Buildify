@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
-  ROLES = ['administrator','subordinate','secretary']
+  ROLES = %w(administrator subordinate secretary)
   royce_roles ROLES
 
   validates :name, :phone, :email, presence: true
@@ -33,9 +33,15 @@ class User < ActiveRecord::Base
   def complete_requisitions(construction_id=nil)
     get_requisitions :complete,construction_id
   end
+
+  def all_requisitions(construction_id=nil)
+    requisitions = self.requisitions.all
+    requisitions.where construction_id: construction_id unless construction_id.nil?
+    requisitions
+  end
   def get_requisitions(status,construction_id)
     requisitions = self.requisitions.where status: status
-    requisitions = requisitions.where construction_id: construction_id unless construction_id.nil?
+    requisitions.where construction_id: construction_id unless construction_id.nil?
     requisitions
   end
 

@@ -24,3 +24,14 @@
   - if @requisitions.count == 0
     .well
       No hay requisiciones
+- if current_user.subordinate?
+  %h1
+    %small
+      Caja chica
+      .pull-right
+        %button{onclick: "ReactDOM.render(React.createElement(PaymentModal,{construction_id: #{@construction ? @construction.id : @office.id}}),document.getElementById('mod'));",class: 'btn btn-primary'}
+          Nuevo gasto
+  -#make partial for petty_cash
+  -#=render partial: 'home/payment',collection: @payments
+  #mod
+

@@ -5,7 +5,9 @@ class PaymentsController < ApplicationController
     @type_list = sanitized_type_list
     respond_to do |format|
       format.html {redirect_to construction_path(params[:construction_id]),type_list: params[:type_list]}
-      format.js {@payments =(class_eval %Q{Payment.#{@type_list}(#{params[:construction_id]})})}
+      @payments =(class_eval %Q{Payment.#{@type_list}(#{params[:construction_id]})})
+      format.js {@payments}
+      format.json {render :index}
     end
 
   end

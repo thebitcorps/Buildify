@@ -2,6 +2,15 @@ var PaymentForm = React.createClass({
     getInitialState: function(){
       return {payments: [],paid_amount: true}
     },
+    componentDidMount: function() {
+        this.serverRequest = $.get('/payments?construction_id='+this.props.construction_id + '&type_list=petty_cash', function (result) {
+            console.log(result);
+            this.setState({payments: result});
+        }.bind(this),'json');
+    },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
     inputChange: function(name,value){
         var inputResponse = {};
         inputResponse[name] = value;

@@ -2,28 +2,9 @@ $('#requisitions').html("#{j( render partial: 'requisition', collection: @requis
 - if @requisitions.count == 0
   $('#requisitions').append("<div class='well'> No hay requisiciones</div>")
 
--#$('#paginate').html("#{j( paginate @requisitions)}");
 
--#$('#search_role').val("#{@type_list}");
-- if @type_list ==  'complete'
-  $('#complete').attr('class', "active");
-  $('#pending').attr('class', '');
-  $('#partially').attr('class', '');
-  $('#all').attr('class', '');
-- elsif @type_list == 'pending'
-  $('#complete').attr('class', "");
-  $('#pending').attr('class', 'active');
-  $('#partially').attr('class', '');
-  $('#all').attr('class', '');
-- elsif @type_list == 'partially'
-  $('#complete').attr('class', "");
-  $('#pending').attr('class', '');
-  $('#partially').attr('class', 'active');
-  $('#all').attr('class', '');
--else
-  $('#complete  ').attr('class', "");
-  $('#pending').attr('class', '');
-  $('#partially').attr('class', '');
-  $('#all').attr('class', 'active');
 
--#window.location.replace("requisitions?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}")
+$('#complete').attr('class', "#{'active' if @type_list ==  'complete'}");
+$('#pending').attr('class', "#{'active' if @type_list ==  'pending'}");
+$('#partially').attr('class', "#{'active' if @type_list ==  'partially'}");
+$('#all').attr('class', "#{'active' if @type_list ==  'all_with_conctruction'}");

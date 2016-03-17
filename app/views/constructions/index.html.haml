@@ -9,13 +9,20 @@
 
 %h1 Obras
 
-%ul.nav.nav-tabs
-  %li{class: "#{'active' if params[:status] == 'running'}",id: 'running'}
-    = link_to 'En curso',constructions_path(status: :running),remote: true
-  %li{class: "#{'active' if params[:status] == 'finished'}",id: 'finished'}
-    = link_to 'Terminadas',constructions_path(status: :finished),remote: true
-  %li{class: "#{'active' if params[:status] == 'all' or params[:status].nil?}",id: 'all'}
-    = link_to 'Todas',constructions_path(status: :all),remote: true
+-if current_user.administrator?
+  %ul.nav.nav-tabs
+    %li{class: "#{'active' if params[:status] == 'running'}",id: 'running'}
+      = link_to 'En curso',constructions_path(status: :running),remote: true
+    %li{class: "#{'active' if params[:status] == 'finished'}",id: 'finished'}
+      = link_to 'Terminadas',constructions_path(status: :finished),remote: true
+    %li{class: "#{'active' if params[:status] == 'all' or params[:status].nil?}",id: 'all'}
+      = link_to 'Todas',constructions_path(status: :all),remote: true
+-elsif current_user.subordinate?
+  %ul.nav.nav-tabs
+    %li{class: "#{'active' if params[:mode] == 'own'}",id: 'own'}
+      = link_to 'Administradas',constructions_path(mode: :own),remote: true
+    %li{class: "#{'active' unless params[:mode] == 'own'}",id: 'help'}
+      = link_to 'Apoyando',constructions_path(mode: :mode),remote: true
 
 .list-group#constructions
   - if @mode == :own

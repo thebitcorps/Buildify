@@ -11,41 +11,56 @@ class Payment < ActiveRecord::Base
   DUE_STATUS = 'due'
   PARTIALLY_DUE_STATUS = 'partially'
   PAID_STATUS = 'paid'
-  STATUS = [DUE_STATUS,PARTIALLY_DUE_STATUS,PAID_STATUS,'all_construction']
+  PETTY_CASH_STATUS = 'petty_cash'
+  STATUS = [DUE_STATUS,PARTIALLY_DUE_STATUS,'paid.no_petty_cash','all_construction',PETTY_CASH_STATUS]
 
   # after_save :change_status_from_remaining!
-  def self.all_construction(construction_id=nil)
+  scope :all_construction, ->(construction_id=nil){
     if construction_id
       where construction_id: construction_id
     else
       all
     end
-  end
+  }
 
-  def self.paid(construction_id=nil)
+  scope  :paid, ->(construction_id=nil){
     if construction_id
-      where status:  PAID_STATUS, construction_id: construction_id
+      where status:  :paid, construction_id: construction_id
     else
-      where status:  PAID_STATUS
+      where status:  :paid
     end
-  end
+  }
 
-  def self.partially(construction_id=nil)
-
+  scope :partially,->(construction_id=nil){
     if construction_id
-      where status:  PARTIALLY_DUE_STATUS, construction_id: construction_id
+      where status:  :partially, construction_id: construction_id
     else
-      where status:  PARTIALLY_DUE_STATUS
+      where status:  :partially
     end
-  end
+  }
 
-  def self.due(construction_id=nil)
+  scope :due,->(construction_id=nil){
     if construction_id
-      where status:  DUE_STATUS, construction_id: construction_id
+      where status:  :due, construction_id: construction_id
     else
-      where status:  DUE_STATUS
+      where status:  :due
     end
-  end
+  }
+
+  scope :petty_cash, ->(construction_id=nil){
+    if construction_id
+      where "construction_id=? AND id NOT IN (SELECT payment_id FROM invoices)", construction_id
+    else
+      where "id NOT IN (SELECT payment_id FROM invoices)"
+    end
+  }
+  scope :no_petty_cash, ->(construction_id=nil){
+    if construction_id
+      where "construction_id=? AND id IN (SELECT payment_id FROM invoices)", construction_id
+    else
+      where "id IN (SELECT payment_id FROM invoices)"
+    end
+  }
 
   def get_color
     if status == PAID_STATUS

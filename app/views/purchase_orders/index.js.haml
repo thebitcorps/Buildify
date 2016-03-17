@@ -1,21 +1,8 @@
 $('#purchase_orders').html("#{j( render partial: 'purchase_order', collection: @purchase_orders )}");
 - if @purchase_orders.count == 0
   $('#purchase_orders').append("<div class='well'> No hay ordenes de compra</div>")
--#window.location.replace("purchase_orders?construction_id=#{j params[:construction_id]}&type_list=#{j @type_list}")
--#$('#paginate').html("#{j( paginate @requisitions)}");
 
--#$('#search_role').val("#{@type_list}");
-- if @type_list ==  'sent'
-  $('#sent').attr('class', "active");
-  $('#not_sent').attr('class', '');
-  $('#all').attr('class', '');
-- elsif @type_list == 'not_sent'
-  $('#sent').attr('class', "");
-  $('#not_sent').attr('class', 'active');
-  $('#all').attr('class', '');
--else
-  $('#sent').attr('class', "");
-  $('#not_sent').attr('class', '');
-  $('#all').attr('class', 'active');
-
+$('#sent').attr('class', "#{'active' if @type_list ==  'sent'}");
+$('#not_sent').attr('class', "#{'active' if @type_list ==  'not_sent'}");
+$('#all').attr('class', "#{'active' if @type_list ==  'all'}");
 

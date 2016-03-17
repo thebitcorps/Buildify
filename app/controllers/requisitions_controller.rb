@@ -7,11 +7,13 @@ class RequisitionsController < ApplicationController
   def index
     @type_list = sanitized_locked_param
     if current_user.subordinate?
-      if params[:mode] == 'sub'
+      if params[:mode] == 'own'
+        @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]})})
+      else
         if @type_list == 'partially'
           # i think this is more readable and also this could be done with metaprogramin in less lines
           # @requisitions =  current_user.requisitions.partially(params[:construction_id])
-          @requisitions =  current_user.partial_requisitions(params[:construction_id])
+          @requisitions = current_user.partial_requisitions(params[:construction_id])
         else
           if @type_list == 'complete'
             @requisitions = current_user.complete_requisitions(params[:construction_id])
@@ -19,13 +21,11 @@ class RequisitionsController < ApplicationController
             if @type_list == 'pending'
               @requisitions = current_user.pending_requisitions(params[:construction_id])
             else
-              @requisitions = current_user.requisitions(params[:construction_id])
+              @requisitions = current_user.all_requisitions params[:construction_id]
             end
           end
         end
         @mode = 'sub'
-      else
-        @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]})})
       end
     else
       @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]})})
@@ -87,6 +87,6 @@ class RequisitionsController < ApplicationController
 
 
   def sanitized_locked_param
-    ['complete','partially','pending'].include?(params[:type_list]) ? params[:type_list] : 'all_with_conctruction'
+      ['complete','partially','pending'].include?(params[:type_list]) ? params[:type_list] : 'all_with_conctruction'
   end
 end

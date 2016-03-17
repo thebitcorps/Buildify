@@ -12,7 +12,7 @@
   %li{id: 'administrators', class: " #{'active' if params[:role] == 'administrator'}"}
     = link_to 'Administradores',users_path(role: 'administrator'), remote: true
   %li{id: 'secretaries', class: "#{'active' if params[:role] == 'secretary'}"}
-    = link_to
+    = link_to 'Secretarias',users_path(role: 'secretary'), remote: true
 .table-responsive
   %table.table.table-condensed.table-striped.table-hover
     %thead

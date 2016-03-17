@@ -1,23 +1,7 @@
 $('#payments').html("#{j (render partial: 'home/payment',collection: @payments)}");
 
-
-- if @type_list ==  Payment::DUE_STATUS
-  $('#due').attr('class', "active");
-  $('#paid').attr('class', '');
-  $('#partially').attr('class', '');
-  $('#all_construction').attr('class', '');
-- elsif @type_list == Payment::PAID_STATUS
-  $('#due').attr('class', "");
-  $('#paid').attr('class', 'active');
-  $('#partially').attr('class', '');
-  $('#all_construction').attr('class', '');
-- elsif @type_list == Payment::PARTIALLY_DUE_STATUS
-  $('#due').attr('class', "");
-  $('#paid').attr('class', '');
-  $('#partially').attr('class', 'active');
-  $('#all_construction').attr('class', '');
--else
-  $('#due').attr('class', "");
-  $('#paid').attr('class', '');
-  $('#partially').attr('class', '');
-  $('#all_construction').attr('class', 'active');
+$('#due').attr('class', "#{'active' if @type_list ==  Payment::DUE_STATUS}");
+$('#paid').attr('class', '#{'active' if @type_list ==  'paid.no_petty_cash'}');
+$('#partially').attr('class', "#{'active' if @type_list ==  Payment::PARTIALLY_DUE_STATUS}");
+$('#all_construction').attr('class', "#{'active' if @type_list ==  'all_construction'}");
+$('#petty_cash').attr('class', "#{'active' if @type_list ==  Payment::PETTY_CASH_STATUS}");

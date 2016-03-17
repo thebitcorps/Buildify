@@ -1,16 +1,10 @@
-- if params[:status] == 'running'
-  $('#running').attr('class', "active");
-  $('#finished').attr('class', "");
-  $('#all').attr('class', "");
-- elsif params[:status] == 'finished'
-  $('#running').attr('class', "");
-  $('#finished').attr('class', "active");
-  $('#all').attr('class', "");
--else
-  $('#running').attr('class', "");
-  $('#finished').attr('class', "");
-  $('#all').attr('class', "active");
 
+$('#running').attr('class', "#{ 'active' if params[:status] == 'running'}");
+$('#finished').attr('class', "#{'active' if params[:status] == 'finished'}");
+$('#all').attr('class', "#{'active' if params[:status] == 'all'}");
+-if current_user.subordinate?
+  $('#own').attr('class', "#{'active' if params[:mode] == 'own'}");
+  $('#help').attr('class', "#{'active' unless params[:mode] == 'own'}");
 - if @mode == :own
   $('#constructions').html("#{j( render partial: 'construction_own', collection: @constructions)}");
 - if @mode == :sub
