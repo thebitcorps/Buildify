@@ -22,5 +22,5 @@
   %td
     = link_to payment.billing_adjustments.count, billing_adjustments_path(payment_id: payment.id)
   %td
-    %button{onclick: "ReactDOM.render(React.createElement(BillingAdjusmentApp,{payment_id: #{payment.id},amount: #{payment.amount},paid_amount: #{payment.paid_amount}}),document.getElementById('billing'));",class: 'btn btn-primary'}
+    %button{onclick: "window.createBillingAdjusment( #{payment.id},#{payment.amount}, #{payment.paid_amount}, #{payment.construction_id} )",class: 'btn btn-primary'}
       Agregar pago

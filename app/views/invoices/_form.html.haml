@@ -1,5 +1,7 @@
 =  simple_form_for(@invoice, html: { class: 'form-horizontal' }) do |f|
   = f.input :folio, label: 'Folio en factura'
   = f.input :amount, label: 'Cantidad en factura'
-  = f.input :invoice_date, label: 'Fecha en factura'
+  = f.input :invoice_date, label: 'Fecha en factura',as: :date_picker,id: 'datetimepicker'
+
   = f.button :submit, value: 'Actualizar', class: 'btn btn-primary'
+  = link_to 'Cancelar', purchase_order_path(@invoice.purchase_order), class: 'btn btn-default'

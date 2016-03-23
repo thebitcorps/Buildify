@@ -35,3 +35,11 @@ Number.prototype.formatMoney = function(c, d, t){
         j = (j = i.length) > 3 ? j % 3 : 0;
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
+
+window.createBillingAdjusment  = function(payment_id,payment_amount,paid_amount,construction_id){
+    ReactDOM.render(React.createElement(BillingAdjusmentApp,{payment_id: payment_id,amount: payment_amount,paid_amount: paid_amount,construction_id: construction_id}),document.getElementById('billing'));
+};
+window.createPayment = function(construction_id){
+    ReactDOM.render(React.createElement(PaymentModal,{construction_id: construction_id}),document.getElementById('mod'));
+
+};

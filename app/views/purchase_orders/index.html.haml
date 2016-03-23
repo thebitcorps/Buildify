@@ -1,8 +1,10 @@
 .page-header
+  %ol.breadcrumb
+    %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
+    %li.active Ordenes de compra
   %h1
-    = link_to @construction.title, construction_path(@construction)
-    %small Ordenes de compra
-
+    %small
+      Ordenes de compra
 
 %ul.nav.nav-tabs
   %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}

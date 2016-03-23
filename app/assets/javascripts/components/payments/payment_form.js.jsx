@@ -4,7 +4,6 @@ var PaymentForm = React.createClass({
     },
     componentDidMount: function() {
         this.serverRequest = $.get('/payments?construction_id='+this.props.construction_id + '&type_list=petty_cash', function (result) {
-            console.log(result);
             this.setState({payments: result});
         }.bind(this),'json');
     },

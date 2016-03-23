@@ -20,7 +20,7 @@ var BillingAdjusmentApp = React.createClass({
         this.setState(inputResponse);
     },
     getInitialState: function(){
-      return {folio: '',amount: '',adjustment_date: '',payment_type: 'check',reference: '',account: '',adjusments: [],paid_amount: parseInt(this.props.paid_amount)}
+      return {folio: '',amount: '',adjustment_date: '',payment_type: 'check',reference: '',account: '',adjusments: [],paid_amount: parseInt(this.props.paid_amount),errors: []}
     },
     isValidAdjusment: function(){
         return this.state.folio && this.state.amount && this.state.adjustment_date && this.state.payment_type && this.state.reference && this.state.account
@@ -36,23 +36,22 @@ var BillingAdjusmentApp = React.createClass({
                 billings.unshift(data);
                 this.setState({adjusments: billings,paid_amount: this.state.paid_amount + parseFloat(billing.amount)});
             }.bind(this),
-            error: function(xhr, status, err) {
-                //TODO add error box
-                console.log(xhr + ' ' +status + " "+ err);
-                if (err == 'Internal Server Error') {
-                    alert("Error de servidor");
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                if(errorThrown == 'Internal Server Error'){
+                    this.setState({ errors: ['Internal Server Error']});
                     return;
                 }
-                alert($.parseJSON(xhr.responseText));
-            },
+                this.setState({ errors: $.parseJSON(XMLHttpRequest.responseText)});
+            }.bind(this),
             dataType: 'JSON'
         });
 
     },
     updateBroswer: function(){
+
+
         $.ajax({
             type: "GET",
-            //todo check url
             url: '/payments/',
             data: {construction_id: this.props.construction_id},
             success: function(data){
@@ -97,6 +96,7 @@ var BillingAdjusmentApp = React.createClass({
         return (
             <div>
                 <Modal title="Pago factura " parentNode="billing" modalClose={this.updateBroswer}>
+                    <ErrorBox errorsArray={this.state.errors}/>
                     <div className="row">
                         <div className="col-sm-6">
                             {this.titleElement("Nuevo pago")}

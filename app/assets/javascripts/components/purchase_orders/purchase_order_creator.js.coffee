@@ -32,7 +32,7 @@
     itemMaterialsIds = []
     for itemMaterial in @state.purchaseOrderItemsMaterials
       itemMaterialsIds.push itemMaterial.id
-    data = {delivery_place: @state.delivery_place,delivery_address: @state.delivery_address,delivery_receiver: @state.delivery_receiver,requisition_id: @props.requisition.id,item_material_ids: itemMaterialsIds}
+    data = {delivery_place: @state.delivery_place ,delivery_place: @state.delivery_type ,delivery_address: @state.delivery_address,delivery_receiver: @state.delivery_receiver,requisition_id: @props.requisition.id,item_material_ids: itemMaterialsIds}
     that = @
     $.ajax
       url: '/purchase_orders.json'
