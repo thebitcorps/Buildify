@@ -170,7 +170,7 @@
         #||||||||UNselected ItemMaterials|||||||||||||
         React.DOM.div
           className: 'col-md-6'
-          React.DOM.h2 null, 'Materiales de la requisicion'
+          React.DOM.h4 null, 'Materiales de la requisicion'
           React.DOM.ul
             style: {cursor: 'pointer'}
             className: 'list-group'
@@ -187,7 +187,7 @@
         #|||||||Selected ItemMaterials||||||||||||
         React.DOM.div
           className: 'col-md-6'
-          React.DOM.h2 null, 'Materiales de la nueva orden de compra'
+          React.DOM.h4 null, 'Materiales de la nueva orden de compra'
           React.DOM.ul
             style: {cursor: 'pointer'}
             className: 'list-group'

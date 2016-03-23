@@ -31,6 +31,7 @@
           %ul.nav.navbar-nav
             %li= link_to "Obras", constructions_path(status: :running)
             %li= link_to "Proveedores", providers_path
+            %li= link_to 'Usuarios', users_path
         %p.navbar-text.navbar-right
           = current_user.name
           = link_to 'Salir',destroy_user_session_path, method: :delete

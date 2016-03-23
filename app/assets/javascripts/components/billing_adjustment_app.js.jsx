@@ -52,6 +52,7 @@ var BillingAdjusmentApp = React.createClass({
     updateBroswer: function(){
         $.ajax({
             type: "GET",
+            //todo check url
             url: '/payments/',
             data: {construction_id: this.props.construction_id},
             success: function(data){
@@ -92,34 +93,35 @@ var BillingAdjusmentApp = React.createClass({
             noBillingsMessage = <a className="list-group-item" key={0}>No se han hecho abonos</a> ;
         }
 
-        var child = <div className="row">
-            <div className="col-sm-6">
-                {this.titleElement("Nuevo pago")}
-                <LabelInput  name="folio" label="Folio" changed={this.inputChange} value={this.state.folio} />
-                <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
-                <DateInput name="adjustment_date" label="Fecha del pago" changed={this.inputChange} value={this.state.adjustment_date}/>
-                <LabelSelect name="payment_type" label="Tipo de pago" onChanged={this.paymentTypeChange} options={[{display: 'Cheque',value: 'check'},{display: 'Transferencia',value: 'transfer'}]}></LabelSelect>
-                <LabelInput name="reference" label={reference_message} changed={this.inputChange} value={this.state.reference}></LabelInput>
-                <LabelInput name="account" label="Cuenta que se deposito" changed={this.inputChange} value={this.state.account} ></LabelInput>
-                <button className="btn btn-primary" disabled={!this.isValidAdjusment()} onClick={this.submitBilling}>Agregar</button>
-            </div>
-            <div className="col-sm-6">
-                <div className="list-group"  style={{height: '500px  ',overflowY: 'auto'}}>
-                {this.titleElement("Saldo $" + this.props.amount.formatMoney(2)+ ",Pagado $" + this.state.paid_amount.formatMoney(2))}
-                {
-                    this.state.adjusments.map(function(item,index){
-                    return this.billingadjusmentElement( item)
-                    }.bind(this))
-                }
-                {noBillingsMessage}
-                </div>
-            </div>
-        </div>;
-
 
         return (
             <div>
-                <Modal title="Pago factura " body={child} parentNode="billing" modalClose={this.updateBroswer}/>
+                <Modal title="Pago factura " parentNode="billing" modalClose={this.updateBroswer}>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            {this.titleElement("Nuevo pago")}
+                            <LabelInput  name="folio" label="Folio" changed={this.inputChange} value={this.state.folio} />
+                            <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
+                            <DateInput name="adjustment_date" label="Fecha del pago" changed={this.inputChange} value={this.state.adjustment_date}/>
+                            <LabelSelect name="payment_type" label="Tipo de pago" onChanged={this.paymentTypeChange} options={[{display: 'Cheque',value: 'check'},{display: 'Transferencia',value: 'transfer'}]}></LabelSelect>
+                            <LabelInput name="reference" label={reference_message} changed={this.inputChange} value={this.state.reference}></LabelInput>
+                            <LabelInput name="account" label="Cuenta que se deposito" changed={this.inputChange} value={this.state.account} ></LabelInput>
+                            <button className="btn btn-primary" disabled={!this.isValidAdjusment()} onClick={this.submitBilling}>Agregar</button>
+                        </div>
+                        <div className="col-sm-6">
+                            <div className="list-group"  style={{height: '500px  ',overflowY: 'auto'}}>
+                            {this.titleElement("Saldo $" + this.props.amount.formatMoney(2)+ ",Pagado $" + this.state.paid_amount.formatMoney(2))}
+                            {
+                                this.state.adjusments.map(function(item,index){
+                                    return this.billingadjusmentElement( item)
+                                }.bind(this))
+                            }
+                            {noBillingsMessage}
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+
             </div>
         )
     }

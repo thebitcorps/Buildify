@@ -7,6 +7,8 @@ class HomeController < ApplicationController
       @balance = get_expenses(@constructions)
     elsif current_user.subordinate?
       @requisitions = current_user.requisitions
+    elsif current_user.secretary?
+      @payments = Payment.all
     end
 
   end

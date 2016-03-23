@@ -17,6 +17,7 @@
     url: ''
     queryParam: 'search[query]'
     withDescription: false
+    allowCreation: null
   componentDidMount: ->
     #refactor this so we can include a function that return the element
     if @props.withDescription
@@ -24,14 +25,18 @@
         return "<li> #{item.name} <p> #{item.description} </p> </li>"
     else
       formater = (item) ->
-        return "<li> #{item.name}</p> </li>"
+        return "<li> #{item.name} </li>"
+
     state = @
     $("#" + state.props.componentName).tokenInput(state.props.url, {
       crossDomain: false,
-#      prePopulate: $("#material").data("pre"),
       theme: "facebook"
+      hintText: "Escriba su busqueda"
+      allowCreation: @props.allowCreation
       queryParam: state.props.queryParam
       tokenLimit: 1
+      searchingText: "Buscando..."
+      noResultsText: "No se encontro"
       resultsFormatter: formater
       onAdd: (item) ->
         state.props.onAddToken item

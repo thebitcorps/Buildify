@@ -7,7 +7,7 @@ var Modal = React.createClass({
         close: React.PropTypes.element
     },
     getDefaultProps: function(){
-        return {name: 'modal',number: '0',parentNode: 'mod',modalClose: function(){}}
+        return {name: 'modal',number: '0',parentNode: 'mod',modalClose: function(){},size: 'lg'}
     },
     closeModal: function() {
         this.modal.modal('hide');
@@ -25,7 +25,7 @@ var Modal = React.createClass({
         return (
             <div>
                 <div id={this.props.name} tabIndex='-1' role='modal' className='modal fade' onRequestClose={this.closeModal} closeTimeoutMS='0'>
-                    <div className='modal-dialog modal-lg'>
+                    <div className={'modal-dialog modal-'+ this.props.size}>
                         <div className="modal-content">
                             <div className="modal-header">
                                 <button type="button" className="close" onClick={this.closeModal}>
@@ -35,7 +35,7 @@ var Modal = React.createClass({
                                 <h3 className="modal-title">{this.props.title}</h3>
                             </div>
                             <div className="modal-body">
-                            {this.props.body}
+                            {this.props.children}
                             </div>
                             <div className="modal-footer">
                             {this.props.close}

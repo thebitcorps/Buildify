@@ -1,10 +1,13 @@
 //ReactDOM.render(React.createElement(Modal,{body: React.createElement(PaymentForm),construction_id: #{@construction.id}}),document.getElementById('mod'));
 var PaymentModal = React.createClass({
   render: function(){
-      var child = <PaymentForm construction_id={this.props.construction_id}/>;
+
       return (
         <div>
-            <Modal body={child} modalClose={this.updateBroswer} title="Nuevo Gasto"/>
+            <Modal modalClose={this.updateBroswer} title="Nuevo Gasto">
+                <PaymentForm construction_id={this.props.construction_id}/>;
+            </Modal>
+
         </div>
       );
   },

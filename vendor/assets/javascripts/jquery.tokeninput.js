@@ -623,6 +623,10 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Hide and clear the results dropdown
     function hide_dropdown () {
+
+        if(dropdown.allowCreation == true){
+            return;
+        }
         dropdown.hide().empty();
         selected_dropdown_item = null;
     }
@@ -704,12 +708,22 @@ $.TokenList = function (input, url_or_data, settings) {
             } else {
                 dropdown_ul.show();
             }
+            dropdown.allowCreation = false;
         } else {
-            if(settings.noResultsText) {
+            if(settings.allowCreation){
+                dropdown.empty();
+                dropdown.html("<p >"+ settings.allowCreation+ "</button>");
+                dropdown.allowCreation = true;
+                show_dropdown();
+                setTimeout(function(){dropdown.allowCreation = false;hide_dropdown()},3000);
+            }
+            else if(settings.noResultsText) {
                 dropdown.html("<p>"+settings.noResultsText+"</p>");
+                dropdown.allowCreation = false;
                 show_dropdown();
             }
         }
+
     }
 
     // Highlight an item in the results dropdown
