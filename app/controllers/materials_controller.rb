@@ -30,8 +30,10 @@ class MaterialsController < ApplicationController
     respond_to do |format|
       if @material.save
         format.html { redirect_to @material, notice: 'Material creado correctamente.'}
+        format.json {render json: @material.to_json(:include => :measure_units)}
       else
         format.html { render :new }
+        format.json {render json: JSON.parse(@material.errors.full_messages.to_json), status: :unprocessable_entity}
       end
     end
   end

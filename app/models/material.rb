@@ -5,6 +5,7 @@ class Material < ActiveRecord::Base
   has_many :measure_units, through: :permitted_measure_units
   scope :all_alphabetical, -> { all.order(name: :asc) } # whats with that statements?
   validates :name ,:measure_units ,presence: true
+  validates :name ,uniqueness: true
 
   # here could make to the classes that uses search that implement search to try DRYing the code
   # how about a search class?

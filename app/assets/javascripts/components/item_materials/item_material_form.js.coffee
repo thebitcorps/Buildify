@@ -44,7 +44,7 @@
     alert('caca');
   render: ->
 #    return "<button class='btn btn-primary' onClick={alert('caca');}>Agregar nuevo material </button>"
-    noResult = ()-> return "<button class='btn btn-primary' onclick={ReactDOM.render(React.createElement(MaterialModal),document.getElementById('new-material'))}>Agregar nuevo material </button>"
+    noResult = "<button class='btn btn-primary' onclick={ReactDOM.render(React.createElement(MaterialModal),document.getElementById('new-material'))}>Agregar nuevo material </button>"
     React.DOM.div
       className: ''
       React.DOM.div
@@ -53,7 +53,7 @@
         React.DOM.label
           className: 'control-label'
           'Buscador de material'
-        React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult()
+        React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
         React.createElement LabelSelect, label: 'Unidad del material',name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
         React.createElement NumberInput,label: 'Cantidad requerida ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
 #        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit

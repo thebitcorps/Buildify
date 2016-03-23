@@ -4,7 +4,7 @@
 var Modal = React.createClass({
     propTypes: {
         body: React.PropTypes.element,
-        close: React.PropTypes.element
+        footer: React.PropTypes.element
     },
     getDefaultProps: function(){
         return {name: 'modal',number: '0',parentNode: 'mod',modalClose: function(){},size: 'lg'}
@@ -38,7 +38,7 @@ var Modal = React.createClass({
                             {this.props.children}
                             </div>
                             <div className="modal-footer">
-                            {this.props.close}
+                            {this.props.footer}
                             </div>
                         </div>
 

@@ -4,7 +4,7 @@
 @ErrorBox = React.createClass
   displayName: 'Error box'
   getDefaultProps: ->
-    errosArray: []
+    errorsArray: []
   render: ->
     if @props.errorsArray.length > 0
 #      add a X to remove the box if user don't want to see it anymore
