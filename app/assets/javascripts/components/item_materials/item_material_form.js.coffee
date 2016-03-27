@@ -55,7 +55,7 @@
           'Buscador de material'
         React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
         React.createElement LabelSelect, label: 'Unidad del material',name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
-        React.createElement NumberInput,label: 'Cantidad requerida ',name: 'requested',placeholder: 'Request',changed: @handleInputChange,value: @state.requested
+        React.createElement NumberInput,label: 'Cantidad requerida ',name: 'requested',placeholder: 'Cantidad numerica',changed: @handleInputChange,value: @state.requested
 #        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit
 
         React.DOM.button

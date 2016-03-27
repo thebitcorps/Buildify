@@ -2,7 +2,6 @@
   displayName: 'Item Material Arraval'
   getInitialState: ->
     status: @props.itemMaterial.status
-    rowColor: @getRowColor @props.itemMaterial.status
     edit: false
     received: @props.itemMaterial.received
     requested: @props.itemMaterial.requested
@@ -15,14 +14,14 @@
     for measure_unit in measures
       units.push  {'display' : "#{measure_unit.unit} | #{measure_unit.abbreviation}" ,'value': measure_unit.abbreviation }
     return units
-  getRowColor: (status) ->
+  getRowColor:  ->
     if @props.itemMaterial.purchase_order_id == null
       return 'default'
-    if status == 'missed'
+    if @state.status == 'missed'
       return 'danger'
-    else if status == 'delivered'
+    else if @state.status == 'delivered'
       return 'success'
-    else if status == 'partially'
+    else if @state.status == 'partially'
       return 'warning'
     else
       return 'dafault'
@@ -65,33 +64,9 @@
     @setState {requested: @state.requested_new,edit: false,measure_unit: @state.measure_unit_new,measure_unit_new: ''}
   valid: ->
     @state.measure_unit_new ? true : false
-  validPartiallyArrive: ->
-    @state.received ? true : false
   partiallyRadioChange:(name,value) ->
-#    @setState {status: value,rowColor: @getRowColor(value)}
-#    @props.itemMaterialChanged name,value
-    $("#" + @props.itemMaterial.id).modal()
-  partiallyArriveSave: ->
-    that= @
-    id =  that.props.itemMaterial.id
-    $.ajax
-      type: 'PUT'
-      url: '/item_materials/'+ id
-      data: {item_material: {received: @state.received,status: 'partially'}}
-      dataType: 'JSON'
-      success:  (data) ->
-        that.setState {status: 'partially',rowColor: that.getRowColor('partially')}
-        #function that updat the item material in the parent
-        that.props.itemMaterialChanged that.props.itemMaterial.id,'partially',that.state.received
-        $("#" + that.props.itemMaterial.id).modal('hide')
-      error: (XMLHttpRequest, textStatus, errorThrown) ->
-        #we parse the responses o errors so we can send a array of errors
-        if errorThrown == 'Internal Server Error'
-          that.setState errors: ['Internal Server Error']
-          return
-        that.setState errors: $.parseJSON(XMLHttpRequest.responseText)
-        return
-
+    @props.partiallyChange(@props.itemMaterial.id)
+    @setState status: 'partially'
   radioChanged: (name,value) ->
     received = ''
     if value == 'delivered'
@@ -106,7 +81,7 @@
       data: {item_material: {status: value,  received: received}}
       dataType: 'JSON'
       success:  (data) ->
-        that.setState {status: value,rowColor: that.getRowColor(value),received: received}
+        that.setState {status: value,received: received}
         that.props.itemMaterialChanged name,value,received
         return
       error: (XMLHttpRequest, textStatus, errorThrown) ->
@@ -124,9 +99,7 @@
           itemMaterial.material.name + ' ' + itemMaterial.material.description
       else
         itemMaterial.material.name + ' ' + itemMaterial.material.description
-  closeModal: ->
-    $("#" + @props.itemMaterial.id).modal('hide')
-    @setState received: @props.received
+
   render: ->
     if @state.edit
       React.DOM.tr null,
@@ -138,7 +111,7 @@
             React.DOM.a {className: 'btn btn-primary',onClick: @handleSubmit,disabled: !@valid()},'Guardar'
             React.DOM.a {className: 'btn btn-default',onClick: @handleToggle},'Cancelar'
     else
-      React.DOM.tr className: @state.rowColor,
+      React.DOM.tr className: @getRowColor(),
         @nameLink(@props.itemMaterial)
         React.DOM.td null,
           @state.requested + ' ' + @state.measure_unit
@@ -161,45 +134,9 @@
               React.DOM.a {className: 'btn btn-warning',onClick: @handleToggle},'Editar'
               React.DOM.a {className: 'btn btn-danger',onClick: @handleDelete},'Borrar'
         else
-          React.DOM.div
-            clasName: ''
 #         |||||||||Purchase order already generated here we  select the arrival status
-            React.DOM.td null,
-              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'Por llegar',changed: @radioChanged,checked: @state.status == 'authorized'
-              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'Entregado',changed: @radioChanged,checked: @state.status == 'delivered'
-              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @partiallyRadioChange,checked: @state.status == 'partially'
-              React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'No entregado',changed: @radioChanged,checked: @state.status == 'missed'
-#        ||||||||||MODAL|||||||
-            React.DOM.div
-              id: @props.itemMaterial.id
-              tabIndex: '-1'
-              role: 'modal'
-              className: 'modal-dialog modal fade'
-              React.DOM.div
-                className: 'modal-content'
-                React.DOM.div
-                  className: 'modal-header'
-                  React.DOM.h4 null,'Cuanto Llego'
-                React.DOM.div
-                  className: 'modal-body'
-                  React.DOM.label className: 'form-group','Se pidio:'
-                    React.DOM.div
-                      className: 'input-group '
-                      React.createElement LabelInput,name: 'received',changed: @handleInputChange,disabled: true,value: "#{@props.itemMaterial.requested }"
-                      React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
-                    React.DOM.label className: 'form-group','Llego:'
-                    React.DOM.div
-                      className: 'input-group '
-                      React.createElement NumberInput,name: 'received',value: @state.received,changed: @handleInputChange
-                      React.DOM.span className: 'input-group-addon',@props.itemMaterial.measure_unit
-                  React.DOM.div
-                    className: 'modal-footer'
-                    React.DOM.button
-                      className: 'btn btn-primary'
-                      onClick: @partiallyArriveSave
-                      disabled: !@validPartiallyArrive()
-                      'Guardar'
-                    React.DOM.button
-                      className: 'btn btn-default'
-                      onClick: @closeModal
-                      'cancelar'
+          React.DOM.td null,
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'authorized',label: 'Por llegar',changed: @radioChanged,checked: @state.status == 'authorized'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'delivered',label: 'Entregado',changed: @radioChanged,checked: @state.status == 'delivered'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'partially',label: 'Parcialmente',changed: @partiallyRadioChange,checked: @state.status == 'partially'
+            React.createElement LabelRadio, name: "#{@props.itemMaterial.id}",value: 'missed',label: 'No entregado',changed: @radioChanged,checked: @state.status == 'missed'

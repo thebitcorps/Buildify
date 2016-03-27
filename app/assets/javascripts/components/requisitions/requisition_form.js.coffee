@@ -66,7 +66,7 @@
       className: 'requisition-form'
       React.createElement ErrorBox, errorsArray: @state.errors
 
-      React.createElement DateInput,label: 'Dia de la requisicion',placeholder: 'Date',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
+      React.createElement DateInput,label: 'Cuando se necesita el material',placeholder: 'Fecha',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.div
         className: 'table-responsive '
