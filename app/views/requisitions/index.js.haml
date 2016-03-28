@@ -1,5 +1,8 @@
 $('#requisitions').html("#{j( render partial: 'requisition', collection: @requisitions )}");
-- if @requisitions.count == 0
+$('#requisitions').append("#{j( paginate @requisitions,theme: 'twitter-bootstrap-3',remote: true )}");
+
+
+- if @requisitions.empty?
   $('#requisitions').append("<div class='well'> No hay requisiciones</div>")
 
 

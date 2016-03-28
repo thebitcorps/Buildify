@@ -16,6 +16,7 @@
 
 .list-group#purchase_orders
   = render partial: 'purchase_order', collection: @purchase_orders
-  - if @purchase_orders.count == 0
+  = paginate @purchase_orders,theme: 'twitter-bootstrap-3',remote: true
+  - if @purchase_orders.empty?
     .well
       No hay ordenes de compra

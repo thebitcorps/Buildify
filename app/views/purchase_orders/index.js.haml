@@ -1,5 +1,6 @@
 $('#purchase_orders').html("#{j( render partial: 'purchase_order', collection: @purchase_orders )}");
-- if @purchase_orders.count == 0
+$('#purchase_orders').append("#{j( paginate @purchase_orders,theme: 'twitter-bootstrap-3',remote: true)}");
+- if @purchase_orders.empty?
   $('#purchase_orders').append("<div class='well'> No hay ordenes de compra</div>")
 
 $('#sent').attr('class', "#{'active' if @type_list ==  'sent'}");

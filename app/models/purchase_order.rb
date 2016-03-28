@@ -4,6 +4,7 @@ class PurchaseOrder < ActiveRecord::Base
   belongs_to :requisition
   has_one :provider, through: :invoice
   has_one :construction, through: :requisition
+  paginates_per 10
   # what does this mean?
         # Answer: In a previous schema there only can be a payment if an invoice exists related to a PO, after some talking with Llamas Pops later it was decided that payments can exist without an invoice in an office entity. But for now for PO the logic persists since it really can't be a payment for a PO if there isn't an invoice.
   has_one :payment, through: :invoice

@@ -1,4 +1,7 @@
 $('#payments').html("#{j (render partial: 'home/payment',collection: @payments)}");
+- if @payments.empty?
+  $('#payments').html("<tr class='well'><td class='well'> No hay pagos</td></tr>")
+
 
 $('#due').attr('class', "#{'active' if @type_list ==  Payment::DUE_STATUS}");
 $('#paid').attr('class', '#{'active' if @type_list ==  'paid.no_petty_cash'}');

@@ -1,5 +1,7 @@
 class Requisition < ActiveRecord::Base
 
+  paginates_per 10
+
   COMPLETE_STATUS = 'complete'
   PENDING_STATUS = 'pending'
   PARTIALLY_STATUS = 'partially'

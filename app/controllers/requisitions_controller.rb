@@ -8,27 +8,17 @@ class RequisitionsController < ApplicationController
     @type_list = sanitized_locked_param
     if current_user.subordinate?
       if params[:mode] == 'own'
-        @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]})})
+        @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]}).page(#{params[:page]})})
       else
-        if @type_list == 'partially'
-          # i think this is more readable and also this could be done with metaprogramin in less lines
-          # @requisitions =  current_user.requisitions.partially(params[:construction_id])
-          @requisitions = current_user.partial_requisitions(params[:construction_id])
+        if @type_list == 'all_with_conctruction'
+          @requisitions = current_user.all_requisitions(params[:construction_id]).page(params[:page])
         else
-          if @type_list == 'complete'
-            @requisitions = current_user.complete_requisitions(params[:construction_id])
-          else
-            if @type_list == 'pending'
-              @requisitions = current_user.pending_requisitions(params[:construction_id])
-            else
-              @requisitions = current_user.all_requisitions params[:construction_id]
-            end
-          end
+          @requisitions = (instance_eval %Q{current_user.#{@type_list}_requisitions(#{params[:construction_id]}).page(#{params[:page]})})
         end
         @mode = 'sub'
       end
     else
-      @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]})})
+      @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]}).page(#{params[:page]})})
     end
     respond_to do |format|
       format.html {@requisition}

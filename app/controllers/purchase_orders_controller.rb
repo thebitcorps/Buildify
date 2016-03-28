@@ -7,7 +7,7 @@ class PurchaseOrdersController < ApplicationController
   def index
     @type_list = sanitized_locked_param
     @construction = Construction.find(params[:construction_id])
-    @purchase_orders = (instance_eval %Q{@construction.purchase_orders.#{@type_list}})
+    @purchase_orders = (instance_eval %Q{@construction.purchase_orders.#{@type_list}.page(#{params[:page]})})
     respond_to do |format|
       format.html
       format.js
@@ -59,6 +59,7 @@ private
   end
 
   def sanitized_locked_param
-    ['sent','not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all.order(created_at: :desc)'
+    ['sent','not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all.order(created_at: :desc
+)'
   end
 end

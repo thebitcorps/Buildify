@@ -21,7 +21,8 @@
 
 .list-group#requisitions
   = render partial: 'requisition', collection: @requisitions
-  - if @requisitions.count == 0
+  = paginate @requisitions,theme: 'twitter-bootstrap-3',remote: true
+  - if @requisitions.empty?
     .well
       No hay requisiciones
 - if current_user.subordinate?
