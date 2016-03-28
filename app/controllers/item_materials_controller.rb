@@ -41,6 +41,6 @@ private
 
 
   def item_material_params
-    params.require(:item_material).permit(:status,:requested,:measure_unit,:received,:requisition_id,:material_id)
+    params.require(:item_material).permit(:status,:requested,:measure_unit,:received,:requisition_id,:material_id,:unit_price)
   end
 end

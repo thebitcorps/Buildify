@@ -2,7 +2,7 @@
 @LabelInput = React.createClass
   displayName: 'Label input'
   getDefaultProps: ->
-    {type: 'text'}
+    {type: 'text',changed: ->console.log("Warning change function not added LabelInput")}
   changed: (e) ->
     @props.changed  e.target.name,e.target.value
   render: ->

@@ -1,6 +1,6 @@
 
 %a.list-group-item.construction-special-row{:href => "#{construction_or_office_path construction}"}
-  %h4
+  %h5
     -#only show constructnions
     - unless construction.office?
       %span.label.label-primary.pull-right= "Monto - #{number_to_currency(construction.contract_amount)}"
@@ -17,7 +17,7 @@
     %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
       = "Gastos - #{number_to_currency(construction.expenses)}"
 
-  %h3.list-group-item-heading
+  %h4.list-group-item-heading
     = construction.title
     %small
       = construction.manager.name unless construction.manager.nil?
