@@ -23,13 +23,22 @@ class ItemMaterial < ActiveRecord::Base
 
   STATUS = [DELIVERED_STATUS, PENDING_STATUS, PARTIALLY_DELIVERED_STATUS, AUTHORIZED_STATUS]
 
+  def partially?
+    status == PARTIALLY_DELIVERED_STATUS
+  end
+  def deliver?
+    status == DELIVERED_STATUS
+  end
+  def missed?
+    status == MISSED_STATUS
+  end
+  def authorize?
+    status == AUTHORIZED_STATUS
+  end
 
-  # def update_purchase_order_status
-  #   return unless purchase_order
-  #   for item_material in purchase_order.item_materials
-  #     if
-  #   end
-  # end
+  def full_item_request
+    "#{requested} #{measure_unit}"
+  end
 
   def get_color
 

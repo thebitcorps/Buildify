@@ -37,12 +37,12 @@ class User < ActiveRecord::Base
   def all_requisitions(construction_id=nil)
     requisitions = self.requisitions.all
     requisitions.where construction_id: construction_id unless construction_id.nil?
-    requisitions
+    requisitions.order(created_at: :desc)
   end
   def get_requisitions(status,construction_id)
     requisitions = self.requisitions.where status: status
     requisitions.where construction_id: construction_id unless construction_id.nil?
-    requisitions
+    requisitions.order(created_at: :desc)
   end
 
   def self.search(search)

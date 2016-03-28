@@ -36,7 +36,7 @@ class Requisition < ActiveRecord::Base
     unless construction_id.nil?
       query = query.where construction_id: construction_id
     end
-    query
+    query.order(created_at: :desc)
   end
 
   def self.requisitions_with_construction(status,construction_id)
@@ -44,7 +44,7 @@ class Requisition < ActiveRecord::Base
     unless construction_id.nil?
       query = query.where construction_id: construction_id
     end
-    query
+    query.order(created_at: :desc)
   end
 
   ##################  Methods   ##################

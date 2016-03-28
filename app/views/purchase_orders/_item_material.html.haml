@@ -1,9 +1,9 @@
 %tr{class: "#{item_material.get_color}"}
   %td
-    = item_material.requested
-  %td
-    = item_material.measure_unit
+    = item_material.full_item_request
   %td
     = link_to item_material.material.name, material_path(item_material.material)
   %td
-    Precio
+    = map_status item_material
+  %td
+    = react_component 'UnitaryPrice', itemMaterial: item_material
