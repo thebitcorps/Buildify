@@ -59,6 +59,6 @@ private
   end
 
   def sanitized_locked_param
-    ['sent','not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all'
+    ['sent','not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all.order(created_at: :desc)'
   end
 end

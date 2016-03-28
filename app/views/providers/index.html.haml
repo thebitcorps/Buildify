@@ -3,7 +3,9 @@
   .col-lg-6
     = f.search_field :query, autofocus: true, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
   = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
-.table-responsive
+%br
+%br
+-#.table-responsive
   %table.table.table-striped.table-condensed
     %thead
       %tr
@@ -14,6 +16,8 @@
         %th
     %tbody#providers
       = render @providers
+%ul.list-group#providers
+  = render @providers
 #paginate
   = paginate @providers,theme: 'twitter-bootstrap-3',remote: true
 %br

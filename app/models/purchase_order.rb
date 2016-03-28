@@ -18,8 +18,8 @@ class PurchaseOrder < ActiveRecord::Base
   COMPLETE_STATUS = 'complete'
   UNCOMPLETED_STATUS = 'pending'
   ##################  Scopes   ##################
-  scope :sent, -> {where status: COMPLETE_STATUS}
-  scope :not_sent, -> {where status: UNCOMPLETED_STATUS}
+  scope :sent, -> {where(status: COMPLETE_STATUS ).order(created_at: :desc)}
+  scope :not_sent, -> {where( status: UNCOMPLETED_STATUS).order(created_at: :desc)}
 
   ##################  Methods   ##################
   def humanize_receiver

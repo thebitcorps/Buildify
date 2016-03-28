@@ -1,9 +1,16 @@
-%tr
-  %td= link_to provider.name, provider
-  %td= provider.address
-  %td= provider.telephone
-  %td= provider.email
-  %td
-    .btn-group
+-#<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+%li.list-group-item
+  %h4.list-group-item-heading
+    = link_to provider.name, provider
+    .pull-right.btn-group
       = link_to 'Editar', edit_provider_path(provider), class: 'btn btn-warning'
       = link_to 'Borrar', provider, :method => :delete, class: 'btn btn-danger', :data => { :confirm => '¿Seguro desea eliminar este proveedor?' }
+  %p.list-group-item-text
+    %span.glyphicon.glyphicon-home
+    =provider.address
+    %br
+    %span.glyphicon.glyphicon-earphone
+    = provider.telephone
+    %br
+    %span.glyphicon.glyphicon-envelope
+    =provider.email
