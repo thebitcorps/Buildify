@@ -34,6 +34,7 @@ class PurchaseOrdersController < ApplicationController
   def create
     @purchase_order = PurchaseOrder.new purchase_order_params
     @purchase_order.build_invoice provider_id: params[:provider_id]
+    @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
     respond_to do |format|
       if @purchase_order.save
         format.json {render json: @purchase_order}
@@ -55,11 +56,10 @@ private
   end
 
   def purchase_order_params
-    params.require(:purchase_order).permit(:delivery_place, :delivery_address,:delivery_receiver,:requisition_id,:item_material_ids => [])
+    params.require(:purchase_order).permit(:stamp_purchase_order, :delivery_place, :delivery_address, :delivery_receiver, :requisition_id, :item_material_ids => [])
   end
 
   def sanitized_locked_param
-    ['sent','not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all.order(created_at: :desc
-)'
+    ['sent', 'not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all.order(created_at: :desc)'
   end
 end

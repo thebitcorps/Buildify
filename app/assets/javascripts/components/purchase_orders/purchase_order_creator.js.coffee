@@ -4,7 +4,7 @@
     requisitionItemMaterials: @props.requisition.item_materials
     purchaseOrderItemsMaterials: []
     errors: []
-  insertToArray: (item,array) ->
+  insertToArray: (item, array) ->
     newArray = array.slice()
     newArray.push item
     return newArray
@@ -32,12 +32,12 @@
     itemMaterialsIds = []
     for itemMaterial in @state.purchaseOrderItemsMaterials
       itemMaterialsIds.push itemMaterial.id
-    data = {delivery_place: @state.delivery_place ,delivery_place: @state.delivery_type ,delivery_address: @state.delivery_address,delivery_receiver: @state.delivery_receiver,requisition_id: @props.requisition.id,item_material_ids: itemMaterialsIds}
+    data = {delivery_place: @state.delivery_place , delivery_place: @state.delivery_type , delivery_address: @state.delivery_address, delivery_receiver: @state.delivery_receiver, requisition_id: @props.requisition.id, item_material_ids: itemMaterialsIds, stamp_purchase_order: @state.stamp_purchase_order}
     that = @
     $.ajax
       url: '/purchase_orders.json'
       type: 'POST'
-      data: {purchase_order: data,provider_id: @state.provider_id_hidden}
+      data: {purchase_order: data, provider_id: @state.provider_id_hidden}
       dataType: 'JSON'
       success:  (data) ->
         #update the browers window
@@ -90,19 +90,19 @@
     newItemMaterial.requisition_id = itemMaterial.requisition_id
     newItemMaterial.status = itemMaterial.status
     newItemMaterial.requested = 0
-    @setState {dividerItemMaterial: itemMaterial,newItemMaterial: newItemMaterial}
+    @setState {dividerItemMaterial: itemMaterial, newItemMaterial: newItemMaterial}
     $("#modal").modal()
-  updateRequested: (itemMaterial,operation)->
+  updateRequested: (itemMaterial, operation)->
     itemMaterial.requested = operation(itemMaterial.requested)
     return itemMaterial
 
   substractRequestedToNew: ->
-    @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial,(a)-> return parseInt(a) + 1),newItemMaterial: @updateRequested(@state.newItemMaterial,(a)-> return a - 1)}
+    @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial, (a)-> return parseInt(a) + 1), newItemMaterial: @updateRequested(@state.newItemMaterial, (a)-> return a - 1)}
   addRequestedToNew: ->
-    @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial,(a)-> return parseInt(a) - 1),newItemMaterial: @updateRequested(@state.newItemMaterial,(a)-> return a + 1)}
+    @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial, (a)-> return parseInt(a) - 1), newItemMaterial: @updateRequested(@state.newItemMaterial, (a)-> return a + 1)}
   closeModal: ->
     b =  @state.newItemMaterial.requested
-    @setState dividerItemMaterial: @updateRequested(@state.dividerItemMaterial,(a)-> return parseInt(a) + b)
+    @setState dividerItemMaterial: @updateRequested(@state.dividerItemMaterial, (a)-> return parseInt(a) + b)
     $("#modal").modal('hide')
   lessThaZeroOldItem: ->
     if @state.dividerItemMaterial
@@ -123,7 +123,7 @@
           className: 'modal-content'
           React.DOM.div
             className: 'modal-header'
-            React.DOM.h4 null,'Dividir el pedido'
+            React.DOM.h4 null, 'Dividir el pedido'
           React.DOM.div
             className: 'modal-body row'
             React.DOM.div
@@ -132,25 +132,25 @@
                 style: {cursor: 'pointer'}
                 className: 'list-group'
                 if  @state.dividerItemMaterial
-                  React.createElement ItemMaterialPurchaseOrder, itemMaterial: @state.dividerItemMaterial,can_select: true
+                  React.createElement ItemMaterialPurchaseOrder, itemMaterial: @state.dividerItemMaterial, can_select: true
             #||||||||Buttons||||||||
             React.DOM.div
               className: 'col-md-2'
 #              React.DOM.p
               React.DOM.div
                 className: 'row text-center'
-                React.DOM.button {className: 'btn btn-primary ' ,onClick: @addRequestedToNew,disabled: @lessThaZeroOldItem()},'+'
+                React.DOM.button {className: 'btn btn-primary ' , onClick: @addRequestedToNew, disabled: @lessThaZeroOldItem()}, '+'
 #                React.DOM.p
                 React.DOM.div
                   className: 'row text-center'
-                  React.DOM.button {className: 'btn btn-default',onClick: @substractRequestedToNew,disabled: @lessThaZeroNewItem()},'-'
+                  React.DOM.button {className: 'btn btn-default', onClick: @substractRequestedToNew, disabled: @lessThaZeroNewItem()}, '-'
             React.DOM.div
               className: 'col-md-5'
               React.DOM.ul
                 style: {cursor: 'pointer'}
                 className: 'list-group'
                 if  @state.newItemMaterial
-                  React.createElement ItemMaterialPurchaseOrder, itemMaterial: @state.newItemMaterial,can_select: true
+                  React.createElement ItemMaterialPurchaseOrder, itemMaterial: @state.newItemMaterial, can_select: true
           React.DOM.div
             className: 'modal-footer'
             React.DOM.button
@@ -166,7 +166,7 @@
       React.DOM.div
         className: 'purchase-orders row'
         React.createElement ErrorBox, errorsArray: @state.errors
-        React.createElement PurchaseOrderForm,purchaseOrder: @state.purchaseOrder,constructionAddress: @props.construction_address,itemMaterials: @state.selected,notifyParent: @addState
+        React.createElement PurchaseOrderForm, purchaseOrder: @state.purchaseOrder, constructionAddress: @props.construction_address, itemMaterials: @state.selected, notifyParent: @addState
         #||||||||UNselected ItemMaterials|||||||||||||
         React.DOM.div
           className: 'col-md-6'
@@ -179,11 +179,11 @@
                 className: 'panel panel-default'
                 React.DOM.div
                   className: 'panel-body'
-                  React.DOM.h4 null,
+                  React.DOM.h4 null, 
                     'No hay materiales para agregar'
             for itemMaterial in @state.requisitionItemMaterials
               if itemMaterial.status == 'pending'
-                React.createElement ItemMaterialPurchaseOrder, itemMaterial: itemMaterial,key: itemMaterial.id, handleSelect: @requisitionItemClick,can_select: true,can_split: true,divideItemMaterial: @promptItemMaterialDivider
+                React.createElement ItemMaterialPurchaseOrder, itemMaterial: itemMaterial, key: itemMaterial.id, handleSelect: @requisitionItemClick, can_select: true, can_split: true, divideItemMaterial: @promptItemMaterialDivider
         #|||||||Selected ItemMaterials||||||||||||
         React.DOM.div
           className: 'col-md-6'
@@ -196,10 +196,10 @@
                 className: 'panel panel-default'
                 React.DOM.div
                   className: 'panel-body'
-                  React.DOM.h4 null,
+                  React.DOM.h4 null, 
                     'Dar click en los materiales de la requisicion para agregar a la orden'
             for newItemMaterial in @state.purchaseOrderItemsMaterials
-              React.createElement ItemMaterialPurchaseOrder, itemMaterial: newItemMaterial,key: newItemMaterial.id, handleSelect: @purchaseItemClick,can_select: true
+              React.createElement ItemMaterialPurchaseOrder, itemMaterial: newItemMaterial, key: newItemMaterial.id, handleSelect: @purchaseItemClick, can_select: true
       React.DOM.div
         className: 'row'
         React.DOM.button

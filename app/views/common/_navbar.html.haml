@@ -34,4 +34,5 @@
             %li= link_to 'Usuarios', users_path
         %p.navbar-text.navbar-right
           = current_user.name
+          / = current_user.administrator?
           = link_to 'Salir',destroy_user_session_path, method: :delete
