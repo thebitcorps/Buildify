@@ -1,7 +1,12 @@
+require 'digest/sha1'
 class PurchaseOrder < ActiveRecord::Base
+  # id, folio, delivery_place, delivery_address, delivery_receiver, status
+  # requisition_id, invoice_id, created_at, updated_at, stamp, authorizer_id, stamp_date
+  attr_accessor :stamp_purchase_order
   has_many :item_materials
   belongs_to :invoice
   belongs_to :requisition
+  belongs_to :authorizer, class_name: "User", foreign_key: :authorizer_id
   has_one :provider, through: :invoice
   has_one :construction, through: :requisition
   paginates_per 10
@@ -15,12 +20,16 @@ class PurchaseOrder < ActiveRecord::Base
   before_save :humanize_receiver
   after_create :check_requisition_items
 
+  #### Validations ####
+  validates :delivery_receiver, :status, :requisition_id, presence: true
   ##################     ##################
   COMPLETE_STATUS = 'complete'
   UNCOMPLETED_STATUS = 'pending'
+  STAMPED_STATUS = 'stamped'
   ##################  Scopes   ##################
   scope :sent, -> {where(status: COMPLETE_STATUS ).order(created_at: :desc)}
   scope :not_sent, -> {where( status: UNCOMPLETED_STATUS).order(created_at: :desc)}
+  scope :authorized, -> {where(status: STAMPED_STATUS).order(created_at: :desc)}
 
   ##################  Methods   ##################
   def humanize_receiver
@@ -60,6 +69,9 @@ class PurchaseOrder < ActiveRecord::Base
     status == COMPLETE_STATUS
   end
 
+  def is_stamped?
+    !stamp.empty?
+  end
 
   # change this to helper
   def get_color
@@ -74,4 +86,15 @@ class PurchaseOrder < ActiveRecord::Base
     self.folio = self.construction.purchase_orders.count + 1
   end
 
+  def stamper(authority_name)
+    Digest::SHA1.base64digest([updated_at, authority_name].join(", "))
+  end
+
+  def stamp_it(checkbox, user)
+    if checkbox == 'true'
+      self.stamp = stamper(user.name)
+      self.authorizer = user
+      self.stamp_date = Date.today
+    end
+  end
 end

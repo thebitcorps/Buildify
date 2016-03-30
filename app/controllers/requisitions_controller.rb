@@ -5,6 +5,7 @@ class RequisitionsController < ApplicationController
   before_action :filter_sec_out
 
   def index
+    @petty_cash = PettyCash.with_construction(params[:construction_id]).last
     @type_list = sanitized_locked_param
     if current_user.subordinate?
       if params[:mode] == 'own'
