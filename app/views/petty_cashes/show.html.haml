@@ -1,0 +1,8 @@
+.page-header
+  %ol.breadcrumb
+    %li= link_to @petty_cash.construction.title, current_user.administrator? ? construction_path(@petty_cash.construction) : constructions_path(mode: 'own')
+    %li= link_to 'Cajas chicas',petty_cashes_path(construction_id: @petty_cash.construction_id)
+    %li= "Caja chica #{spanish_formated_date(@petty_cash.created_at,false)}"
+
+= react_component 'PettyCashApp',petty_cash: @petty_cash,petty_cash_expenses: @petty_cash.petty_cash_expenses
+

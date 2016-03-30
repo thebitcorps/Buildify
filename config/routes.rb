@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'petty_cash_expenses/:id'=> 'petty_cash_expenses#show', :as => :petty_cash_expense
+  post '/petty_cash_expenses' => 'petty_cash_expenses#create'
+
+
+  resources :petty_cashes
   resources :offices, only: [:new, :create, :show, :edit, :update]
 
   resources :extensions

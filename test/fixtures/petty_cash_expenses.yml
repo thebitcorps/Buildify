@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  concept: MyString
+  amount: MyString
+  expense_date: 2016-03-29
+  observation: MyText
+  petty_cash_id: 
+
+two:
+  concept: MyString
+  amount: MyString
+  expense_date: 2016-03-29
+  observation: MyText
+  petty_cash_id: 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160313140947) do
+ActiveRecord::Schema.define(version: 20160329193557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,28 @@ ActiveRecord::Schema.define(version: 20160313140947) do
   add_index "permitted_measure_units", ["material_id"], name: "index_permitted_measure_units_on_material_id", using: :btree
   add_index "permitted_measure_units", ["measure_unit_id"], name: "index_permitted_measure_units_on_measure_unit_id", using: :btree
 
+  create_table "petty_cash_expenses", force: :cascade do |t|
+    t.string   "concept"
+    t.string   "amount"
+    t.date     "expense_date"
+    t.text     "observation"
+    t.integer  "petty_cash_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "petty_cash_expenses", ["petty_cash_id"], name: "index_petty_cash_expenses_on_petty_cash_id", using: :btree
+
+  create_table "petty_cashes", force: :cascade do |t|
+    t.date     "closing_date"
+    t.integer  "construction_id"
+    t.string   "amount"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "petty_cashes", ["construction_id"], name: "index_petty_cashes_on_construction_id", using: :btree
+
   create_table "providers", force: :cascade do |t|
     t.string   "name"
     t.string   "telephone"
@@ -239,6 +261,8 @@ ActiveRecord::Schema.define(version: 20160313140947) do
   add_foreign_key "payments", "constructions"
   add_foreign_key "permitted_measure_units", "materials"
   add_foreign_key "permitted_measure_units", "measure_units"
+  add_foreign_key "petty_cash_expenses", "petty_cashes"
+  add_foreign_key "petty_cashes", "constructions"
   add_foreign_key "purchase_orders", "invoices"
   add_foreign_key "purchase_orders", "requisitions"
   add_foreign_key "requisitions", "constructions"

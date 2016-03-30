@@ -7,6 +7,7 @@ class Construction < ActiveRecord::Base
   has_many :payments
   has_many :estimates
   has_many :extensions
+  has_many :petty_cashs
   has_many :invoiced_payments, through: :invoices, source: :payment
   has_many :construction_users, dependent: :destroy
   has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user
@@ -20,12 +21,16 @@ class Construction < ActiveRecord::Base
   STATUS = [:running,:stopped,:finished]
   ROLES = %w[velador ayudante]
 
+  after_create :create_initial_petty_cash
   ##################  VALIDATIONS   ##################
   # validate :validate_field
   validate :validate_fields
   validate :validate_dates_logic_relation
   validate :validate_contract_amount
 
+  def create_initial_petty_cash
+    PettyCash.create construction_id: id,amount: PettyCash::DEFAULT_AMOUNT
+  end
 
   def validate_contract_amount
     # skip validations if is and office object

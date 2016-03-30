@@ -26,6 +26,6 @@
       %tbody#payments
         = render partial: 'home/payment', collection: @payments
         - if @payments.empty?
-          .well
-            No hay pagos
+          %tr
+            %td No hay pagos
 #mod

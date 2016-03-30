@@ -34,7 +34,7 @@ var BillingAdjusmentApp = React.createClass({
             success: function(data){
                 var billings = this.state.adjusments.slice();
                 billings.unshift(data);
-                this.setState({adjusments: billings,paid_amount: this.state.paid_amount + parseFloat(billing.amount)});
+                this.setState({folio: '',amount: '',adjustment_date: '',payment_type: 'check',reference: '',account: '',adjusments: billings,paid_amount: this.state.paid_amount + parseFloat(billing.amount)});
             }.bind(this),
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 if(errorThrown == 'Internal Server Error'){
@@ -56,6 +56,7 @@ var BillingAdjusmentApp = React.createClass({
             data: {construction_id: this.props.construction_id},
             success: function(data){
                 eval(data);
+
             }.bind(this),
             error: function(xhr, status, err) {
             },
@@ -109,8 +110,8 @@ var BillingAdjusmentApp = React.createClass({
                             <button className="btn btn-primary" disabled={!this.isValidAdjusment()} onClick={this.submitBilling}>Agregar</button>
                         </div>
                         <div className="col-sm-6">
-                            <div className="list-group"  style={{height: '500px  ',overflowY: 'auto'}}>
                             {this.titleElement("Saldo $" + this.props.amount.formatMoney(2)+ ",Pagado $" + this.state.paid_amount.formatMoney(2))}
+                            <div className="list-group"  style={{height: '500px  ',overflowY: 'auto'}}>
                             {
                                 this.state.adjusments.map(function(item,index){
                                     return this.billingadjusmentElement( item)

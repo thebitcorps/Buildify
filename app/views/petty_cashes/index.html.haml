@@ -1,0 +1,30 @@
+.page-header
+  %ol.breadcrumb
+    %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: 'own')
+    %li.active Cajas chicas
+  %h1
+    %small
+      Cajas Chicas
+      -#.pull-right
+        = link_to 'Nueva requisicion', new_requisition_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
+
+
+%table.table
+  %thead
+    %tr
+      %th Dia de inicio
+      %th Dia de cierre
+      %th Cantidad
+      %th Cantidad usada
+      %th
+
+  %tbody
+    - @petty_cashes.each_with_index do |petty_cash,index|
+      %tr{class: "#{"success"if index == 0}"}
+        %td= spanish_formated_date petty_cash.created_at,false
+        %td= spanish_formated_date petty_cash.closing_date,false if petty_cash.closing_date
+        %td= petty_cash.amount
+        %td
+        %td= link_to 'Ver', petty_cash,class: 'btn btn-primary'
+
+%br

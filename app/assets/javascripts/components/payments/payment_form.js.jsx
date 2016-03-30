@@ -32,15 +32,17 @@ var PaymentForm = React.createClass({
             url: '/payments',
             data: {payment: payment},
             success: function(data){
-                console.log(data);
                 var payments = this.state.payments.slice();
                 payments.push(payment);
                 this.setState({payments: payments,amount: '',payment_date: moment().format('DD/MM/YYYY'),concept: ''});
             }.bind(this),
-            error: function(xhr, status, err) {
-                //TODO add error box
-                console.log(xhr + ' ' +status + " "+ err);
-            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                if(errorThrown == 'Internal Server Error'){
+                    this.setState({ errors: ['Internal Server Error']});
+                    return;
+                }
+                this.setState({ errors: $.parseJSON(XMLHttpRequest.responseText)});
+            }.bind(this),
             dataType: 'JSON'
         });
 

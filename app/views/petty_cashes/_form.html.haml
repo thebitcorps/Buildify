@@ -1,0 +1,10 @@
+= simple_form_for(@petty_cash) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :closing_date
+    = f.association :construction
+    = f.input :amount
+
+  .form-actions
+    = f.button :submit

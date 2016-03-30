@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  closing_date: 2016-03-29
+  construction_id: 
+  amount: MyString
+
+two:
+  closing_date: 2016-03-29
+  construction_id: 
+  amount: MyString

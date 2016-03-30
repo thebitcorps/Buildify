@@ -1,0 +1,1 @@
+json.extract! @petty_cash_expense, :id, :amount,:concept,:expense_date,:petty_cash_id,:observation
