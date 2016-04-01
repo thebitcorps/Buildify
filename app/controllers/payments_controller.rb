@@ -18,7 +18,8 @@ class PaymentsController < ApplicationController
       if @payment.save
          format.json{ render :show ,status: :ok, location: @payment }
       else
-        format.json{render json: @payment.errors.full_message.to_json,status: :unprocessable_entity}
+        format.json { render json: JSON.parse(@payment.errors.full_messages.to_json), status: :unprocessable_entity}
+
       end
     end
   end

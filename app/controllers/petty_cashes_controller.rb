@@ -25,7 +25,7 @@ class PettyCashesController < ApplicationController
         format.json { render :show, status: :created, location: @petty_cash }
       else
         format.html { render :new }
-        format.json { render json: @petty_cash.errors, status: :unprocessable_entity }
+        format.json { render json: @petty_cash.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end

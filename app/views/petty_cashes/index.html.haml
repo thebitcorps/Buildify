@@ -15,7 +15,7 @@
       %th Dia de inicio
       %th Dia de cierre
       %th Cantidad
-      %th Cantidad usada
+      %th Numero de gastos
       %th
 
   %tbody
@@ -24,7 +24,8 @@
         %td= spanish_formated_date petty_cash.created_at,false
         %td= spanish_formated_date petty_cash.closing_date,false if petty_cash.closing_date
         %td= petty_cash.amount
-        %td
+        -#make sum of expenses
+        %td= petty_cash.petty_cash_expenses.count
         %td= link_to 'Ver', petty_cash,class: 'btn btn-primary'
 
 %br
