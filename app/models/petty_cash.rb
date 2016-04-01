@@ -13,6 +13,7 @@ class PettyCash < ActiveRecord::Base
   # close last last petty cash before from a construction
   def close_petty_cash
     last_petty_chash = PettyCash.active_from_construction self.construction_id
+    return if last_petty_chash.nil?
     last_petty_chash.closing_date = Time.now
     last_petty_chash.save
   end
