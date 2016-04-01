@@ -22,7 +22,10 @@
     - @petty_cashes.each_with_index do |petty_cash,index|
       %tr{class: "#{"success"if index == 0}"}
         %td= spanish_formated_date petty_cash.created_at,false
-        %td= spanish_formated_date petty_cash.closing_date,false if petty_cash.closing_date
+        - if petty_cash.closing_date
+          %td= spanish_formated_date petty_cash.closing_date,false
+        - else
+          %td Activa
         %td= petty_cash.amount
         -#make sum of expenses
         %td= petty_cash.petty_cash_expenses.count

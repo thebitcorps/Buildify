@@ -14,28 +14,12 @@ var PettyCashApp = React.createClass({
             return;
         }
         $.ajax({
-            type: "PATCH",
-            url: '/petty_cashes/'+ this.props.petty_cash.id,
+            type: "POST",
+            url: '/petty_cashes',
             dataType: 'JSON',
-            data: {petty_cash: {closing_date: moment().format()}},
+            data: {petty_cash: {construction_id: this.props.petty_cash.construction_id,amount: '1000'}},
             success: function(data){
-                $.ajax({
-                    type: "POST",
-                    url: '/petty_cashes',
-                    dataType: 'JSON',
-                    data: {petty_cash: {construction_id: this.props.petty_cash.construction_id,amount: '1000'}},
-                    success: function(data){
-                        location.replace("/petty_cashes/"+data.id);
-                    }.bind(this),
-                    error: function(XMLHttpRequest, textStatus, errorThrown){
-                        if(errorThrown == 'Internal Server Error'){
-                            this.setState({ errors: ['Internal Server Error']});
-                            return;
-                        }
-                        this.setState({ errors: $.parseJSON(XMLHttpRequest.responseText)});
-                    }.bind(this)
-
-                });
+                location.replace("/petty_cashes/"+data.id);
             }.bind(this),
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 if(errorThrown == 'Internal Server Error'){
@@ -46,7 +30,6 @@ var PettyCashApp = React.createClass({
             }.bind(this)
 
         });
-
     },
     render: function(){
 

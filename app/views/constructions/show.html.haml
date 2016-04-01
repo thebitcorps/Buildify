@@ -40,8 +40,8 @@
             = link_to "#{@construction.estimates.count} Estimaciones, ", estimates_path(construction_id: @construction)
 
             = link_to "Agregar nueva", new_estimate_path(construction_id: @construction)
-- unless current_user.secretary?
-  = render :partial => 'balance',locals: {expenses: @construction.expenses,paid: @construction.paid}
+
+
 .page-header
   .row
     - unless current_user.secretary?
@@ -70,7 +70,21 @@
         %span.text-muted
           Ordenes de compra sin facturar
 
+.page-header
+  .row
+    .col-sm-4.col-md-offset-4
+      %h4.text-center.cons-inf-title
+        %span.text-muted
+          Caja chica
+        %span.text-muted
+          %strong
+            = number_to_currency(@construction.extensions_amount)
+      %h5.text-center.cons-inf-title-sub
+        %span.text-muted
+          = link_to 'Ir a cajas chicas', petty_cashes_path(construction_id: @construction),class: 'btn btn-primary'
 
+- unless current_user.secretary?
+  = render :partial => 'balance',locals: {expenses: @construction.expenses,paid: @construction.paid}
 
 = render :partial => 'payments_part'
 #billing

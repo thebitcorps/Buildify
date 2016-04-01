@@ -2,7 +2,7 @@
   Gastos
   -#%button{onclick: "ReactDOM.render(React.createElement(PaymentModal,{construction_id: #{@construction ? @construction.id : @office.id}}),document.getElementById('mod'));",class: 'btn btn-primary'}
   %button{onclick: "window.createPayment(#{@construction ? @construction.id : @office.id})",class: 'btn btn-primary'}
-    Gastos sin requisicion
+    Gastos sin orden de compra
 
 = render partial: 'constructions/payment_tabs'
 .panel.panel-default
