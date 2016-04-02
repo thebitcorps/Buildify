@@ -1,3 +1,4 @@
+/ Soon to be refactored, idea came in
 = render :partial => 'show_header',locals: {construction: @construction}
 - unless current_user.secretary?
   .page-header
@@ -12,8 +13,6 @@
         %h5.text-center.cons-inf-title-sub
           %span.text-muted
             = link_to "#{@construction.extensions.count} Extensiones,", extensions_path(construction_id: @construction)
-
-
             = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
       .col-sm-4
         %h4.text-center.cons-inf-title
@@ -69,8 +68,6 @@
           = @construction.uninvoiced_purchases_orders.count
         %span.text-muted
           Ordenes de compra sin facturar
-
-
 
 = render :partial => 'payments_part'
 #billing

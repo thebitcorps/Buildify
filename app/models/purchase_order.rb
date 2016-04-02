@@ -70,7 +70,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def is_stamped?
-    !stamp.empty?
+    !stamp.blank?
   end
 
   # change this to helper
@@ -86,15 +86,17 @@ class PurchaseOrder < ActiveRecord::Base
     self.folio = self.construction.purchase_orders.count + 1
   end
 
-  def stamper(authority_name)
-    Digest::SHA1.base64digest([updated_at, authority_name].join(", "))
-  end
-
   def stamp_it(checkbox, user)
     if checkbox == 'true'
       self.stamp = stamper(user.name)
       self.authorizer = user
       self.stamp_date = Date.today
     end
+  end
+
+  private
+
+  def stamper(authority_name)
+    Digest::SHA1.base64digest([updated_at, authority_name].join(", "))
   end
 end

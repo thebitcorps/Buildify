@@ -1,7 +1,7 @@
 @PurchaseOrderForm = React.createClass
   displayName: 'Purchase order form'
   getInitialState: ->
-    {purchaseOrder: @props.purchaseOrder, stamp_purchase_order: false}
+    purchaseOrder: @props.purchaseOrder
   onTokenAdded: (item) ->
     @setState {provider_id_hidden: item.id, provider_name_hidden: item.name, provider_address: item.description}
     if @state.delivery_type == 'pick_up'
@@ -36,4 +36,3 @@
         React.createElement LabelSelect, label: 'Tipo de entrega',name: 'delivery_place',options: [{'display' : '','value': ''},{'display' : 'Se enviara a obra','value' : 'ship'},{'display' : 'Ir a recoger', 'value' : 'pick_up'}],onChanged: @changeDeliveryType
         React.createElement LabelInput, label: 'Direccion de entrega', name: 'delivery_address',changed: @handleInputChange, disabled: true, value: @state.delivery_address
         React.createElement LabelInput, label: 'Nombre del receptor', name: 'delivery_receiver', changed: @handleInputChange
-        React.createElement CheckboxInput, label: 'Firmar orden de compra', name: 'stamp_purchase_order', changed: @handleInputChange, checked: @state.stamp_purchase_order

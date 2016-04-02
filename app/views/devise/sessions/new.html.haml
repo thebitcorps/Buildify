@@ -1,9 +1,9 @@
-%h2 Log in
+%h2 Ingreso
 = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   .form-inputs
     = f.input :email, required: false, autofocus: true
     = f.input :password, required: false
-    = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+    = f.input :remember_me, label: 'Recordarme', as: :boolean if devise_mapping.rememberable?
   .form-actions
-    = f.button :submit, "Log in",class: 'btn btn-defautl'
+    = f.button :submit, "Ingresar",class: 'btn btn-defautl'
 = render "devise/shared/links"

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :providers
   resources :purchase_orders do
     get 'document', on: :member, defaults: { format: 'pdf' }
+    post 'stamp', on: :member
   end
   resources :materials
   resources :requisitions do

@@ -34,7 +34,7 @@ class PurchaseOrdersController < ApplicationController
   def create
     @purchase_order = PurchaseOrder.new purchase_order_params
     @purchase_order.build_invoice provider_id: params[:provider_id]
-    @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
+    # @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
     respond_to do |format|
       if @purchase_order.save
         format.json {render json: @purchase_order}
@@ -42,6 +42,12 @@ class PurchaseOrdersController < ApplicationController
         format.json { render json: JSON.parse(@purchase_order.errors.full_messages.to_json), status: :unprocessable_entity}
       end
     end
+  end
+
+  def stamp
+    @purchase_order = PurchaseOrder.find(params[:id])
+    @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
+    redirect_to @purchase_order
   end
 
 private
