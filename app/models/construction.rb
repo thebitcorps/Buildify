@@ -7,7 +7,7 @@ class Construction < ActiveRecord::Base
   has_many :payments
   has_many :estimates
   has_many :extensions
-  has_many :petty_cashs
+  has_many :petty_cashes
   has_many :invoiced_payments, through: :invoices, source: :payment
   has_many :construction_users, dependent: :destroy
   has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user
@@ -68,6 +68,9 @@ class Construction < ActiveRecord::Base
   scope :all_constructions,-> {(where type: nil).order(created_at: :asc)}
 
   ##################  METHODS   ##################
+  def active_petty_cash
+    petty_cashes.last
+  end
   def expenses
     payments.sum :amount
   end

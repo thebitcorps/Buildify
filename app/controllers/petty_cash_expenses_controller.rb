@@ -8,7 +8,7 @@ class PettyCashExpensesController < ApplicationController
       if @petty_cash_expense.save
         format.json {render  :show,status: :ok,location: @petty_cash_expense}
       else
-        format.json {render  @petty_cash_expense.errors.full_message.to_json,status: :unprocessable_entity}
+        format.json { render json: JSON.parse(@petty_cash_expense.errors.full_messages.to_json), status: :unprocessable_entity}
       end
     end
   end
