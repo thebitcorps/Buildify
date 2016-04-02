@@ -19,6 +19,8 @@ class PurchaseOrdersController < ApplicationController
     @item_materials = @purchase_order.item_materials
     @requisition = @purchase_order.requisition
     @invoice = @purchase_order.invoice
+    @verification = @purchase_order.verify_stamp(params[:stamp_string] || '')
+    flash[:notice] = "Orden de compra verificada" if @verification
   end
 
   def document
@@ -46,8 +48,10 @@ class PurchaseOrdersController < ApplicationController
 
   def stamp
     @purchase_order = PurchaseOrder.find(params[:id])
-    @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
-    redirect_to @purchase_order
+    @purchase_order.stamp_it(current_user)
+    if @purchase_order.save
+      redirect_to @purchase_order
+    end
   end
 
 private

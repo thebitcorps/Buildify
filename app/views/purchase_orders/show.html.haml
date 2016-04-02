@@ -1,4 +1,11 @@
 / Soon to be refactored
+/ Verification stuff to be deleted
+/ = debug(@verification)
+= link_to 'simula captura de qr', purchase_order_path(@purchase_order, stamp_string: @purchase_order.stamp)
+%br/
+= link_to 'liga normal a PO', @purchase_order
+%br/
+= link_to 'PO con firma fake', purchase_order_path(@purchase_order, stamp_string: 'Caquita')
 .page-header
   %ol.breadcrumb
     %li= link_to @requisition.construction.title, construction_path(@requisition.construction)
@@ -14,11 +21,13 @@
   %div
     - if @purchase_order.is_stamped?
       Esta orden de compra ya fue firmada por:
-      = @puchase_order.authorizer.name
+      = @purchase_order.authorizer.name
+      %br/
+      / = @purchase_order.stamp
       / maybe an icon with a tooltip for the leyend, name and date ??
     - else
       = link_to "Firmar", stamp_purchase_order_path(@purchase_order), class: 'btn', method: :post
-      / new stamp route idea in progress, not working yet, don't bitch about it
+      / new stamp route idea in progress, working :)
   .row
     .col-md-4
       %h6.text-center
