@@ -93,7 +93,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def verify_stamp(params_stamp)
-    is_stamped? if params_stamp == stamp
+    is_stamped? && params_stamp == stamp
   end
 
   private
