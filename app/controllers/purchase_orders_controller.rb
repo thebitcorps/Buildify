@@ -19,8 +19,7 @@ class PurchaseOrdersController < ApplicationController
     @item_materials = @purchase_order.item_materials
     @requisition = @purchase_order.requisition
     @invoice = @purchase_order.invoice
-    @verification = @purchase_order.verify_stamp(params[:stamp_string] || '')
-    flash[:notice] = "Orden de compra verificada" if @verification
+    flash.now[:notice] = "Orden de compra verificada" if @purchase_order.verify_stamp(params[:stamp_string] || '')
   end
 
   def document
