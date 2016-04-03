@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   post '/petty_cash_expenses' => 'petty_cash_expenses#create'
 
 
-  resources :petty_cashes
+  resources :petty_cashes,except: [:new]
   resources :offices, only: [:new, :create, :show, :edit, :update]
 
   resources :extensions
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :providers
   resources :purchase_orders do
     get 'document', on: :member, defaults: { format: 'pdf' }
+    post 'stamp', on: :member
   end
   resources :materials
   resources :requisitions do

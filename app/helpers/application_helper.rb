@@ -6,7 +6,7 @@ module ApplicationHelper
     if short
       [date.day, @@spanish_months[date.month - 1], date.year].join("/")
     else
-      [@@spanish_days[date.wday], [date.day, @@spanish_months[date.month - 1], date.year].join("/")].join(", ")
+      [@@spanish_days[date.wday].downcase, [date.day, @@spanish_months[date.month - 1].downcase, date.year].join(" de ")].join(", ")
     end
   end
 

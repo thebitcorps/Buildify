@@ -34,7 +34,12 @@ gem 'react-rails', '~> 1.0'
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
+  gem 'better_errors'
+  gem 'quiet_assets'
+  gem 'binding_of_caller'
+  gem 'pry-rails'
+  gem 'brakeman'
+  # gem 'web-console', '~> 2.0'
   gem 'spring'
 end
 

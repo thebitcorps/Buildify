@@ -19,6 +19,8 @@ class PurchaseOrdersController < ApplicationController
     @item_materials = @purchase_order.item_materials
     @requisition = @purchase_order.requisition
     @invoice = @purchase_order.invoice
+    @verification = @purchase_order.verify_stamp(params[:stamp_string] || '')
+    flash[:notice] = "Orden de compra verificada" if @verification
   end
 
   def document
@@ -34,13 +36,21 @@ class PurchaseOrdersController < ApplicationController
   def create
     @purchase_order = PurchaseOrder.new purchase_order_params
     @purchase_order.build_invoice provider_id: params[:provider_id]
-    @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
+    # @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
     respond_to do |format|
       if @purchase_order.save
         format.json {render json: @purchase_order}
       else
         format.json { render json: JSON.parse(@purchase_order.errors.full_messages.to_json), status: :unprocessable_entity}
       end
+    end
+  end
+
+  def stamp
+    @purchase_order = PurchaseOrder.find(params[:id])
+    @purchase_order.stamp_it(current_user)
+    if @purchase_order.save
+      redirect_to @purchase_order
     end
   end
 

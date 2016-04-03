@@ -1,12 +1,9 @@
-%a.list-group-item.construction-special-row{:href => "#{purchase_order_path(purchase_order)}"}
+= link_to purchase_order, class: "list-group-item construction-special-row" do
   .row
     .col-md-12
       %h4.pull-right
         %small
-          -if purchase_order.completed?
-            = "Enviada a proveedor"
-          -else
-            = "Pendiente"
+          = purchase_order.completed? ? "Enviada a proveedor" : "Pendiente"
       %table
         %tr
           %td
@@ -17,3 +14,7 @@
             %h4
               %small
                 = [purchase_order.item_materials.count, " materiales agregados"].join(' ')
+          %td
+            %h4
+              %span{class: "label label-info"}
+                = purchase_order.stamp.blank? ? "Sin firmar" : "Firmada"

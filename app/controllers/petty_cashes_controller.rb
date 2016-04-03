@@ -1,4 +1,7 @@
 class PettyCashesController < ApplicationController
+  before_filter :authenticate_user!
+  before_action :filter_sec_out
+  before_action :filter_sub_out, only: [:destroy,:edit]
   before_action :set_petty_cash, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -9,9 +12,6 @@ class PettyCashesController < ApplicationController
   def show
   end
 
-  def new
-    @petty_cash = PettyCash.new
-  end
 
   def edit
   end
@@ -21,10 +21,8 @@ class PettyCashesController < ApplicationController
 
     respond_to do |format|
       if @petty_cash.save
-        format.html { redirect_to @petty_cash, notice: 'Petty cash was successfully created.' }
         format.json { render :show, status: :created, location: @petty_cash }
       else
-        format.html { render :new }
         format.json { render json: @petty_cash.errors.full_messages, status: :unprocessable_entity }
       end
     end

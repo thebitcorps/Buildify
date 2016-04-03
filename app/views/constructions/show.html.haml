@@ -1,3 +1,4 @@
+/ Soon to be refactored, idea came in
 = render :partial => 'show_header',locals: {construction: @construction}
 - unless current_user.secretary?
   .page-header
@@ -12,8 +13,6 @@
         %h5.text-center.cons-inf-title-sub
           %span.text-muted
             = link_to "#{@construction.extensions.count} Extensiones,", extensions_path(construction_id: @construction)
-
-
             = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
       .col-sm-4
         %h4.text-center.cons-inf-title
@@ -70,21 +69,20 @@
         %span.text-muted
           Ordenes de compra sin facturar
 
+
 .page-header
   .row
     .col-sm-4.col-md-offset-4
       %h4.text-center.cons-inf-title
         %span.text-muted
           Caja chica
-        %span.text-muted
-          %strong
-            = number_to_currency(@construction.extensions_amount)
       %h5.text-center.cons-inf-title-sub
         %span.text-muted
           = link_to 'Ir a cajas chicas', petty_cashes_path(construction_id: @construction),class: 'btn btn-primary'
 
 - unless current_user.secretary?
   = render :partial => 'balance',locals: {expenses: @construction.expenses,paid: @construction.paid}
+
 
 = render :partial => 'payments_part'
 #billing

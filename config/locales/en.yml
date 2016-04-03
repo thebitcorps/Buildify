@@ -46,7 +46,7 @@ en:
       other: over %{count} years
     x_days:
       one: 1 day
-      other: "en %{count} dias"
+      other: "hace %{count} dias"
     x_minutes:
       one: 1 minute
       other: "%{count} minutes"

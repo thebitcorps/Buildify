@@ -1,3 +1,11 @@
+/ Soon to be refactored
+/ Verification stuff to be deleted
+/ = debug(@verification)
+= link_to 'simula captura de qr', purchase_order_path(@purchase_order, stamp_string: @purchase_order.stamp)
+%br/
+= link_to 'liga normal a PO', @purchase_order
+%br/
+= link_to 'PO con firma fake', purchase_order_path(@purchase_order, stamp_string: 'Caquita')
 .page-header
   %ol.breadcrumb
     %li= link_to @requisition.construction.title, construction_path(@requisition.construction)
@@ -9,42 +17,41 @@
       Orden de Compra
       %span{class: "label label-#{@purchase_order.get_color}"}
         = @purchase_order.formated_folio
-    = link_to image_tag('pdf-icon.png',class: 'pdf-icon'),document_purchase_order_path(@purchase_order)
+    = link_to image_tag('pdf-icon.png', class: 'pdf-icon'), document_purchase_order_path(@purchase_order)
+  %div
+    - if @purchase_order.is_stamped?
+      Esta orden de compra ya fue firmada por:
+      = @purchase_order.authorizer.name
+      %br/
+      / = @purchase_order.stamp
+      / maybe an icon with a tooltip for the leyend, name and date ??
+    - else
+      = link_to "Firmar", stamp_purchase_order_path(@purchase_order), class: 'btn', method: :post
+      / new stamp route idea in progress, working :)
   .row
     .col-md-4
-      %h3.text-center
-        %small
-          %b
-            Proveedor
-        %br
-        %small
-          = @purchase_order.provider.name
+      %h6.text-center
+        Proveedor:
+        = @purchase_order.provider.name
     .col-md-4
-      %h3.text-center
-        %small
-          %b
-            Fecha de emición
-        %br
-        %small
-          = spanish_formated_date @purchase_order.created_at, false
+      %h6.text-center
+        Emitida el 
+        = spanish_formated_date(@purchase_order.created_at, false)
     .col-md-4
       - if @invoice.waiting?
-        %h3.text-center
-          %small
-            Esta factura no ha sido recibida
+        %h6.text-center
+          Esta factura no ha sido recibida
           %br
-          %small
-            = link_to "Editar factura", edit_invoice_path(@invoice)
+          = link_to "Editar factura", edit_invoice_path(@invoice), class: 'btn'
       - else
-        -# Second idea just pass the link to anctions, this view keeps purchase order stuff
+        / Second idea just pass the link to actions, this view keeps purchase order stuff
         %h3.text-center
           %small
             %b
               Factura
           %br
           %small
-
-            = link_to image_tag('pdf-icon.png',class: 'pdf-icon'), document_invoice_path(@invoice)
+            = link_to image_tag('pdf-icon.png', class: 'pdf-icon'), document_invoice_path(@invoice)
             = link_to "Administrar", edit_invoice_path(@invoice)
 
 .panel.panel-default

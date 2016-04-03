@@ -1,4 +1,5 @@
 class PettyCashExpensesController < ApplicationController
+  before_filter :authenticate_user!
   def show
     @petty_cash_expense = PettyCashExpense.find params[:id]
   end

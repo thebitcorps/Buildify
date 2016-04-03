@@ -9,7 +9,6 @@ class PettyCash < ActiveRecord::Base
 
   scope :active_from_construction, ->(construction_id) { where(construction_id: construction_id).order(created_at: :asc).last }
   scope :with_construction, ->(construction_id) { where(construction_id: construction_id).order(created_at: :desc)}
-
   # close last last petty cash before from a construction
   def close_petty_cash
     last_petty_chash = PettyCash.active_from_construction self.construction_id
