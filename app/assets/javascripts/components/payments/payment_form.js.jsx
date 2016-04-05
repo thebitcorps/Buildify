@@ -86,7 +86,6 @@ var PaymentForm = React.createClass({
            <div className="row">
                <div className="col-sm-6" ref="a">
                    {this.titleElement('Agregar gasto')}
-                    {moment("20171031", "YYYYMMDD").fromNow()}
                    <LabelRadio name="other" value="other" label="Otro" changed={this.radioChange} checked={this.state.payment_type == 'other'}/>
                    <LabelRadio name="gas" value="gas" label="Gasolina" changed={this.radioChange} checked={this.state.payment_type == 'gas'}/>
                    <LabelRadio name="phone" value="phone" label="Telefono" changed={this.radioChange} checked={this.state.payment_type == 'phone'}/>

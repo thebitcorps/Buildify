@@ -2,9 +2,14 @@
   %h1 Materiales
   = simple_form_for :search, url: materials_path, method: :get ,remote: true do |f|
     .col-lg-6
-      = f.search_field :query, autofocus: true, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
+      = f.search_field :query, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
     = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
 
+%ul.nav.nav-tabs
+  %li{id: 'all_alphabetical',class: " #{'active' if params[:type_list] == 'all_alphabetical'  or params[:type_list].nil? }"}
+    = link_to 'Todos', materials_path(type_list: 'all_alphabetical'), remote: true
+  %li{id: 'pending', class: " #{'active' if params[:type_list] == 'pending' }"}
+    = link_to 'Pendientes', materials_path(type_list: 'pending'), remote: true
 .table-responsive
   %table.table.table-striped.table-condensed.table-hover
     %thead

@@ -1,21 +1,11 @@
 %h1 Proveedores
 = simple_form_for :search, url: providers_path, method: :get,remote: true  do |f|
   .col-lg-6
-    = f.search_field :query, autofocus: true, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
+    = f.search_field :query, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
   = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
 %br
 %br
--#.table-responsive
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th Nombre
-        %th Direccion
-        %th Telefono
-        %th Email
-        %th
-    %tbody#providers
-      = render @providers
+
 %ul.list-group#providers
   = render @providers
 #paginate

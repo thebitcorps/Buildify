@@ -4,7 +4,7 @@
   = simple_form_for :search, url: constructions_path, method: :get, remote: true do |f|
     .col-lg-6
       = f.hidden_field :mode, value: @mode
-      = f.search_field :query, autofocus: true, class: "form-control", placeholder: 'Buscar obras', onkeyup: "$('#submit').click();", autocomplete: 'off'
+      = f.search_field :query, class: "form-control", placeholder: 'Buscar obras', onkeyup: "$('#submit').click();", autocomplete: 'off'
     %span.input-group-btn
       = f.submit "Buscar", class: "btn btn-default", id: 'submit'
 %hr
