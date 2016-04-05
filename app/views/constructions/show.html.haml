@@ -1,12 +1,7 @@
 .row
-  .col-md-4.col-xs-12
-    %div{class: "panel panel-default"}
-      %div{class: "panel-heading"}
-        %h4{class: "panel-title"}
-          Extensiones:
-          = number_to_currency(@construction.extensions_amount)
-      %div{class: "panel-body"}
-        = link_to 'Agregar', new_extension_path(construction_id: @construction)
+  .col-xs-12
+    = render partial: 'show_header', locals: {construction: @construction}
+.row
   .col-md-4.col-xs-12
     %div{class: "panel panel-default"}
       %div{class: "panel-heading"}
@@ -14,7 +9,22 @@
           Contrato
           = number_to_currency(@construction.total_budget)
       %div{class: "panel-body"}
-        = number_to_currency(@construction.contract_amount)
+        %p
+          Monto original:
+          = number_to_currency(@construction.contract_amount)
+  .col-md-4.col-xs-12
+    %div{class: "panel panel-default"}
+      %div{class: "panel-heading"}
+        %h4{class: "panel-title"}
+          Extensiones:
+          = number_to_currency(@construction.extensions_amount)
+      %div{class: "panel-body"}
+        %p
+          Actualmente:
+          = @construction.extensions.size
+          = link_to "(ver todas)", extensions_path(construction_id: @construction)
+        %p
+        = link_to 'Agregar', new_extension_path(construction_id: @construction), class: 'pull-right'
   .col-md-4.col-xs-12
     %div{class: "panel panel-default"}
       %div{class: "panel-heading"}
@@ -22,93 +32,69 @@
           Estimaciones
           = number_to_currency(@construction.estimates_amount)
       %div{class: "panel-body"}
-        = link_to "Agregar", new_estimate_path(construction_id: @construction)
+        %p
+          Actualmente:
+          = @construction.estimates.size
+          = link_to "(ver todas)", estimates_path(construction_id: @construction)
+        %p
+          = link_to "Agregar", new_estimate_path(construction_id: @construction), class: 'pull-right'
 
-/ Soon to be refactored, idea came in
-= render :partial => 'show_header', locals: {construction: @construction}
-- unless current_user.secretary?
-  .page-header
-    .row
-      .col-sm-4
-        %h4.text-center.cons-inf-title
-          %span.text-muted
-            Extensión
-          %span.text-muted
-            %strong
-              = number_to_currency(@construction.extensions_amount)
-        %h5.text-center.cons-inf-title-sub
-          %span.text-muted
-            = link_to "#{@construction.extensions.count} Extensiones, ", extensions_path(construction_id: @construction)
-            = link_to "Agregar nueva", new_extension_path(construction_id: @construction)
-      .col-sm-4
-        %h4.text-center.cons-inf-title
-          %span.text-muted
-            Contrato
-          %span.text-muted
-            %strong
-              = number_to_currency(@construction.total_budget)
-        %h5.text-center.cons-inf-title-sub
-          %span.text-muted
-            Contrato original
-          %span.text-muted
-            %strong
-              = number_to_currency(@construction.contract_amount)
-      .col-sm-4
-        %h4.text-center.cons-inf-title
-          %span.text-muted
-            Estimación
-          %span.text-muted
-            %strong
-              = number_to_currency(@construction.estimates_amount)
-        %h5.text-center.cons-inf-title-sub
-          %span.text-muted
-            = link_to "#{@construction.estimates.count} Estimaciones, ", estimates_path(construction_id: @construction)
-
-            = link_to "Agregar nueva", new_estimate_path(construction_id: @construction)
-
-
-.page-header
-  .row
-    - unless current_user.secretary?
-      .col-sm-6
-        %h4.text-center.cons-inf-title
-          %span.text-success
-            = @construction.partial_requisitions.count + @construction.complete_requisitions.count
-          %span.text-muted
-            = link_to "Requisiciones", requisitions_path(construction_id: @construction)
-            procesadas
-        %h5.text-center.cons-inf-title
-          %span.text-warning
-            = @construction.pending_requisitions.count
-          %span.text-muted
-            Requisiciones pendientes
-    %div{:class=> ("col-sm-6" unless current_user.secretary?)}
-      %h4.text-center.cons-inf-title
-        %span.text-success
-          = @construction.invoiced_purchases_orders.count
-        %span.text-muted
-          = link_to "Ordenes de compra", purchase_orders_path(construction_id: @construction)
-          facturadas
-      %h5.text-center.cons-inf-title
-        %span.text-warning
-          = @construction.uninvoiced_purchases_orders.count
-        %span.text-muted
-          Ordenes de compra sin facturar
-
-
-.page-header
-  .row
-    .col-sm-4.col-md-offset-4
-      %h4.text-center.cons-inf-title
-        %span.text-muted
-          Caja chica
-      %h5.text-center.cons-inf-title-sub
-        %span.text-muted
-          = link_to 'Ir a cajas chicas', petty_cashes_path(construction_id: @construction), class: 'btn btn-primary'
+.row
+  .col-md-4.col-xs-12
+    %div{class: "panel panel-default"}
+      %div{class: "panel-heading"}
+        %h4{class: "panel-title"}
+          Caja chica 
+      %div{class: "panel-body"}
+        %p
+          = link_to '(ver todas)', petty_cashes_path(construction_id: @construction)
+  .col-md-4.col-xs-12
+    %div{class: "panel panel-default"}
+      %div{class: "panel-heading"}
+        %h4{class: "panel-title"}
+          Requisiciones 
+      %div{class: "panel-body"}
+        %p
+          Procesadas:
+          = @construction.partial_requisitions.size + @construction.complete_requisitions.size
+          = link_to "(ver todas)", requisitions_path(construction_id: @construction)
+        %p
+          Pendientes:
+          = @construction.pending_requisitions.count
+  .col-md-4.col-xs-12
+    %div{class: "panel panel-default"}
+      %div{class: "panel-heading"}
+        %h4{class: "panel-title"}
+          Ordenes de compra 
+      %div{class: "panel-body"}
+        %p
+          Facturadas:
+          = @construction.invoiced_purchases_orders.size
+          = link_to "(ver todas)", purchase_orders_path(construction_id: @construction)
+        %p
+          Sin facturar:
+          = @construction.uninvoiced_purchases_orders.size
 
 - unless current_user.secretary?
-  = render :partial => 'balance', locals: {expenses: @construction.expenses, paid: @construction.paid}
+  .row
+    .col-md-4.col-xs-12
+      %div{class: "panel panel-default"}
+        %div{class: "panel-heading"}
+          %h4{class: "panel-title"}
+            Gastos
+        %div{class: "panel-body"}
+          %p
+            Total:
+            = number_to_currency(@construction.expenses)
+          %p
+            Pagado:
+            = number_to_currency(@construction.paid)
+          %p
+            Saldo:
+            = number_to_currency(@construction.expenses - @construction.paid)
+          %p
+            %a{onclick: "window.createPayment(#{@construction ? @construction.id : @office.id})", class: 'pull-right', style: 'cursor: pointer;'}
+              Agregar
 
-
-= render :partial => 'payments_part'
+= render partial: 'payments_part'
 #billing

@@ -1,13 +1,11 @@
 .page-header
   .row
     .col-xs-12
-      %h3
+      %h5
         = construction.title
         - if construction.manager
-          %small
-            administrada por
-            = link_to construction.manager.name, user_path(construction.manager)
-  //= link_to 'Administrar',edit_construction_path(construction),class: 'btn btn-default'
+          administrada por
+          = link_to construction.manager.name, user_path(construction.manager)
   .row
     .col-xs-12
       .progress.cons-st-prog
@@ -24,3 +22,4 @@
           = " hasta el "
         %span.text-info
           = spanish_formated_date(construction.finish_date, false)
+  %hr
