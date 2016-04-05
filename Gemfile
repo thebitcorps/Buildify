@@ -31,6 +31,7 @@ gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails'
 
 gem 'cocoon'
 gem 'react-rails', '~> 1.0'
+gem 'puma'
 
 group :development, :test do
   gem 'byebug'

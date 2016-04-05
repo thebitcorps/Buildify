@@ -1,28 +1,28 @@
 %p#notice= notice
 
-= simple_form_for :search, url: constructions_path, method: :get,remote: true do |f|
+= simple_form_for :search, url: constructions_path, method: :get, remote: true do |f|
   .col-lg-6
     = f.hidden_field :mode, value: @mode
-    = f.search_field :query, autofocus: true, class: "form-control", placeholder: 'Buscar',onkeyup: "$('#submit').click();",autocomplete: 'off'
+    = f.search_field :query, autofocus: true, class: "form-control", placeholder: 'Buscar', onkeyup: "$('#submit').click();", autocomplete: 'off'
   %span.input-group-btn
-    = f.submit "Buscar", class: "btn btn-default",id: 'submit'
+    = f.submit "Buscar", class: "btn btn-default", id: 'submit'
 
 %h1 Obras
 
 -if current_user.administrator?
   %ul.nav.nav-tabs
-    %li{class: "#{'active' if params[:status] == 'running'}",id: 'running'}
-      = link_to 'En curso',constructions_path(status: :running),remote: true
-    %li{class: "#{'active' if params[:status] == 'finished'}",id: 'finished'}
-      = link_to 'Terminadas',constructions_path(status: :finished),remote: true
-    %li{class: "#{'active' if params[:status] == 'all' or params[:status].nil?}",id: 'all'}
-      = link_to 'Todas',constructions_path(status: :all),remote: true
+    %li{class: "#{'active' if params[:status] == 'running'}", id: 'running'}
+      = link_to 'En curso', constructions_path(status: :running), remote: true
+    %li{class: "#{'active' if params[:status] == 'finished'}", id: 'finished'}
+      = link_to 'Terminadas', constructions_path(status: :finished), remote: true
+    %li{class: "#{'active' if params[:status] == 'all' or params[:status].nil?}", id: 'all'}
+      = link_to 'Todas', constructions_path(status: :all), remote: true
 -elsif current_user.subordinate?
   %ul.nav.nav-tabs
-    %li{class: "#{'active' if params[:mode] == 'own'}",id: 'own'}
-      = link_to 'Administradas',constructions_path(mode: :own),remote: true
-    %li{class: "#{'active' unless params[:mode] == 'own'}",id: 'help'}
-      = link_to 'Apoyando',constructions_path(mode: :mode),remote: true
+    %li{class: "#{'active' if params[:mode] == 'own'}", id: 'own'}
+      = link_to 'Administradas', constructions_path(mode: :own), remote: true
+    %li{class: "#{'active' unless params[:mode] == 'own'}", id: 'help'}
+      = link_to 'Apoyando', constructions_path(mode: :mode), remote: true
 
 .list-group#constructions
   - if @mode == :own

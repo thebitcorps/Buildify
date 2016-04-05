@@ -4,7 +4,7 @@
       %span.icon-bar
       %span.icon-bar
       %span.icon-bar
-    = link_to 'Buildify', root_path, class: 'navbar-brand'
+    = link_to 'Allpino', root_path, class: 'navbar-brand'
     #main-navbar.collapse.navbar-collapse
       - if current_user
         - if current_user.administrator?
@@ -12,8 +12,13 @@
             %li= link_to "Obras", constructions_path(status: :running)
             %li= link_to "Proveedores", providers_path
             %li= link_to 'Usuarios', users_path
-            %li= link_to "Materiales", materials_path
-            %li= link_to 'Unidades', measure_units_path
+            %li.dropdown
+              %a{href: "#", class: "dropdown-toggle", 'data-toggle' => "dropdown", role: "button", 'aria-haspopup' => "true", 'aria-expanded' => "false"}
+                Más
+                %span{class: "caret"}
+              %ul{class: "dropdown-menu"}
+                %li= link_to "Materiales", materials_path
+                %li= link_to 'Unidades', measure_units_path
         - elsif current_user.subordinate? # Subordinate Navbar
           %ul.nav.navbar-nav
             %li.dropdown
@@ -26,13 +31,15 @@
                 %li
                   = link_to 'Apoyadas', constructions_path(mode: :sub)
             %li
-              = link_to 'Materiales',materials_path
+              = link_to 'Materiales', materials_path
         - elsif current_user.secretary?
           %ul.nav.navbar-nav
             %li= link_to "Obras", constructions_path(status: :running)
             %li= link_to "Proveedores", providers_path
             %li= link_to 'Usuarios', users_path
         %p.navbar-text.navbar-right
-          = current_user.name
+          = link_to current_user.name, current_user
           / = current_user.administrator?
-          = link_to 'Salir',destroy_user_session_path, method: :delete
+          |
+          = link_to destroy_user_session_path, method: :delete do
+            %span{class: 'fa fa-sign-out'}

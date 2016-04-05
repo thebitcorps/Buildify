@@ -1,11 +1,6 @@
 .page-header
   .row
-    .col-md-6.col-xs-12
-      .row
-        %h6
-          = 'Hola'
-          = link_to current_user.name, user_path(current_user)
-    .col-md-6.col-xs-12
+    .col-xs-12
       .row
         %h6.pull-right
           = ["Hoy es", spanish_formated_date(Date.today, false)].join(" ")
