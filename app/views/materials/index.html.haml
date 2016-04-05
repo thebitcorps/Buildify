@@ -1,8 +1,9 @@
-%h1 Materiales
-= simple_form_for :search, url: materials_path, method: :get ,remote: true do |f|
-  .col-lg-6
-    = f.search_field :query, autofocus: true, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
-  = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
+.page-header
+  %h1 Materiales
+  = simple_form_for :search, url: materials_path, method: :get ,remote: true do |f|
+    .col-lg-6
+      = f.search_field :query, autofocus: true, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
+    = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
 
 .table-responsive
   %table.table.table-striped.table-condensed.table-hover
@@ -15,7 +16,7 @@
     %tbody#materials
       = render @materials
 #paginate
-  = paginate @materials,theme: 'twitter-bootstrap-3',remote: true
+  = paginate @materials, theme: 'twitter-bootstrap-3', remote: true
 %br
 
 = link_to 'Nuevo material', new_material_path, class: 'btn btn-primary'

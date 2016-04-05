@@ -1,10 +1,10 @@
-%h1 Listing measure_units
+%h1 Lista de unidades
 .table-responsive
   %table.table.table-condensed
     %thead
       %tr
-        %th Unit
-        %th Abbreviation
+        %th Unidad
+        %th Abreviatura
         %th
 
     %tbody
@@ -14,10 +14,8 @@
           %td= measure_unit.abbreviation
           %td
             .btn-group
-              = link_to 'Edit', edit_measure_unit_path(measure_unit),class: 'btn btn-warning'
-              = link_to 'Destroy', measure_unit, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
-
-
+              = link_to 'Editar', edit_measure_unit_path(measure_unit),class: 'btn btn-warning'
+              = link_to 'Borrar', measure_unit, :method => :delete, :data => { :confirm => '¿Está seguro?' },class: 'btn btn-danger'
 %br
-
-= link_to 'New Mesure unit', new_measure_unit_path,class: 'btn btn-primary'
+.col-lg-3.pull-right
+  = link_to 'Nueva unidad', new_measure_unit_path, class: 'btn btn-primary'

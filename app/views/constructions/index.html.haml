@@ -1,14 +1,13 @@
 %p#notice= notice
-
-= simple_form_for :search, url: constructions_path, method: :get, remote: true do |f|
-  .col-lg-6
-    = f.hidden_field :mode, value: @mode
-    = f.search_field :query, autofocus: true, class: "form-control", placeholder: 'Buscar', onkeyup: "$('#submit').click();", autocomplete: 'off'
-  %span.input-group-btn
-    = f.submit "Buscar", class: "btn btn-default", id: 'submit'
-
-%h1 Obras
-
+.page-header
+  %h1 Obras
+  = simple_form_for :search, url: constructions_path, method: :get, remote: true do |f|
+    .col-lg-6
+      = f.hidden_field :mode, value: @mode
+      = f.search_field :query, autofocus: true, class: "form-control", placeholder: 'Buscar obras', onkeyup: "$('#submit').click();", autocomplete: 'off'
+    %span.input-group-btn
+      = f.submit "Buscar", class: "btn btn-default", id: 'submit'
+%hr
 -if current_user.administrator?
   %ul.nav.nav-tabs
     %li{class: "#{'active' if params[:status] == 'running'}", id: 'running'}
@@ -35,5 +34,6 @@
   = paginate @constructions, theme: 'twitter-bootstrap-3', remote: true
 %br
 -if current_user.administrator?
-  = link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'
-  = link_to 'Nueva Oficina', new_office_path, class: 'btn btn-primary'
+  .col-lg-3.pull-right
+    = link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'
+    = link_to 'Nueva oficina', new_office_path, class: 'btn btn-primary'

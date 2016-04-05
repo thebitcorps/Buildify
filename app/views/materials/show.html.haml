@@ -1,12 +1,16 @@
-.jumbotron
-  %h1= @material.name
-  %h3= @material.description
-  %h3 Unidades permitidas:
-  %ul
-    - @material.measure_units.each do |mesure_unit|
-      %li="#{mesure_unit.unit} | #{mesure_unit.abbreviation}"
+%div{class: "panel panel-default"}
+  .panel-heading
+    %h3.panel-title
+      = @material.name
+  .panel-body
+    %p= @material.description
+    %p
+      Unidades permitidas:
+      %ul
+        - @material.measure_units.each do |measure_unit|
+          %li="#{measure_unit.unit} | #{measure_unit.abbreviation}"
 
-
-  = link_to 'Nuevo material',new_material_path,class: 'btn btn-primary'  if current_user.administrator?
-  = link_to 'Editar', edit_material_path(@material), class: 'btn btn-warning'  if current_user.administrator?
+.col-lg-4.pull-right
+  = link_to 'Nuevo material',new_material_path,class: 'btn btn-primary' if current_user.administrator?
+  = link_to 'Editar', edit_material_path(@material), class: 'btn btn-warning' if current_user.administrator?
   = link_to 'Regresar', materials_path, class: 'btn btn-default'
