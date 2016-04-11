@@ -10,7 +10,8 @@
 
     = link_to 'Cambiar contraseña', edit_password_users_path, class: 'btn btn-warning' if current_user == @user
     = link_to 'Editar', edit_user_path(@user), class: 'btn btn-info'
-    / # = link_to 'Atrás', users_path, class: 'btn btn-default'
+    = link_to "#{@user.access_locked? ? 'Desbloquear' : 'Bloquear'}", update_lock_user_path(@user), class: 'btn btn-info',method: :post if current_user.administrator?
+
 
   - unless current_user.secretary?
     .row

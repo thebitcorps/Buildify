@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy,:update_lock]
   before_action :humanize_name ,only: [:create,:update]
   before_action :filter_sub_out
   before_action :filter_sec_out, except: [:index]
@@ -81,6 +81,15 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def update_lock
+    if @user.change_lock_status
+      redirect_to user_path(@user),notice: "Usuario a sido #{@user.access_locked? ? 'bloqueado' : 'desbloqueado'}"
+    else
+      redirect_to user_path(@user),notice: 'Error en intento de bloqueo de usuario'
+    end
+
   end
 
   private

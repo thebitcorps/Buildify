@@ -8,9 +8,10 @@ class User < ActiveRecord::Base
   # Not sure about this
   #has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user
 
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable,:lockable
 
   ROLES = %w(administrator subordinate secretary)
+  ROLES_SELECT = {:Administrador => :administrator,:Secretaria => :secretary,:Residente => :subordinate}
   royce_roles ROLES
 
   validates :name, :phone, :email, presence: true
@@ -51,6 +52,14 @@ class User < ActiveRecord::Base
       all.order(name: :asc)
     else
       where('name ilike ?', "%#{search}%").order(name: :asc)
+    end
+  end
+
+  def change_lock_status
+    if self.access_locked?
+      self.unlock_access!
+    else
+      self.lock_access!
     end
   end
 

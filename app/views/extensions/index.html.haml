@@ -1,12 +1,12 @@
 .page-header
   %ol.breadcrumb
     %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
-    %li.active Extensiones
+    %li.active Ampliaciones
   %h1
     %small
-      Extensiones
+      Ampliaciones
       .pull-right
-        = link_to 'Nueva extension', new_extension_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
+        = link_to 'Nueva ampliaciones', new_extension_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
 .table-responsive
   %table.table.table-striped.table-condensed.table-hover
     %thead
@@ -22,11 +22,11 @@
           %td=number_to_currency extension.amount
           %td
             .btn-group
-              = link_to 'Edit', edit_extension_path(extension,construction_id: extension.construction_id),class: 'btn btn-warning'
-              = link_to 'Destroy', extension, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
+              = link_to 'Editar', edit_extension_path(extension,construction_id: extension.construction_id),class: 'btn btn-warning'
+              = link_to 'Eliminar', extension, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
 -if @construction.extensions.empty?
   .well
-    No se han introducido extensiones
+    No se han introducido ampliaciones
 
 
 

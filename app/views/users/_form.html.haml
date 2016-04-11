@@ -2,6 +2,6 @@
   = f.input :name
   = f.input :email
   = f.input :phone
-  = f.input :role, as: :fake_select, collection: User::ROLES
+  = f.input :role, as: :fake_select, collection: User::ROLES_SELECT
   = f.button :submit,class: 'btn btn-primary'
   = link_to 'Cancelar',users_path,class: 'btn btn-default'
