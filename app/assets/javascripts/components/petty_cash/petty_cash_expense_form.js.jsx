@@ -1,6 +1,6 @@
 var PettyCashExpenseForm = React.createClass({
     getInitialState: function(){
-        return {concept: '',amount: '',expense_date: '',observation: '',petty_cash_id: this.props.petty_cash_id,error: []}
+        return {concept: '',amount: '',expense_date: moment().format('DD/MM/YYYY'),observation: '',petty_cash_id: this.props.petty_cash_id,error: []}
     },
     getDefaultProps: function(){
         return {notifyParent: function(){}}
@@ -26,7 +26,6 @@ var PettyCashExpenseForm = React.createClass({
             url: '/petty_cash_expenses',
             data: {petty_cash_expense: this.state},
             success: function(data){
-                console.log(data);
                 this.props.notifyParent(data);
                 this.setState(this.getInitialState());
             }.bind(this),

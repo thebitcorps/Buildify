@@ -7,7 +7,7 @@ class Construction < ActiveRecord::Base
   has_many :payments
   has_many :estimates
   has_many :extensions
-  has_many :petty_cashes
+  has_many :petty_cashes,dependent: :destroy
   has_many :invoiced_payments, through: :invoices, source: :payment
   has_many :construction_users, dependent: :destroy
   has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user
@@ -59,6 +59,15 @@ class Construction < ActiveRecord::Base
 
 
   def validate_dates_logic_relation
+    if finish_date.nil?
+      errors.add(:finish_date,"Can't be blank")
+      return
+
+    end
+    if start_date.nil?
+      errors.add(:start_date,"Can't be blank")
+      return
+    end
     errors.add(:finish_date, 'Finish date must be greater than start date') if finish_date < start_date
   end
   ##################  SCOPES   ##################
