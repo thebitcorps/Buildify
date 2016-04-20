@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+ sign_out: "Sign out"
  datetime:
   distance_in_words:
     about_x_hours:
@@ -56,3 +57,8 @@ en:
     x_seconds:
       one: 1 second
       other: "%{count} seconds"
+ invoice:
+   pdf_message: "Invoice PDF"
+ purchase_order:
+   pdf_message: "Purchase order PDF"
+

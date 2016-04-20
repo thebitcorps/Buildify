@@ -1,5 +1,10 @@
 ---
 es:
+  sign_out: "Cerrar sesion"
+  invoice:
+     pdf_message: "Contra recibo PDF"
+ purchase_order:
+    pdf_message: "Orden de compra PDF"
   activerecord:
     errors:
       messages:
@@ -212,3 +217,4 @@ es:
       long: "%d de %B de %Y %H:%M"
       short: "%d de %b %H:%M"
     pm: pm
+

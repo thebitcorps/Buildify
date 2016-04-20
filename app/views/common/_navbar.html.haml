@@ -41,5 +41,5 @@
           = link_to current_user.name, current_user
           / = current_user.administrator?
           |
-          = link_to destroy_user_session_path, method: :delete do
+          = link_to destroy_user_session_path, method: :delete  ,data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' },'title' => t('sign_out') do
             %span{class: 'fa fa-sign-out'}

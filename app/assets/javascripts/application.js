@@ -43,3 +43,9 @@ window.createPayment = function(construction_id){
     ReactDOM.render(React.createElement(PaymentModal,{construction_id: construction_id}),document.getElementById('mod'));
 
 };
+
+var loadToolptip = function(){
+    $('[data-toggle="tooltip"]').tooltip();
+};
+
+$(document).on('page:load ready page:change', loadToolptip);
