@@ -58,7 +58,7 @@ en:
       one: 1 second
       other: "%{count} seconds"
  invoice:
-   pdf_message: "Invoice PDF"
+  pdf_message: "Invoice PDF"
  purchase_order:
-   pdf_message: "Purchase order PDF"
+  pdf_message: "Purchase order PDF"
 

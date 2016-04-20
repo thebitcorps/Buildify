@@ -2,8 +2,8 @@
 es:
   sign_out: "Cerrar sesion"
   invoice:
-     pdf_message: "Contra recibo PDF"
- purchase_order:
+    pdf_message: "Contra recibo PDF"
+  purchase_order:
     pdf_message: "Orden de compra PDF"
   activerecord:
     errors:
