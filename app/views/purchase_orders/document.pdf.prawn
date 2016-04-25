@@ -158,7 +158,7 @@ f6.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width:5
 
 f7 = pdf.make_cell content: ""
 f7.style borders: [:bottom], border_widths: [2, 2, 2, 2], size: 11, width:5
-auth_cell = pdf.make_cell content: @purchase_order.authorizer.name
+auth_cell =  pdf.make_cell content: (@purchase_order.authorizer != nil ?  @purchase_order.authorizer.name : "No autorizada")
 auth_cell.style inline_format: true, align: :center, borders: [:bottom, :top], border_widths: [1, 2, 2, 2], size: 10
 f8 = pdf.make_cell content: ""
 f8.style borders: [:bottom, :right], border_widths: [2, 2, 2, 2], size: 11, width:10
