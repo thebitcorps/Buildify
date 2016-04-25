@@ -84,6 +84,15 @@ class Requisition < ActiveRecord::Base
   def partially?
     status == PARTIALLY_STATUS
   end
+
+  def item_materials_status_count
+    status_count = {count: item_materials.count,authorized: 0,delivered: 0,missed: 0,pending: 0,partially: 0}
+    item_materials.each do |item_material|
+      status_count[item_material.status.to_sym] += 1
+    end
+    status_count
+  end
+
   # change this to helper
   def status_color
     if complete?

@@ -5,6 +5,23 @@ es:
     pdf_message: "Contra recibo PDF"
   purchase_order:
     pdf_message: "Orden de compra PDF"
+  materials:
+     name:
+       zero: 'Sin materiales'
+       one: '1 material'
+       other: "%{count} materiales"
+  item_material:
+     pending: "%{count} esperando orden de compra"
+     authorized: "%{count} esperando entrega"
+     missed:
+       one: '1 no entregado'
+       other: "%{count} no entregados"
+     delivered:
+       one: '1 entregado'
+       other: "%{count} entregados"
+     partially:
+       one: '1 parcialmente entregado'
+       other: "%{count} parcialmente entregados"
   activerecord:
     errors:
       messages:

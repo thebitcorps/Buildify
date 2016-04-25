@@ -61,4 +61,17 @@ en:
   pdf_message: "Invoice PDF"
  purchase_order:
   pdf_message: "Purchase order PDF"
+ materials:
+   name:
+     zero: 'Sin materiales'
+     one: '1 material'
+     other: "%{count} materiales"
+ item_material:
+   pending: "%{count} waiting for purchase order"
+   authorized: "%{count} waiting delivery"
+   missed: "%{count} not deliver"
+   delivered: "%{count} deliver"
+   partially: "%{count} partially deliver"
+
+
 

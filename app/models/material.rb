@@ -6,7 +6,7 @@ class Material < ActiveRecord::Base
   scope :all_alphabetical, -> { all.order(name: :asc) } # whats with that statements?
   scope :pending, -> { where description: ''} # whats with that statements?
   validates :name ,:measure_units ,presence: true
-  validates :name ,uniqueness: true
+  # validates :name ,uniqueness: true
 
   # here could make to the classes that uses search that implement search to try DRYing the code
   # how about a search class?
