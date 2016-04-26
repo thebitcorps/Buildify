@@ -48,7 +48,7 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      @user.change_role role_param
+      # @user.change_role role_param
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
