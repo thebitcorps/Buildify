@@ -24,6 +24,6 @@ module Buildify
     config.active_record.raise_in_transactional_callbacks = true
     config.react.addons = true
     config.autoload_paths += %W(#{config.root}/app/models/construction)
-
+    config.to_prepare { Devise::SessionsController.layout "login" }
   end
 end

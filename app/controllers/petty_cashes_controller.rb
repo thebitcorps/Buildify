@@ -1,8 +1,9 @@
 class PettyCashesController < ApplicationController
-  before_filter :authenticate_user!
-  before_action :filter_sec_out
-  before_action :filter_sub_out, only: [:destroy,:edit]
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_petty_cash, only: [:show, :edit, :update, :destroy]
+  # before_action :filter_sec_out
+  # before_action :filter_sub_out, only: [:destroy,:edit]
 
   def index
     @construction = Construction.find params[:construction_id]

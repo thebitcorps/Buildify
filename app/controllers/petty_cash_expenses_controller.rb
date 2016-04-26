@@ -1,5 +1,7 @@
 class PettyCashExpensesController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  load_and_authorize_resource
+
   def show
     @petty_cash_expense = PettyCashExpense.find params[:id]
   end
@@ -13,6 +15,7 @@ class PettyCashExpensesController < ApplicationController
       end
     end
   end
+
 private
   def petty_cash_expense_params
     params.require(:petty_cash_expense).permit(:concept,:amount,:expense_date,:observation,:petty_cash_id )

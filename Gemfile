@@ -7,23 +7,25 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', platforms: :ruby
 
-gem 'haml-rails'
+gem 'devise'
 gem 'royce'
-gem 'prawn-rails'
+gem 'cancancan', '~> 1.10'
 
 gem 'jquery-rails'
 # gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'haml-rails'
 gem 'less-rails'
-gem 'twitter-bootstrap-rails', '3.2.0'
-gem 'rails_12factor', group: :production
-
-gem 'devise'
 gem 'simple_form'
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+gem 'twitter-bootstrap-rails', '3.2.0'
+
+gem 'rails_12factor', group: :production
+
+gem 'prawn-rails'
 
 gem 'momentjs-rails', '>= 2.9.0'
 
@@ -43,4 +45,3 @@ group :development, :test do
   # gem 'web-console', '~> 2.0'
   gem 'spring'
 end
-

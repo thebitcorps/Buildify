@@ -1,8 +1,9 @@
 class MeasureUnitsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_mesure_unit, only: [ :edit, :update, :destroy]
-  before_action :filter_sub_out,except: [:index]
-  before_action :filter_sec_out
+  # before_action :filter_sub_out,except: [:index]
+  # before_action :filter_sec_out
 
   def index
     @measure_units = MeasureUnit.all.order(:unit)

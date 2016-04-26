@@ -1,5 +1,11 @@
-admin = User.create(name: "The bit corps", phone: '4498961443', email: "dev@thebitcorps.com", password: "12345678", password_confirmation: "12345678")
+admin = User.create(name: "TheBitCorps", phone: '4498961443', email: "dev@thebitcorps.com", password: "12345678", password_confirmation: "12345678")
 admin.administrator!
+
+sub = User.create(name: 'SubordinateCorps', phone: '0001234567', email: 'sub@thebitcorps.com', password: '12345678', password_confirmation: '12345678')
+sub.subordinate!
+
+hot_secretary = User.create(name: 'Secretary', phone: '0001231234', email: 'sec@thebitcorps.com', password: '12345678', password_confirmation: '12345678')
+hot_secretary.secretary!
 
 unit1 = MeasureUnit.create(unit: 'Kilogramo', abbreviation: 'Kg')
 unit2 = MeasureUnit.create(unit: 'Pieza', abbreviation: 'Pza')
