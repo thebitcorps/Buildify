@@ -22,6 +22,10 @@ es:
      partially:
        one: '1 parcialmente entregado'
        other: "%{count} parcialmente entregados"
+  extension:
+    delete_warning: "Desea borrar esta ampliacion?"
+  requisition:
+    sent_warning: "Desea terminar esta requisicion? Ya no podra agregar materiales. Tendra que ser de una nueva requisicion"
   activerecord:
     errors:
       messages:

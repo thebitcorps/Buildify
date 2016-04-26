@@ -23,7 +23,7 @@
           %td
             .btn-group
               = link_to 'Editar', edit_extension_path(extension,construction_id: extension.construction_id),class: 'btn btn-warning'
-              = link_to 'Eliminar', extension, :method => :delete, :data => { :confirm => 'Are you sure?' },class: 'btn btn-danger'
+              = link_to 'Eliminar', extension, :method => :delete, :data => { :confirm => t('extension.delete_warning') },class: 'btn btn-danger'
 -if @construction.extensions.empty?
   .well
     No se han introducido ampliaciones

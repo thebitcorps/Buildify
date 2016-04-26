@@ -27,6 +27,24 @@
         break
     @setState {requested: selectItem.requested,measure_unit: selectItem.measure_unit,partialItem: selectItem}
     $("#partially").modal('show')
+  addNewItemMaterial: (item)->
+    $.ajax
+      type: 'POST'
+      url: '/item_materials/'
+      data: {item_material: {requested: item.requested,material_id: item.material_id,requisition_id: @props.requisition_id,measure_unit: item.measure_unit,status: 'pending'}}
+      dataType: 'JSON'
+      success: ( (item) ->
+        items = @state.itemMaterials.slice()
+        items.push(item)
+        @setState itemMaterials: items
+      ).bind(this)
+      error: ((XMLHttpRequest, textStatus, errorThrown) ->
+    #we parse the responses o errors so we can send a array of errors
+        if errorThrown == 'Internal Server Error'
+          @setState errors: ['Internal Server Error']
+          return
+        @setState errors: $.parseJSON(XMLHttpRequest.responseText)
+        return).bind(this)
   partiallyArriveSave: ->
     $.ajax
       type: 'PUT'
@@ -51,7 +69,10 @@
   render: ->
     React.DOM.div
       className: 'requisition-arrival'
-      #    ||||||||||MODAL|||||||
+      if @props.pending
+        React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
+
+#    ||||||||||MODAL|||||||
       React.DOM.div
         id: 'partially'
         tabIndex: '-1'

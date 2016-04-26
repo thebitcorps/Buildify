@@ -72,6 +72,10 @@ en:
    missed: "%{count} not deliver"
    delivered: "%{count} deliver"
    partially: "%{count} partially deliver"
+ extension:
+   delete_warning: "Want to delete this extension?"
+ requisition:
+   sent_warning: "Want to finish this requisition?"
 
 
 

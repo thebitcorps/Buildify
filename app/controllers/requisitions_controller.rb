@@ -1,6 +1,6 @@
 class RequisitionsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_requisition, only: [:show, :document, :edit, :update, :destroy]
+  before_action :set_requisition, only: [:show, :document, :edit, :update]
   before_action :set_construction, only: [:index, :new, :edit]
   before_action :filter_sec_out
 
@@ -61,6 +61,15 @@ class RequisitionsController < ApplicationController
     end
   end
 
+  def update
+    @requisition.status = Requisition::SENT_STATUS
+    if @requisition.save
+      redirect_to @requisition, notice: 'Requisicion cerrada'
+    else
+      redirect_to @requisition, alert: @requisition.errors.full_message
+    end
+  end
+
   private
 
   def set_construction
@@ -78,6 +87,6 @@ class RequisitionsController < ApplicationController
 
 
   def sanitized_locked_param
-      ['complete','partially','pending'].include?(params[:type_list]) ? params[:type_list] : 'all_with_conctruction'
+      ['complete','partially','pending','sent'].include?(params[:type_list]) ? params[:type_list] : 'all_with_conctruction'
   end
 end

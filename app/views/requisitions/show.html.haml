@@ -9,8 +9,10 @@
       %span{class: "label label-#{@requisition.status_color}"}
         = @requisition.formated_folio
       = link_to image_tag('pdf-icon.png',class: 'pdf-icon'),document_requisition_path(@requisition)
+  - if @requisition.pending?
+    = link_to 'Terminar requisicion',requisition_path(@requisition,requisition: {status: 'sent'}),method: :patch, data: { confirm: t('requisition.sent_warning')},class: 'btn btn-warning'
 
-= react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?
+= react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?,requisition_id: @requisition.id,pending: @requisition.pending?
 
 -if current_user.administrator?
   .page-header

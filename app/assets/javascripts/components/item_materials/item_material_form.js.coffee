@@ -40,26 +40,27 @@
       placeholder: name
       ref: name
       name: name
-  createMaterialForm: ->
-    alert('caca');
   render: ->
 #    return "<button class='btn btn-primary' onClick={alert('caca');}>Agregar nuevo material </button>"
     noResult = "<button class='btn btn-primary' onclick={ReactDOM.render(React.createElement(MaterialModal),document.getElementById('new-material'))}>Agregar nuevo material </button>"
     React.DOM.div
-      className: ''
-      React.DOM.div
-        className: 'form-group typehead'
-#        React.createElement LabelInput,label: 'Material ',name: 'material_id',placeholder: 'Material',changed: @handleInputChange,value: @state.material_id
-        React.DOM.label
-          className: 'control-label'
-          'Buscador de material'
-        React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
-        React.createElement LabelSelect, label: 'Unidad del material',name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
-        React.createElement NumberInput,label: 'Cantidad requerida ',name: 'requested',placeholder: 'Cantidad numerica',changed: @handleInputChange,value: @state.requested
-#        React.createElement LabelInput,label: 'Mesure unit ',name: 'measure_unit',placeholder: 'Mesure unit',changed: @handleInputChange,value: @state.measure_unit
-
-        React.DOM.button
-          className: 'btn btn-primary'
-          onClick: @handleNew
-          disabled: !@valid()
-          'Agregar material a la requisicion'
+      className: 'table-responsive'
+      React.DOM.table
+        className: 'table table-striped'
+        React.DOM.tbody null,
+          React.DOM.tr null,
+            for th,i in ['Material','Unidad ','Cantidad','Accion']
+              React.DOM.th key: i,th
+          React.DOM.tr null,
+            React.DOM.td null,
+              React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
+            React.DOM.td null,
+              React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
+            React.DOM.td null,
+              React.createElement NumberInput,name: 'requested',placeholder: 'Cantidad numerica',changed: @handleInputChange,value: @state.requested
+            React.DOM.td null,
+              React.DOM.button
+                className: 'btn btn-primary'
+                onClick: @handleNew
+                disabled: !@valid()
+                'Agregar material '

@@ -4,6 +4,7 @@ class Requisition < ActiveRecord::Base
 
   COMPLETE_STATUS = 'complete'
   PENDING_STATUS = 'pending'
+  SENT_STATUS = 'sent'
   PARTIALLY_STATUS = 'partially'
 
   belongs_to :construction
@@ -32,6 +33,11 @@ class Requisition < ActiveRecord::Base
   def self.complete(construction_id=nil)
     requisitions_with_construction :complete,construction_id
   end
+
+  def self.sent(construction_id=nil)
+    requisitions_with_construction :sent,construction_id
+  end
+
 
   def self.all_with_conctruction(construction_id=nil)
     query = all
@@ -77,6 +83,10 @@ class Requisition < ActiveRecord::Base
     status == COMPLETE_STATUS
   end
 
+  def sent?
+    status == SENT_STATUS
+  end
+
   def pending?
     status == PENDING_STATUS
   end
@@ -98,11 +108,11 @@ class Requisition < ActiveRecord::Base
     if complete?
       'success'
     elsif pending?
-      'danger'
+      'default'
     elsif partially?
       'warning'
-    else
-      'default'
+    elsif sent?
+      'danger'
     end
   end
 

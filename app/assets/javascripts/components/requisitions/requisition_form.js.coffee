@@ -65,7 +65,6 @@
     React.DOM.div
       className: 'requisition-form'
       React.createElement ErrorBox, errorsArray: @state.errors
-
       React.createElement DateInput,label: 'Cuando se necesita el material',placeholder: 'Fecha',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.div
@@ -83,4 +82,4 @@
         className: 'btn btn-primary'
         onClick: @handleSubmit
         disabled: !@valid()
-        'Terminar requisicion'
+        'Guardar requisicion'

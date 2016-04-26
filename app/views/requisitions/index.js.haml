@@ -6,7 +6,7 @@ $('#requisitions').append("#{j( paginate @requisitions,theme: 'twitter-bootstrap
   $('#requisitions').append("<div class='well'> No hay requisiciones</div>")
 
 
-
+$('#sent').attr('class', "#{'active' if @type_list ==  'sent'}");
 $('#complete').attr('class', "#{'active' if @type_list ==  'complete'}");
 $('#pending').attr('class', "#{'active' if @type_list ==  'pending'}");
 $('#partially').attr('class', "#{'active' if @type_list ==  'partially'}");
