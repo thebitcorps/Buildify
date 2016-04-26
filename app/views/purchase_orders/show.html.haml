@@ -1,8 +1,9 @@
 .page-header
   %ol.breadcrumb
     %li= link_to @requisition.construction.title, construction_path(@requisition.construction)
-    %li= link_to "Requisiciones", requisitions_path(construction_id: @requisition.construction.id)
+    %li= link_to 'Requisiciones', requisitions_path(construction_id: @requisition.construction.id)
     %li= link_to @requisition.formated_folio, requisition_path(@requisition)
+    %li= link_to 'Ordenes de compra',purchase_orders_path(construction_id: @requisition.construction_id)
     %li Orden de Compra
   %h1
     %small
@@ -18,7 +19,7 @@
       / = @purchase_order.stamp
       / maybe an icon with a tooltip for the leyend, name and date ??
     - else
-      = link_to "Autorizar", stamp_purchase_order_path(@purchase_order), class: 'btn', method: :post
+      = link_to 'Autorizar', stamp_purchase_order_path(@purchase_order), class: 'btn', method: :post
       / new stamp route idea in progress, working :)
   .row
     .col-md-4
@@ -34,7 +35,7 @@
         %h6.text-center
           Esta factura no ha sido recibida
           %br
-          = link_to "Editar factura", edit_invoice_path(@invoice), class: 'btn'
+          = link_to 'Editar factura', edit_invoice_path(@invoice), class: 'btn'
       - else
         / Second idea just pass the link to actions, this view keeps purchase order stuff
         %h3.text-center
@@ -44,7 +45,7 @@
           %br
           %small
             = link_to image_tag('pdf-icon.png', class: 'pdf-icon'), document_invoice_path(@invoice)
-            = link_to "Administrar", edit_invoice_path(@invoice)
+            = link_to 'Administrar', edit_invoice_path(@invoice)
 
 .panel.panel-default
   .table-responsive

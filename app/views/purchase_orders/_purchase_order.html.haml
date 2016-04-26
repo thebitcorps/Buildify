@@ -13,7 +13,7 @@
           %td
             %h4
               %small
-                = [purchase_order.item_materials.count, " materiales agregados"].join(' ')
+                = item_materials_status_message purchase_order.item_materials_status_count
           %td
             %h4
               %span{class: "label label-info"}

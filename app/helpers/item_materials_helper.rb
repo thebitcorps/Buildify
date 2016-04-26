@@ -1,4 +1,5 @@
 module ItemMaterialsHelper
+  # @param [Object] item_material
   def map_status(item_material)
     if item_material.partially?
       "Solo se entrego #{item_material.received} #{item_material.measure_unit}"
@@ -14,5 +15,17 @@ module ItemMaterialsHelper
       'Otro'
     end
 
+  end
+
+  # @return [Hash]
+  # @return [String]
+  def item_materials_status_message(material_hash)
+    message = [t('materials.name',count: material_hash[:count])]
+    message << t('item_material.pending', count: material_hash[:pending]) if material_hash[:pending] > 0
+    message << t('item_material.authorized',count: material_hash[:authorized]) if material_hash[:authorized] > 0
+    message << t('item_material.missed',count: material_hash[:missed]) if material_hash[:missed] > 0
+    message << t('item_material.delivered',count: material_hash[:delivered]) if material_hash[:delivered] > 0
+    message << t('item_material.partially',count: material_hash[:partially]) if material_hash[:partially] > 0
+    message.join ', '
   end
 end

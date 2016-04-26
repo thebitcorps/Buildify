@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+ sign_out: "Sign out"
  datetime:
   distance_in_words:
     about_x_hours:
@@ -56,3 +57,21 @@ en:
     x_seconds:
       one: 1 second
       other: "%{count} seconds"
+ invoice:
+  pdf_message: "Invoice PDF"
+ purchase_order:
+  pdf_message: "Purchase order PDF"
+ materials:
+   name:
+     zero: 'Sin materiales'
+     one: '1 material'
+     other: "%{count} materiales"
+ item_material:
+   pending: "%{count} waiting for purchase order"
+   authorized: "%{count} waiting delivery"
+   missed: "%{count} not deliver"
+   delivered: "%{count} deliver"
+   partially: "%{count} partially deliver"
+
+
+
