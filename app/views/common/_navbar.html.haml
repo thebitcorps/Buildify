@@ -8,7 +8,7 @@
     #main-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li= link_to 'Inicio', root_path
-        = render partial: "common/menubars/administrator" if current_user.administrator?
+        = render partial: "common/menubars/#{current_user.roles.first.to_s}"
       %p.navbar-text.navbar-right
         = link_to current_user.name, current_user
         |
