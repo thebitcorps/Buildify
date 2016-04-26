@@ -1,7 +1,7 @@
 class InvoicesController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_invoice, only: [:show, :document, :edit, :update]
-  before_action :filter_sub_out
 
   def show
   end

@@ -1,7 +1,8 @@
   class ProvidersController < ApplicationController
-  before_filter :authenticate_user!
-  before_action :set_provider, only: [:show,:edit,:destroy,:update]
-  before_action :filter_sub_out
+  before_action :authenticate_user!
+  load_and_authorize_resource
+  before_action :set_provider, only: [ :show, :edit, :destroy, :update ]
+  # before_action :filter_sub_out
 
   def index
     @providers = Provider.all_alphabetical.search(sanitized_search).page(params[:page])

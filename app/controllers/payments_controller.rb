@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   def index
     @type_list = sanitized_type_list

@@ -1,7 +1,7 @@
 class ExtensionsController < ApplicationController
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_extension, only: [ :edit, :update, :destroy]
-  before_action :filter_sec_out
-  before_action :filter_sub_out
 
   def index
     @extensions = Extension.where_construction params[:construction_id]

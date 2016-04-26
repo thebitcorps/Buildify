@@ -1,8 +1,9 @@
 class ConstructionsController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource
   before_action :set_construction, only: [:show, :edit, :update, :destroy]
-  before_action :filter_sub_out, only: [:show, :edit, :update, :destroy]
-  before_action :filter_sec_out, only: [:new, :edit, :update, :destroy]
+  # before_action :filter_sub_out, only: [:show, :edit, :update, :destroy]
+  # before_action :filter_sec_out, only: [:new, :edit, :update, :destroy]
   # before_action :humanize_title, only: [:create, :update]
 
   def index
@@ -68,12 +69,10 @@ class ConstructionsController < ApplicationController
       params[:construction][:title] = params[:construction][:title].split.map(&:capitalize).join(' ')
     end
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_construction
       @construction = Construction.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def construction_params
       params.require(:construction).permit(:title, :start_date,:address, :status,:finish_date, :contract_amount, :user_id, construction_users_attributes: [:id,:user_id,:role,:_destroy])
     end

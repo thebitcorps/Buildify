@@ -1,8 +1,9 @@
 class PurchaseOrdersController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_purchase_order, only: [:show, :document]
   before_action :set_requisition, only: [:new]
-  before_action :filter_sub_out
+  # before_action :filter_sub_out
 
   def index
     @type_list = sanitized_locked_param
@@ -59,7 +60,6 @@ private
     @requisition = Requisition.find params[:requisition_id]
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_purchase_order
     @purchase_order = PurchaseOrder.find(params[:id])
   end

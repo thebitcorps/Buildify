@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_user, only: [:show, :edit, :update, :destroy,:update_lock]
   before_action :humanize_name ,only: [:create,:update]
-  before_action :filter_sub_out
-  before_action :filter_sec_out, except: [:index]
+  # before_action :filter_sub_out
+  # before_action :filter_sec_out, except: [:index]
 
   def index
     # we verify inclusion of role first then metaprograming for choosing the rigth list to show
@@ -34,15 +35,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new user_params
-    # create method for generate password
-    # what?! Rob
-    # who?! Omar
-    @user.password = '12345678'
-    @user.password_confirmation = '12345678'
+    @user = User.new(creation_params)
     respond_to do |format|
       if @user.save
-        @user.add_role role_param
+        # @user.add_role role_param # possible bug, implementing before_create callback
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
         format.html { render :new }
@@ -112,5 +108,9 @@ class UsersController < ApplicationController
 
     def password_params
       params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def creation_params
+      params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation, :roles)
     end
 end

@@ -4,7 +4,7 @@ admin.administrator!
 sub = User.create(name: 'SubordinateCorps', phone: '0001234567', email: 'sub@thebitcorps.com', password: '12345678', password_confirmation: '12345678')
 sub.subordinate!
 
-hot_secretary = User.create(name: 'Secretary', phone: '0001231231234', email: 'sec@thebitcorps.com', password: '12345678', password_confirmation: '12345678')
+hot_secretary = User.create(name: 'Secretary', phone: '0001231234', email: 'sec@thebitcorps.com', password: '12345678', password_confirmation: '12345678')
 hot_secretary.secretary!
 
 unit1 = MeasureUnit.create(unit: 'Kilogramo', abbreviation: 'Kg')

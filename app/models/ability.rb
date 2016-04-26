@@ -7,6 +7,7 @@ class Ability
       can :manage, :all
     elsif user.subordinate?
     elsif user.secretary?
+      can :read, User
     end
     # Define abilities for the passed in user here. For example:
     #
