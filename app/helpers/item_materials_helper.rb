@@ -17,8 +17,8 @@ module ItemMaterialsHelper
 
   end
 
-  # @return [Hash]
-  # @return [String]
+  # @param [Hash] material_hash a hash with count, pending ,authorized ,missed , delivered ,partially values with the count of every item material
+  # @return [String] the message pf the status for all the item materials
   def item_materials_status_message(material_hash)
     message = [t('materials.name',count: material_hash[:count])]
     message << t('item_material.pending', count: material_hash[:pending]) if material_hash[:pending] > 0

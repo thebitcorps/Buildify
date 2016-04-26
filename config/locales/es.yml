@@ -25,7 +25,7 @@ es:
   extension:
     delete_warning: "Desea borrar esta ampliacion?"
   requisition:
-    sent_warning: "Desea terminar esta requisicion? Ya no podra agregar materiales. Tendra que ser de una nueva requisicion"
+    sent_warning: "Desea terminar esta requisicion? Ya no podra agregar materiales. Tendra que creat de una nueva requisicion"
   activerecord:
     errors:
       messages:

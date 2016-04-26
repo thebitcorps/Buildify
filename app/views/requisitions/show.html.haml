@@ -14,7 +14,7 @@
 
 = react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?,requisition_id: @requisition.id,pending: @requisition.pending?
 
--if current_user.administrator?
+-if current_user.administrator? and @requisition.sent?
   .page-header
     - if current_user.administrator?
       %h1
