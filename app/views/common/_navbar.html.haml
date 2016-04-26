@@ -9,6 +9,7 @@
       - if current_user
         - if current_user.administrator?
           %ul.nav.navbar-nav
+            %li= link_to 'Inicio', root_path
             %li= link_to "Obras", constructions_path(status: :running)
             %li= link_to "Proveedores", providers_path
             %li= link_to 'Usuarios', users_path
