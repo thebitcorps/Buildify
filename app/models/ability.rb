@@ -6,8 +6,20 @@ class Ability
     if user.administrator?
       can :manage, :all
     elsif user.subordinate?
+      can [:read, :update], Construction
+      can [:read, :update, :destroy], ItemMaterial
+      can :read, MeasureUnit
+      can :manage, Requisition
+      can :read, User, id: user.id
+      # can :manage, PettyCashExpense # ?
     elsif user.secretary?
       can :read, User
+      can :manage, Construction
+      can :manage, Provider
+      can :manage, Invoice
+      can :manage, Material
+      can :manage, PettyCash
+      can :manage, PettyCashExpense
     end
     # Define abilities for the passed in user here. For example:
     #

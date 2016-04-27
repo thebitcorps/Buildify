@@ -3,7 +3,6 @@ class RequisitionsController < ApplicationController
   load_and_authorize_resource
   before_action :set_requisition, only: [:show, :document, :edit, :update, :destroy]
   before_action :set_construction, only: [:index, :new, :edit]
-  # before_action :filter_sec_out
 
   def index
     @petty_cash = PettyCash.active_from_construction(params[:construction_id])

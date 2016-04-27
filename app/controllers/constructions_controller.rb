@@ -2,8 +2,6 @@ class ConstructionsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   before_action :set_construction, only: [:show, :edit, :update, :destroy]
-  # before_action :filter_sub_out, only: [:show, :edit, :update, :destroy]
-  # before_action :filter_sec_out, only: [:new, :edit, :update, :destroy]
   # before_action :humanize_title, only: [:create, :update]
 
   def index
