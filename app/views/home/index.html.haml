@@ -1,7 +1,2 @@
-- if current_user.administrator?
-  = render 'administrator_home'
-- elsif current_user.subordinate?
-  = render 'subordinate_home'
-- elsif current_user.secretary?
-  = render 'secretary_home'
+= render partial: "#{current_user.roles.first.to_s}_home"
 #billing

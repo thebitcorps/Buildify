@@ -1,7 +1,7 @@
 !!! 5
 %html{lang: 'es'}
   %head
-    %meta{charset: "utf-8"}
+    %meta{charset: 'utf-8'}
     %meta{'http-equiv' => "X-UA-Compatible", content: "IE=Edge,chrome=1"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
     %title Allpino
@@ -9,9 +9,8 @@
     / Le HTML5 shim, for IE6-8 support of HTML elements
     /[if lt IE 9]
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"
-    = javascript_include_tag "application"
-    = stylesheet_link_tag "application", "token-input-facebook"
-    / = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag 'application'
+    = stylesheet_link_tag 'application', 'token-input-facebook', media: 'all'
     = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
     = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
     = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
@@ -20,6 +19,7 @@
 
   %body
     .container
-      = bootstrap_flash
+      .loginflash{style: 'margin-top:25px;', class: 'col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2'}
+        = bootstrap_flash
       = yield
     = render 'common/footer'

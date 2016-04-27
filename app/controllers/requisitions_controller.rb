@@ -64,7 +64,7 @@ class RequisitionsController < ApplicationController
   def update
     @requisition.status = Requisition::SENT_STATUS
     if @requisition.save
-      redirect_to @requisition, notice: 'Requisicion cerrada'
+      redirect_to @requisition, notice: 'La requisición fue cerrada.'
     else
       redirect_to @requisition, alert: @requisition.errors.full_message
     end
