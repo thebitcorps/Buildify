@@ -5,6 +5,8 @@
     requested: ''
     measure_unit: ''
     material: {measure_units: []}
+    showing: false
+    tokenClean: true
   valid: ->
     @state.material_id_hidden && @state.requested && @state.measure_unit
   handleInputChange: (name,value) ->
@@ -20,12 +22,11 @@
       requested: @state.requested
       measure_unit: @state.measure_unit
       material: @state.material
-    $("#material").tokenInput('clear')
     @props.handleNewItemMaterial data
     @setState @getInitialState
   onTokenAdded: (item) ->
 #    alert item.measure_units[0]
-    @setState {material_id_hidden: item.id, material_name_hidden: item.name,material: item}
+    @setState {material_id_hidden: item.id, material_name_hidden: item.name,material: item,tokenClean: false}
   removeToken: (item) ->
     @setState {material_id_hidden: '',material_name_hidden: '',material: {measure_units: []}}
   units: ->
@@ -41,8 +42,8 @@
       ref: name
       name: name
   render: ->
-#    return "<button class='btn btn-primary' onClick={alert('caca');}>Agregar nuevo material </button>"
-    noResult = "<button class='btn btn-primary' onclick={ReactDOM.render(React.createElement(MaterialModal),document.getElementById('new-material'))}>Agregar nuevo material </button>"
+
+#    noResult = "<button class='btn btn-primary' onclick={ReactDOM.render(React.createElement(MaterialModal),document.getElementById('new-material'))}>Agregar nuevo material </button>"
     React.DOM.div
       className: 'table-responsive'
       React.DOM.table
@@ -53,7 +54,8 @@
               React.DOM.th key: i,th
           React.DOM.tr null,
             React.DOM.td null,
-              React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
+#              React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
+              React.createElement TokenInputCustom,url: '/materials.json',queryParam: 'search[query]',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean
             React.DOM.td null,
               React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
             React.DOM.td null,

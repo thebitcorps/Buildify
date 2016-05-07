@@ -62,6 +62,7 @@ class RequisitionsController < ApplicationController
     end
   end
 
+  # only use for sending requisiton for revision
   def update
     @requisition.status = Requisition::SENT_STATUS
     if @requisition.save
@@ -86,6 +87,6 @@ class RequisitionsController < ApplicationController
   end
 
   def sanitized_locked_param
-      ['complete','partially','pending','sent'].include?(params[:type_list]) ? params[:type_list] : 'all_with_conctruction'
+      ['complete','partially','pending','sent'].include?(params[:type_list]) ? params[:type_list] : 'all_with_construction'
   end
 end

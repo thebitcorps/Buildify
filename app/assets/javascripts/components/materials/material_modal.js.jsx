@@ -60,7 +60,7 @@ var MaterialModal = React.createClass({
         //console.log(units);
         return (
             <div>
-                <Modal title="Proponer Nuevo Material" parentNode="new-material" size="md" footer={submit} name="material-modal">
+                <Modal title="Proponer Nuevo Material" parentNode="new-material" size="md" footer={submit} name="material-modal" modalClose={this.props.close}>
                     <div>
 
                         <ErrorBox errorsArray={this.state.errors}/>

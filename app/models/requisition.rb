@@ -25,32 +25,34 @@ class Requisition < ActiveRecord::Base
   ##################  Scopes   ##################
   # scope :partially, ->(construction_id=nil) { where status: PARTIALLY_STATUS,construction_id: construction_id}
   def self.partially(construction_id=nil)
-    requisitions_with_construction :partially,construction_id
+    from_construction :partially, construction_id
   end
   def self.pending(construction_id=nil)
-    requisitions_with_construction :pending,construction_id
+    from_construction :pending, construction_id
   end
   def self.complete(construction_id=nil)
-    requisitions_with_construction :complete,construction_id
+    from_construction :complete, construction_id
   end
 
   def self.sent(construction_id=nil)
-    requisitions_with_construction :sent,construction_id
+    from_construction :sent, construction_id
   end
 
 
-  def self.all_with_conctruction(construction_id=nil)
-    query = all
-    unless construction_id.nil?
-      query = query.where construction_id: construction_id
+  def self.all_with_construction(construction_id=nil)
+    if construction_id.nil?
+      query = includes(:item_materials).all
+    else
+      query = includes(:item_materials).where construction_id: construction_id
     end
     query.order(created_at: :desc)
   end
 
-  def self.requisitions_with_construction(status,construction_id)
-    query = where status: status
-    unless construction_id.nil?
-      query = query.where construction_id: construction_id
+  def self.from_construction(status,construction_id)
+    if construction_id.nil?
+      query = self.includes(:item_materials).where status: status
+    else
+      query = self.includes(:item_materials).where construction_id: construction_id,status: status
     end
     query.order(created_at: :desc)
   end
