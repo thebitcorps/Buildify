@@ -3,7 +3,6 @@ class RequisitionsController < ApplicationController
   load_and_authorize_resource
   before_action :set_requisition, only: [:show, :document, :edit, :update, :destroy]
   before_action :set_construction, only: [:index, :new, :edit]
-  # before_action :filter_sec_out
 
   def index
     @petty_cash = PettyCash.active_from_construction(params[:construction_id])
@@ -66,7 +65,7 @@ class RequisitionsController < ApplicationController
   def update
     @requisition.status = Requisition::SENT_STATUS
     if @requisition.save
-      redirect_to @requisition, notice: 'Requisicion cerrada'
+      redirect_to @requisition, notice: 'La requisición fue cerrada.'
     else
       redirect_to @requisition, alert: @requisition.errors.full_message
     end

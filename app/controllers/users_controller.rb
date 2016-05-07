@@ -3,8 +3,6 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   before_action :set_user, only: [:show, :edit, :update, :destroy,:update_lock]
   before_action :humanize_name ,only: [:create,:update]
-  # before_action :filter_sub_out
-  # before_action :filter_sec_out, except: [:index]
 
   def index
     # we verify inclusion of role first then metaprograming for choosing the rigth list to show
@@ -92,12 +90,11 @@ class UsersController < ApplicationController
     def humanize_name
       params[:user][:name] = params[:user][:name].split.map(&:capitalize).join(' ')
     end
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_user
       @user = User.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :phone, :email)
     end

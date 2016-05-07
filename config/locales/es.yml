@@ -1,6 +1,6 @@
 ---
 es:
-  sign_out: "Cerrar sesion"
+  sign_out: "Cerrar sesión"
   invoice:
     pdf_message: "Contra recibo PDF"
   purchase_order:
@@ -23,9 +23,9 @@ es:
        one: '1 parcialmente entregado'
        other: "%{count} parcialmente entregados"
   extension:
-    delete_warning: "Desea borrar esta ampliacion?"
+    delete_warning: "¿Desea borrar esta ampliación?"
   requisition:
-    sent_warning: "Desea terminar esta requisicion? Ya no podra agregar materiales. Tendra que creat de una nueva requisicion"
+    sent_warning: "Está por cerrar la requisición. Ya no podrá agregar materiales a esta, tendría que crear una nueva requisición"
   activerecord:
     errors:
       messages:

@@ -2,8 +2,6 @@ class EstimatesController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_construction, only: [:new, :index]
-  # before_action :filter_sub_out
-  # before_action :filter_sec_out
 
   def index
     @estimates = @construction.estimates
