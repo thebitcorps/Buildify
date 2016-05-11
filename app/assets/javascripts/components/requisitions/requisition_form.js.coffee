@@ -12,8 +12,8 @@
     errors: []
   #funtion for inputs that update the state with a given value and the name of the object in the state
   valid: ->
-    @state.requisition_date
-  # update the state with the name of the input
+    @state.requisition_date 
+# update the state with the name of the input
   handleInputChange: (name,value) ->
     @setState "#{name}": value
   # finds a change

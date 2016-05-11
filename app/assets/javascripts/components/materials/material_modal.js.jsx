@@ -39,8 +39,10 @@ var MaterialModal = React.createClass({
             url: '/materials',
             data: {material: {name: this.state.name,measure_unit_ids: this.state.measure_unit_ids}},
             success: function(data){
-                $('#material-modal').modal('hide');
-            },
+                $('#modal').modal('hide');
+                this.props.materialAdded(data);
+                this.setState({name: ''})
+            }.bind(this),
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 if(errorThrown == 'Internal Server Error'){
                     this.setState({ errors: ['Internal Server Error']});
@@ -52,26 +54,27 @@ var MaterialModal = React.createClass({
         });
     },
 
+    componentWillReceiveProps: function (nextProps) {
+        this.setState({name: nextProps.name})
+    },
     render: function(){
         var units = this.state.units.map(function(item){
             return  <CheckboxInput name={item.id} changed={this.checkboxChange} label={item.unit} key={item.id}/>
         }.bind(this));
-        var submit = <button onClick={this.submitMaterial} className="btn btn-primary" disabled={!this.validMaterial()}>Agregar</button>;
+
         //console.log(units);
         return (
             <div>
-                <Modal title="Proponer Nuevo Material" parentNode="new-material" size="md" footer={submit} name="material-modal" modalClose={this.props.close}>
                     <div>
-
                         <ErrorBox errorsArray={this.state.errors}/>
                         <LabelInput  name="name" label="Nombre del nuevo material" changed={this.inputChange} value={this.state.name} />
                         <label>Unidades permitidas </label>
                         <br/>
                         {units}
                         <br/>
-
-                    </div>
-                </Modal>
+                        <button onClick={this.submitMaterial} className="btn btn-primary" disabled={!this.validMaterial()}>Agregar</button>
+                        <button className="btn btn-default" onClick={this.props.onClose}>Cancelar </button>
+                </div>
             </div>
         );
     }

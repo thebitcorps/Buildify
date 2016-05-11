@@ -5,8 +5,8 @@
     requested: ''
     measure_unit: ''
     material: {measure_units: []}
-    showing: false
     tokenClean: true
+    token: ''
   valid: ->
     @state.material_id_hidden && @state.requested && @state.measure_unit
   handleInputChange: (name,value) ->
@@ -41,28 +41,51 @@
       placeholder: name
       ref: name
       name: name
+  showMaterialModal: (value)->
+    @setState {material_name_hidden: value}
+    $('#modal').modal();
+  closeModal: (material)->
+    $('#modal').modal('hide');
   render: ->
-
 #    noResult = "<button class='btn btn-primary' onclick={ReactDOM.render(React.createElement(MaterialModal),document.getElementById('new-material'))}>Agregar nuevo material </button>"
     React.DOM.div
-      className: 'table-responsive'
-      React.DOM.table
-        className: 'table table-striped'
-        React.DOM.tbody null,
-          React.DOM.tr null,
-            for th,i in ['Material','Unidad ','Cantidad','Accion']
-              React.DOM.th key: i,th
-          React.DOM.tr null,
-            React.DOM.td null,
-#              React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
-              React.createElement TokenInputCustom,url: '/materials.json',queryParam: 'search[query]',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean
-            React.DOM.td null,
-              React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
-            React.DOM.td null,
-              React.createElement NumberInput,name: 'requested',placeholder: 'Cantidad numerica',changed: @handleInputChange,value: @state.requested
-            React.DOM.td null,
-              React.DOM.button
-                className: 'btn btn-primary'
-                onClick: @handleNew
-                disabled: !@valid()
-                'Agregar material '
+      className: ''
+      React.DOM.div
+        id: 'modal'
+        className: 'modal fade'
+        tabIndex: '-1'
+        role: "dialog"
+        React.DOM.div
+          className: 'modal-dialog'
+          React.DOM.div
+            className: 'modal-content'
+            React.DOM.div
+              className: 'modal-header'
+              React.DOM.h4
+                className: 'modal-title'
+                'Nuevo Material'
+            React.DOM.div
+              className: 'modal-body'
+              React.createElement MaterialModal,onClose: @closeModal,materialAdded: @onTokenAdded,name: @state.material_name_hidden,
+      React.DOM.div
+        className: 'table-responsive'
+        React.DOM.table
+          className: 'table table-striped'
+          React.DOM.tbody null,
+            React.DOM.tr null,
+              for th,i in ['Material','Unidad ','Cantidad','Accion']
+                React.DOM.th key: i,th
+            React.DOM.tr null,
+              React.DOM.td null,
+  #              React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
+                React.createElement TokenInputCustom,url: '/materials.json',queryParam: 'search[query]',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean,noResultAction: @showMaterialModal,noResultMessage: 'No se encontro. Click para agregar nuevo',outsideToken: this.state.material_name_hidden
+              React.DOM.td null,
+                React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
+              React.DOM.td null,
+                React.createElement NumberInput,name: 'requested',placeholder: 'Cantidad numerica',changed: @handleInputChange,value: @state.requested
+              React.DOM.td null,
+                React.DOM.button
+                  className: 'btn btn-primary'
+                  onClick: @handleNew
+                  disabled: !@valid()
+                  'Agregar material '
