@@ -29,3 +29,5 @@
 %br
 -if current_user.administrator?
   = link_to 'Nuevo usuario', new_user_path, class: 'btn btn-primary'
+-#= javascript_tag "ReactDOM.render( React.createElement(SearchInput,{url: '#{users_path}',queryParam: 'search'}),document.getElementById('search'));"
+

@@ -15,6 +15,7 @@
       id: @props.name
       value: @props.value
       onChange: @changed
+      autoComplete: 'off'
 
     React.DOM.div
       className: 'form-group'
