@@ -78,7 +78,7 @@
             React.DOM.tr null,
               React.DOM.td null,
   #              React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
-                React.createElement TokenInputCustom,url: '/materials.json',queryParam: 'search[query]',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean,noResultAction: @showMaterialModal,noResultMessage: 'No se encontro. Click para agregar nuevo',outsideToken: this.state.material_name_hidden
+                React.createElement TokenInputCustom,url: '/materials',queryParam: 'search',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean,noResultAction: @showMaterialModal,noResultMessage: 'No se encontro. Click para agregar nuevo',outsideToken: this.state.material_name_hidden
               React.DOM.td null,
                 React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
               React.DOM.td null,
