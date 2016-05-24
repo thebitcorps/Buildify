@@ -1,12 +1,7 @@
-%p#notice= notice
 .page-header
   %h1 Obras
-  = simple_form_for :search, url: constructions_path, method: :get, remote: true do |f|
-    .col-lg-6
-      = f.hidden_field :mode, value: @mode
-      = f.search_field :query, class: "form-control", placeholder: 'Buscar obras', onkeyup: "$('#submit').click();", autocomplete: 'off'
-    %span.input-group-btn
-      = f.submit "Buscar", class: "btn btn-default", id: 'submit'
+#search
+
 %hr
 -if current_user.administrator?
   %ul.nav.nav-tabs
@@ -37,3 +32,5 @@
   .col-lg-3.pull-right
     = link_to 'Nueva obra', new_construction_path, class: 'btn btn-primary'
     = link_to 'Nueva oficina', new_office_path, class: 'btn btn-primary'
+
+= javascript_tag "ReactDOM.render( React.createElement(SearchInput,{url: '#{constructions_path}',queryParam: 'search'}),document.getElementById('search'));"

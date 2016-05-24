@@ -1,4 +1,5 @@
 class Requisition < ActiveRecord::Base
+  include AASM
 
   paginates_per 10
 
@@ -7,6 +8,28 @@ class Requisition < ActiveRecord::Base
   SENT_STATUS = 'sent'
   PARTIALLY_STATUS = 'partially'
 
+  ############# State machine ################
+  aasm :column => 'status'
+  aasm :whiny_transitions => false
+  aasm do
+    state :pending, initial: true
+    state :sent
+    state :partially
+    state :complete
+
+    event :sent do
+      transitions :from => :pending, :to => :sent
+    end
+
+    event :partially_complete do
+      transitions :from => :sent, :to => :partially
+    end
+
+    event :complete do
+      transitions :from => [:sent, :partially], :to => :complete
+    end
+  end
+  ##################  Active model   ##################
   belongs_to :construction
   belongs_to :creator, class_name: 'User', foreign_key: :user_id
   has_many :purchase_orders, dependent: :destroy
@@ -18,44 +41,11 @@ class Requisition < ActiveRecord::Base
   validates :requisition_date, presence: true
   ##################  Callbacks   ##################
   after_create :change_item_material_pending
-  # def self.next_folio(construction_id)
-  #   where(construction_id: construction_id).count + 1
-  # end
+
 
   ##################  Scopes   ##################
-  # scope :partially, ->(construction_id=nil) { where status: PARTIALLY_STATUS,construction_id: construction_id}
-  def self.partially(construction_id=nil)
-    from_construction :partially, construction_id
-  end
-  def self.pending(construction_id=nil)
-    from_construction :pending, construction_id
-  end
-  def self.complete(construction_id=nil)
-    from_construction :complete, construction_id
-  end
-
-  def self.sent(construction_id=nil)
-    from_construction :sent, construction_id
-  end
-
-
-  def self.all_with_construction(construction_id=nil)
-    if construction_id.nil?
-      query = includes(:item_materials).all
-    else
-      query = includes(:item_materials).where construction_id: construction_id
-    end
-    query.order(created_at: :desc)
-  end
-
-  def self.from_construction(status,construction_id)
-    if construction_id.nil?
-      query = self.includes(:item_materials).where status: status
-    else
-      query = self.includes(:item_materials).where construction_id: construction_id,status: status
-    end
-    query.order(created_at: :desc)
-  end
+  default_scope {order(created_at: :desc)}
+  scope :from_construction, -> (construction_id=nil) {where(construction_id: construction_id)}
 
   ##################  Methods   ##################
   # which is better?
@@ -79,22 +69,6 @@ class Requisition < ActiveRecord::Base
 
   def change_item_material_pending
     ApplicationHelper::change_item_material_status self, ItemMaterial::PENDING_STATUS
-  end
-
-  def complete?
-    status == COMPLETE_STATUS
-  end
-
-  def sent?
-    status == SENT_STATUS
-  end
-
-  def pending?
-    status == PENDING_STATUS
-  end
-
-  def partially?
-    status == PARTIALLY_STATUS
   end
 
   def item_materials_status_count

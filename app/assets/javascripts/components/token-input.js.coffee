@@ -15,7 +15,7 @@
   getDefaultProps: ->
     componentName: 'token-input'
     url: ''
-    queryParam: 'search[query]'
+    queryParam: 'search'
     withDescription: false
     allowCreation: null
   componentDidMount: ->

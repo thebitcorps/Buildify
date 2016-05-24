@@ -6,12 +6,14 @@ class Ability
     if user.administrator?
       can :manage, :all
     elsif user.subordinate?
-      can :read, Construction
-      can [:read, :update, :destroy], ItemMaterial
+      can [:read, :update], Construction
+      can [:read, :update, :destroy,:create], ItemMaterial
       can :read, MeasureUnit
       can :manage, Requisition
       can :read, User, id: user.id
-      # can :manage, PettyCashExpense # ?
+      can [:read, :create], Material
+      can :manage, PettyCash
+      can :manage, PettyCashExpense
     elsif user.secretary?
       can :read, User
       can :manage, Construction

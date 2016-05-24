@@ -2,17 +2,16 @@
   %ol.breadcrumb
     %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
     %li.active Ordenes de compra
-  / %h1
-  /   %small
-  /     Ordenes de compra
 
 %ul.nav.nav-tabs
   %li{id: 'all', class: " #{'active' if params[:type_list] == 'all' or params[:type_list].nil? }"}
     = link_to 'Todas', purchase_orders_path(type_list: 'all', construction_id: params[:construction_id]), remote: true
-  %li{id: 'not_sent', class: " #{'active' if params[:type_list] == 'not_sent' }"}
-    = link_to 'Pendientes', purchase_orders_path(type_list: 'not_sent', construction_id: params[:construction_id]), remote: true
-  %li{id: 'sent', class: " #{'active' if params[:type_list] == 'sent' }"}
-    = link_to 'Enviadas', purchase_orders_path(type_list: 'sent', construction_id: params[:construction_id]), remote: true
+  %li{id: 'pending', class: " #{'active' if params[:type_list] == 'pending' }"}
+    = link_to 'Pendientes', purchase_orders_path(type_list: 'pending', construction_id: params[:construction_id]), remote: true
+  %li{id: 'complete', class: " #{'active' if params[:type_list] == 'complete' }"}
+    = link_to 'Enviadas', purchase_orders_path(type_list: 'complete', construction_id: params[:construction_id]), remote: true
+  %li{id: 'stamped', class: " #{'active' if params[:type_list] == 'stamped' }"}
+    = link_to 'Autorizadas', purchase_orders_path(type_list: 'stamped', construction_id: params[:construction_id]), remote: true
 
 .list-group#purchase_orders
   = render partial: 'purchase_order', collection: @purchase_orders

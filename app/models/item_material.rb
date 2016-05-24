@@ -1,4 +1,5 @@
 class ItemMaterial < ActiveRecord::Base
+  include AASM
   belongs_to :requisition
   belongs_to :purchase_order
   belongs_to :material
@@ -9,6 +10,30 @@ class ItemMaterial < ActiveRecord::Base
   has_one :payment, through: :invoice
 
   validates :requested, numericality: true
+  scope :pendings, -> {where(status: 'pending')}
+  ########## STATE MACHINE ##########
+  aasm :column => 'status'
+  aasm :whiny_transitions => false
+  aasm do
+    state :pending ,initial: true
+    state :partially, :delivered, :authorized, :missed
+    event :authorize do
+      transitions :from => :pending, :to => :authorized
+    end
+
+    event :miss do
+      transitions :from => [:partially, :delivered, :authorized], :to => :missed
+    end
+
+    event :deliver do
+      transitions :from => [:partially, :missed, :authorized], :to => :delivered
+    end
+
+    event :partially do
+      transitions :from => [:delivered, :missed, :authorized], :to => :partially
+    end
+
+  end
 
   #when the itemMaterial was't fully deliver
   PARTIALLY_DELIVERED_STATUS = 'partially'
@@ -23,30 +48,17 @@ class ItemMaterial < ActiveRecord::Base
 
   STATUS = [DELIVERED_STATUS, PENDING_STATUS, PARTIALLY_DELIVERED_STATUS, AUTHORIZED_STATUS]
 
-  def partially?
-    status == PARTIALLY_DELIVERED_STATUS
-  end
-  def deliver?
-    status == DELIVERED_STATUS
-  end
-  def missed?
-    status == MISSED_STATUS
-  end
-  def authorize?
-    status == AUTHORIZED_STATUS
-  end
 
   def full_item_request
     "#{requested} #{measure_unit}"
   end
 
   def get_color
-
-    if status == PARTIALLY_DELIVERED_STATUS
+    if partially?
       'warning'
-    elsif status == DELIVERED_STATUS
+    elsif delivered?
       'success'
-    elsif status == MISSED_STATUS
+    elsif missed?
       'danger'
     else
       'dafault'

@@ -7,15 +7,18 @@
  *     <li>  tokenAdded {function}: function that notify parent when a result is clicked,@param: value that was selected by user
  *     <li> tokenRemoved {function}: function that notify parent when a token is removed,@param: value that was removed by user
  *     <li> clean: this is for the parent can clean the token setting this to false or true for handling a token added or remove
+ *     <li> noResultMessage
+ *     <li> noResultAction
  * </ul>
  */
 var TokenInputCustom = React.createClass({
+    //TODO add props types
     getInitialState: function () {
-        return {search: '',results: [],token: ''}
+        return {search: '',results: [],token: '',emptyResult: false}
     },
     getDefaultProps: function () {
         var emptyFunction = function () {};
-      return {url: '/',queryParam: 'search',searchDelay: 300,resultClearDelay: 4000,tokenAdded: emptyFunction,tokenRemoved: emptyFunction,clean: true}
+      return {url: '/',queryParam: 'search',searchDelay: 300,resultClearDelay: 4000,tokenAdded: emptyFunction,tokenRemoved: emptyFunction,clean: true,noResultMessage: 'No se encontro,,,',noResultAction: emptyFunction,outsideToken: ''}
     },
     componentWillUnmount: function() {
         this.abortSearchRequest();
@@ -40,9 +43,15 @@ var TokenInputCustom = React.createClass({
             url: this.props.url,
             data: search,
             success: function(data){
-                this.setState({results: data});
+                if(data.length == 0){
+                    // var emptyResult = {id: 0,name: 'No se encontro resultado...',description: ''};
+                    this.setState({emptyResult: true,results: []})
+                }
+                else{
+                    this.setState({results: data,emptyResult: false});
+                }
                 clearTimeout(this.resultTimeout);
-                this.resultTimeout = setTimeout(function () {this.setState({results: []})}.bind(this),this.props.resultClearDelay);
+                this.resultTimeout = setTimeout(function () {this.setState({results: [],emptyResult:false})}.bind(this),this.props.resultClearDelay);
             }.bind(this),
             error: function(XMLHttpRequest, textStatus, errorThrown){
                 if(errorThrown == 'Internal Server Error'){
@@ -60,24 +69,35 @@ var TokenInputCustom = React.createClass({
     },
     onResultClick: function (resultClick) {
         this.props.tokenAdded(resultClick);
-        this.setState({results: [],token: resultClick.name})
-
+        this.setState({results: [],token: resultClick.name});
+    },
+    componentWillReceiveProps: function (nextProps) {
+        if(nextProps.clean){
+            this.setState(this.getInitialState())
+        }
     },
     // TODO will recive props clean search state
     render: function () {
         var token;
         //props.clean is a props for the parent to clean the token input
-        if(this.state.token == 0 || this.props.clean){
+        if( this.props.clean || (this.props.outsideToken == '' && this.state.token == '')){
             token = <input type="text" name="search" value={this.state.search} onChange={this.searchChange} className="form-control" autoComplete="off"/>;
         }else {
+            var tokenName = this.state.token !=  '' ? this.state.token : this.props.outsideToken;
             token = <span className="tag label label-primary">
-                      <span>{this.state.token}</span>
+                      <span>{tokenName}</span>
                       <a onClick={this.onRemoveToken}><i className="remove glyphicon glyphicon-remove-sign glyphicon-white"/></a>
                     </span>;
         }
-        var results = this.state.results.map(function (result) {
-            return (<div className=" hover list-group-item " style={{cursor: 'pointer'}} key={result.id} onClick={()=>this.onResultClick(result)}><h6 className="list-group-item-heading">{result.name + ' '+ result.description}</h6></div>);
-        }.bind(this));
+        var results = null;
+        if(this.state.emptyResult){
+            results = <div className=" hover list-group-item " style={{cursor: 'pointer'}} key='1' onClick={()=> this.props.noResultAction(this.state.search)}><h6 className="list-group-item-heading">{this.props.noResultMessage}</h6></div>
+        }else{
+            results = this.state.results.map(function (result) {
+                return (<div className=" hover list-group-item " style={{cursor: 'pointer'}} key={result.id} onClick={()=>this.onResultClick(result)}><h6 className="list-group-item-heading">{result.name + ' '+ result.description}</h6></div>);
+            }.bind(this));
+        }
+
 
         return (
           <div>

@@ -5,7 +5,7 @@
   # before_action :filter_sub_out
 
   def index
-    @providers = Provider.all_alphabetical.search(sanitized_search).page(params[:page])
+    @providers = Provider.all_alphabetical.search(params[:search]).page(params[:page])
     respond_to do |format|
       format.html {@providers}
       format.json { render :index}

@@ -1,10 +1,8 @@
 .page-header
   %h1 Materiales
-  = simple_form_for :search, url: materials_path, method: :get ,remote: true do |f|
-    .col-lg-6
-      = f.search_field :query, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
-    = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
+#search
 
+%hr
 %ul.nav.nav-tabs
   %li{id: 'all_alphabetical',class: " #{'active' if params[:type_list] == 'all_alphabetical'  or params[:type_list].nil? }"}
     = link_to 'Todos', materials_path(type_list: 'all_alphabetical'), remote: true
@@ -25,3 +23,4 @@
 %br
 
 = link_to 'Nuevo material', new_material_path, class: 'btn btn-primary'
+= javascript_tag "ReactDOM.render( React.createElement(SearchInput,{url: '#{materials_path}',queryParam: 'search'}),document.getElementById('search'));"

@@ -35,7 +35,7 @@ class PurchaseOrdersController < ApplicationController
 
   def create
     @purchase_order = PurchaseOrder.new purchase_order_params
-    @purchase_order.build_invoice provider_id: params[:provider_id]
+    # @purchase_order.build_invoice provider_id: params[:provider_id]
     # @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
     respond_to do |format|
       if @purchase_order.save
@@ -48,9 +48,10 @@ class PurchaseOrdersController < ApplicationController
 
   def stamp
     @purchase_order = PurchaseOrder.find(params[:id])
-    @purchase_order.stamp_it(current_user)
-    if @purchase_order.save
+    if @purchase_order.stampp!(current_user)
       redirect_to @purchase_order
+    else
+      redirect_to @purchase_order,alert: 'Error'
     end
   end
 
@@ -69,6 +70,6 @@ private
   end
 
   def sanitized_locked_param
-    ['sent', 'not_sent'].include?(params[:type_list]) ? params[:type_list] : 'all.order(created_at: :desc)'
+    ['complete', 'pending','stamped'].include?(params[:type_list]) ? params[:type_list] : 'all'
   end
 end

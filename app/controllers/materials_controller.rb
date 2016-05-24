@@ -6,7 +6,7 @@ class MaterialsController < ApplicationController
 
   def index
     @materials = class_eval("Material.#{sanitize_type_list}")
-    @materials = @materials.search(sanitized_search).page(params[:page])
+    @materials = @materials.search(params[:search]).page(params[:page])
     respond_to do |format|
       format.html {@materials}
       format.json { render json: @materials, include: :measure_units}
@@ -58,7 +58,7 @@ class MaterialsController < ApplicationController
 private
 
   def sanitize_type_list
-    ['all_alphabetical','pending'].include?(params[:type_list]) ? params[:type_list] : 'all_alphabetical'
+    ['all','pending'].include?(params[:type_list]) ? params[:type_list] : 'all'
   end
 
 

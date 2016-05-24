@@ -8,14 +8,14 @@ class ConstructionsController < ApplicationController
     if current_user.subordinate?
       params[:mode] = params[:search][:mode] if !params[:search].nil?
       if params[:mode] == 'own'
-        @constructions =  current_user.construction_administrations.search(sanitized_search).page(params[:page])
+        @constructions =  current_user.construction_administrations.search(params[:search]).page(params[:page])
         @mode = :own
       else
-        @constructions =  current_user.constructions.search(sanitized_search).page(params[:page])
+        @constructions =  current_user.constructions.search(params[:search]).page(params[:page])
         @mode = :sub
       end
     else
-      @constructions = instance_eval("Construction.search(sanitized_search).page(params[:page]).#{sanitize_status}")
+      @constructions = instance_eval("Construction.search(params[:search]).page(params[:page]).#{sanitize_status}")
       @mode = :all
     end
     respond_to do |format|

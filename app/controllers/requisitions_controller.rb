@@ -9,17 +9,17 @@ class RequisitionsController < ApplicationController
     @type_list = sanitized_locked_param
     if current_user.subordinate?
       if params[:mode] == 'own'
-        @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]}).page(#{params[:page]})})
+        @requisitions = (class_eval %Q{Requisition.#{@type_list}.from_construction(#{params[:construction_id]}).page(#{params[:page]})})
       else
         if @type_list == 'all_with_conctruction'
           @requisitions = current_user.all_requisitions(params[:construction_id]).page(params[:page])
         else
-          @requisitions = (instance_eval %Q{current_user.#{@type_list}_requisitions(#{params[:construction_id]}).page(#{params[:page]})})
+          @requisitions = (instance_eval %Q{current_user.requisitions.#{@type_list}.from_construction(#{params[:construction_id]}).page(#{params[:page]})})
         end
         @mode = 'sub'
       end
     else
-      @requisitions = (class_eval %Q{Requisition.#{@type_list}(#{params[:construction_id]}).page(#{params[:page]})})
+      @requisitions = (class_eval %Q{Requisition.#{@type_list}.from_construction(#{params[:construction_id]}).page(#{params[:page]})})
     end
     respond_to do |format|
       format.html {@requisition}
@@ -63,7 +63,7 @@ class RequisitionsController < ApplicationController
 
   # only use for sending requisiton for revision
   def update
-    @requisition.status = Requisition::SENT_STATUS
+    @requisition.sent
     if @requisition.save
       redirect_to @requisition, notice: 'La requisición fue cerrada.'
     else
@@ -86,6 +86,6 @@ class RequisitionsController < ApplicationController
   end
 
   def sanitized_locked_param
-      ['complete','partially','pending','sent'].include?(params[:type_list]) ? params[:type_list] : 'all_with_construction'
+      ['complete','partially','pending','sent'].include?(params[:type_list]) ? params[:type_list] : 'all'
   end
 end

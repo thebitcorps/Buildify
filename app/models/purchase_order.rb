@@ -1,5 +1,6 @@
 require 'digest/sha1'
 class PurchaseOrder < ActiveRecord::Base
+  include AASM
   # id, folio, delivery_place, delivery_address, delivery_receiver, status
   # requisition_id, invoice_id, created_at, updated_at, stamp, authorizer_id, stamp_date
   attr_accessor :stamp_purchase_order
@@ -14,8 +15,24 @@ class PurchaseOrder < ActiveRecord::Base
         # Answer: In a previous schema there only can be a payment if an invoice exists related to a PO, after some talking with Llamas Pops later it was decided that payments can exist without an invoice in an office entity. But for now for PO the logic persists since it really can't be a payment for a PO if there isn't an invoice.
   has_one :payment, through: :invoice
   accepts_nested_attributes_for :item_materials, reject_if: :all_blank, allow_destroy: true
+  ##################  State machine   ##################
+  aasm :column => 'status'
+  aasm :whiny_transitions => false
+  aasm do
+    state :pending, initial: true
+    state :complete
+    state :stamped
+
+    event :complete do
+      transitions :from =>  :stamped, :to => :complete
+    end
+
+    event :stampp, after: :stamp_it do
+      transitions :from => :pending, :to => :stamped
+    end
+  end
   ##################  Callbacks   ##################
-  after_create :change_item_material_pending
+  after_create :authorize_item_materials
   before_create :set_folio
   before_save :humanize_receiver
   after_create :check_requisition_items
@@ -27,9 +44,7 @@ class PurchaseOrder < ActiveRecord::Base
   UNCOMPLETED_STATUS = 'pending'
   STAMPED_STATUS = 'stamped'
   ##################  Scopes   ##################
-  scope :sent, -> {where(status: COMPLETE_STATUS ).order(created_at: :desc)}
-  scope :not_sent, -> {where( status: UNCOMPLETED_STATUS).order(created_at: :desc)}
-  scope :authorized, -> {where(status: STAMPED_STATUS).order(created_at: :desc)}
+  default_scope {order(created_at: :desc)}
 
   ##################  Methods   ##################
   def humanize_receiver
@@ -44,25 +59,23 @@ class PurchaseOrder < ActiveRecord::Base
     construction.id.to_s + construction.title[0..2].upcase + requisition.folio.to_s + folio.to_s.rjust(4, '0') + "-" + created_at.year.to_s
   end
 
+  def authorize_item_materials
+    item_materials.collect { |item_material| item_material.authorize!}
+  end
+
   def check_requisition_items
-    items_with_purchase = 0
-    self.requisition.item_materials.each do |item_material|
-      # count item materials that has assing to a purchase order
-      if item_material.status != ItemMaterial::PENDING_STATUS
-        items_with_purchase += 1
-      end
+    items_with_purchase =0
+    self.requisition.item_materials.each do |item|
+      items_with_purchase += 1 if item.authorized?
     end
 
     if items_with_purchase == 0
-      self.requisition.status = Requisition::PENDING_STATUS
+      self.requisition.sent!
     elsif items_with_purchase == self.requisition.item_materials.count
-      self.requisition.status = Requisition::COMPLETE_STATUS
+      self.requisition.complete!
     else
-      self.requisition.status = Requisition::PARTIALLY_STATUS
+      self.requisition.partially_complete!
     end
-
-
-    self.requisition.save
   end
 
   def completed?
@@ -70,16 +83,12 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def is_stamped?
-    !stamp.blank?
+    stamp? or complete?
   end
 
   # change this to helper
   def get_color
     completed? ? 'info' : 'warning'
-  end
-
-  def change_item_material_pending
-    ApplicationHelper::change_item_material_status self,ItemMaterial::AUTHORIZED_STATUS
   end
 
   def set_folio
@@ -90,6 +99,7 @@ class PurchaseOrder < ActiveRecord::Base
     self.stamp = stamper(user.name)
     self.authorizer = user
     self.stamp_date = Date.today
+    save
   end
 
   def verify_stamp(params_stamp)

@@ -1,10 +1,8 @@
-%h1 Proveedores
-= simple_form_for :search, url: providers_path, method: :get,remote: true  do |f|
-  .col-lg-6
-    = f.search_field :query, class: 'form-control',onkeyup: "$('#submit').click();",autocomplete: 'off'
-  = f.submit 'Buscar', class: 'btn btn-default',id: 'submit'
-%br
-%br
+.page-header
+  %h1 Proveedores
+#search
+
+%hr
 
 %ul.list-group#providers
   = render @providers
@@ -13,3 +11,5 @@
 %br
 
 = link_to 'Nuevo proveedor', new_provider_path, class: 'btn btn-primary'
+
+= javascript_tag "ReactDOM.render( React.createElement(SearchInput,{url: '#{providers_path}',queryParam: 'search'}),document.getElementById('search'));"
