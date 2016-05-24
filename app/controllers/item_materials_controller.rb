@@ -7,7 +7,7 @@ class ItemMaterialsController < ApplicationController
     @item_material = ItemMaterial.new item_material_params
     respond_to do |format|
       if @item_material.save
-        format.json {render json: @item_material.to_json(:include => :material)}
+        format.json {render json: @item_material.to_json(include: { material: { include: :measure_units } } )}
       else
         format.json {render json: JSON.parse(@item_material.errors.full_messages.to_json), status: :unprocessable_entity}
       end

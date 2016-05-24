@@ -58,7 +58,7 @@ class MaterialsController < ApplicationController
 private
 
   def sanitize_type_list
-    ['all_alphabetical','pending'].include?(params[:type_list]) ? params[:type_list] : 'all_alphabetical'
+    ['all','pending'].include?(params[:type_list]) ? params[:type_list] : 'all'
   end
 
 

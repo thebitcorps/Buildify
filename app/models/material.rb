@@ -3,7 +3,7 @@ class Material < ActiveRecord::Base
   paginates_per 30
   has_many :permitted_measure_units,dependent: :destroy
   has_many :measure_units, through: :permitted_measure_units
-  scope :all_alphabetical, -> { all.order(name: :asc) } # whats with that statements?
+  default_scope {order(name: :asc)}
   scope :pending, -> { where description: ''} # whats with that statements?
   validates :name ,:measure_units ,presence: true
   # validates :name ,uniqueness: true

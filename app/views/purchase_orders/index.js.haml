@@ -3,7 +3,8 @@ $('#purchase_orders').append("#{j( paginate @purchase_orders,theme: 'twitter-boo
 - if @purchase_orders.empty?
   $('#purchase_orders').append("<div class='well'> No hay ordenes de compra</div>")
 
-$('#sent').attr('class', "#{'active' if @type_list ==  'sent'}");
-$('#not_sent').attr('class', "#{'active' if @type_list ==  'not_sent'}");
+$('#complete').attr('class', "#{'active' if @type_list ==  'complete'}");
+$('#pending').attr('class', "#{'active' if @type_list ==  'pending'}");
+$('#stamped').attr('class', "#{'active' if @type_list ==  'stamped'}");
 $('#all').attr('class', "#{'active' if @type_list ==  'all'}");
 
