@@ -6,7 +6,7 @@ class Ability
     if user.administrator?
       can :manage, :all
     elsif user.subordinate?
-      can [:read, :update], Construction
+      can :read, Construction
       can [:read, :update, :destroy], ItemMaterial
       can :read, MeasureUnit
       can :manage, Requisition
