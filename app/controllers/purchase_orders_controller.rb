@@ -35,7 +35,7 @@ class PurchaseOrdersController < ApplicationController
 
   def create
     @purchase_order = PurchaseOrder.new purchase_order_params
-    # @purchase_order.build_invoice provider_id: params[:provider_id]
+    @purchase_order.build_invoice provider_id: params[:provider_id]
     # @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
     respond_to do |format|
       if @purchase_order.save

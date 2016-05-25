@@ -11,11 +11,7 @@ class RequisitionsController < ApplicationController
       if params[:mode] == 'own'
         @requisitions = (class_eval %Q{Requisition.#{@type_list}.from_construction(#{params[:construction_id]}).page(#{params[:page]})})
       else
-        if @type_list == 'all_with_conctruction'
-          @requisitions = current_user.all_requisitions(params[:construction_id]).page(params[:page])
-        else
-          @requisitions = (instance_eval %Q{current_user.requisitions.#{@type_list}.from_construction(#{params[:construction_id]}).page(#{params[:page]})})
-        end
+        @requisitions = (instance_eval %Q{current_user.requisitions.#{@type_list}.from_construction(#{params[:construction_id]}).page(#{params[:page]})})
         @mode = 'sub'
       end
     else

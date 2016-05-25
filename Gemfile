@@ -24,6 +24,7 @@ gem 'simple_form'
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 gem 'twitter-bootstrap-rails', '3.2.0'
+gem 'public_activity'
 
 gem 'rails_12factor', group: :production
 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post 'notifications/:id' => 'notifications#seen', as: :seen_notification
+
   get 'petty_cash_expenses/:id'=> 'petty_cash_expenses#show', :as => :petty_cash_expense
   post '/petty_cash_expenses' => 'petty_cash_expenses#create'
 

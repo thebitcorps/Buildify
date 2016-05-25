@@ -1,6 +1,7 @@
 ---
 es:
   sign_out: "Cerrar sesión"
+  profile: "Perfil de usuario"
   invoice:
     pdf_message: "Contra recibo PDF"
   purchase_order:

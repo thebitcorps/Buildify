@@ -162,6 +162,11 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    public_activity (1.5.0)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
     puma (3.4.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
@@ -289,6 +294,7 @@ DEPENDENCIES
   pg
   prawn-rails
   pry-rails
+  public_activity
   puma
   quiet_assets
   rails (= 4.2.5)

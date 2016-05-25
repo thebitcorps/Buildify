@@ -1,6 +1,7 @@
 require 'digest/sha1'
 class PurchaseOrder < ActiveRecord::Base
   include AASM
+  include PublicActivity::Common
   # id, folio, delivery_place, delivery_address, delivery_receiver, status
   # requisition_id, invoice_id, created_at, updated_at, stamp, authorizer_id, stamp_date
   attr_accessor :stamp_purchase_order
@@ -22,12 +23,12 @@ class PurchaseOrder < ActiveRecord::Base
     state :pending, initial: true
     state :complete
     state :stamped
-
+    # should be authorize to be stamp, this could change
     event :complete do
       transitions :from =>  :stamped, :to => :complete
     end
 
-    event :stampp, after: :stamp_it do
+    event :stampp, after: [:stamp_it, :notify_purchase_order_creation] do
       transitions :from => :pending, :to => :stamped
     end
   end
@@ -115,6 +116,10 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   private
+  def notify_purchase_order_creation
+    public_activity = create_activity(:create, owner: authorizer)
+    Notification.notify_residents(public_activity,construction)
+  end
 
   def stamper(authority_name)
     Digest::SHA1.base64digest([updated_at, authority_name, item_materials.size].join(", "))

@@ -9,8 +9,22 @@
       %ul.nav.navbar-nav
         %li= link_to 'Inicio', root_path
         = render partial: "common/menubars/#{current_user.roles.first.to_s}"
-      %p.navbar-text.navbar-right
-        = link_to current_user.name, current_user
-        |
-        = link_to destroy_user_session_path, method: :delete, data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' },'title' => t('sign_out') do
-          %span{class: 'fa fa-sign-out'}
+      %ul{class: 'nav navbar-nav navbar-right'}
+        %li.dropdown
+          %a.dropdown-toggle{'aria-expanded' => 'false', 'aria-haspopup' => 'true', 'data-toggle' => 'dropdown', href: '#', role: 'button'}
+            %span{class: 'fa fa-bell-o'}
+            %span{class: 'label label-default'}
+              = current_user.notifications.unseen.count
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              %a
+                ='No hay notificaciones nuevas' if current_user.notifications.unseen.empty?
+            - current_user.notifications.unseen.each do |notification|
+              %li= link_to render_activity(notification.activity),seen_notification_path(notification),method: :post
+        %li
+          = link_to current_user, data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' }, 'title' => t('profile') do
+            %span{class: 'fa fa-user'}
+        %li
+          = link_to destroy_user_session_path, method: :delete, data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' },'title' => t('sign_out') do
+            %span{class: 'fa fa-sign-out'}

@@ -1,5 +1,6 @@
 class Requisition < ActiveRecord::Base
   include AASM
+  include PublicActivity::Common
 
   paginates_per 10
 
@@ -17,7 +18,7 @@ class Requisition < ActiveRecord::Base
     state :partially
     state :complete
 
-    event :sent do
+    event :sent ,after: :notify_requisition_sent do
       transitions :from => :pending, :to => :sent
     end
 
@@ -48,6 +49,7 @@ class Requisition < ActiveRecord::Base
   scope :from_construction, -> (construction_id=nil) {where(construction_id: construction_id)}
 
   ##################  Methods   ##################
+
   # which is better?
   # los auto incrementos de las DB guardan el último número en una tabla, a lo mejor podermos hacer lo mismo para tantos folios
   def self.next_folio(construction_id)
@@ -58,6 +60,8 @@ class Requisition < ActiveRecord::Base
       1
     end
   end
+
+
 
   def formated_folio
     construction.id.to_s + construction.title[0..2].upcase + folio.to_s.rjust(4, '0') + "-" + requisition_date.year.to_s
@@ -90,6 +94,11 @@ class Requisition < ActiveRecord::Base
     elsif sent?
       'danger'
     end
+  end
+  private
+  def notify_requisition_sent
+    public_activity = create_activity(:create, owner: creator)
+    Notification.notify_admins(public_activity)
   end
 
 end
