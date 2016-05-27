@@ -51,7 +51,7 @@ class PurchaseOrdersController < ApplicationController
     if @purchase_order.stampp!(current_user)
       redirect_to @purchase_order
     else
-      redirect_to @purchase_order,alert: 'Error'
+      redirect_to @purchase_order,alert: 'Autorizar primero orden de compra.'
     end
   end
 

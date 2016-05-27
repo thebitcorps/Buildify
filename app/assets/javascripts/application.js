@@ -48,4 +48,7 @@ var loadToolptip = function(){
     $('[data-toggle="tooltip"]').tooltip();
 };
 
+// $(document).on('click', '.dropdown-menu', function (e) {
+//     e.stopPropagation();
+// });
 $(document).on('page:load ready page:change', loadToolptip);

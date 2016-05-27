@@ -1,4 +1,5 @@
 class PettyCash < ActiveRecord::Base
+  include PublicActivity::Common
   belongs_to :construction
   has_many :petty_cash_expenses,dependent: :destroy
   DEFAULT_AMOUNT = '1000'
@@ -18,6 +19,9 @@ class PettyCash < ActiveRecord::Base
     last_petty_chash = last_petty_chash.second
 
     last_petty_chash.closing_date = Time.now
-    last_petty_chash.save
+    if last_petty_chash.save
+      public_activity = create_activity(:create, owner: construction.manager)
+      Notification.notify_admins(public_activity)
+    end
   end
 end

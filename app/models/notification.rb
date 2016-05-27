@@ -10,8 +10,13 @@ class Notification < ActiveRecord::Base
   default_scope {order(created_at: :desc)}
   scope :unseen, -> {where(seen: false)}
   scope :seen, -> {where(seen: true)}
+  scope :from_user, ->(user_id) {where(user_id: user_id)}
   def seen!
     update_column :seen,true
+  end
+
+  def seen?
+    seen
   end
 
   ##################  Class Methods   ##################
@@ -27,4 +32,5 @@ class Notification < ActiveRecord::Base
       Notification.create(user: resident,activity: public_activity)
     end
   end
+
 end

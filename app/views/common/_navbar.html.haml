@@ -18,10 +18,13 @@
             %span.caret
           %ul.dropdown-menu
             %li
+              =link_to '#', class: 'col-sm-1 col-sm-offset-9',data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' }, 'title' => 'Marcar como leidas' do
+                %i{class: 'fa fa-eye'}
+            %li
               %a
-                ='No hay notificaciones nuevas' if current_user.notifications.unseen.empty?
-            - current_user.notifications.unseen.each do |notification|
-              %li= link_to render_activity(notification.activity),seen_notification_path(notification),method: :post
+                ='No hay notificaciones nuevas' if current_user.notifications.empty?
+            - current_user.notifications.limit(10).each do |notification|
+              %li= link_to render_activity(notification.activity),seen_notification_path(notification),method: :post,class: "#{'seen' if notification.seen? }"
         %li
           = link_to current_user, data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' }, 'title' => t('profile') do
             %span{class: 'fa fa-user'}

@@ -17,6 +17,9 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+
+
+
 gem 'haml-rails'
 gem 'aasm'
 gem 'less-rails'
@@ -31,8 +34,7 @@ gem 'rails_12factor', group: :production
 gem 'prawn-rails'
 
 gem 'momentjs-rails', '>= 2.9.0'
-
-gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails'
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
 
 gem 'cocoon'
 gem 'react-rails', '~> 1.0'

@@ -1,6 +1,8 @@
 GIT
   remote: git://github.com/zpaulovics/datetimepicker-rails.git
   revision: 36d21cec5da7f5b214925804f60e63c61c747023
+  branch: master
+  submodules: true
   specs:
     datetimepicker-rails (4.7.16)
       momentjs-rails (>= 2.9.0)
@@ -294,4 +296,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.12.3
+   1.12.5
