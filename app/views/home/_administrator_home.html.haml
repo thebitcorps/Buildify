@@ -7,9 +7,9 @@
 
 = render partial: 'constructions/balance', locals: {expenses: @balance[:expenses], paid: @balance[:paid]}
 %hr
-%h4 Facturas
-= render partial: 'constructions/payment_tabs'
-.panel.panel-default
+.col-md-8
+  %h4 Facturas
+  = render partial: 'constructions/payment_tabs'
   .table-responsive
     %table.table.table-hover
       %thead
@@ -28,7 +28,13 @@
             Pagos
           %th
       %tbody#payments
-        - @acumulated_amount, @acumulated_paid = 0 # por que está esto aquí?
         = render partial: 'payment', collection: @payments
+.col-md-4
+  .panel.panel-default
+    .panel-heading Actividades
+    .panel-body
+      .panel_default_body
+        = render_activities(@activities)
+
 #mod
 #billing

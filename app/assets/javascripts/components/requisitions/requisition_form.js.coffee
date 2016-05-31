@@ -35,8 +35,9 @@
     index = itemMaterials.indexOf element
     itemMaterials.splice index,1
     @setState {itemMaterials: itemMaterials,itemMaterialsIdCount: @state.itemMaterialsIdCount - 1}
-  handleSubmit: (e) ->
-    e.preventDefault()
+  handleSent: ->
+    @handleSubmit('sent')
+  handleSubmit: (sent) ->
     if @state.itemMaterials.length == 0
       @setState errors: ['You need to select at least one item']
       return
@@ -44,6 +45,8 @@
       requisition_date: @state.requisition_date
       construction_id: @props.construction_id
       item_materials_attributes: @state.itemMaterials
+    if(sent == 'sent')
+      data.status = sent
     that = @
     $.ajax
       url: '/requisitions.json'
@@ -83,3 +86,8 @@
         onClick: @handleSubmit
         disabled: !@valid()
         'Guardar requisicion'
+      React.DOM.button
+        className: 'btn btn-default'
+        onClick: @handleSent
+        disabled: !@valid()
+        'Terminar requisicion'

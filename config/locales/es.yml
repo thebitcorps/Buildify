@@ -4,6 +4,13 @@ es:
   profile: "Perfil de usuario"
   invoice:
     pdf_message: "Contra recibo PDF"
+  public_activity:
+    purchase_order:
+      create: "Orden de compra creada por %{name}."
+    petty_cash:
+      create: "Corte de Caja Chica hecho por %{name}."
+    requisition:
+      create: "Requisicion enviada a revision por %{name}."
   purchase_order:
     pdf_message: "Orden de compra PDF"
   materials:

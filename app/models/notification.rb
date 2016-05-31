@@ -19,6 +19,18 @@ class Notification < ActiveRecord::Base
     seen
   end
 
+  def redirect_to_object
+    case activity.trackable
+      when PurchaseOrder
+        activity.trackable.requisition
+      when nil
+        '/'
+      else
+        activity.trackable
+    end
+
+  end
+
   ##################  Class Methods   ##################
   def self.notify_admins(public_activity)
     User.administrators.each do |admin|

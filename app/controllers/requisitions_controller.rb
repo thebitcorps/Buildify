@@ -44,8 +44,8 @@ class RequisitionsController < ApplicationController
 
   def create
     @requisition = Requisition.new requisition_params
-    @requisition.folio = Requisition.next_folio @requisition.construction_id
     @requisition.creator = current_user
+    @requisition.sent if params[:requisition][:status] == 'sent'
     respond_to do |format|
       if @requisition.save
         format.json {render json: @requisition}
@@ -78,7 +78,7 @@ class RequisitionsController < ApplicationController
   end
 
   def requisition_params
-    params.require(:requisition).permit(:construction_id, :requisition_date, item_materials_attributes: [:material_id, :measure_unit, :requested])
+    params.require(:requisition).permit(:construction_id, :status, :requisition_date, item_materials_attributes: [:material_id, :measure_unit, :requested])
   end
 
   def sanitized_locked_param

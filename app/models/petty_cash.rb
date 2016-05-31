@@ -20,7 +20,7 @@ class PettyCash < ActiveRecord::Base
 
     last_petty_chash.closing_date = Time.now
     if last_petty_chash.save
-      public_activity = create_activity(:create, owner: construction.manager)
+      public_activity = last_petty_chash.create_activity(:create, owner: construction.manager)
       Notification.notify_admins(public_activity)
     end
   end

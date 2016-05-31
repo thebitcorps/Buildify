@@ -1,2 +1,4 @@
-%p= "Corte de caja chica #{activity.owner.name}"
-%p.small.text-right=time_ago_in_words activity.created_at
+%div
+  %p= t 'public_activity.petty_cash.create' ,name: activity.owner.name
+  %p.small.text-right=time_ago_in_words activity.created_at
+%hr

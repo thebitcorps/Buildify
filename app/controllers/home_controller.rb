@@ -3,6 +3,7 @@ class HomeController < ApplicationController
 
   def index
     if current_user.administrator?
+      @activities = PublicActivity::Activity.all.order(created_at: :desc).limit(15)
       @constructions = Construction.running
       @payments = Payment.all
       @balance = get_expenses(@constructions)

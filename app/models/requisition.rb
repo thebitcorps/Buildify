@@ -42,7 +42,7 @@ class Requisition < ActiveRecord::Base
   validates :requisition_date, presence: true
   ##################  Callbacks   ##################
   after_create :change_item_material_pending
-
+  before_create :next_folio
 
   ##################  Scopes   ##################
   default_scope {order(created_at: :desc)}
@@ -60,7 +60,9 @@ class Requisition < ActiveRecord::Base
       1
     end
   end
-
+  def next_folio
+    self.folio = Requisition.next_folio self.construction_id
+  end
 
 
   def formated_folio

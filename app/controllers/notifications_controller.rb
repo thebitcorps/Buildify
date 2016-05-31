@@ -5,7 +5,7 @@ class NotificationsController < ApplicationController
   def seen
     @notification = Notification.find params[:id]
     if @notification.seen!
-      redirect_to @notification.activity.trackable
+      redirect_to @notification.redirect_to_object
     else
       redirect_to root_path, alert: 'Error'
     end

@@ -82,19 +82,19 @@ var PettyCashApp = React.createClass({
                    </h1>
                </div>
                <ErrorBox errorsArray={this.state.errors}/>
-                   <h4 className="text-center cons-inf-title row">
-                       <div className="row">
-                           <div className='col-sm-4'>
-                               <small className="text-muted">Cantidad $ <strong>{parseInt(this.props.petty_cash.amount).formatMoney()}</strong></small>
-                           </div>
-                           <div className='col-sm-4'>
-                               <small className="text-muted">Se a gastado $ <strong>{expense_count.formatMoney()}</strong></small>
-                           </div>
-                           <div className='col-sm-4'>
-                               <small className="text-muted">Fecha de inicio <strong>{date}</strong></small>
-                           </div>
+               <h4 className="text-center cons-inf-title row">
+                   <div className="row">
+                       <div className='col-sm-4'>
+                           <small className="text-muted">Cantidad $ <strong>{parseInt(this.props.petty_cash.amount).formatMoney()}</strong></small>
                        </div>
-                   </h4>
+                       <div className='col-sm-4'>
+                           <small className="text-muted">Se a gastado $ <strong>{expense_count.formatMoney()}</strong></small>
+                       </div>
+                       <div className='col-sm-4'>
+                           <small className="text-muted">Fecha de inicio <strong>{date}</strong></small>
+                       </div>
+                   </div>
+               </h4>
 
 
                <div className="row">

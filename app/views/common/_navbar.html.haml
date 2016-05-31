@@ -23,7 +23,7 @@
             %li
               %a
                 ='No hay notificaciones nuevas' if current_user.notifications.empty?
-            - current_user.notifications.limit(10).each do |notification|
+            - current_user.notifications.limit(7).each do |notification|
               %li= link_to render_activity(notification.activity),seen_notification_path(notification),method: :post,class: "#{'seen' if notification.seen? }"
         %li
           = link_to current_user, data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' }, 'title' => t('profile') do

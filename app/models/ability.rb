@@ -14,7 +14,7 @@ class Ability
       can [:read, :create], Material
       can :manage, PettyCash
       can :manage, PettyCashExpense
-      can [:create, :read], Notification
+      can :manage, Notification
     elsif user.secretary?
       can :read, User
       can :manage, Construction
@@ -23,7 +23,7 @@ class Ability
       can :manage, Material
       can :manage, PettyCash
       can :manage, PettyCashExpense
-      can [:create, :read], Notification
+      can :manage, Notification
     end
     # Define abilities for the passed in user here. For example:
     #
