@@ -5,6 +5,7 @@ es:
   invoice:
     pdf_message: "Contra recibo PDF"
   public_activity:
+    recent: "Actividades Recientes"
     purchase_order:
       create: "Orden de compra creada por %{name}."
     petty_cash:

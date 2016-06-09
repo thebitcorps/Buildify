@@ -10,13 +10,20 @@ class Material < ActiveRecord::Base
 
   # here could make to the classes that uses search that implement search to try DRYing the code
   # how about a search class?
-  def self.search(query)
-    return all if query.nil?
-    if query.empty?
+  scope :search , ->(search){
+    if search.blank?
       all
     else
-      where('name ilike ? OR description ilike ?' , "%#{query}%","%#{query}%").order(name: :asc)
+      includes(:measure_units).where('(materials.name || \' \' || materials.description) ILIKE ?', "%#{search}%")
     end
-  end
+  }
+  # def self.search(query)
+  #   return all if query.nil?
+  #   if query.empty?
+  #     all
+  #   else
+  #     where('name ilike ? OR description ilike ?' , "%#{query}%","%#{query}%").order(name: :asc)
+  #   end
+  # end
 
 end

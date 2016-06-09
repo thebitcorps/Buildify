@@ -18,7 +18,7 @@ var SearchInput = React.createClass({
       return {queryParam: 'search',searchDelay: 300,placeholder: 'search'}
     },
     getInitialState: function () {
-        return {serching: false}
+        return {searching: false}
     },
     inputChange: function (name,value) {
         var inputValue = {};

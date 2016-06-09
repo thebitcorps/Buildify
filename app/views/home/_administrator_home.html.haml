@@ -31,7 +31,7 @@
         = render partial: 'payment', collection: @payments
 .col-md-4
   .panel.panel-default
-    .panel-heading Actividades
+    .panel-heading= t 'public_activity.recent'
     .panel-body
       .panel_default_body
         = render_activities(@activities)
