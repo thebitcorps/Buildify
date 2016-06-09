@@ -1,6 +1,6 @@
 .navbar.navbar-default.navbar-static-top
   .container
-    %button.navbar-toggle.collapsed{ "aria-expanded" => "false", type: "button", data: { target: "#main-navbar", toggle: "collapse" } }
+    %button.navbar-toggle.collapsed{ type: :button, data: { target: '#main-navbar', toggle: 'collapse' }, aria: { expanded: false } }
       %span.icon-bar
       %span.icon-bar
       %span.icon-bar
@@ -11,23 +11,27 @@
         = render partial: "common/menubars/#{current_user.roles.first.to_s}"
       %ul{class: 'nav navbar-nav navbar-right'}
         %li.dropdown
-          %a.dropdown-toggle{'aria-expanded' => 'false', 'aria-haspopup' => 'true', 'data-toggle' => 'dropdown', href: '#', role: 'button'}
-            %span{class: 'fa fa-bell-o'}
+          = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' }, role: 'button', aria: { expanded: false, haspopup: true } do
+            %span{class: 'fa fa-bell-o fa-fw'}
             %span{class: 'label label-default'}
               = current_user.notifications.unseen.count
             %span.caret
           %ul.dropdown-menu
-            %li
-              =link_to '#', class: 'col-sm-1 col-sm-offset-9',data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' }, 'title' => 'Marcar como leidas' do
-                %i{class: 'fa fa-eye'}
-            %li
-              %a
-                ='No hay notificaciones nuevas' if current_user.notifications.empty?
-            - current_user.notifications.limit(7).each do |notification|
-              %li= link_to render_activity(notification.activity),seen_notification_path(notification),method: :post,class: "#{'seen' if notification.seen? }"
+            - if current_user.notifications.empty?
+              %li{class: 'dropdown-header'}
+                %p No hay notificaciones
+            - else
+              %li
+                =link_to '#', data: { toggle: :tooltip, placement: :bottom }, title: 'Marcar como leidas' do
+                  Marcar como leidas
+                  %i{class: 'fa fa-eye fa-fw'}
+              %li.divider
+              -# this needs some work, a partial, and a correct route for the member
+              - current_user.notifications.limit(7).each do |notification|
+                %li= link_to render_activity(notification.activity),seen_notification_path(notification), method: :post, class: "#{'seen' if notification.seen? }"
         %li
-          = link_to current_user, data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' }, 'title' => t('profile') do
+          = link_to current_user, data: { toggle: 'tooltip', placement: 'bottom' }, title: t('profile') do
             %span{class: 'fa fa-user'}
         %li
-          = link_to destroy_user_session_path, method: :delete, data: { 'toggle' => 'tooltip' ,'placement' => 'bottom' },'title' => t('sign_out') do
+          = link_to destroy_user_session_path, method: :delete, data: { toggle: 'tooltip', placement: 'bottom' },title: t('sign_out') do
             %span{class: 'fa fa-sign-out'}
