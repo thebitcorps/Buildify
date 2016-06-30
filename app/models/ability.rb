@@ -17,12 +17,12 @@ class Ability
       can :manage, Notification
     elsif user.secretary?
       can :read, User
-      can :manage, Construction
-      can :manage, Provider
+      can :read, Construction
+      can :read, Provider
       can :manage, Invoice
       can :manage, Material
-      can :manage, PettyCash
-      can :manage, PettyCashExpense
+      can :read, PettyCash
+      can :read, PettyCashExpense
       can :manage, Notification
     end
     # Define abilities for the passed in user here. For example:

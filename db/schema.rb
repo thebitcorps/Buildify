@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525135027) do
+ActiveRecord::Schema.define(version: 20160610204746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -131,6 +132,9 @@ ActiveRecord::Schema.define(version: 20160525135027) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "materials", ["description"], name: "description_similarity_idx", using: :gist
+  add_index "materials", ["name"], name: "name_similarity_idx", using: :gist
 
   create_table "measure_units", force: :cascade do |t|
     t.string   "unit"

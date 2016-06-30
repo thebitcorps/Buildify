@@ -1,43 +1,44 @@
 .row
   .col-xs-12
     = render partial: 'show_header', locals: {construction: @construction}
-.row
-  .col-md-4.col-xs-12
-    %div{class: "panel panel-default"}
-      %div{class: "panel-heading"}
-        %h4{class: "panel-title"}
-          Contrato
-          = number_to_currency(@construction.total_budget)
-      %div{class: "panel-body"}
-        %p
-          Monto original:
-          = number_to_currency(@construction.contract_amount)
-  .col-md-4.col-xs-12
-    %div{class: "panel panel-default"}
-      %div{class: "panel-heading"}
-        %h4{class: "panel-title"}
-          Ampliaciones:
-          = number_to_currency(@construction.extensions_amount)
-      %div{class: "panel-body"}
-        %p
-          Actualmente:
-          = @construction.extensions.size
-          = link_to "(ver todas)", extensions_path(construction_id: @construction)
-        %p
-        = link_to 'Agregar', new_extension_path(construction_id: @construction), class: 'pull-right'
-  .col-md-4.col-xs-12
-    %div{class: "panel panel-default"}
-      %div{class: "panel-heading"}
-        %h4{class: "panel-title"}
-          Estimaciones
-          = number_to_currency(@construction.estimates_amount)
-      %div{class: "panel-body"}
-        %p
-          Actualmente:
-          = @construction.estimates.size
-          = link_to "(ver todas)", estimates_path(construction_id: @construction)
-        %p
-          = link_to "Agregar", new_estimate_path(construction_id: @construction), class: 'pull-right'
+- if current_user.administrator?
+  .row
+    .col-md-4.col-xs-12
+      %div{class: "panel panel-default"}
+        %div{class: "panel-heading"}
+          %h4{class: "panel-title"}
+            Contrato
+            = number_to_currency(@construction.total_budget)
+        %div{class: "panel-body"}
+          %p
+            Monto original:
+            = number_to_currency(@construction.contract_amount)
+    .col-md-4.col-xs-12
+      %div{class: "panel panel-default"}
+        %div{class: "panel-heading"}
+          %h4{class: "panel-title"}
+            Ampliaciones:
+            = number_to_currency(@construction.extensions_amount)
+        %div{class: "panel-body"}
+          %p
+            Actualmente:
+            = @construction.extensions.size
+            = link_to "(ver todas)", extensions_path(construction_id: @construction)
+          %p
+          = link_to 'Agregar', new_extension_path(construction_id: @construction), class: 'pull-right'
+    .col-md-4.col-xs-12
+      %div{class: "panel panel-default"}
+        %div{class: "panel-heading"}
+          %h4{class: "panel-title"}
+            Estimaciones
+            = number_to_currency(@construction.estimates_amount)
+        %div{class: "panel-body"}
+          %p
+            Actualmente:
+            = @construction.estimates.size
+            = link_to "(ver todas)", estimates_path(construction_id: @construction)
+          %p
+            = link_to "Agregar", new_estimate_path(construction_id: @construction), class: 'pull-right'
 
 .row
   .col-md-4.col-xs-12
@@ -75,7 +76,7 @@
           Sin facturar:
           = @construction.uninvoiced_purchases_orders.size
 
-- unless current_user.secretary?
+- if current_user.administrator?
   .row
     .col-md-4.col-xs-12
       %div{class: "panel panel-default"}

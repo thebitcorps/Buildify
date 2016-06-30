@@ -2,15 +2,15 @@ class MaterialsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_material, only: [:show, :edit, :destroy, :update]
-  # before_action :humanize_material,only: [:create,:update]
 
   def index
     @materials = class_eval("Material.#{sanitize_type_list}")
     @materials = @materials.search(params[:search]).page(params[:page])
     respond_to do |format|
-      format.html {@materials}
+      # the order in html and js response if for ordering
       format.json { render json: @materials, include: :measure_units}
-      format.js {@materials}
+      format.html {@materials = @materials.order(name: :asc)}
+      format.js {@materials = @materials.order(name: :asc)}
     end
   end
 

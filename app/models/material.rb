@@ -3,7 +3,7 @@ class Material < ActiveRecord::Base
   paginates_per 30
   has_many :permitted_measure_units,dependent: :destroy
   has_many :measure_units, through: :permitted_measure_units
-  default_scope {order(name: :asc)}
+  # default_scope {order(name: :asc)}
   scope :pending, -> { where description: ''} # whats with that statements?
   validates :name ,:measure_units ,presence: true
   # validates :name ,uniqueness: true
@@ -14,16 +14,13 @@ class Material < ActiveRecord::Base
     if search.blank?
       all
     else
-      includes(:measure_units).where('(materials.name || \' \' || materials.description) ILIKE ?', "%#{search}%")
+      # y tried with joined name and description and works better the other way att llams
+      # joined_name = '(name || \' \' || description)'
+      # includes(:measure_units).where("similarity(#{joined_name}, ?) > 0.3", search).order("similarity(#{joined_name}, #{ActiveRecord::Base.connection.quote(search)}) DESC")
+      includes(:measure_units).where("similarity(name, ?) > 0.3 OR similarity(name, ?) > 0.3", search,search).order("similarity(name, #{ActiveRecord::Base.connection.quote(search)}) DESC")
     end
   }
-  # def self.search(query)
-  #   return all if query.nil?
-  #   if query.empty?
-  #     all
-  #   else
-  #     where('name ilike ? OR description ilike ?' , "%#{query}%","%#{query}%").order(name: :asc)
-  #   end
-  # end
+
+
 
 end
