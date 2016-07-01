@@ -6,12 +6,12 @@ class Provider < ActiveRecord::Base
   has_many :payments, through: :invoices
   paginates_per 15
   # validations for provider
-  validates :name, :number, :neighborhood, :city, :street, :zipcode, :email, :telephone, presence: true
+  validates :name, presence: true
   scope :all_alphabetical, -> { all.order("LOWER(name)") }
 
-  validates :zipcode, numericality: {message: 'Código postal debe ser numérico'}, length: {is: 5, message: 'Código postal debe contener 5 digitos'}
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'E-mail inválido'
-  validates :telephone, numericality: {message: 'Télefono debe ser numérico'}, length: { in: 7..10, message: 'Teléfono inválido' }
+  # validates :zipcode, numericality: {message: 'Código postal debe ser numérico'}, length: {is: 5, message: 'Código postal debe contener 5 digitos'}
+  # validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'E-mail inválido'
+  # validates :telephone, numericality: {message: 'Télefono debe ser numérico'}, length: { in: 7..10, message: 'Teléfono inválido' }
 
   before_save :humanize_attr
 
