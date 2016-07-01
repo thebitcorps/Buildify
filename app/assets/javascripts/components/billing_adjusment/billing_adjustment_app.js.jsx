@@ -20,10 +20,10 @@ var BillingAdjusmentApp = React.createClass({
         this.setState(inputResponse);
     },
     getInitialState: function(){
-      return {folio: '',amount: '',adjustment_date: '',payment_type: 'check',reference: '',account: '',adjusments: [],paid_amount: parseInt(this.props.paid_amount),errors: []}
+      return {amount: '',adjustment_date: '',payment_type: 'check',reference: '',account: '',adjusments: [],paid_amount: parseInt(this.props.paid_amount),errors: []}
     },
     isValidAdjusment: function(){
-        return this.state.folio && this.state.amount && this.state.adjustment_date && this.state.payment_type && this.state.reference && this.state.account
+        return this.state.amount && this.state.adjustment_date && this.state.payment_type && this.state.reference && this.state.account
     },
     submitBilling: function(){
         var billing = new BillingAdjusment(this.state.folio,this.state.amount,this.state.payment_type,this.state.adjustment_date,this.props.payment_id,this.state.reference,this.state.account);
@@ -72,28 +72,22 @@ var BillingAdjusmentApp = React.createClass({
     },
     billingadjusmentElement: function(element){
         return (<a className="list-group-item" key={element.id}>
-            <h5 className="list-group-item-heading">
-                Folio: {element.folio}
-                <div className="pull-right">{this.mapPaymentType(element.payment_type)}<label className="label label-primary "> $ {parseFloat(element.amount).formatMoney(2)} </label></div>
-            </h5>
-            <div className="list-group-item-text">,
-                <ul>
-                    <li><b>Fecha:</b> {element.adjustment_date}</li>
-                    <li><b>Cuenta:</b> {element.account}</li>
-                    <li><b>{this.state.payment_type == 'check'  ? 'Numero de cheque' : 'Numero de transaccion'}:</b> {element.reference}</li>
-                </ul>
-            </div>
+                <h5>{this.mapPaymentType(element.payment_type)} por $ {parseFloat(element.amount).formatMoney(2)}</h5>
+                <h6><i className="fa fa-calendar"></i> {element.adjustment_date}</h6>
+                <h6><b>Cuenta:</b> {element.account}</h6>
+                <h6><b>{element.payment_type == 'check'  ? 'Numero de cheque' : 'Numero de transaccion'}:</b> {element.reference}</h6>
         </a>)
     },
     render: function(){
 
-        var reference_message = this.state.payment_type == 'check'  ? 'Numero de cheque' : 'Numero de transaccion';
+        var account_message = this.state.payment_type == 'check'  ? 'Numero de cuenta de cheques' : 'Numero de cuenta';
+        var reference_message = this.state.payment_type == 'check' ? 'Numero de cheque' : 'Numero de transaccion';
         var noBillingsMessage;
         if(this.state.adjusments.length == 0){
             noBillingsMessage = <a className="list-group-item" key={0}>No se han hecho abonos</a> ;
         }
-
-
+        var balanceAmount = this.props.amount - this.state.paid_amount;
+        var balanceMessage = "Total $" + this.props.amount.formatMoney(2)+ ", pagado $" + this.state.paid_amount.formatMoney(2) + " restante $" + balanceAmount.formatMoney(2);
         return (
             <div>
                 <Modal title="Pago factura " parentNode="billing" modalClose={this.updateBroswer}>
@@ -101,16 +95,15 @@ var BillingAdjusmentApp = React.createClass({
                     <div className="row">
                         <div className="col-sm-6">
                             {this.titleElement("Nuevo pago")}
-                            <LabelInput  name="folio" label="Folio" changed={this.inputChange} value={this.state.folio} />
                             <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
                             <DateInput name="adjustment_date" label="Fecha del pago" changed={this.inputChange} value={this.state.adjustment_date}/>
                             <LabelSelect name="payment_type" label="Tipo de pago" onChanged={this.paymentTypeChange} options={[{display: 'Cheque',value: 'check'},{display: 'Transferencia',value: 'transfer'}]}/>
+                            <LabelInput name="account" label={account_message} changed={this.inputChange} value={this.state.account}/>
                             <LabelInput name="reference" label={reference_message} changed={this.inputChange} value={this.state.reference}/>
-                            <LabelInput name="account" label="Cuenta que se deposito" changed={this.inputChange} value={this.state.account}/>
                             <button className="btn btn-primary" disabled={!this.isValidAdjusment()} onClick={this.submitBilling}>Agregar</button>
                         </div>
                         <div className="col-sm-6">
-                            {this.titleElement("Saldo $" + this.props.amount.formatMoney(2)+ ",Pagado $" + this.state.paid_amount.formatMoney(2))}
+                            {this.titleElement(balanceMessage)}
                             <div className="list-group"  style={{height: '500px  ',overflowY: 'auto'}}>
                             {
                                 this.state.adjusments.map(function(item,index){

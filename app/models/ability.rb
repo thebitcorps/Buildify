@@ -16,9 +16,9 @@ class Ability
       can :manage, PettyCashExpense
       can :manage, Notification
     elsif user.secretary?
-      can :read, User
+      can :read, User, id: user.id
       can :read, Construction
-      can :read, Provider
+      can :manage, Provider
       can :manage, Invoice
       can :manage, Material
       can :read, PettyCash

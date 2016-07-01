@@ -91,7 +91,7 @@
                   React.DOM.th key: i,th
             React.DOM.tr null,
               React.DOM.td null,
-                React.createElement TokenInputCustom,url: '/materials',queryParam: 'search',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean,noResultAction: @showMaterialModal,noResultMessage: 'No se encontro. Click para agregar nuevo',outsideToken: this.state.material_name_hidden, openModal: @state.showModalButton
+                React.createElement TokenInputCustom,url: '/materials',queryParam: 'search', placeholder: 'Ingresar nombre del material',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean,noResultAction: @showMaterialModal,noResultMessage: 'No se encontro. Click para agregar nuevo',outsideToken: this.state.material_name_hidden, openModal: @state.showModalButton
 
               React.DOM.td null,
                 React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange

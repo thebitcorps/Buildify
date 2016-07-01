@@ -1,21 +1,21 @@
 
 %a.list-group-item.construction-special-row{:href => "#{construction_or_office_path construction}"}
   %h5
-    -#only show constructnions
-    - unless construction.office?
-      %span.label.label-primary.pull-right= "Monto - #{number_to_currency(construction.contract_amount)}"
-      %span.pull-right -
-      %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
-        = "Estimaciones - #{number_to_currency(construction.estimates_amount)}"
-      -#make method for the expense of construction
-      -#is just an idea so it could be more
-      %span.pull-right -
-    - if construction.office?
+    - if current_user.administrator?
+      - unless construction.office?
+        %span.label.label-primary.pull-right= "Monto - #{number_to_currency(construction.contract_amount)}"
+        %span.pull-right -
+        %span.label.pull-right{class: "#{amount_tag_class(construction)}"}
+          = "Estimaciones - #{number_to_currency(construction.estimates_amount)}"
+        -#make method for the expense of construction
+        -#is just an idea so it could be more
+        %span.pull-right -
+      - if construction.office?
+        %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
+          = "Gastos del mes- Pendiente"
+        %span.pull-right -
       %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
-        = "Gastos del mes- Pendiente"
-      %span.pull-right -
-    %span.label.pull-right{class: "#{expenses_amount_tag(construction)}"}
-      = "Gastos - #{number_to_currency(construction.expenses)}"
+        = "Gastos - #{number_to_currency(construction.expenses)}"
 
   %h4.list-group-item-heading
     = construction.title

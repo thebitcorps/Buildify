@@ -84,12 +84,12 @@ var TokenInputCustom = React.createClass({
         var token;
         //props.clean is a props for the parent to clean the token input
         if( this.props.clean || (this.props.outsideToken == '' && this.state.token == '')){
-            token = <input type="text" name="search" value={this.state.search} onChange={this.searchChange} className="form-control" autoComplete="off"/>;
+            token = <input type="text" name="search" value={this.state.search} onChange={this.searchChange} className="form-control" autoComplete="off" placeholder={this.props.placeholder}/>;
         }else {
             var tokenName = this.state.token !=  '' ? this.state.token : this.props.outsideToken;
             token = <span className="tag label label-primary">
                       <span>{tokenName}</span>
-                      <a onClick={this.onRemoveToken}><i className="remove glyphicon glyphicon-remove-sign glyphicon-white"/></a>
+                      <a onClick={this.onRemoveToken}><i className="fa fa-times fa-fw" style={{color: 'white'}}/></a>
                     </span>;
         }
         var results = null;
