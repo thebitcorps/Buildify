@@ -167,8 +167,9 @@ pdf.table [[f1, made_cell, f2, f3, request_cell, f4, f5, review_cell, f6, f7, au
 
 
 pdf.move_down 10
-
 pdf.text @purchase_order.stamp, align: :center
+
+pdf.text "Sello digital que autentifica la validez de la orden", align: :center
 
 
 pdf.render
