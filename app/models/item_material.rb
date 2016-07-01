@@ -11,6 +11,7 @@ class ItemMaterial < ActiveRecord::Base
 
   validates :requested, numericality: true
   scope :pendings, -> {where(status: 'pending')}
+  after_destroy :update_requisition_state
   ########## STATE MACHINE ##########
   aasm :column => 'status'
   aasm :whiny_transitions => false
@@ -65,5 +66,19 @@ class ItemMaterial < ActiveRecord::Base
     end
   end
 
+private
+  def update_requisition_state
+    items_with_purchase =0
+    self.requisition.item_materials.each do |item|
+      items_with_purchase += 1 if item.authorized?
+    end
 
+    if items_with_purchase == 0
+      self.requisition.sent!
+    elsif items_with_purchase == self.requisition.item_materials.count
+      self.requisition.complete!
+    else
+      self.requisition.partially_complete!
+    end
+  end
 end

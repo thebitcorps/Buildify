@@ -7,6 +7,7 @@
     material: {measure_units: []}
     tokenClean: true
     token: ''
+    showModalButton: false
   valid: ->
     @state.material_id_hidden && @state.requested && @state.measure_unit
   handleInputChange: (name,value) ->
@@ -42,10 +43,15 @@
       ref: name
       name: name
   showMaterialModal: (value)->
-    @setState {material_name_hidden: value}
+#    set showModal false to prevent tikenInput keep calling noResultAction
+    @setState {material_name_hidden: value, showModalButton: false}
     $('#modal').modal();
   closeModal: (material)->
+#    set showModal false to prevent tikenInput keep calling noResultAction
     $('#modal').modal('hide');
+    @setState {showModalButton: false}
+  changeShowModal: ()->
+    @setState {showModalButton: true}
   render: ->
 #    noResult = "<button class='btn btn-primary' onclick={ReactDOM.render(React.createElement(MaterialModal),document.getElementById('new-material'))}>Agregar nuevo material </button>"
     React.DOM.div
@@ -74,13 +80,22 @@
           React.DOM.tbody null,
             React.DOM.tr null,
               for th,i in ['Material','Unidad ','Cantidad','Accion']
-                React.DOM.th key: i,th
+                if th == "Material"
+                  React.DOM.th key: i,
+                    th
+                    React.DOM.button
+                      className: "btn btn-default pull-right"
+                      onClick: @changeShowModal
+                      "+"
+                else
+                  React.DOM.th key: i,th
             React.DOM.tr null,
               React.DOM.td null,
-  #              React.createElement TokenInput,componentName: 'material',url: '/materials.json', onAddToken: @onTokenAdded, onRemoveToken: @removeToken,withDescription: true,allowCreation: noResult
-                React.createElement TokenInputCustom,url: '/materials',queryParam: 'search',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean,noResultAction: @showMaterialModal,noResultMessage: 'No se encontro. Click para agregar nuevo',outsideToken: this.state.material_name_hidden
+                React.createElement TokenInputCustom,url: '/materials',queryParam: 'search',tokenAdded: @onTokenAdded,tokenRemoved: @removeToken,clean: this.state.tokenClean,noResultAction: @showMaterialModal,noResultMessage: 'No se encontro. Click para agregar nuevo',outsideToken: this.state.material_name_hidden, openModal: @state.showModalButton
+
               React.DOM.td null,
                 React.createElement LabelSelect,name: 'measure_unit',options: @units(),onChanged: @handleSelectChange
+
               React.DOM.td null,
                 React.createElement NumberInput,name: 'requested',placeholder: 'Cantidad numerica',changed: @handleInputChange,value: @state.requested
               React.DOM.td null,

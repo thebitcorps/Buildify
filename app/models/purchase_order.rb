@@ -36,7 +36,7 @@ class PurchaseOrder < ActiveRecord::Base
   after_create :authorize_item_materials
   before_create :set_folio
   before_save :humanize_receiver
-  after_create :check_requisition_items
+  after_create :update_requisition_state
 
   #### Validations ####
   validates :delivery_receiver, :status, :requisition_id, presence: true
@@ -64,7 +64,7 @@ class PurchaseOrder < ActiveRecord::Base
     item_materials.collect { |item_material| item_material.authorize!}
   end
 
-  def check_requisition_items
+  def update_requisition_state
     items_with_purchase =0
     self.requisition.item_materials.each do |item|
       items_with_purchase += 1 if item.authorized?

@@ -16,6 +16,10 @@
  *= require bootstrap-datetimepicker
  */
 
+.one-line{
+    display: inline-block;
+}
+
 .header-up{
   margin-top: -30px;
 }

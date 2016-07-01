@@ -104,9 +104,9 @@ var BillingAdjusmentApp = React.createClass({
                             <LabelInput  name="folio" label="Folio" changed={this.inputChange} value={this.state.folio} />
                             <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
                             <DateInput name="adjustment_date" label="Fecha del pago" changed={this.inputChange} value={this.state.adjustment_date}/>
-                            <LabelSelect name="payment_type" label="Tipo de pago" onChanged={this.paymentTypeChange} options={[{display: 'Cheque',value: 'check'},{display: 'Transferencia',value: 'transfer'}]}></LabelSelect>
-                            <LabelInput name="reference" label={reference_message} changed={this.inputChange} value={this.state.reference}></LabelInput>
-                            <LabelInput name="account" label="Cuenta que se deposito" changed={this.inputChange} value={this.state.account} ></LabelInput>
+                            <LabelSelect name="payment_type" label="Tipo de pago" onChanged={this.paymentTypeChange} options={[{display: 'Cheque',value: 'check'},{display: 'Transferencia',value: 'transfer'}]}/>
+                            <LabelInput name="reference" label={reference_message} changed={this.inputChange} value={this.state.reference}/>
+                            <LabelInput name="account" label="Cuenta que se deposito" changed={this.inputChange} value={this.state.account}/>
                             <button className="btn btn-primary" disabled={!this.isValidAdjusment()} onClick={this.submitBilling}>Agregar</button>
                         </div>
                         <div className="col-sm-6">

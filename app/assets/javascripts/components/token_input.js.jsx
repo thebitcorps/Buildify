@@ -73,7 +73,10 @@ var TokenInputCustom = React.createClass({
     },
     componentWillReceiveProps: function (nextProps) {
         if(nextProps.clean){
-            this.setState(this.getInitialState())
+            this.setState(this.getInitialState());
+        }
+        if(nextProps.openModal){
+            this.props.noResultAction(this.state.search);
         }
     },
     // TODO will recive props clean search state
