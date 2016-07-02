@@ -1,20 +1,18 @@
-%a.list-group-item.construction-special-row{:href => "#{purchase_order_path(purchase_order)}"}
+-# %a.list-group-item.construction-special-row{:href => "#{purchase_order_path(purchase_order)}"}
+= link_to purchase_order_path(purchase_order), class: "list-group-item construction-special-row" do
   .row
     .col-md-12
       %h4.pull-right
         %small
-          -if purchase_order.completed?
-            = "Enviada a proveedor"
-          -else
-            = "Pendiente"
+          - purchase_order.completed? ? "Enviada a proveedor" : "Pendiente"
       %table
         %tr
           %td
-            = link_to purchase_order.construction.title,construction_path(purchase_order.construction)
-            %h4{style: ' display: inline-block;'}
+            = link_to purchase_order.construction.title, construction_path(purchase_order.construction)
+            %h4{style: 'display: inline-block;'}
               %span{class: "label label-#{purchase_order.get_color}"}
                 = purchase_order.formated_folio
           %td
             %h4
               %small
-                = [purchase_order.item_materials.count, " materiales agregados"].join(' ')
+                = [purchase_order.item_materials.count, "materiales agregados"].join(' ')

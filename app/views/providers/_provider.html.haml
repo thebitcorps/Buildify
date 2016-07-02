@@ -4,8 +4,9 @@
     = link_to provider.name, provider
     .pull-right.btn-group
       = link_to 'Editar', edit_provider_path(provider), class: 'btn btn-warning'
-      = link_to 'Borrar', provider, :method => :delete, class: 'btn btn-danger', :data => { :confirm => '¿Seguro desea eliminar este proveedor?' }
+      = link_to 'Borrar', provider, method: :delete, class: 'btn btn-danger', data: { confirm: '¿Seguro desea eliminar este proveedor?' }
   %p.list-group-item-text
+    -# Fontawesome
     %span.glyphicon.glyphicon-home
     =provider.address
     %br
