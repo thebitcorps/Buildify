@@ -22,6 +22,7 @@
 
   # we show add @provider_purchase order so we can show similar as in the user the purchse_order of the correspondly provider
   def show
+    @missing_attributes = @provider.attributes.select { |key,value| key if value.blank? }
   end
 
   def create
