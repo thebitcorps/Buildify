@@ -2,25 +2,27 @@
   %h1
     = @provider.name
     = link_to 'Administrar', edit_provider_path(@provider), class: 'btn btn-primary btn-sm'
+  - if !@missing_attributes.empty?
+    %div
+      %h5
+        %i.fa.fa-warning
+        Hay datos faltantes para este proveedor
   .row
+    -# this needs better formatting
     .col-md-4
       %h3.text-center
-        %small
-          = @provider.street
-          %br
-          = @provider.neighborhood
-          %br
-          = "##{@provider.number}"
-          %br
-          = @provider.city
-          %br
-          = "C.P #{@provider.zipcode}"
+        %address
+          = @provider.street unless @provider.street.blank?
+          = @provider.neighborhood unless @provider.neighborhood.blank?
+          = "##{@provider.number}" unless @provider.number.blank?
+          = @provider.city unless @provider.city.blank?
+          = "cp #{@provider.zipcode}" unless @provider.zipcode.blank?
     .col-md-4
       %h3.text-center
-        %small= "Tel: " + @provider.telephone
+        %small= "Tel: " + @provider.telephone unless @provider.telephone.blank?
     .col-md-4
       %h3.text-center
-        %small= "Email: " + @provider.email
+        %small= "Email: " + @provider.email unless @provider.email.blank?
 
 .row
   - expenses = @provider.expenses
@@ -47,7 +49,7 @@
 -#ajax this methods call proper controllers
 %ul.nav.nav-tabs
   %li.active
-    %a{"data-toggle" => "tab", :href => "#purchase_orders"} Ordenes decompra
+    %a{"data-toggle" => "tab", :href => "#purchase_orders"} Ordenes de compra
   %li
     %a{"data-toggle" => "tab", :href => "#paymets"} Gastos
   -#payments for that provider

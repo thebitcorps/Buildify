@@ -2,12 +2,10 @@
   %h1 Proveedores
 #search
 
-%hr
-
 %ul.list-group#providers
   = render @providers
 #paginate
-  = paginate @providers,theme: 'twitter-bootstrap-3',remote: true
+  = paginate @providers, theme: 'twitter-bootstrap-3', remote: true
 %br
 
 = link_to 'Nuevo proveedor', new_provider_path, class: 'btn btn-primary'
