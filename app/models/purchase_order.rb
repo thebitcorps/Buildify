@@ -46,6 +46,9 @@ class PurchaseOrder < ActiveRecord::Base
   STAMPED_STATUS = 'stamped'
   ##################  Scopes   ##################
   default_scope {order(created_at: :desc)}
+  scope :active, ->{
+    joins(:construction).where(constructions: {status: :running})
+  }
 
   ##################  Methods   ##################
   def humanize_receiver

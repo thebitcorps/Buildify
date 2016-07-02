@@ -11,10 +11,13 @@ class HomeController < ApplicationController
       @requisitions = current_user.requisitions
     elsif current_user.secretary?
       @payments = Payment.all
+      @purchase_orders = PurchaseOrder.active.page(params[:page])
     end
 
   end
   private
+
+
   # method that extract all the expenses from the given construction array
   # return: hash with keys expeneses and paid with the sum of all the expeneses and paid
   def get_expenses(constructions)

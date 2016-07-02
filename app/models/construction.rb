@@ -57,7 +57,6 @@ class Construction < ActiveRecord::Base
   end
 
 
-
   def validate_dates_logic_relation
     if finish_date.nil?
       errors.add(:finish_date,"Can't be blank")
@@ -104,29 +103,6 @@ class Construction < ActiveRecord::Base
     extensions_amount + contract_amount
   end
 
-  def pending_requisitions(user = nil)
-    if user.nil?
-      requisitions.where status: :pending
-    else
-      requisitions.where status: :pending, user_id: user.id
-    end
-  end
-
-  def partial_requisitions(user = nil)
-    if user.nil?
-      requisitions.where status: :partially
-    else
-      requisitions.where status: :partially, user_id: user.id
-    end
-  end
-
-  def complete_requisitions(user = nil)
-    if user.nil?
-      requisitions.where status: :complete
-    else
-      requisitions.where status: :complete, user_id: user.id
-    end
-  end
 
   def invoiced_purchases_orders
     purchase_orders.select { |po| !po.invoice.waiting?}
@@ -138,6 +114,14 @@ class Construction < ActiveRecord::Base
 
   def office?
     type == 'Office'
+  end
+
+  def running?
+    status == 'running'
+  end
+
+  def stopped?
+    status == 'stopped'
   end
 
 
@@ -157,5 +141,6 @@ class Construction < ActiveRecord::Base
       where("title ilike ?", "%#{query}%").order(title: :asc)
     end
   end
+
 
 end

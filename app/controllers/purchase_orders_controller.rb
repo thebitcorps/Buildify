@@ -7,8 +7,12 @@ class PurchaseOrdersController < ApplicationController
 
   def index
     @type_list = sanitized_locked_param
-    @construction = Construction.find(params[:construction_id])
-    @purchase_orders = (instance_eval %Q{@construction.purchase_orders.#{@type_list}.page(#{params[:page]})})
+    if params[:construction_id]
+      @construction = Construction.find(params[:construction_id])
+      @purchase_orders = (instance_eval %Q{@construction.purchase_orders.#{@type_list}.page(#{params[:page]})})
+    else
+      @purchase_orders = (class_eval %Q{PurchaseOrder.active.#{@type_list}.page(#{params[:page]})})
+    end
     respond_to do |format|
       format.html
       format.js

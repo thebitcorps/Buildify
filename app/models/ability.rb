@@ -18,6 +18,7 @@ class Ability
     elsif user.secretary?
       can :read, User, id: user.id
       can :read, Construction
+      can :manage, PurchaseOrder
       can :manage, Provider
       can :manage, Invoice
       can :manage, Material
