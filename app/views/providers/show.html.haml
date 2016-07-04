@@ -10,7 +10,8 @@
   .row
     -# this needs better formatting
     .col-md-4
-      %h3.text-center
+      %h5.text-center Domicilio
+      %p.text-center
         %address
           = @provider.street unless @provider.street.blank?
           = @provider.neighborhood unless @provider.neighborhood.blank?
@@ -18,11 +19,11 @@
           = @provider.city unless @provider.city.blank?
           = "cp #{@provider.zipcode}" unless @provider.zipcode.blank?
     .col-md-4
-      %h3.text-center
-        %small= "Tel: " + @provider.telephone unless @provider.telephone.blank?
+      %h5.text-center Teléfono
+      %p{class: 'phone'}= link_to @provider.telephone, "tel:#{@provider.telephone}" unless @provider.telephone.blank?
     .col-md-4
-      %h3.text-center
-        %small= "Email: " + @provider.email unless @provider.email.blank?
+      %h5.text-center Correo
+      %p{class: 'mail'}= mail_to @provider.email unless @provider.email.blank?
 
 .row
   - expenses = @provider.expenses
@@ -30,7 +31,7 @@
   .col-md-4
     .panel.panel-warning
       .panel-heading
-        Se le a comprado
+        Se le ha comprado
       .panel-body
         = number_to_currency expenses
   .col-md-4
@@ -48,31 +49,23 @@
 
 -#ajax this methods call proper controllers
 %ul.nav.nav-tabs
-  %li.active
-    %a{"data-toggle" => "tab", :href => "#purchase_orders"} Ordenes de compra
-  %li
-    %a{"data-toggle" => "tab", :href => "#paymets"} Gastos
+  %li.active= link_to 'Ordenes de compra', '#purchase_orders', data: {toggle: :tab}
+  %li= link_to 'Gastos', '#payments', data: {toggle: :tab}
   -#payments for that provider
 .tab-content
   #purchase_orders.tab-pane.fade.active.in
-    = render partial: 'providers/purchase_order',collection: @provider.purchase_orders
-  #paymets.tab-pane.fade
+    = render partial: 'providers/purchase_order', collection: @provider.purchase_orders
+  #payments.tab-pane.fade
     .panel.panel-default
       %table.table
         %thead
           %tr
-            %th
-              Factura
-            %th
-              Orden de compra
-            %th
-              Importe
-            %th
-              Pagado
-            %th
-              Saldo
-            %th
-              Pagos
+            %th Factura
+            %th Orden de compra
+            %th Importe
+            %th Pagado
+            %th Saldo
+            %th Pagos
             %th
         %tbody
           = render partial: 'home/payment', collection: @provider.payments
