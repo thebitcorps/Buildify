@@ -1,7 +1,9 @@
 .page-header
   %h1
     = @provider.name
-    = link_to 'Administrar', edit_provider_path(@provider), class: 'btn btn-primary btn-sm'
+    = link_to edit_provider_path(@provider), class: 'btn btn-primary btn-sm' do
+      %i{class: 'fa fa-pencil'}
+      Editar
   - if !@missing_attributes.empty?
     %div
       %h5
@@ -48,24 +50,26 @@
         = number_to_currency expenses - paid
 
 -#ajax this methods call proper controllers
-%ul.nav.nav-tabs
-  %li.active= link_to 'Ordenes de compra', '#purchase_orders', data: {toggle: :tab}
-  %li= link_to 'Gastos', '#payments', data: {toggle: :tab}
-  -#payments for that provider
-.tab-content
-  #purchase_orders.tab-pane.fade.active.in
-    = render partial: 'providers/purchase_order', collection: @provider.purchase_orders
-  #payments.tab-pane.fade
-    .panel.panel-default
-      %table.table
-        %thead
-          %tr
-            %th Factura
-            %th Orden de compra
-            %th Importe
-            %th Pagado
-            %th Saldo
-            %th Pagos
-            %th
-        %tbody
-          = render partial: 'home/payment', collection: @provider.payments
+.row
+  .col-md-12
+    %ul.nav.nav-tabs
+      %li.active= link_to 'Ordenes de compra', '#purchase_orders', data: {toggle: :tab}
+      %li= link_to 'Gastos', '#payments', data: {toggle: :tab}
+      -#payments for that provider
+    .tab-content
+      #purchase_orders.tab-pane.fade.active.in
+        = render partial: 'providers/purchase_order', collection: @provider.purchase_orders
+      #payments.tab-pane.fade
+        .panel.panel-default
+          %table.table
+            %thead
+              %tr
+                %th Factura
+                %th Orden de compra
+                %th Importe
+                %th Pagado
+                %th Saldo
+                %th Pagos
+                %th
+            %tbody
+              = render partial: 'home/payment', collection: @provider.payments
