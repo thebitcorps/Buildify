@@ -35,6 +35,7 @@ class PurchaseOrder < ActiveRecord::Base
   ##################  Callbacks   ##################
   after_create :authorize_item_materials
   before_create :set_folio
+  before_create :set_formated_folio
   before_save :humanize_receiver
   after_create :update_requisition_state
 
@@ -59,8 +60,8 @@ class PurchaseOrder < ActiveRecord::Base
     count == 1 ? 'orden de compra' : 'ordenes de compra'
   end
 
-  def formated_folio
-    construction.id.to_s + construction.title[0..2].upcase + requisition.folio.to_s + folio.to_s.rjust(4, '0') + "-" + created_at.year.to_s
+  def set_formated_folio
+    self.formated_folio = construction.id.to_s + construction.title[0..2].upcase + requisition.folio.to_s + folio.to_s.rjust(4, '0') + "-" + created_at.year.to_s
   end
 
   def authorize_item_materials
@@ -87,7 +88,7 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   def is_stamped?
-    stamp? or complete?
+    stamp?
   end
 
   # change this to helper

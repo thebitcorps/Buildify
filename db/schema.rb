@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610204746) do
+ActiveRecord::Schema.define(version: 20160707171601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,13 +97,14 @@ ActiveRecord::Schema.define(version: 20160610204746) do
 
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
-    t.string   "status",       default: "waiting"
+    t.string   "status",        default: "waiting"
     t.decimal  "amount"
     t.date     "invoice_date"
     t.integer  "payment_id"
     t.integer  "provider_id"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "receipt_folio"
   end
 
   add_index "invoices", ["payment_id"], name: "index_invoices_on_payment_id", using: :btree
@@ -225,6 +226,7 @@ ActiveRecord::Schema.define(version: 20160610204746) do
     t.string   "stamp"
     t.integer  "authorizer_id"
     t.date     "stamp_date"
+    t.string   "formated_folio"
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree
@@ -238,6 +240,7 @@ ActiveRecord::Schema.define(version: 20160610204746) do
     t.integer  "user_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+    t.string   "formated_folio"
   end
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
