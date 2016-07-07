@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     @user = User.new(creation_params)
     respond_to do |format|
       if @user.save
-        # @user.add_role role_param # possible bug, implementing before_create callback
+        @user.add_role role_param # possible bug, implementing before_create callback
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      # @user.change_role role_param
+      @user.change_role role_param
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
