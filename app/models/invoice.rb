@@ -16,6 +16,7 @@ class Invoice < ActiveRecord::Base
 
   after_update :set_purchase_order_sent
   after_update :notify_admins
+
   # validates :folio,:amount,:invoice_date,presence: true
   # validates :amount, numericality: true
   #we create the invoice always so we manage the existance of the invoice if the folio is nil
@@ -24,8 +25,9 @@ class Invoice < ActiveRecord::Base
     self.status == WAITING_STATUS
   end
 
-  def receipt_folio
-    purchase_order.folio.to_s + construction.title[0..2].upcase + id.to_s.rjust(4, '0')
+  def set_receipt_folio
+    self.receipt_folio = purchase_order.folio.to_s + construction.title[0..2].upcase + id.to_s.rjust(4, '0')
+    self.save
   end
 
   def set_purchase_order_sent

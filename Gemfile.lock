@@ -63,6 +63,9 @@ GEM
       rails (>= 3.1)
     brakeman (3.3.0)
     builder (3.2.2)
+    bullet (5.1.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.0.4)
     cancancan (1.14.0)
     cocoon (1.2.9)
@@ -250,6 +253,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.10.0)
     warden (1.2.6)
       rack (>= 1.0)
 
@@ -262,6 +266,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-kaminari-views
   brakeman
+  bullet
   byebug
   cancancan (~> 1.10)
   cocoon

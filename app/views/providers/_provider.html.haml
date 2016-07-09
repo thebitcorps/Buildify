@@ -1,16 +1,23 @@
--#<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 %li.list-group-item
   %h4.list-group-item-heading
     = link_to provider.name, provider
     .pull-right.btn-group
-      = link_to 'Editar', edit_provider_path(provider), class: 'btn btn-warning'
-      = link_to 'Borrar', provider, method: :delete, class: 'btn btn-danger', data: { confirm: '¿Seguro desea eliminar este proveedor?' }
+      = link_to edit_provider_path(provider), class: 'btn btn-warning' do
+        %i{class: 'fa fa-pencil'}
+        Editar
+      = link_to provider, method: :delete, class: 'btn btn-danger', data: { confirm: '¿Seguro desea eliminar este proveedor?' } do
+        %i{class: 'fa fa-trash-o'}
+        Borrar
   %p.list-group-item-text
-    %span.fa.fa-globe
-    =provider.address
-    %br
-    %span.fa.fa-phone
-    = provider.telephone
-    %br
-    %span.fa.fa-envelope-o
-    = provider.email
+    - unless provider.address.empty?
+      %span.fa.fa-globe
+      = provider.address
+      %br
+    - unless provider.telephone.empty?
+      %span.fa.fa-phone
+      = provider.telephone
+      %br
+    - unless provider.email.empty?
+      %span.fa.fa-envelope-o
+      = provider.email
+      %br

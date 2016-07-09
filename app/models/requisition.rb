@@ -43,6 +43,7 @@ class Requisition < ActiveRecord::Base
   ##################  Callbacks   ##################
   after_create :change_item_material_pending
   before_create :next_folio
+  before_create :set_formated_folio
 
   ##################  Scopes   ##################
   default_scope {order(created_at: :desc)}
@@ -65,8 +66,8 @@ class Requisition < ActiveRecord::Base
   end
 
 
-  def formated_folio
-    construction.id.to_s + construction.title[0..2].upcase + folio.to_s.rjust(4, '0') + "-" + requisition_date.year.to_s
+  def set_formated_folio
+    self.formated_folio = construction.id.to_s + construction.title[0..2].upcase + folio.to_s.rjust(4, '0') + "-" + requisition_date.year.to_s
   end
 
   def self.plural(count)
