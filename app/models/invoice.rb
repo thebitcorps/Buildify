@@ -4,6 +4,7 @@ class Invoice < ActiveRecord::Base
   has_one :construction, through: :requisition
   belongs_to :payment
   belongs_to :provider
+  include PublicActivity::Common
   #status when the invoice is create in db
   WAITING_STATUS = 'waiting'
   #status when user finally capture the invoice
@@ -14,6 +15,7 @@ class Invoice < ActiveRecord::Base
   PAID_STATUS = 'paid'
 
   after_update :set_purchase_order_sent
+  after_update :notify_admins
   # validates :folio,:amount,:invoice_date,presence: true
   # validates :amount, numericality: true
   #we create the invoice always so we manage the existance of the invoice if the folio is nil
@@ -29,6 +31,13 @@ class Invoice < ActiveRecord::Base
   def set_purchase_order_sent
     purchase_order.status = PurchaseOrder::COMPLETE_STATUS
     purchase_order.save
+  end
+
+  def notify_admins
+    # Uncomment until the we generate the invoice aparte from the purchase order
+    # and change this to create callback
+    # activity = create_activity(:update,owner: provider)
+    # Notification.notify_admins activity
   end
 
 

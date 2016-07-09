@@ -119,9 +119,11 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   private
+
   def notify_purchase_order_creation
     public_activity = create_activity(:create, owner: authorizer)
     Notification.notify_residents(public_activity,construction)
+    Notification.notify_secretary(public_activity)
   end
 
   def stamper(authority_name)
