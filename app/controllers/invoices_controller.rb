@@ -4,6 +4,7 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :document, :edit, :update]
 
   def show
+    redirect_to document_invoice_path(@invoice)
   end
 
   def edit
