@@ -45,9 +45,9 @@ class RequisitionsController < ApplicationController
   def create
     @requisition = Requisition.new requisition_params
     @requisition.creator = current_user
-    @requisition.sent if params[:requisition][:status] == 'sent'
     respond_to do |format|
       if @requisition.save
+        @requisition.sent! if params[:requisition][:status] == 'sent'
         format.json {render json: @requisition}
         format.html {redirect_to @requisition, notice: 'requisition was made'}
       else

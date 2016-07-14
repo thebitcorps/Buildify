@@ -20,7 +20,7 @@ class PurchaseOrder < ActiveRecord::Base
   aasm :column => 'status'
   aasm :whiny_transitions => false
   aasm do
-    state :pending, initial: true
+    state :pending, initial: true, before_enter: :set_formated_folio
     state :complete
     state :stamped
     # should be authorize to be stamp, this could change
