@@ -4,6 +4,6 @@
   = f.input :phone
   = f.input :password
   = f.input :password_confirmation
-  = f.input :role, as: :fake_select, collection: User::ROLES_SELECT
-  = f.button :submit,class: 'btn btn-primary'
-  = link_to 'Cancelar',users_path,class: 'btn btn-default'
+  = f.input :roles, collection: User::ROLES
+  = f.button :submit, class: 'btn btn-primary'
+  = link_to 'Cancelar', users_path, class: 'btn btn-default'

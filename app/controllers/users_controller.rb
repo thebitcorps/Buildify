@@ -108,6 +108,6 @@ class UsersController < ApplicationController
     end
 
     def creation_params
-      params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation, :roles)
+      params.require(:user).permit(:name, :phone, :email, :password, :password_confirmation, :roles_ids)
     end
 end
