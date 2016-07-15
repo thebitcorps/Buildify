@@ -22,7 +22,7 @@ class Notification < ActiveRecord::Base
   def redirect_to_object
     case activity.trackable
       when PurchaseOrder
-        activity.trackable.requisition
+        user.secretary? ? activity.trackable : activity.trackable.requisition
       when nil
         '/'
       else
@@ -41,7 +41,13 @@ class Notification < ActiveRecord::Base
   def self.notify_residents(public_activity, construction)
     Notification.create(user: construction.manager,activity: public_activity)
     construction.residents.each do |resident|
-      Notification.create(user: resident,activity: public_activity)
+      Notification.create(user: resident,activity: public_activity) unless resident.access_locked?
+    end
+  end
+
+  def self.notify_secretary(public_activity)
+    User.secretaries.each do |secretary|
+      Notification.create(user: secretary, activity: public_activity) unless secretary.access_locked?
     end
   end
 

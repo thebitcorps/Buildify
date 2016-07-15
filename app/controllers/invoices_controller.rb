@@ -4,6 +4,7 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :document, :edit, :update]
 
   def show
+    redirect_to document_invoice_path(@invoice)
   end
 
   def edit
@@ -15,16 +16,9 @@ class InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update invoice_params
-        @invoice.build_payment if @invoice.payment.nil? && !@invoice.amount.blank?
-        #here we have repetition of fields
-        #maybe get this value always from the invoice to prevent repetition
-        @invoice.payment.amount = @invoice.amount
-        @invoice.payment.payment_date = @invoice.invoice_date
-        @invoice.payment.construction = @invoice.construction
-        @invoice.save # este método no es correcto en la actualización
         format.html { redirect_to @invoice.construction, notice: 'Factura actualizada.' }
       else
-        format.html { render :edit }
+        format.html { render :edit, notice: 'Error' }
       end
     end
   end

@@ -1,0 +1,5 @@
+%div
+  -#%p= t 'public_activity.petty_cash.create' ,name: activity.owner.name
+  %p= "Factura recibida de #{activity.owner.try(:name)}"
+  %p.small.text-right=time_ago_in_words activity.created_at
+%hr

@@ -20,7 +20,7 @@ class PurchaseOrder < ActiveRecord::Base
   aasm :column => 'status'
   aasm :whiny_transitions => false
   aasm do
-    state :pending, initial: true
+    state :pending, initial: true, before_enter: :set_formated_folio
     state :complete
     state :stamped
     # should be authorize to be stamp, this could change
@@ -120,9 +120,11 @@ class PurchaseOrder < ActiveRecord::Base
   end
 
   private
+
   def notify_purchase_order_creation
     public_activity = create_activity(:create, owner: authorizer)
     Notification.notify_residents(public_activity,construction)
+    Notification.notify_secretary(public_activity)
   end
 
   def stamper(authority_name)
