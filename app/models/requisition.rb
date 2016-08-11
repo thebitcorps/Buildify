@@ -54,13 +54,14 @@ class Requisition < ActiveRecord::Base
   # which is better?
   # los auto incrementos de las DB guardan el último número en una tabla, a lo mejor podermos hacer lo mismo para tantos folios
   def self.next_folio(construction_id)
-    last_requisition = where(construction_id: construction_id).last
+    last_requisition = where(construction_id: construction_id).first
     if last_requisition
       last_requisition.folio + 1
     else
       1
     end
   end
+
   def next_folio
     self.folio = Requisition.next_folio self.construction_id
   end
