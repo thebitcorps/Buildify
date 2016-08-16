@@ -3,6 +3,9 @@
     %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
     %li.active Ordenes de compra
 
+#search
+
+
 %ul.nav.nav-tabs
   %li{id: 'all', class: " #{'active' if params[:type_list] == 'all' or params[:type_list].nil? }"}
     = link_to 'Todas', purchase_orders_path(type_list: 'all', construction_id: params[:construction_id]), remote: true
@@ -19,3 +22,5 @@
   - if @purchase_orders.empty?
     .well
       No hay ordenes de compra
+
+= javascript_tag "ReactDOM.render( React.createElement(SearchInput,{staticParams: {'construction_id':#{@construction.id}, 'type_list': 'all'}, url: '#{purchase_orders_path}', placeholder: 'Folio',queryParam: 'formated_folio'}),document.getElementById('search'));"

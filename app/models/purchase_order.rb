@@ -51,6 +51,14 @@ class PurchaseOrder < ActiveRecord::Base
     joins(:construction).where(constructions: {status: :running})
   }
 
+  scope :by_folio, -> (folio) {
+    if folio.nil? or folio.empty?
+      all
+    else
+      where('lower(purchase_orders.formated_folio) = ?', folio.downcase)
+    end
+  }
+
   ##################  Methods   ##################
   def humanize_receiver
     self.delivery_receiver = delivery_receiver.humanize

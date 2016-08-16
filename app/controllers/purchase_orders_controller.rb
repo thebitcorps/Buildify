@@ -9,9 +9,9 @@ class PurchaseOrdersController < ApplicationController
     @type_list = sanitized_locked_param
     if params[:construction_id]
       @construction = Construction.find(params[:construction_id])
-      @purchase_orders = (instance_eval %Q{@construction.purchase_orders.#{@type_list}.page(#{params[:page]})})
+      @purchase_orders = (instance_eval %Q{@construction.purchase_orders.#{@type_list}.by_folio(#{sanitize_formated_folio}).page(#{params[:page]})})
     else
-      @purchase_orders = (class_eval %Q{PurchaseOrder.active.#{@type_list}.page(#{params[:page]})})
+      @purchase_orders = (class_eval %Q{PurchaseOrder.active.#{@type_list}.by_folio(#{sanitize_formated_folio}).page(#{params[:page]})})
     end
     respond_to do |format|
       format.html
@@ -60,6 +60,13 @@ class PurchaseOrdersController < ApplicationController
   end
 
 private
+  def sanitize_formated_folio
+    if params[:formated_folio].nil?
+      "nil"
+    else
+      "\'#{params[:formated_folio]}\'"
+    end
+  end
 
   def set_requisition
     @requisition = Requisition.find params[:requisition_id]

@@ -48,7 +48,7 @@ deliver_inf_cell.style inline_format: true, align: :left, borders: [:bottom, :le
 deliver_inf_data_cell = pdf.make_cell content: "#{@purchase_order.delivery_receiver}"
 deliver_inf_data_cell.style inline_format: true, align: :left, borders: [:bottom, :right], border_widths: [1, 2, 1, 1], size: 11, padding: [2, 5, 2, 5]
 
-deliver_address_cell = pdf.make_cell content: "<b>#{@purchase_order.delivery_place != "pick_up" ? "Recoger con proveedor:" : "Enviar a obra:"}</b>"
+deliver_address_cell = pdf.make_cell content: "<b>#{@purchase_order.delivery_place == "pick_up" ? "Recoger con proveedor:" : "Enviar a obra:"}</b>"
 deliver_address_cell.style inline_format: true, align: :left, borders: [:bottom, :left], border_widths: [1, 1, 2, 2], size: 11, padding: [2, 5, 2, 5], width: 140
 deliver_address_data_cell = pdf.make_cell content: "#{@purchase_order.delivery_address}"
 deliver_address_data_cell.style inline_format: true, align: :left, borders: [:bottom, :right], border_widths: [1, 2, 2, 1], size: 11	, padding: [2, 5, 2, 5]
