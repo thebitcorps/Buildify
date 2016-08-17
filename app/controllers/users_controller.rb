@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(creation_params)
+    @user.change_role role_param
     respond_to do |format|
       if @user.save
         @user.add_role role_param # possible bug, implementing before_create callback
@@ -100,7 +101,7 @@ class UsersController < ApplicationController
     end
 
     def role_param
-      params.permit(:role)[:role]
+      params[:user][:roles]
     end
 
     def password_params

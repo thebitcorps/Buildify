@@ -52,6 +52,10 @@ class PurchaseOrder < ActiveRecord::Base
   }
 
   scope :by_folio, -> (folio) {
+    is_number =  true if Float(string) rescue false
+    if is_number
+      where(folio: folio.to_i)
+    end
     if folio.nil? or folio.empty?
       all
     else

@@ -15,10 +15,10 @@ class User < ActiveRecord::Base
   ROLES_SELECT = {:Administrador => :administrator,:Secretaria => :secretary,:Residente => :subordinate}
   royce_roles ROLES
 
-  validates :name, :phone, :email, presence: true
+  validates :name, :email, presence: true
   validates_format_of :name, :with => /[a-z]/, message: 'Ingresar sólo letras'
   validates :email, format: { with: %r{(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})\Z}i, message: 'Email inválido' } #fucking message does not show salavabinch
-  validates :phone, format: { with: %r{\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d\Z}i, message: 'Teléfono inválido' }
+  # validates :phone, format: { with: %r{\+?\d{1,3}?[- .]?\(?(?:\d{2,3})\)?[- .]?\d\d\d[- .]?\d\d\d\d\Z}i, message: 'Teléfono inválido' }
   paginates_per 10
 
   before_save name.humanize
@@ -70,6 +70,8 @@ class User < ActiveRecord::Base
     role_list.each do |old_role|
       remove_role old_role
     end
+    puts role
     add_role role
+    puts roles
   end
 end
