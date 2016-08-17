@@ -15,8 +15,8 @@ class Material < ActiveRecord::Base
       all
     else
       # y tried with joined name and description and works better the other way att llams
-      includes(:measure_units).where('(materials.name || \' \' || materials.description) ILIKE ?', "%#{search}%")
-      # includes(:measure_units).where("similarity(name, ?) > 0.3 OR similarity(name, ?) > 0.3", search,search).order("similarity(name, #{ActiveRecord::Base.connection.quote(search)}) DESC")
+      # includes(:measure_units).where('(materials.name || \' \' || materials.description) ILIKE ?', "%#{search}%")
+      includes(:measure_units).where("similarity(name, ?) > 0.3 OR similarity(name, ?) > 0.3", search,search).order("similarity(name, #{ActiveRecord::Base.connection.quote(search)}) DESC")
     end
   }
 
