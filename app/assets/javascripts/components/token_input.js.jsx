@@ -18,7 +18,7 @@ var TokenInputCustom = React.createClass({
     },
     getDefaultProps: function () {
         var emptyFunction = function () {};
-      return {url: '/',queryParam: 'search',searchDelay: 300,resultClearDelay: 4000,tokenAdded: emptyFunction,tokenRemoved: emptyFunction,clean: true,noResultMessage: 'No se encontro,,,',noResultAction: emptyFunction,outsideToken: ''}
+      return {url: '/',queryParam: 'search',searchDelay: 300,resultClearDelay: 5500,tokenAdded: emptyFunction,tokenRemoved: emptyFunction,clean: true,noResultMessage: 'No se encontro,,,',noResultAction: emptyFunction,outsideToken: ''}
     },
     componentWillUnmount: function() {
         this.abortSearchRequest();

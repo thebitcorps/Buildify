@@ -1,0 +1,12 @@
+- if current_user.notifications.empty?
+  %li{class: 'dropdown-header'}
+    %p No hay notificaciones
+- else
+  %li
+    =link_to seen_all_notifications_path, remote: true, method: :post, data: { toggle: :tooltip, placement: :bottom }, title: 'Marcar como leidas' do
+      Marcar como leidas
+      %i{class: 'fa fa-eye fa-fw'}
+  %li.divider
+  -# this needs some work, a partial, and a correct route for the member
+  - current_user.notifications.limit(7).each do |notification|
+    %li= link_to render_activity(notification.activity),seen_notification_path(notification), method: :post, class: "#{'seen' if notification.seen? }"

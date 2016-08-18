@@ -23,6 +23,12 @@ class User < ActiveRecord::Base
 
   before_save name.humanize
 
+  def clean_notifications
+    notifications.unseen.each do |notification|
+      notification.seen!
+    end
+  end
+
   def partial_requisitions(construction_id=nil)
     get_requisitions :partially,construction_id
   end

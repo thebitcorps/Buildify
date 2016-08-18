@@ -11,24 +11,13 @@
         = render partial: "common/menubars/#{current_user.roles.first.to_s}"
       %ul{class: 'nav navbar-nav navbar-right'}
         %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' }, role: 'button', aria: { expanded: false, haspopup: true } do
+          = link_to '#', id: 'notification-container', class: 'dropdown-toggle', data: { toggle: 'dropdown' }, role: 'button', aria: { expanded: false, haspopup: true } do
             %span{class: 'fa fa-bell-o fa-fw'}
-            %span{class: 'label label-default'}
+            %span{class: 'label label-default', id: 'notifications-count'}
               = current_user.notifications.unseen.count
             %span.caret
-          %ul.dropdown-menu
-            - if current_user.notifications.empty?
-              %li{class: 'dropdown-header'}
-                %p No hay notificaciones
-            - else
-              %li
-                =link_to '#', data: { toggle: :tooltip, placement: :bottom }, title: 'Marcar como leidas' do
-                  Marcar como leidas
-                  %i{class: 'fa fa-eye fa-fw'}
-              %li.divider
-              -# this needs some work, a partial, and a correct route for the member
-              - current_user.notifications.limit(7).each do |notification|
-                %li= link_to render_activity(notification.activity),seen_notification_path(notification), method: :post, class: "#{'seen' if notification.seen? }"
+          %ul.dropdown-menu#notifications
+            %i{class:  "fa fa-circle-o-notch  text-primary fa-spin"}
         %li
           = link_to current_user, data: { toggle: 'tooltip', placement: 'bottom' }, title: t('profile') do
             %span{class: 'fa fa-user'}

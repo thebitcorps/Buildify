@@ -44,6 +44,20 @@ window.createPayment = function(construction_id){
 
 };
 
+var loadNotification = function () {
+    $('#notification-container').click( function (event) {
+        $('#notifications').html('<i class="fa fa-circle-o-notch text-primary fa-spin" />');
+        $.ajax({
+            method: "GET",
+            dataType: "script",
+            url: "/notifications",
+            success: function(result){
+                eval(result);
+            }
+        });
+    });
+};
+
 var loadToolptip = function(){
     $('[data-toggle="tooltip"]').tooltip();
 };
@@ -52,3 +66,4 @@ var loadToolptip = function(){
 //     e.stopPropagation();
 // });
 $(document).on('page:load ready page:change', loadToolptip);
+$(document).on('ready', loadNotification);
