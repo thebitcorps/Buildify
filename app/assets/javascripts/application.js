@@ -51,9 +51,7 @@ var loadNotification = function () {
             method: "GET",
             dataType: "script",
             url: "/notifications",
-            success: function(result){
-                eval(result);
-            }
+            success: function(result){}
         });
     });
 };

@@ -59,8 +59,7 @@ class RequisitionsController < ApplicationController
 
   # only use for sending requisiton for revision
   def update
-    @requisition.sent
-    if @requisition.save
+    if @requisition.sent!
       redirect_to @requisition, notice: 'La requisición fue cerrada.'
     else
       redirect_to @requisition, alert: @requisition.errors.full_message
@@ -78,7 +77,7 @@ class RequisitionsController < ApplicationController
   end
 
   def requisition_params
-    params.require(:requisition).permit(:construction_id, :status, :requisition_date, item_materials_attributes: [:material_id, :measure_unit, :requested])
+    params.require(:requisition).permit(:construction_id, :requisition_date, item_materials_attributes: [:material_id, :measure_unit, :requested])
   end
 
   def sanitized_locked_param

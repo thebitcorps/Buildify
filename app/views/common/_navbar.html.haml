@@ -17,7 +17,6 @@
               = current_user.notifications.unseen.count
             %span.caret
           %ul.dropdown-menu#notifications
-            %i{class:  "fa fa-circle-o-notch  text-primary fa-spin"}
         %li
           = link_to current_user, data: { toggle: 'tooltip', placement: 'bottom' }, title: t('profile') do
             %span{class: 'fa fa-user'}

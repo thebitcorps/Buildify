@@ -1,4 +1,4 @@
 var notifications = $('#notifications');
 $('#notifications-count').html("#{@notifications.unseen.count}");
-notifications.dropdown("toggle");
 notifications.html("#{j( render partial: 'common/notifications')}");
+notifications.click(function(e){e.preventDefault()});

@@ -38,6 +38,7 @@ class Notification < ActiveRecord::Base
     end
   end
 
+  # we pass the construction so we can get the helpers user to notify them
   def self.notify_residents(public_activity, construction)
     Notification.create(user: construction.manager,activity: public_activity)
     construction.residents.each do |resident|
