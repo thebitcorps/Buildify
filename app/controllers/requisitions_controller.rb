@@ -66,6 +66,18 @@ class RequisitionsController < ApplicationController
     end
   end
 
+  def destroy
+    if @requisition.empty?
+      if @requisition.destroy
+        redirect_to requisitions_path(construction_id: @requisition.construction_id), notice: 'Requisicion borrada correctamente'
+      else
+        redirect_to @requisition,alert: 'No fue posible realizar accion.'
+      end
+    else
+      redirect_to @requisition, alert: 'Requisicion tiene materiales. No es posible borrarla'
+    end
+  end
+
   private
 
   def set_construction

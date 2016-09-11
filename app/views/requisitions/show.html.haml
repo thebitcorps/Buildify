@@ -11,6 +11,8 @@
       = link_to image_tag('pdf-icon.png',class: 'pdf-icon'),document_requisition_path(@requisition)
   - if @requisition.pending?
     = link_to 'Terminar requisicion',requisition_path(@requisition,requisition: {status: 'sent'}),method: :patch, data: { confirm: t('requisition.sent_warning')},class: 'btn btn-warning'
+  - if current_user.administrator? and @requisition.empty?
+    = link_to 'Borrar',  @requisition,  method: :delete, data: { confirm: 'Desea borrar la requisicion' }, class: 'btn btn-danger'
 
 = react_component 'RequisitionArrival', itemMaterials: @item_materials_json, administrator: current_user.administrator?,requisition_id: @requisition.id,pending: @requisition.pending?
 

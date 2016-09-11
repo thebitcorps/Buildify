@@ -3,7 +3,7 @@ class Invoice < ActiveRecord::Base
   has_one :requisition, through: :purchase_order
   has_one :construction, through: :requisition
   belongs_to :payment
-  belongs_to :provider
+  has_one :provider, through: :purchase_order
   include PublicActivity::Common
   #status when the invoice is create in db
   WAITING_STATUS = 'waiting'
@@ -18,7 +18,7 @@ class Invoice < ActiveRecord::Base
   before_update :set_purchase_order_sent
   after_update :notify_admins
   before_update :set_payment
-  before_update :set_receipt_folio
+  before_update :set_invoice_folio
 
 
   # validates :folio,:amount,:invoice_date,presence: true
@@ -29,8 +29,20 @@ class Invoice < ActiveRecord::Base
     self.status == WAITING_STATUS
   end
 
-  def set_receipt_folio
-    self.receipt_folio = purchase_order.folio.to_s + construction.title[0..2].upcase + id.to_s.rjust(4, '0')
+  def set_consecutiive_folio
+    last = Invoice.order('created_at DESC').limit(2).last
+    if Invoice.all.count > 1
+      if last.created_at.year == Date.today.year
+        self.consecutive_folio = last.consecutive_folio +  1
+        return
+      end
+    end
+    self.consecutive_folio = 1
+  end
+
+  def set_invoice_folio
+    set_consecutiive_folio
+    self.folio = self.consecutive_folio.to_s + '-' + Date.today.year.to_s
   end
 
   def set_payment
@@ -49,9 +61,9 @@ class Invoice < ActiveRecord::Base
   end
 
   def validate_fields
-    errors.add(:purchase_order, "Orden de compra no esta firmada") unless purchase_order.stamped?
+    errors.add(:purchase_order, "Orden de compra no esta firmada") unless purchase_order.stamped? or purchase_order.complete?
     errors.add(:amount, "No puede estar vacio") if amount.nil?
-    errors.add(:folio, "No puede estar vacio") if folio.nil?
+    errors.add(:provider_folio, "No puede estar vacio") if receipt_folio.nil?
     errors.add(:invoice_date, "No puede estar vacio") if invoice_date.nil?
 
   end

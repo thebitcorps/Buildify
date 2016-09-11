@@ -33,12 +33,12 @@
     itemMaterialsIds = []
     for itemMaterial in @state.purchaseOrderItemsMaterials
       itemMaterialsIds.push itemMaterial.id
-    data = {delivery_place: @state.delivery_place , delivery_place: @state.delivery_type , delivery_address: @state.delivery_address, delivery_receiver: @state.delivery_receiver, requisition_id: @props.requisition.id, item_material_ids: itemMaterialsIds, stamp_purchase_order: @state.stamp_purchase_order}
+    data = { provider_id: @state.provider_id_hidden, delivery_place: @state.delivery_place , delivery_place: @state.delivery_type , delivery_address: @state.delivery_address, delivery_receiver: @state.delivery_receiver, requisition_id: @props.requisition.id, item_material_ids: itemMaterialsIds, stamp_purchase_order: @state.stamp_purchase_order}
     that = @
     $.ajax
       url: '/purchase_orders.json'
       type: 'POST'
-      data: {purchase_order: data, provider_id: @state.provider_id_hidden}
+      data: {purchase_order: data}
       dataType: 'JSON'
       success:  (data) ->
         #update the browers window

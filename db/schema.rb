@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707171601) do
+ActiveRecord::Schema.define(version: 20160911191348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,18 +97,17 @@ ActiveRecord::Schema.define(version: 20160707171601) do
 
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
-    t.string   "status",        default: "waiting"
+    t.string   "status",            default: "waiting"
     t.decimal  "amount"
     t.date     "invoice_date"
     t.integer  "payment_id"
-    t.integer  "provider_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "receipt_folio"
+    t.integer  "consecutive_folio"
   end
 
   add_index "invoices", ["payment_id"], name: "index_invoices_on_payment_id", using: :btree
-  add_index "invoices", ["provider_id"], name: "index_invoices_on_provider_id", using: :btree
 
   create_table "item_materials", force: :cascade do |t|
     t.decimal  "requested"
@@ -227,6 +226,7 @@ ActiveRecord::Schema.define(version: 20160707171601) do
     t.integer  "authorizer_id"
     t.date     "stamp_date"
     t.string   "formated_folio"
+    t.integer  "provider_id"
   end
 
   add_index "purchase_orders", ["invoice_id"], name: "index_purchase_orders_on_invoice_id", using: :btree
@@ -295,7 +295,6 @@ ActiveRecord::Schema.define(version: 20160707171601) do
   add_foreign_key "estimates", "constructions"
   add_foreign_key "extensions", "constructions"
   add_foreign_key "invoices", "payments"
-  add_foreign_key "invoices", "providers"
   add_foreign_key "item_materials", "materials"
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"

@@ -1,13 +1,19 @@
 = render partial: 'constructions/payment_tabs'
 .panel.panel-default
   .table-responsive
-    %table.table.table-hover
+    %table.table.table-hover.table-responsive.table-bordered
       %thead
         %tr
           %th
-            Factura
+            Fecha
+          %th
+            Folio
+          %th
+            Folio Provedor
           %th
             Orden de compra
+          %th
+            Requisicion
           %th
             Importe
           %th
@@ -16,7 +22,6 @@
             Saldo
           %th
             Pagos
-          %th
       %tbody#payments
         = render partial: 'home/payment', collection: @payments
         - if @payments.empty?

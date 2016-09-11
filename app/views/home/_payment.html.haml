@@ -1,17 +1,25 @@
 %tr{class: "#{payment.get_color}"}
   %td
+    =payment.try(:invoice).try(:invoice_date)
+  %td
     - if payment.invoice
+      = link_to payment.invoice.folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
+  %td
+    - if payment.invoice
+      = link_to payment.invoice.receipt_folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
       = link_to payment.invoice.provider.name, provider_path(payment.invoice.provider)
-      = link_to payment.invoice.folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info", type: "button",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
     - else
       = payment.concept
   %td
-    = link_to payment.construction.title, construction_path(payment.construction)
     - if payment.purchase_order
-      = link_to payment.purchase_order.folio.to_s.rjust(4, '0'), purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-info", type: "button",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('purchase_order.pdf_message')}
+      = link_to payment.purchase_order.formated_folio, purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-info", type: "button",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('purchase_order.pdf_message')}
     - else
       %span.button.btn-sm.btn-info
         Caja chica
+    = link_to payment.construction.title, construction_path(payment.construction)
+
+  %td
+    = link_to payment.requisition.formated_folio, requisition_path(payment.requisition), {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
 
   %td
     = number_to_currency payment.amount
@@ -19,8 +27,6 @@
     = number_to_currency payment.paid_amount.to_f
   %td
     = number_to_currency (payment.remaining)
-  %td
-    = link_to payment.billing_adjustments.count, billing_adjustments_path(payment_id: payment.id)
   %td
     %button{onclick: "window.createBillingAdjusment( #{payment.id},#{payment.amount}, #{payment.paid_amount}, #{payment.construction_id} )",class: 'btn btn-primary'}
       Agregar pago

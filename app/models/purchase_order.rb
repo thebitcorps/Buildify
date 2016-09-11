@@ -9,7 +9,7 @@ class PurchaseOrder < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :requisition
   belongs_to :authorizer, class_name: "User", foreign_key: :authorizer_id
-  has_one :provider, through: :invoice
+  belongs_to :provider
   has_one :construction, through: :requisition
   paginates_per 10
   # what does this mean?

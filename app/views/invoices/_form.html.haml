@@ -1,6 +1,7 @@
 =  simple_form_for(@invoice, html: { class: 'form-horizontal' }) do |f|
+
   = f.error :purchase_order
-  = f.input :folio, label: 'Folio en factura'
+  = f.input :receipt_folio, label: 'Folio en factura'
   = f.input :amount, label: 'Cantidad en factura'
   = f.input :invoice_date, label: 'Fecha en factura',as: :date_picker,id: 'datetimepicker'
 

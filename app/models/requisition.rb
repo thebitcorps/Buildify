@@ -66,6 +66,10 @@ class Requisition < ActiveRecord::Base
     self.folio = Requisition.next_folio self.construction_id
   end
 
+  def empty?
+    item_materials.empty?
+  end
+
 
   def set_formated_folio
     self.formated_folio = construction.id.to_s + construction.title[0..2].upcase + folio.to_s.rjust(4, '0') + "-" + requisition_date.year.to_s
