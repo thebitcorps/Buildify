@@ -6,6 +6,9 @@
         - if construction.manager
           administrada por
           = link_to construction.manager.name, user_path(construction.manager)
+        - if current_user.administrator?
+          = link_to "Editar", edit_construction_path(@construction), class: 'btn btn-primary'
+
   .row
     .col-xs-12
       .progress.cons-st-prog

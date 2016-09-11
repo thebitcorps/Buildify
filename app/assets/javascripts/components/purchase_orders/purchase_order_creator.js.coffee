@@ -4,6 +4,7 @@
     requisitionItemMaterials: @props.requisition.item_materials
     purchaseOrderItemsMaterials: []
     errors: []
+    integerDivider: true
   insertToArray: (item, array) ->
     newArray = array.slice()
     newArray.push item
@@ -92,17 +93,25 @@
     newItemMaterial.requested = 0
     @setState {dividerItemMaterial: itemMaterial, newItemMaterial: newItemMaterial}
     $("#modal").modal()
-  updateRequested: (itemMaterial, operation)->
-    itemMaterial.requested = operation(itemMaterial.requested)
+  changeItemRequested: (itemMaterial, operation)->
+    itemMaterial.requested = operation(itemMaterial.requested).toFixed(1)
     return itemMaterial
-
+  toogleDividerMultipler: ->
+    @setState {integerDivider: !@state.integerDivider}
+  getDividerAddVAlue: ->
+    if @state.integerDivider
+      1.0
+    else
+      0.1
   substractRequestedToNew: ->
-    @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial, (a)-> return parseInt(a) + 1), newItemMaterial: @updateRequested(@state.newItemMaterial, (a)-> return a - 1)}
+    addValue = @getDividerAddVAlue()
+    @setState {dividerItemMaterial: @changeItemRequested(@state.dividerItemMaterial, (a)-> return parseFloat(a) + addValue), newItemMaterial: @changeItemRequested(@state.newItemMaterial, (a)-> return parseFloat(a) - addValue)}
   addRequestedToNew: ->
-    @setState {dividerItemMaterial: @updateRequested(@state.dividerItemMaterial, (a)-> return parseInt(a) - 1), newItemMaterial: @updateRequested(@state.newItemMaterial, (a)-> return a + 1)}
+    addValue = @getDividerAddVAlue()
+    @setState {dividerItemMaterial: @changeItemRequested(@state.dividerItemMaterial, (a)-> return parseFloat(a) - addValue), newItemMaterial: @changeItemRequested(@state.newItemMaterial, (a)-> return parseFloat(a) + addValue)}
   closeModal: ->
     b =  @state.newItemMaterial.requested
-    @setState dividerItemMaterial: @updateRequested(@state.dividerItemMaterial, (a)-> return parseInt(a) + b)
+    @setState dividerItemMaterial: @changeItemRequested(@state.dividerItemMaterial, (a)-> return parseFloat(a) + parseFloat(b))
     $("#modal").modal('hide')
   lessThaZeroOldItem: ->
     if @state.dividerItemMaterial
@@ -110,6 +119,11 @@
   lessThaZeroNewItem: ->
     if @state.newItemMaterial
       return @state.newItemMaterial.requested == 0
+  getDividerUnitClass: (isActive)->
+    if isActive
+      'primary'
+    else
+      'default'
   render: ->
     React.DOM.div
       className: 'purchase_order_creator'
@@ -137,6 +151,12 @@
             React.DOM.div
               className: 'col-md-2'
 #              React.DOM.p
+              React.DOM.div
+                className: 'row text-center'
+                React.DOM.div
+                  className: 'btn-group '
+                  React.DOM.button {className: 'btn btn-'+  @getDividerUnitClass(@state.integerDivider)+ ' btn-xs' , onClick: @toogleDividerMultipler, disabled: @lessThaZeroOldItem()}, 'Enteros'
+                  React.DOM.button {className: 'btn btn-' + @getDividerUnitClass(!@state.integerDivider) + ' btn-xs' , onClick: @toogleDividerMultipler, disabled: @lessThaZeroOldItem()}, 'Decimales'
               React.DOM.div
                 className: 'row text-center'
                 React.DOM.button {className: 'btn btn-primary ' , onClick: @addRequestedToNew, disabled: @lessThaZeroOldItem()}, '+'
