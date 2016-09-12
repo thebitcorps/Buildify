@@ -1,6 +1,13 @@
 %tr
   %td= estimate_counter + 1
   %td= number_to_currency(estimate.amount)
-  %td= spanish_formated_date(estimate.payment_date, false)
+  %td= estimate.concept
+  %td= spanish_formated_date(estimate.extension_date, false)
   %td
-    = link_to 'Remover', estimate_path(estimate), :method => :delete, :data => { :confirm => '¿Esta seguro de que desea remover esta estimacion?' }
+    - if estimate.completed?
+      = spanish_formated_date(estimate.extension_date, false)
+    - else
+      %a{onclick: "window.completeEstimate(#{estimate.id})", class: 'btn btn-primary'}
+        Terminar
+
+  %td= link_to 'Remover', estimate_path(estimate), class: 'btn btn-danger', :method => :delete, :data => { :confirm => '¿Esta seguro de que desea remover esta estimacion?' }

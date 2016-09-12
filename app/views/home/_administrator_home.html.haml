@@ -7,7 +7,7 @@
 
 = render partial: 'constructions/balance', locals: {expenses: @balance[:expenses], paid: @balance[:paid]}
 %hr
-.col-md-8
+.col-md-12
   %h4 Facturas
   = render partial: 'constructions/payment_tabs'
   .table-responsive
@@ -15,9 +15,15 @@
       %thead
         %tr
           %th
-            Factura
+            Fecha
+          %th
+            Folio
+          %th
+            Folio Provedor
           %th
             Orden de compra
+          %th
+            Requisicion
           %th
             Importe
           %th
@@ -26,7 +32,6 @@
             Saldo
           %th
             Pagos
-          %th
       %tbody#payments
         = render partial: 'payment', collection: @payments
 .col-md-4

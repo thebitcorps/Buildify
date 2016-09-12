@@ -44,6 +44,11 @@ window.createPayment = function(construction_id){
 
 };
 
+window.completeEstimate = function(estimate_id){
+    ReactDOM.render(React.createElement(CompleteEstimateModal,{estimate_id: estimate_id}),document.getElementById('mod'));
+
+};
+
 var loadNotification = function () {
     $('#notification-container').click( function (event) {
         $('#notifications').html('<i class="fa fa-circle-o-notch text-primary fa-spin" />');

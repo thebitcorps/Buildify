@@ -17,11 +17,22 @@ class EstimatesController < ApplicationController
     @estimate = Estimate.new(estimate_params)
     respond_to do |format|
       if @estimate.save
-        @estimate.construction.estimates_amount += @estimate.amount #esto no es correcto, hay que llamar un callback para que sume y no salvar adentro del if
-        @estimate.construction.save
-        format.html { redirect_to @estimate.construction, notice: 'Estamacion agragada a la obra.'}
+        format.html { redirect_to @estimate.construction, notice: 'Extension agregada a la obra.'}
       else
-        format.html { render :new }
+        @construction = @estimate.construction
+        format.html { render :new}
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @estimate.update payment_date: params[:estimate][:payment_date]
+        @estimate.complete!
+        format.json { render json: @estimate.to_json}
+      else
+        puts 'no caca'
+        format.json{ @estimte.errors.full_messages.to_json}
       end
     end
   end
@@ -29,8 +40,6 @@ class EstimatesController < ApplicationController
   def destroy
     @estimate = Estimate.find(params[:id])
     @construction = @estimate.construction
-    @construction.estimates_amount -= @estimate.amount #no valdría la pena tener un método de calcule?
-    @construction.save
     @estimate.destroy
     respond_to do |format|
       format.html { redirect_to estimates_path(construction_id: @construction), notice: 'Estimacion elimina correctamente.' }
@@ -43,6 +52,6 @@ class EstimatesController < ApplicationController
     end
 
     def estimate_params
-      params.require(:estimate).permit(:amount, :payment_date, :construction_id)
+      params.require(:estimate).permit(:amount, :extension_date, :construction_id, :concept)
     end
 end

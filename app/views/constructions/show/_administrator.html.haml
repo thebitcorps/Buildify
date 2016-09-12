@@ -31,11 +31,13 @@
         %h4{class: "panel-title"}
           Estimaciones
           = number_to_currency(@construction.estimates_amount)
+          = link_to '(Ver todas)' ,estimates_path(construction_id: @construction.id)
       %div{class: "panel-body"}
-        %p
-          Actualmente:
-          = @construction.estimates.size
-          = link_to "(ver todas)", estimates_path(construction_id: @construction)
+        %ul
+          - if @construction.estimates.completed.empty?
+            %li ND
+          - @construction.estimates.completed.each do |estimate|
+            %li=estimate.concept + " " +  estimate.amount.to_s
         %p
           = link_to "Agregar", new_estimate_path(construction_id: @construction), class: 'pull-right'
 .rpw

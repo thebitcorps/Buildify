@@ -4,9 +4,14 @@
     %li.active Estimaciones
   %h1
     %small
-      Extensiones
       .pull-right
         = link_to 'Nueva estimacion', new_estimate_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
+      Extensiones
+      %small
+        %p
+          = "Montos cobrados: #{number_to_currency(@estimates.completed.sum :amount)}"
+          = "Montos pendientes: #{number_to_currency(@estimates.pending.sum :amount)}"
+
 
 .panel.panel-default
   .table-responsive
@@ -15,8 +20,11 @@
         %tr
           %th #
           %th Cantidad
-          %th Fecha de pago
+          %th Concepto
+          %th Fecha de estimacion
+          %th Fecha de autorizacion
           %th
       %tbody
         = render partial: 'estimate', collection: @estimates
 
+#mod
