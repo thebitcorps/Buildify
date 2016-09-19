@@ -23,7 +23,7 @@ class PurchaseOrdersController < ApplicationController
     @construction = @purchase_order.construction
     @item_materials = @purchase_order.item_materials
     @requisition = @purchase_order.requisition
-    @invoice = @purchase_order.invoice
+
     flash.now[:notice] = "Orden de compra verificada" if @purchase_order.verify_stamp(params[:stamp_string] || '')
   end
 
@@ -39,7 +39,7 @@ class PurchaseOrdersController < ApplicationController
 
   def create
     @purchase_order = PurchaseOrder.new purchase_order_params
-    @purchase_order.build_invoice
+    # @purchase_order.build_invoice
     # @purchase_order.stamp_it(params[:stamp_purchase_order], current_user)
     respond_to do |format|
       if @purchase_order.save

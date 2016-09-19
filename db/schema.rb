@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912013314) do
+ActiveRecord::Schema.define(version: 20160916164915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(version: 20160912013314) do
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+
+  create_table "against_receipts", force: :cascade do |t|
+    t.integer  "purchase_order_id"
+    t.integer  "invoice_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "against_receipts", ["invoice_id"], name: "index_against_receipts_on_invoice_id", using: :btree
+  add_index "against_receipts", ["purchase_order_id"], name: "index_against_receipts_on_purchase_order_id", using: :btree
 
   create_table "billing_adjustments", force: :cascade do |t|
     t.decimal  "amount"
@@ -82,7 +92,6 @@ ActiveRecord::Schema.define(version: 20160912013314) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "concept"
-    t.date     "payday"
     t.date     "extension_date"
     t.string   "status"
   end
@@ -292,6 +301,8 @@ ActiveRecord::Schema.define(version: 20160912013314) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "against_receipts", "invoices"
+  add_foreign_key "against_receipts", "purchase_orders"
   add_foreign_key "billing_adjustments", "payments"
   add_foreign_key "construction_users", "constructions"
   add_foreign_key "construction_users", "users"

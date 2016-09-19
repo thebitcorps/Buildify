@@ -105,11 +105,13 @@ class Construction < ActiveRecord::Base
 
 
   def invoiced_purchases_orders
-    purchase_orders.select { |po| !po.invoice.waiting?}
+    # purchase_orders.select { |po| !po.invoice.waiting?}
+    purchase_orders
   end
 
   def uninvoiced_purchases_orders
-    purchase_orders.select { |po| po.invoice.waiting?}
+    purchase_orders
+    # purchase_orders.select { |po| po.invoice.waiting?}
   end
 
   def office?

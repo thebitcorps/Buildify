@@ -1,4 +1,8 @@
 class Invoice < ActiveRecord::Base
+  # Nuevo muchos a muchos
+  has_many :against_receipts
+  has_many :purchase_orders, through: :against_receipts
+  # \\\\\\\
   has_one :purchase_order
   has_one :requisition, through: :purchase_order
   has_one :construction, through: :requisition
@@ -14,12 +18,11 @@ class Invoice < ActiveRecord::Base
   #when the invoice is liquid
   PAID_STATUS = 'paid'
 
-  before_update :validate_fields
-  before_update :set_purchase_order_sent
-  after_update :notify_admins
-  before_update :set_payment
-  before_update :set_invoice_folio
-
+  # before_update :validate_fields
+  # before_update :set_purchase_order_sent
+  # after_update :notify_admins
+  before_create :set_invoice_folio
+  before_create :set_payment
 
   # validates :folio,:amount,:invoice_date,presence: true
   # validates :amount, numericality: true
@@ -30,7 +33,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def set_consecutiive_folio
-    last = Invoice.order('created_at DESC').limit(2).last
+    last = Invoice.order('created_at DESC').limit(1).last
     if Invoice.all.count > 1
       if last.created_at.year == Date.today.year
         self.consecutive_folio = last.consecutive_folio +  1
@@ -47,8 +50,8 @@ class Invoice < ActiveRecord::Base
 
   def set_payment
     # after payment creation editing not working
-    payment = self.payment || Payment.create(amount: self.amount, payment_date: self.invoice_date, construction: self.construction)
-    self.payment = payment
+    payment = Payment.create(amount: self.amount, payment_date: self.invoice_date, construction_id: self.construction_id)
+    self.payment_id = payment.id
   end
 
   def set_purchase_order_sent
