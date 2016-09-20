@@ -1,13 +1,11 @@
 class Invoice < ActiveRecord::Base
-  # Nuevo muchos a muchos
-  has_many :against_receipts
-  has_many :purchase_orders, through: :against_receipts
-  # \\\\\\\
   has_one :purchase_order
+  has_many :purchase_orders, through: :payments
+  has_many :payments
   has_one :requisition, through: :purchase_order
   has_one :construction, through: :requisition
   belongs_to :payment
-  has_one :provider, through: :purchase_order
+  has_one :provider
   include PublicActivity::Common
   #status when the invoice is create in db
   WAITING_STATUS = 'waiting'
@@ -22,7 +20,7 @@ class Invoice < ActiveRecord::Base
   # before_update :set_purchase_order_sent
   # after_update :notify_admins
   before_create :set_invoice_folio
-  before_create :set_payment
+  # before_create :set_payment
 
   # validates :folio,:amount,:invoice_date,presence: true
   # validates :amount, numericality: true
@@ -34,7 +32,7 @@ class Invoice < ActiveRecord::Base
 
   def set_consecutiive_folio
     last = Invoice.order('created_at DESC').limit(1).last
-    if Invoice.all.count > 1
+    if Invoice.all.count > 0
       if last.created_at.year == Date.today.year
         self.consecutive_folio = last.consecutive_folio +  1
         return

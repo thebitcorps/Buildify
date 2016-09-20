@@ -3,20 +3,31 @@ class InvoicesController < ApplicationController
   load_and_authorize_resource
   before_action :set_invoice, only: [:show, :document, :edit, :update]
 
+  def index
+    if params[:purchase_order_id]
+      invoice_ids = Payment.from_purchase_order(params[:purchase_order_id]).pluck(:invoice_id)
+      # is okay to use find because all id are valid 
+      @invoice = Invoice.find invoice_ids
+    else
+      @invoices = Invoice.all
+    end
+    respond_to do |format|
+      format.json {render :index}
+    end
+  end
+
   def new
     @invoice = Invoice.new
   end
 
   def create
     @invoice = Invoice.new invoice_params
-    if build_against_receipt(@invoice)
-      respond_to do  |format|
-        if @invoice.save
-            build_against_receipt(@invoice)
-          format.json {render :show ,status: :ok, location: @invoice}
-        else
-          format.json {render json: JSON.parse(@invoice.errors.full_messages.to_json), status: :unprocessable_entity}
-        end
+    respond_to do  |format|
+      if @invoice.save
+        build_payment(@invoice)
+        format.json {render :show ,status: :ok, location: @invoice}
+      else
+        format.json {render json: JSON.parse(@invoice.errors.full_messages.to_json), status: :unprocessable_entity}
       end
     end
   end
@@ -45,8 +56,9 @@ class InvoicesController < ApplicationController
   end
 
   private
-  def build_against_receipt(invoice)
-    AgainstReceipt.create invoice_id: invoice.id,purchase_order_id: params[:purchase_order_id].to_i
+  def build_payment(invoice)
+    purchase_order = PurchaseOrder.find params[:purchase_order_id]
+    Payment.create(invoice_id: invoice.id, amount: invoice.amount, payment_date: invoice.invoice_date, construction_id: purchase_order.construction.id, purchase_order_id: purchase_order.id)
   end
 
   def set_invoice

@@ -7,8 +7,10 @@ class PurchaseOrder < ActiveRecord::Base
   attr_accessor :stamp_purchase_order
   has_many :item_materials
   # nuevos
-  has_many :against_receipts
-  has_many :invoices, through: :against_receipts
+  has_many :payments
+  has_many :invoices, through: :payments
+  # has_many :against_receipts
+  # has_many :invoices, through: :against_receipts
   #
   belongs_to :invoice
   belongs_to :requisition

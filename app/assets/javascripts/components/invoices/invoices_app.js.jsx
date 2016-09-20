@@ -1,8 +1,16 @@
 var InvoicesApp = React.createClass({
     INDEX_TAB_NAME: 'index',
     ASSIGN_TAB_NAME: 'assign',
+    componentDidMount: function() {
+        this.serverRequest = $.get('/invoices?purchase_order_id='+this.props.purchase_order_id, function (result) {
+            this.setState({invoices: result});
+        }.bind(this),'json');
+    },
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
    getInitialState: function () {
-       return {active_tab: 'index', invoices: this.props.invoices, adding: false, editing: false}
+       return {active_tab: 'index', invoices: [], adding: false, editing: false}
    },
     isTabActice: function (tab_name) {
         return this.state.active_tab == tab_name ? 'active' : '';
@@ -13,6 +21,7 @@ var InvoicesApp = React.createClass({
       }
       this.setState({active_tab: tab_name});
     },
+
     invoiceElement: function (invoice) {
         return (
             <div className="list-group-item" key={invoice.id}>
@@ -115,7 +124,7 @@ var InvoicesApp = React.createClass({
                  {adding_button}
              </div>
              <ul className="nav nav-tabs">
-                 <li role="presentation" className={this.isTabActice(this.INDEX_TAB_NAME)} onClick={() => this.changeActiveTab(this.INDEX_TAB_NAME)}><a href="#">Invoices</a></li>
+                 <li role="presentation" className={this.isTabActice(this.INDEX_TAB_NAME)} onClick={() => this.changeActiveTab(this.INDEX_TAB_NAME)}><a href="#">Invoices {this.state.invoices.length}</a></li>
                  <li role="presentation" className={this.isTabActice(this.ASSIGN_TAB_NAME)} onClick={() => this.changeActiveTab(this.ASSIGN_TAB_NAME)}><a href="#">Asignar </a></li>
              </ul>
              {active_body}

@@ -1,7 +1,9 @@
 class Payment < ActiveRecord::Base
+  belongs_to :purchase_order
+  belongs_to :invoice
   belongs_to :construction
-  has_one :invoice, dependent: :nullify
-  has_one :purchase_order, through: :invoice
+  # has_one :invoice, dependent: :nullify
+  # has_one :purchase_order, through: :invoice
   has_one :requisition, through: :purchase_order
   has_one :invoiced_construction, through: :requisition, source: :construction
   has_many :billing_adjustments
@@ -14,6 +16,10 @@ class Payment < ActiveRecord::Base
   STATUS = [DUE_STATUS,PARTIALLY_DUE_STATUS,'paid.no_petty_cash','all_construction',PETTY_CASH_STATUS]
 
   # after_save :change_status_from_remaining!
+
+  scope :from_purchase_order, ->(purchase_order_id){
+    includes(:invoice).where purchase_order_id: purchase_order_id
+  }
   scope :all_construction, ->(construction_id=nil){
     if construction_id
       where construction_id: construction_id
