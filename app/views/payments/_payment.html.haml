@@ -4,7 +4,7 @@
   %td
     %a{onclick: "window.createInvoices(#{payment.purchase_order.id},'#{payment.purchase_order.formated_folio}')", class: 'button btn-sm btn-info no-break', data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => 'Facuturas asociadas'}
       = payment.invoice.folio
-    -#= link_to payment.invoice.folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
+  -#= link_to payment.invoice.folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
   %td
     - if payment.invoice
       = link_to payment.invoice.receipt_folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}

@@ -25,7 +25,7 @@ class ConstructionsController < ApplicationController
   end
 
   def show
-    @payments = @construction.payments
+    @payments = @construction.payments.page(params[:payment_page])
   end
 
   def new

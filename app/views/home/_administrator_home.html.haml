@@ -33,7 +33,8 @@
           %th
             Pagos
       %tbody#payments
-        = render partial: 'payment', collection: @payments
+        = render partial: 'payments/payment', collection: @payments
+=render partial: 'payments/pagination'
 .col-md-4
   .panel.panel-default
     .panel-heading= t 'public_activity.recent'

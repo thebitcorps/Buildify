@@ -5,6 +5,7 @@ class PurchaseOrdersController < ApplicationController
   before_action :set_requisition, only: [:new]
   # before_action :filter_sub_out
 
+  # TODO includes item_materials
   def index
     @type_list = sanitized_locked_param
     if params[:construction_id]

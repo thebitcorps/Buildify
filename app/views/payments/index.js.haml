@@ -1,4 +1,5 @@
-$('#payments').html("#{j (render partial: 'home/payment',collection: @payments)}");
+$('#payments').html("#{j (render partial: 'payments/payment',collection: @payments)}");
+$('#paginate').html("#{j (render partial: 'payments/pagination')}");
 - if @payments.empty?
   $('#payments').html("<tr class='well'><td class='well'> No hay pagos</td></tr>")
 

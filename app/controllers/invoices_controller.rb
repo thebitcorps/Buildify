@@ -4,15 +4,11 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :document, :edit, :update]
 
   def index
-    if params[:purchase_order_id]
-      invoice_ids = Payment.from_purchase_order(params[:purchase_order_id]).pluck(:invoice_id)
-      # is okay to use find because all id are valid 
-      @invoice = Invoice.find invoice_ids
-    else
-      @invoices = Invoice.all
-    end
+    payments = Payment.from_purchase_order(params[:purchase_order_id]).pluck(:invoice_id)
+    @invoices = Invoice.where(id: payments)
+    # is okay to use find because all id are valid
     respond_to do |format|
-      format.json {render :index}
+      format.json{render :index}
     end
   end
 
