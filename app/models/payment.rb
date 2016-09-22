@@ -8,7 +8,7 @@ class Payment < ActiveRecord::Base
   has_one :invoiced_construction, through: :requisition, source: :construction
   has_many :billing_adjustments
 
-  paginates_per 25
+  paginates_per 10
   DUE_STATUS = 'due'
   PARTIALLY_DUE_STATUS = 'partially'
   PAID_STATUS = 'paid'

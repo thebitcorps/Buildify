@@ -5,6 +5,7 @@ class AddPurchaseOrderToPayment < ActiveRecord::Migration
     add_reference :invoices, :construction, index: true
     Invoice.find_each do |invoice|
       payment = invoice.payment
+      next if payment.blank?
       payment.purchase_order_id = invoice.purchase_order.id
       payment.invoice_id = invoice.id
       payment.save

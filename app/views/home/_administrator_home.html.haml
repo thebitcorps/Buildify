@@ -7,6 +7,7 @@
 
 = render partial: 'constructions/balance', locals: {expenses: @balance[:expenses], paid: @balance[:paid]}
 %hr
+=render partial: 'payments/pagination'
 .col-md-12
   %h4 Facturas
   = render partial: 'constructions/payment_tabs'

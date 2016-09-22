@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160920013148) do
+ActiveRecord::Schema.define(version: 20160922162955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,11 @@ ActiveRecord::Schema.define(version: 20160920013148) do
   end
 
   add_index "extensions", ["construction_id"], name: "index_extensions_on_construction_id", using: :btree
+
+  create_table "folio_counters", force: :cascade do |t|
+    t.integer "year",  default: 2016
+    t.integer "count", default: 0
+  end
 
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
