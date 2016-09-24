@@ -22,6 +22,7 @@ class Invoice < ActiveRecord::Base
   # before_update :set_purchase_order_sent
   # after_update :notify_admins
   before_create :set_invoice_folio
+  after_create :next_folio
   # before_create :set_payment
 
   # validates :folio,:amount,:invoice_date,presence: true
@@ -32,20 +33,12 @@ class Invoice < ActiveRecord::Base
     self.status == WAITING_STATUS
   end
 
-  def set_consecutiive_folio
-    last = Invoice.order('created_at DESC').limit(1).last
-    if Invoice.all.count > 0
-      if last.created_at.year == Date.today.year
-        self.consecutive_folio = last.consecutive_folio +  1
-        return
-      end
-    end
-    self.consecutive_folio = 1
+  def set_invoice_folio
+    self.folio = FolioCounter.formated_folio
   end
 
-  def set_invoice_folio
-    set_consecutiive_folio
-    self.folio = self.consecutive_folio.to_s + '-' + Date.today.year.to_s
+  def next_folio
+    FolioCounter.next_folio
   end
 
   def set_payment
