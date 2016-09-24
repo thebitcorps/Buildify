@@ -8,6 +8,8 @@ class Invoice < ActiveRecord::Base
   has_one :provider
   include PublicActivity::Common
   #status when the invoice is create in db
+
+  paginates_per 25
   WAITING_STATUS = 'waiting'
   #status when user finally capture the invoice
   ADDED_STATUS = 'added'

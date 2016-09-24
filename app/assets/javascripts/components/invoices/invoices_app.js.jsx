@@ -10,7 +10,7 @@ var InvoicesApp = React.createClass({
         this.serverRequest.abort();
     },
    getInitialState: function () {
-       return {active_tab: 'index', invoices: [], adding: false, editing: false}
+       return {active_tab: 'index', invoices: [ ], adding: false, editing: false}
    },
     isTabActice: function (tab_name) {
         return this.state.active_tab == tab_name ? 'active' : '';
@@ -62,15 +62,22 @@ var InvoicesApp = React.createClass({
         invoices.push(invoice);
         this.setState({invoices: invoices});
     },
-    getIndexBody: function () {
-        var no_invoices, column_class, invoice_form, invoice_list;
+    invoiceAdded: function (invoice) {
+        this.addNewInvoice(invoice);
+        this.changeActiveTab(this.INDEX_TAB_NAME);
+    },
+    getNoInvoicesMessage: function () {
         if(this.state.invoices.length == 0){
-            no_invoices = <a className="list-group-item" >
+            return <a className="list-group-item" >
                 <h4 className="list-group-item-heading">No hay facturas</h4>
             </a>;
         }else{
-            no_invoices = null;
+            return null;
         }
+    },
+    getIndexBody: function () {
+        var  column_class, invoice_form, invoice_list;
+
         if(this.state.editing){
             invoice_form = <div className="col-md-12"><InvoiceForm invoice={this.state.editing_invoice} cancelForm={this.toggleEditing} invoiceAdded={this.replaceOld}/></div>
         } else{
@@ -82,18 +89,7 @@ var InvoicesApp = React.createClass({
                 column_class = 'col-md-6';
                 invoice_form = <div className="col-md-6"><InvoiceForm purchase_order_id={this.props.purchase_order_id} cancelForm={this.toggleAdding} invoiceAdded={this.addNewInvoice}/></div>
             }
-            //TODO make function
-            invoice_list =<ul className={column_class} style={{height: '480px  ',overflowY: 'auto'}}>
-                <div className="list-group">
-                    {
-                        this.state.invoices.map(function(item){
-                            return this.invoiceElement(item);
-                        }.bind(this))
-                    }
-                    {no_invoices}
-                </div>
-            </ul>;
-
+            invoice_list = this.getInvoiceList(column_class);
         }
 
       return (
@@ -102,6 +98,18 @@ var InvoicesApp = React.createClass({
               {invoice_list}
           </div>
       );
+    },
+    getInvoiceList: function (column_class) {
+       return  <ul className={column_class} style={{height: '480px  ',overflowY: 'auto'}}>
+           <div className="list-group">
+               {
+                   this.state.invoices.map(function(item){
+                       return this.invoiceElement(item);
+                   }.bind(this))
+               }
+               {this.getNoInvoicesMessage()}
+           </div>
+       </ul>;
     },
     render: function () {
         var active_body, adding_button;
@@ -116,7 +124,8 @@ var InvoicesApp = React.createClass({
         if(this.state.active_tab == this.INDEX_TAB_NAME){
             active_body = this.getIndexBody();
         }else{
-            active_body = <div></div>;
+            adding_button = null;
+            active_body = <AddInvoice invoices={this.state.invoices} purchase_order_id={this.props.purchase_order_id} construction_id={this.props.construction_id} onInvoiceAdded={this.invoiceAdded}/>;
         }
        return (
          <div>

@@ -27,7 +27,7 @@ class PaymentsController < ApplicationController
 
   private
   def payment_params
-    params.require(:payment).permit(:amount,:concept,:payment_date,:construction_id,:paid_amount,:status)
+    params.require(:payment).permit(:amount,:concept,:payment_date,:construction_id,:invoice_id,:purchase_order_id)
   end
 
   def sanitized_type_list

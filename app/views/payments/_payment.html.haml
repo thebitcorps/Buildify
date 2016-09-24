@@ -2,7 +2,7 @@
   %td.no-break
     =payment.try(:invoice).try(:invoice_date)
   %td
-    %a{onclick: "window.createInvoices(#{payment.purchase_order.id},'#{payment.purchase_order.formated_folio}')", class: 'button btn-sm btn-info no-break', data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => 'Facuturas asociadas'}
+    %a{onclick: "window.createInvoices(#{payment.purchase_order.id},'#{payment.purchase_order.formated_folio}',#{payment.purchase_order.construction.id})", class: 'button btn-sm btn-info no-break', data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => 'Facuturas asociadas'}
       = payment.invoice.folio
   -#= link_to payment.invoice.folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
   %td
@@ -24,10 +24,10 @@
 
   %td
     = number_to_currency payment.amount
-  %td
-    = number_to_currency payment.paid_amount.to_f
-  %td
+  -#%td
+    -#= number_to_currency payment.paid_amount.to_f
+  -#%td
     = number_to_currency (payment.remaining)
   %td
     %button{onclick: "window.createBillingAdjusment( #{payment.id},#{payment.amount}, #{payment.paid_amount}, #{payment.construction_id} )",class: 'btn btn-primary'}
-      Agregar pago
+      Informacion de pagos

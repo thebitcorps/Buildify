@@ -1,8 +1,5 @@
 var InvoiceForm = React.createClass({
     getInitialState: function () {
-        console.log('caca');
-        console.log(this.props);
-
         if(this.props.invoice != null){
             this.editing = true;
             return {receipt_folio: this.props.invoice.receipt_folio, invoice_date: this.props.invoice.invoice_date, amount: this.props.invoice.amount};

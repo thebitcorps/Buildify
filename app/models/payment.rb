@@ -17,8 +17,16 @@ class Payment < ActiveRecord::Base
 
   # after_save :change_status_from_remaining!
 
+  # not using includes because we only using invoice_id for the moment
+  # if will use invoice or purchase order from the payments use includes
   scope :from_purchase_order, ->(purchase_order_id){
-    includes(:invoice,:purchase_order).where purchase_order_id: purchase_order_id
+    where purchase_order_id: purchase_order_id
+  }
+
+  # not using includes because we only using invoice_id for the moment
+  # if will use invoice or purchase order from the payments use includes
+  scope :not_from_purchase_order, ->(purchase_order_id){
+    where.not purchase_order_id: purchase_order_id
   }
 
   scope :active,-> (){
