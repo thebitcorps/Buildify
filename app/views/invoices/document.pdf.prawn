@@ -41,17 +41,19 @@ pdf.move_down 5.mm
 
 items_title = pdf.make_cell content: "<b>Folio</b>"
 items_title.style inline_format: true, align: :center, borders: [:left, :top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10, width: 130
-items_title2 = pdf.make_cell content: "<b>Observaciones</b>"
+items_title2 = pdf.make_cell content: "<b>Fecha</b>"
 items_title2.style inline_format: true, align: :center, borders: [:top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10
-items_title3 = pdf.make_cell content: "<b>Importe</b>"
-items_title3.style inline_format: true, align: :center, borders: [:top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10, width: 130
+items_title3 = pdf.make_cell content: "<b>Folio de factura</b>"
+items_title3.style inline_format: true, align: :center, borders: [:top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10
+items_title4 = pdf.make_cell content: "<b>Importe</b>"
+items_title4.style inline_format: true, align: :center, borders: [:top, :bottom, :right], border_widths: [2, 2, 2, 2], size: 10, width: 130
 
-rows = [[items_title, items_title2, items_title3]]
+rows = [[items_title, items_title2, items_title3, items_title4]]
 
 items_title = pdf.make_cell content: ""
 items_title.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10, width: 130
 items_title2 = pdf.make_cell content: ""
-items_title2.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10
+items_title2.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10, width: 50
 items_title3 = pdf.make_cell content: ""
 items_title3.style inline_format: true, align: :center, borders: [:bottom], border_widths: [2, 2, 2, 2], size: 10, width: 130
 
@@ -59,12 +61,14 @@ rows<<[items_title, items_title2, items_title3]
 
 items_title = pdf.make_cell content: "#{@invoice.folio}"
 items_title.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right], border_widths: [1, 2, 2, 2], size: 10, width: 130
-items_title2 = pdf.make_cell content: ""
+items_title2 = pdf.make_cell content: "#{@invoice.invoice_date}"
 items_title2.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right], border_widths: [1, 2, 2, 2], size: 10
-items_title3 = pdf.make_cell content: "#{number_to_currency @invoice.amount}"
-items_title3.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10, width: 130
+items_title3 = pdf.make_cell content: "#{@invoice.receipt_folio}"
+items_title3.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right], border_widths: [1, 2, 2, 2], size: 10, width: 50
+items_title4 = pdf.make_cell content: "#{number_to_currency @invoice.amount}"
+items_title4.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right, :top], border_widths: [2, 2, 1, 2], size: 10, width: 130
 
-rows<<[items_title, items_title2, items_title3]
+rows<<[items_title, items_title2, items_title3, items_title4]
 
 items_title = pdf.make_cell content: ""
 items_title.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [], border_widths: [1, 2, 1, 2], size: 10, width: 130
@@ -73,20 +77,27 @@ items_title2.style inline_format: true, padding: [5, 10, 5, 5], align: :right, b
 items_title3 = pdf.make_cell content: "#{number_to_currency @invoice.amount * 0.16}"
 items_title3.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10, width: 130
 
-rows<<[items_title, items_title2, items_title3]
+rows<<[items_title, items_title, items_title2, items_title3]
 
 items_title = pdf.make_cell content: ""
 items_title.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [], border_widths: [1, 2, 1, 2], size: 10, width: 130
 items_title2 = pdf.make_cell content: "<b>Total:</b>"
 items_title2.style inline_format: true, padding: [5, 10, 5, 5], align: :right, borders: [], border_widths: [1, 2, 1, 2], size: 10
 items_title3 = pdf.make_cell content: "<b>#{number_to_currency @invoice.amount}</b>"
-items_title3.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right], border_widths: [1, 2, 1, 2], size: 10, width: 130
+items_title3.style inline_format: true, padding: [5, 0, 5, 0], align: :center, borders: [:left, :bottom, :right, :top], border_widths: [2, 2, 2, 2], size: 10, width: 130
 
-rows<<[items_title, items_title2, items_title3]
+rows<<[items_title, items_title, items_title2, items_title3]
 
-pdf.table rows, width: pdf.bounds.width
+pdf.table rows, width: pdf.bounds.width - 20
 
 pdf.move_down 5.mm
+
+obs_cell = pdf.make_cell content: "Observaciones:"
+obs_cell.style inline_format: true, borders: [:top, :right, :bottom, :left], border_widths: [2, 2, 2, 2], size: 10, padding: [5, 5, 5, 5]
+
+pdf.table [[obs_cell]], width: pdf.bounds.width
+
+pdf.move_down 2.mm
 
 high_inf_cell = pdf.make_cell content: "*Los dias de pago y revisión son los dias <b>lunes</b> de <b>9am</b> a <b>1pm</b>"
 high_inf_cell.style inline_format: true, align: :center, borders: [:top, :right, :bottom, :left], border_widths: [2, 2, 2, 2], size: 10, padding: [5, 5, 5, 5]

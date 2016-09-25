@@ -3,9 +3,9 @@ class Invoice < ActiveRecord::Base
   has_many :purchase_orders, through: :payments
   has_many :payments
   has_one :requisition, through: :purchase_order
-  has_one :construction, through: :requisition
+  belongs_to :construction
   belongs_to :payment
-  has_one :provider
+  belongs_to :provider
   include PublicActivity::Common
   #status when the invoice is create in db
 
@@ -34,7 +34,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def set_invoice_folio
-    self.folio = FolioCounter.formated_folio
+    self.folio = FolioCounter.get_current.formated_folio
   end
 
   def next_folio

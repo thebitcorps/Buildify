@@ -19,6 +19,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new invoice_params
     purchase_order = PurchaseOrder.find params[:purchase_order_id]
     @invoice.provider_id = purchase_order.provider_id
+    @invoice.construction_id = purchase_order.id
     respond_to do  |format|
       if @invoice.save
         build_payment(@invoice, purchase_order)
@@ -46,7 +47,7 @@ class InvoicesController < ApplicationController
         format.html { redirect_to @invoice.construction, notice: 'Factura actualizada.' }
         format.json {render :show ,status: :ok, location: @invoice}
       else
-        format.html { render :edit, notice: 'Error' }
+        format.html {render :edit, notice: 'Error' }
         format.json {render json: JSON.parse(@invoice.errors.full_messages.to_json), status: :unprocessable_entity}
       end
     end
@@ -77,6 +78,6 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice).permit(:receipt_folio, :amount, :invoice_date, :purchase_order_id)
+    params.require(:invoice).permit(:receipt_folio, :amount, :invoice_date, :purchase_order_id, :provider_id)
   end
 end

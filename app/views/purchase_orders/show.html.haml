@@ -10,7 +10,7 @@
       Orden de Compra
       %span{class: "label label-#{@purchase_order.get_color}"}
         = @purchase_order.formated_folio
-    = link_to image_tag('pdf-icon.png', class: 'pdf-icon'), document_purchase_order_path(@purchase_order) , target: '_blank'
+    = link_to image_tag('pdf-icon.png', class: 'pdf-icon', target: "_blank"), document_purchase_order_path(@purchase_order) , target: "_blank"
   %div
     - if @purchase_order.is_stamped?
       Esta orden de compra ya fue autorizada por:

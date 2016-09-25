@@ -29,7 +29,7 @@ var InvoicesApp = React.createClass({
                     Folio: {invoice.folio}
                     <div className="pull-right"><button className="btn btn-primary" onClick={()=> this.toggleEditing(invoice)}>Editar</button></div>
 
-                    <a href={"/invoices/" + invoice.id+ "/document"}>
+                    <a href={"/invoices/" + invoice.id+ "/document"} target="_blank">
                         <img className="pdf-icon"  alt="Pdf icon" src="/assets/pdf-icon-8cbf78af37779857c322c4020429d65733cb89435a9e513f8d5e3ed9113e809e.png"/>
                     </a>
                 </h4>
