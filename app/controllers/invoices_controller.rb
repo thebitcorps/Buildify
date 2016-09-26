@@ -4,8 +4,7 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :document, :edit, :update]
 
   def index
-    payments = Payment.from_purchase_order(params[:purchase_order_id]).pluck(:invoice_id)
-    @invoices = Invoice.where(id: payments)
+    @invoices = Invoice.where(id: get_payments_ids).page(params[:page])
     # is okay to use find because all id are valid
     respond_to do |format|
       format.json{render :index}
@@ -18,9 +17,12 @@ class InvoicesController < ApplicationController
 
   def create
     @invoice = Invoice.new invoice_params
+    purchase_order = PurchaseOrder.find params[:purchase_order_id]
+    @invoice.provider_id = purchase_order.provider_id
+    @invoice.construction_id = purchase_order.id
     respond_to do  |format|
       if @invoice.save
-        build_payment(@invoice)
+        build_payment(@invoice, purchase_order)
         format.json {render :show ,status: :ok, location: @invoice}
       else
         format.json {render json: JSON.parse(@invoice.errors.full_messages.to_json), status: :unprocessable_entity}
@@ -45,15 +47,28 @@ class InvoicesController < ApplicationController
         format.html { redirect_to @invoice.construction, notice: 'Factura actualizada.' }
         format.json {render :show ,status: :ok, location: @invoice}
       else
-        format.html { render :edit, notice: 'Error' }
+        format.html {render :edit, notice: 'Error' }
         format.json {render json: JSON.parse(@invoice.errors.full_messages.to_json), status: :unprocessable_entity}
       end
     end
   end
 
   private
-  def build_payment(invoice)
-    purchase_order = PurchaseOrder.find params[:purchase_order_id]
+
+  def get_payments_ids
+    if params[:purchase_order_id].blank?
+      Payment.all.pluck(:invoice_id)
+    else
+      if params[:not_from].blank?
+        Payment.from_purchase_order(params[:purchase_order_id]).pluck(:invoice_id)
+      else
+        Payment.not_from_purchase_order(params[:purchase_order_id]).pluck(:invoice_id)
+      end
+    end
+  end
+
+
+  def build_payment(invoice, purchase_order)
     Payment.create(invoice_id: invoice.id, amount: invoice.amount, payment_date: invoice.invoice_date, construction_id: purchase_order.construction.id, purchase_order_id: purchase_order.id)
   end
 
@@ -63,6 +78,6 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice).permit(:receipt_folio, :amount, :invoice_date, :purchase_order_id)
+    params.require(:invoice).permit(:receipt_folio, :amount, :invoice_date, :purchase_order_id, :provider_id)
   end
 end
