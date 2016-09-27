@@ -1,15 +1,28 @@
 var AddInvoice = React.createClass({
     getInitialState: function () {
-        return {invoices: []}
+        return {invoices: [], folio: ''}
     },
     componentDidMount: function() {
+        this.invoice_page = 1;
         //Gets all the inovoices that are not in the purchase order
-        //TODO add pagination
-        this.serverRequest = $.get('/invoices?not_from=true&purchase_order_id='+this.props.purchase_order_id, function (result) {
+        this.serverRequest = $.get('/invoices', function (result) {
             var invoices = this.removeDuplicatedInvoices(result, this.props.invoices);
+            this.invoces = invoices;
             this.setState({invoices: invoices});
+            this.props.sendListCount(result.length);
         }.bind(this),'json');
     },
+    // bringNextPage: function(){
+    //     this.invoice_page += 1;
+    //     this.serverRequest = $.get('/invoices?not_from=true&purchase_order_id='+this.props.purchase_order_id + 'page=' + this.invoice_page, function (result) {
+    //         var new_invoices = this.removeDuplicatedInvoices(result, this.props.invoices);
+    //         var state_invoice = this.state.invoices.slice();
+    //         var merge = state_invoice.concat(new_invoices);
+    //         console.log(merge);
+    //         this.setState({invoices: merge});
+    //         this.props.sendListCount(merge.length);
+    //     }.bind(this),'json');
+    // },
     componentWillUnmount: function() {
         this.serverRequest.abort();
     },
@@ -44,34 +57,37 @@ var AddInvoice = React.createClass({
         });
         
     },
-    invoiceElement: function (invoice) {
-        return (
-            <div className="list-group-item" key={invoice.id}>
-                <h4 className="list-group-item-heading">
-                    Folio: {invoice.folio}
-                    <div className="pull-right"><button className="btn btn-primary" onClick={()=> this.addInvoiceToPurchase(invoice)}>Agregar a orden</button></div>
-                    <a href={"/invoices/" + invoice.id+ "/document"} target="_blank">
-                        <img className="pdf-icon"  alt="Pdf icon" src="/assets/pdf-icon-8cbf78af37779857c322c4020429d65733cb89435a9e513f8d5e3ed9113e809e.png"/>
-                    </a>
-                </h4>
-
-                <label className="label label-primary ">{invoice.status}</label>
-                <h6><b>Folio Factura: </b>{invoice.receipt_folio}</h6>
-                <h6><i className="fa fa-usd"/>  {invoice.amount}</h6>
-                <h6><i className="fa fa-calendar"/>  {invoice.invoice_date}</h6>
-            </div>
-        );
+    getNoInvoicesMessage: function () {
+        if(this.state.invoices.length == 0){
+            return <a className="list-group-item" >
+                <h4 className="list-group-item-heading">No hay facturas para agregar</h4>
+            </a>;
+        }else{
+            return null;
+        }
+    },
+    filterByFolio: function (name,value) {
+        if(value == ''){
+            this.setState({invoices: this.invoces, folio: value});
+            return;
+        }
+        var filtered_invoices = this.invoces.filter(function (invoice) {
+            return invoice.folio.indexOf(value) !== -1;
+        });
+        this.setState({invoices: filtered_invoices, folio: value});
     },
     render: function () {
         var invoices;
         invoices = this.state.invoices.map(function (invoice) {
-            return this.invoiceElement(invoice);
+            return <Invoice invoice={invoice} btn_message="Agregar" btn_click={this.addInvoiceToPurchase}/>;
         }.bind(this));
         return (
           <div>
               <ErrorBox errorsArray={this.state.errors}/>
-              <div className="list-group">
+              <div className="col-md-3"><LabelInput name="folio" label="Buscar por folio" changed={this.filterByFolio} value={this.state.folio} /></div>
+              <div className="list-group" style={{height: '480px  ',overflowY: 'auto'}} >
                 {invoices}
+                {this.getNoInvoicesMessage()}
               </div>
           </div>
         );

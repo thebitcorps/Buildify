@@ -10,7 +10,7 @@ var InvoicesApp = React.createClass({
         this.serverRequest.abort();
     },
    getInitialState: function () {
-       return {active_tab: 'index', invoices: [ ], adding: false, editing: false}
+       return {active_tab: 'index', invoices: [ ], adding: false, editing: false, adding_list_count: 0}
    },
     isTabActice: function (tab_name) {
         return this.state.active_tab == tab_name ? 'active' : '';
@@ -20,26 +20,6 @@ var InvoicesApp = React.createClass({
           return;
       }
       this.setState({active_tab: tab_name});
-    },
-
-    invoiceElement: function (invoice) {
-        return (
-            <div className="list-group-item" key={invoice.id}>
-                <h4 className="list-group-item-heading">
-                    Folio: {invoice.folio}
-                    <div className="pull-right"><button className="btn btn-primary" onClick={()=> this.toggleEditing(invoice)}>Editar</button></div>
-
-                    <a href={"/invoices/" + invoice.id+ "/document"} target="_blank">
-                        <img className="pdf-icon"  alt="Pdf icon" src="/assets/pdf-icon-8cbf78af37779857c322c4020429d65733cb89435a9e513f8d5e3ed9113e809e.png"/>
-                    </a>
-                </h4>
-
-                <label className="label label-primary ">{invoice.status}</label>
-                <h6><b>Folio Factura: </b>{invoice.receipt_folio}</h6>
-                <h6><i className="fa fa-usd"/>  {invoice.amount}</h6>
-                <h6><i className="fa fa-calendar"/>  {invoice.invoice_date}</h6>
-            </div>
-        );
     },
     toggleAdding: function () {
         this.setState({adding: !this.state.adding, active_tab: this.INDEX_TAB_NAME, editing: false, editing_invoice: null});
@@ -56,6 +36,9 @@ var InvoicesApp = React.createClass({
             }
         }
         this.setState({invoices: invoices, editing_invoice: null});
+    },
+    updateAddingList: function (count) {
+        this.setState({adding_list_count: count})
     },
     addNewInvoice: function (invoice) {
         var invoices = this.state.invoices.slice();
@@ -104,7 +87,7 @@ var InvoicesApp = React.createClass({
            <div className="list-group">
                {
                    this.state.invoices.map(function(item){
-                       return this.invoiceElement(item);
+                       return <Invoice invoice={item} btn_message="Editar" btn_click={this.toggleEditing}/>;
                    }.bind(this))
                }
                {this.getNoInvoicesMessage()}
@@ -125,7 +108,7 @@ var InvoicesApp = React.createClass({
             active_body = this.getIndexBody();
         }else{
             adding_button = null;
-            active_body = <AddInvoice invoices={this.state.invoices} purchase_order_id={this.props.purchase_order_id} construction_id={this.props.construction_id} onInvoiceAdded={this.invoiceAdded}/>;
+            active_body = <AddInvoice invoices={this.state.invoices} purchase_order_id={this.props.purchase_order_id} construction_id={this.props.construction_id} onInvoiceAdded={this.invoiceAdded} sendListCount={this.updateAddingList}/>;
         }
        return (
          <div>
@@ -134,7 +117,7 @@ var InvoicesApp = React.createClass({
              </div>
              <ul className="nav nav-tabs">
                  <li role="presentation" className={this.isTabActice(this.INDEX_TAB_NAME)} onClick={() => this.changeActiveTab(this.INDEX_TAB_NAME)}><a href="#">Invoices {this.state.invoices.length}</a></li>
-                 <li role="presentation" className={this.isTabActice(this.ASSIGN_TAB_NAME)} onClick={() => this.changeActiveTab(this.ASSIGN_TAB_NAME)}><a href="#">Asignar </a></li>
+                 <li role="presentation" className={this.isTabActice(this.ASSIGN_TAB_NAME)} onClick={() => this.changeActiveTab(this.ASSIGN_TAB_NAME)}><a href="#">Asignar {this.state.adding_list_count}</a></li>
              </ul>
              {active_body}
          </div>  
