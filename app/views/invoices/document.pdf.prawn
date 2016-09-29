@@ -19,7 +19,7 @@ date_data_cell.style inline_format: true, align: :left, borders: [:bottom], size
 
 folio_cell = pdf.make_cell content: "<b>Contra Recibo N°:</b>"
 folio_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, padding: [2, 5, 2, 5]
-folio_data_cell = pdf.make_cell content: "<b>#{@invoice.receipt_folio}</b>"
+folio_data_cell = pdf.make_cell content: "<b>#{@invoice.folio}</b>"
 folio_data_cell.style inline_format: true, align: :left, borders: [:bottom], size: 11, :text_color => "2A718C", padding: [2, 5, 2, 5]
 
 deliver_cell = pdf.make_cell content: "<b>Recibimos de:</b>"

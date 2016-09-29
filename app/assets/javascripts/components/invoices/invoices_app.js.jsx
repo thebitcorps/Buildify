@@ -9,9 +9,9 @@ var InvoicesApp = React.createClass({
     componentWillUnmount: function() {
         this.serverRequest.abort();
     },
-   getInitialState: function () {
-       return {active_tab: 'index', invoices: [ ], adding: false, editing: false, adding_list_count: 0}
-   },
+    getInitialState: function () {
+        return {active_tab: 'index', invoices: [ ], adding: false, editing: false, adding_list_count: 0}
+    },
     isTabActice: function (tab_name) {
         return this.state.active_tab == tab_name ? 'active' : '';
     },
@@ -87,7 +87,7 @@ var InvoicesApp = React.createClass({
            <div className="list-group">
                {
                    this.state.invoices.map(function(item){
-                       return <Invoice invoice={item} btn_message="Editar" btn_click={this.toggleEditing}/>;
+                       return <Invoice invoice={item} btn_message="Editar" btn_click={this.toggleEditing} key={item.id}/>;
                    }.bind(this))
                }
                {this.getNoInvoicesMessage()}

@@ -4,7 +4,7 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :document, :edit, :update]
 
   def index
-    @invoices = Invoice.where(id: get_payments_ids)
+    @invoices = Invoice.includes(:provider).where(id: get_payments_ids)
     # is okay to use find because all id are valid
     respond_to do |format|
       format.json{render :index}
@@ -19,7 +19,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new invoice_params
     purchase_order = PurchaseOrder.find params[:purchase_order_id]
     @invoice.provider_id = purchase_order.provider_id
-    @invoice.construction_id = purchase_order.id
+    @invoice.construction_id = purchase_order.construction.id
     respond_to do  |format|
       if @invoice.save
         build_payment(@invoice, purchase_order)

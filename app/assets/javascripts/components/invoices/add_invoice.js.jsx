@@ -1,9 +1,10 @@
 var AddInvoice = React.createClass({
     getInitialState: function () {
-        return {invoices: [], folio: ''}
+        this.first_date = true;
+        return {invoices: [], folio: '',invoice_date: '',receipt_folio: ''}
     },
     componentDidMount: function() {
-        this.invoice_page = 1;
+        $('#clear-date').tooltip();
         //Gets all the inovoices that are not in the purchase order
         this.serverRequest = $.get('/invoices', function (result) {
             var invoices = this.removeDuplicatedInvoices(result, this.props.invoices);
@@ -12,17 +13,6 @@ var AddInvoice = React.createClass({
             this.props.sendListCount(result.length);
         }.bind(this),'json');
     },
-    // bringNextPage: function(){
-    //     this.invoice_page += 1;
-    //     this.serverRequest = $.get('/invoices?not_from=true&purchase_order_id='+this.props.purchase_order_id + 'page=' + this.invoice_page, function (result) {
-    //         var new_invoices = this.removeDuplicatedInvoices(result, this.props.invoices);
-    //         var state_invoice = this.state.invoices.slice();
-    //         var merge = state_invoice.concat(new_invoices);
-    //         console.log(merge);
-    //         this.setState({invoices: merge});
-    //         this.props.sendListCount(merge.length);
-    //     }.bind(this),'json');
-    // },
     componentWillUnmount: function() {
         this.serverRequest.abort();
     },
@@ -55,7 +45,6 @@ var AddInvoice = React.createClass({
                 this.setState({ errors: $.parseJSON(XMLHttpRequest.responseText)});
             }.bind(this)
         });
-        
     },
     getNoInvoicesMessage: function () {
         if(this.state.invoices.length == 0){
@@ -66,25 +55,40 @@ var AddInvoice = React.createClass({
             return null;
         }
     },
-    filterByFolio: function (name,value) {
-        if(value == ''){
-            this.setState({invoices: this.invoces, folio: value});
-            return;
-        }
+    filterBy: function (name, value) {
         var filtered_invoices = this.invoces.filter(function (invoice) {
-            return invoice.folio.indexOf(value) !== -1;
+            return invoice[name].indexOf(value) !== -1;
         });
-        this.setState({invoices: filtered_invoices, folio: value});
+        var object = {invoices: filtered_invoices};
+        object[name] = value;
+        this.setState(object);
+    },
+    filterByDate: function (name, value) {
+        if(this.first_date){
+            this.first_date = false;
+        }else{
+            this.filterBy(name, value);
+        }
+    },
+    clearDate: function(){
+        this.filterBy('invoice_date', '');
+
     },
     render: function () {
         var invoices;
         invoices = this.state.invoices.map(function (invoice) {
-            return <Invoice invoice={invoice} btn_message="Agregar" btn_click={this.addInvoiceToPurchase}/>;
+            return <Invoice invoice={invoice} btn_message="Agregar" btn_click={this.addInvoiceToPurchase} key={invoice.id}/>;
         }.bind(this));
+        
         return (
           <div>
               <ErrorBox errorsArray={this.state.errors}/>
-              <div className="col-md-3"><LabelInput name="folio" label="Buscar por folio" changed={this.filterByFolio} value={this.state.folio} /></div>
+              <div className="col-sm-3">
+                  <LabelInput name="folio" label="Buscar por folio" changed={this.filterBy} value={this.state.folio} />
+                  <LabelInput name="receipt_folio" label="Buscar por folio de factura" changed={this.filterBy} value={this.state.receipt_folio} />
+                  <DateInput  minDate="10000" name="invoice_date" label="Fecha factura" changed={this.filterByDate} value={this.state.invoice_date}/>
+                  <button id="clear-date" className="btn btn-default btn-xs"onClick={this.clearDate} data-toggle="tooltip" data-placement="right" title="Limpiar fecha">X</button>
+              </div>
               <div className="list-group" style={{height: '480px  ',overflowY: 'auto'}} >
                 {invoices}
                 {this.getNoInvoicesMessage()}

@@ -31,7 +31,6 @@ class EstimatesController < ApplicationController
         @estimate.complete!
         format.json { render json: @estimate.to_json}
       else
-        puts 'no caca'
         format.json{ @estimte.errors.full_messages.to_json}
       end
     end
