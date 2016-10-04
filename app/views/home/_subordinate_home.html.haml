@@ -11,14 +11,14 @@
   .col-md-12
     %h4 Requisiciones
     %ul.nav.nav-tabs
-      %li{id: 'all', class: "#{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
-        = link_to 'Todos', requisitions_path(type_list: 'all', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+      %li{id: 'all', class: "#{'active' if params[:type_list] == 'all' or params[:type_list].nil? }"}
+        = link_to 'Todos', requisitions_path(type_list: 'all', construction_id: @constructions.ids, mode: params[:mode]), remote: true
       %li{id: 'pending', class: " #{'active' if params[:type_list] == 'pending' }"}
-        = link_to 'Pendientes', requisitions_path(type_list: 'pending', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+        = link_to 'Pendientes', requisitions_path(type_list: 'pending', construction_id: @constructions.ids, mode: params[:mode]), remote: true
       %li{id: 'partially', class: " #{'active' if params[:type_list] == 'partially'}"}
-        = link_to 'Parcialmente', requisitions_path(type_list: 'partially', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+        = link_to 'Parcialmente', requisitions_path(type_list: 'partially', construction_id: @constructions.ids, mode: params[:mode]), remote: true
       %li{id: 'complete', class: " #{'active' if params[:type_list] == 'complete'}"}
-        = link_to 'Completas', requisitions_path(type_list: 'complete', construction_id: params[:construction_id],  mode: params[:mode]), remote: true
+        = link_to 'Completas', requisitions_path(type_list: 'complete', construction_id: @constructions.ids,  mode: params[:mode]), remote: true
 .row#requisitions
   - if @requisitions.present?
     = render @requisitions

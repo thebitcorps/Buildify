@@ -82,6 +82,6 @@ class User < ActiveRecord::Base
   end
 
   def get_role
-    roles.first
+    roles.first.to_s
   end
 end
