@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912013314) do
+ActiveRecord::Schema.define(version: 20160922162955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(version: 20160912013314) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "concept"
-    t.date     "payday"
     t.date     "extension_date"
     t.string   "status"
   end
@@ -99,19 +98,28 @@ ActiveRecord::Schema.define(version: 20160912013314) do
 
   add_index "extensions", ["construction_id"], name: "index_extensions_on_construction_id", using: :btree
 
+  create_table "folio_counters", force: :cascade do |t|
+    t.integer "year",  default: 2016
+    t.integer "count", default: 0
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.string   "folio"
     t.string   "status",            default: "waiting"
     t.decimal  "amount"
     t.date     "invoice_date"
     t.integer  "payment_id"
+    t.integer  "provider_id"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
     t.string   "receipt_folio"
     t.integer  "consecutive_folio"
+    t.integer  "construction_id"
   end
 
+  add_index "invoices", ["construction_id"], name: "index_invoices_on_construction_id", using: :btree
   add_index "invoices", ["payment_id"], name: "index_invoices_on_payment_id", using: :btree
+  add_index "invoices", ["provider_id"], name: "index_invoices_on_provider_id", using: :btree
 
   create_table "item_materials", force: :cascade do |t|
     t.decimal  "requested"
@@ -159,17 +167,21 @@ ActiveRecord::Schema.define(version: 20160912013314) do
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
-    t.string   "status",          default: "due"
+    t.string   "status",            default: "due"
     t.string   "concept"
     t.decimal  "amount"
     t.date     "payment_date"
-    t.decimal  "paid_amount",     default: 0.0
+    t.decimal  "paid_amount",       default: 0.0
     t.integer  "construction_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "purchase_order_id"
+    t.integer  "invoice_id"
   end
 
   add_index "payments", ["construction_id"], name: "index_payments_on_construction_id", using: :btree
+  add_index "payments", ["invoice_id"], name: "index_payments_on_invoice_id", using: :btree
+  add_index "payments", ["purchase_order_id"], name: "index_payments_on_purchase_order_id", using: :btree
 
   create_table "permitted_measure_units", force: :cascade do |t|
     t.integer  "material_id"
@@ -299,6 +311,7 @@ ActiveRecord::Schema.define(version: 20160912013314) do
   add_foreign_key "estimates", "constructions"
   add_foreign_key "extensions", "constructions"
   add_foreign_key "invoices", "payments"
+  add_foreign_key "invoices", "providers"
   add_foreign_key "item_materials", "materials"
   add_foreign_key "item_materials", "purchase_orders"
   add_foreign_key "item_materials", "requisitions"

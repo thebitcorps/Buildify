@@ -44,6 +44,10 @@ window.createPayment = function(construction_id){
 
 };
 
+window.createInvoices = function(purchase_order_id, folio,construction_id){
+    ReactDOM.render(React.createElement(InvoicesModal, {purchase_order_id: purchase_order_id, folio: folio,construction_id: construction_id}), document.getElementById('invoices'));
+};
+
 window.completeEstimate = function(estimate_id){
     ReactDOM.render(React.createElement(CompleteEstimateModal,{estimate_id: estimate_id}),document.getElementById('mod'));
 

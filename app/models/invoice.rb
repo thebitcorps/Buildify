@@ -1,11 +1,15 @@
 class Invoice < ActiveRecord::Base
   has_one :purchase_order
+  has_many :purchase_orders, through: :payments
+  has_many :payments
   has_one :requisition, through: :purchase_order
-  has_one :construction, through: :requisition
+  belongs_to :construction
   belongs_to :payment
-  has_one :provider, through: :purchase_order
+  belongs_to :provider
   include PublicActivity::Common
   #status when the invoice is create in db
+
+  paginates_per 25
   WAITING_STATUS = 'waiting'
   #status when user finally capture the invoice
   ADDED_STATUS = 'added'
@@ -14,12 +18,12 @@ class Invoice < ActiveRecord::Base
   #when the invoice is liquid
   PAID_STATUS = 'paid'
 
-  before_update :validate_fields
-  before_update :set_purchase_order_sent
-  after_update :notify_admins
-  before_update :set_payment
-  before_update :set_invoice_folio
-
+  # before_update :validate_fields
+  # before_update :set_purchase_order_sent
+  # after_update :notify_admins
+  before_create :set_invoice_folio
+  after_create :next_folio
+  # before_create :set_payment
 
   # validates :folio,:amount,:invoice_date,presence: true
   # validates :amount, numericality: true
@@ -29,26 +33,18 @@ class Invoice < ActiveRecord::Base
     self.status == WAITING_STATUS
   end
 
-  def set_consecutiive_folio
-    last = Invoice.order('created_at DESC').limit(2).last
-    if Invoice.all.count > 1
-      if last.created_at.year == Date.today.year
-        self.consecutive_folio = last.consecutive_folio +  1
-        return
-      end
-    end
-    self.consecutive_folio = 1
+  def set_invoice_folio
+    self.folio = FolioCounter.get_current.formated_folio
   end
 
-  def set_invoice_folio
-    set_consecutiive_folio
-    self.folio = self.consecutive_folio.to_s + '-' + Date.today.year.to_s
+  def next_folio
+    FolioCounter.next_folio
   end
 
   def set_payment
     # after payment creation editing not working
-    payment = self.payment || Payment.create(amount: self.amount, payment_date: self.invoice_date, construction: self.construction)
-    self.payment = payment
+    payment = Payment.create(amount: self.amount, payment_date: self.invoice_date, construction_id: self.construction_id)
+    self.payment_id = payment.id
   end
 
   def set_purchase_order_sent

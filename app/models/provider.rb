@@ -3,7 +3,6 @@ class Provider < ActiveRecord::Base
   has_many :purchase_orders
   has_many :requisitions, through: :purchase_orders
   has_many :constructions, through: :requisitions
-  has_many :payments, through: :invoices
   paginates_per 15
   # validations for provider
   validates :name, presence: true
@@ -20,6 +19,11 @@ class Provider < ActiveRecord::Base
     self.neighborhood = neighborhood.humanize
     self.city = city.humanize
     self.street = street.humanize
+  end
+
+  def payments
+    ids = invoices.pluck(:id)
+    Payment.where(invoice_id: ids)
   end
 
   def expenses

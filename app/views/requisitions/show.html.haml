@@ -8,7 +8,7 @@
       Requisición
       %span{class: "label label-#{@requisition.status_color}"}
         = @requisition.formated_folio
-      = link_to image_tag('pdf-icon.png',class: 'pdf-icon'),document_requisition_path(@requisition)
+      = link_to image_tag('pdf-icon.png',class: 'pdf-icon', target: "_blank"),document_requisition_path(@requisition), target: "_blank"
   - if @requisition.pending?
     = link_to 'Terminar requisicion',requisition_path(@requisition,requisition: {status: 'sent'}),method: :patch, data: { confirm: t('requisition.sent_warning')},class: 'btn btn-warning'
   - if current_user.administrator? and @requisition.empty?

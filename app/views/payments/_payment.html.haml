@@ -2,31 +2,20 @@
   %td.no-break
     =payment.try(:invoice).try(:invoice_date)
   %td
-    - if payment.invoice
-      = link_to payment.invoice.folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
+    %a{onclick: "window.createInvoices(#{payment.purchase_order.id},'#{payment.purchase_order.formated_folio}',#{payment.purchase_order.construction.id})", class: 'button btn-sm btn-info no-break', data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => 'Facuturas asociadas'}
+      = payment.invoice.folio
   %td
     - if payment.invoice
       = link_to payment.invoice.receipt_folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
-      = link_to payment.invoice.provider.name, provider_path(payment.invoice.provider)
-    - else
-      = payment.concept
+      = link_to payment.purchase_order.provider.name, provider_path(payment.purchase_order.provider)
   %td
     - if payment.purchase_order
       = link_to payment.purchase_order.formated_folio, purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-info no-break", type: "button",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('purchase_order.pdf_message')}
-    - else
-      %span.button.btn-sm.btn-info
-        Caja chica
-    = link_to payment.construction.title, construction_path(payment.construction)
-
   %td
     = link_to payment.requisition.formated_folio, requisition_path(payment.requisition), {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => 'Requisicion PDF'}
 
   %td
     = number_to_currency payment.amount
   %td
-    = number_to_currency payment.paid_amount.to_f
-  %td
-    = number_to_currency (payment.remaining)
-  %td
     %button{onclick: "window.createBillingAdjusment( #{payment.id},#{payment.amount}, #{payment.paid_amount}, #{payment.construction_id} )",class: 'btn btn-primary'}
-      Agregar pago
+      Informacion de pagos

@@ -5,12 +5,12 @@ class HomeController < ApplicationController
     if current_user.administrator?
       @activities = PublicActivity::Activity.all.order(created_at: :desc).limit(15)
       @constructions = Construction.running
-      @payments = Payment.all
+      @payments = Payment.active.page(params[:payment_page])
       @balance = get_expenses(@constructions)
     elsif current_user.subordinate?
       @requisitions = current_user.requisitions
     elsif current_user.secretary?
-      @payments = Payment.all
+      @payments = Payment.active.page(params[:payment_page])
       @purchase_orders = PurchaseOrder.active.page(params[:page])
     end
 

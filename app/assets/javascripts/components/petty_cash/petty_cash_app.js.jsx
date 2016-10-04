@@ -38,7 +38,7 @@ var PettyCashApp = React.createClass({
         var title,expenses_form = null,expenses_size = 'col-md-6',close;
         if(this.props.petty_cash.closing_date){
             title = "Caja chica cerrada";
-            expenses_size = 'col-md-12'
+            expenses_size = 'col-md-12';
             close = true;
         }
         else{

@@ -4,6 +4,7 @@ class RequisitionsController < ApplicationController
   before_action :set_requisition, only: [:show, :document, :edit, :update, :destroy]
   before_action :set_construction, only: [:index, :new, :edit]
 
+  # TODO includes item_materials
   def index
     @petty_cash = PettyCash.active_from_construction(params[:construction_id])
     @type_list = sanitized_locked_param

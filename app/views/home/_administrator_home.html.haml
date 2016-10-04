@@ -7,8 +7,10 @@
 
 = render partial: 'constructions/balance', locals: {expenses: @balance[:expenses], paid: @balance[:paid]}
 %hr
+
 .col-md-12
   %h4 Facturas
+  = render partial: 'payments/pagination'
   = render partial: 'constructions/payment_tabs'
   .table-responsive
     %table.table.table-hover
@@ -26,14 +28,14 @@
             Requisicion
           %th
             Importe
-          %th
+          -#%th
             Pagado
-          %th
+          -#%th
             Saldo
           %th
             Pagos
       %tbody#payments
-        = render partial: 'payment', collection: @payments
+        = render partial: 'payments/payment', collection: @payments
 .col-md-4
   .panel.panel-default
     .panel-heading= t 'public_activity.recent'

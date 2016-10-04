@@ -6,6 +6,12 @@ class PurchaseOrder < ActiveRecord::Base
   # requisition_id, invoice_id, created_at, updated_at, stamp, authorizer_id, stamp_date
   attr_accessor :stamp_purchase_order
   has_many :item_materials
+  # nuevos
+  has_many :payments
+  has_many :invoices, through: :payments
+  # has_many :against_receipts
+  # has_many :invoices, through: :against_receipts
+  #
   belongs_to :invoice
   belongs_to :requisition
   belongs_to :authorizer, class_name: "User", foreign_key: :authorizer_id

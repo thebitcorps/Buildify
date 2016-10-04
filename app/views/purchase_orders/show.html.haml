@@ -10,7 +10,7 @@
       Orden de Compra
       %span{class: "label label-#{@purchase_order.get_color}"}
         = @purchase_order.formated_folio
-    = link_to image_tag('pdf-icon.png', class: 'pdf-icon'), document_purchase_order_path(@purchase_order)
+    = link_to image_tag('pdf-icon.png', class: 'pdf-icon', target: "_blank"), document_purchase_order_path(@purchase_order) , target: "_blank"
   %div
     - if @purchase_order.is_stamped?
       Esta orden de compra ya fue autorizada por:
@@ -31,11 +31,11 @@
         Emitida el 
         = spanish_formated_date(@purchase_order.created_at, false)
     .col-md-4
-      - if @invoice.waiting?
+      - unless @purchase_order.is_stamped?
         %h6.text-center
-          Esta factura no ha sido recibida
+          Orden de compra no a sido autorizada
           %br
-          = link_to 'Editar factura', edit_invoice_path(@invoice), class: 'btn'
+          -#= link_to 'Editar factura', edit_invoice_path(@invoice), class: 'btn'
       - else
         / Second idea just pass the link to actions, this view keeps purchase order stuff
         %h3.text-center
@@ -44,8 +44,8 @@
               Factura
           %br
           %small
-            = link_to image_tag('pdf-icon.png', class: 'pdf-icon'), document_invoice_path(@invoice)
-            = link_to 'Administrar', edit_invoice_path(@invoice)
+            %a{onclick: "window.createInvoices(#{@purchase_order.id} , '#{@purchase_order.formated_folio}',#{@purchase_order.construction.id})", class: 'btn btn-primary'}
+              Administrar invoices
 
 .panel.panel-default
   .table-responsive
@@ -62,3 +62,4 @@
             Precio unitario
       %tbody
         = render partial: 'item_material', collection: @item_materials
+#invoices

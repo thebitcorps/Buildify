@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
     @type_list = sanitized_type_list
     respond_to do |format|
       format.html {redirect_to construction_path(params[:construction_id]),type_list: params[:type_list]}
-      @payments =(class_eval %Q{Payment.#{@type_list}(#{params[:construction_id]})})
+      @payments =(class_eval %Q{Payment.#{@type_list}(#{params[:construction_id]}).page(#{params[:payment_page]})})
       format.js {@payments}
       format.json {render :index}
     end
@@ -27,7 +27,7 @@ class PaymentsController < ApplicationController
 
   private
   def payment_params
-    params.require(:payment).permit(:amount,:concept,:payment_date,:construction_id,:paid_amount,:status)
+    params.require(:payment).permit(:amount,:concept,:payment_date,:construction_id,:invoice_id,:purchase_order_id)
   end
 
   def sanitized_type_list

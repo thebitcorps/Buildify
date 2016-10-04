@@ -16,15 +16,17 @@
             Requisicion
           %th
             Importe
-          %th
+          -#%th
             Pagado
-          %th
+          -#%th
             Saldo
           %th
             Pagos
       %tbody#payments
-        = render partial: 'home/payment', collection: @payments
+        = render partial: 'payments/payment', collection: @payments
         - if @payments.empty?
           %tr
             %td No hay pagos
+= render partial: 'payments/pagination'
 #mod
+#invoices

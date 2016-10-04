@@ -1,4 +1,6 @@
 @DateInput = React.createClass
+  getDefaultProps: ->
+    minDate: 1, initToday: true
   componentDidMount: ->
     $('#' + "#{@props.name}").datetimepicker
       daysOfWeekDisabled: [ 0 ]
@@ -7,7 +9,7 @@
       defaultDate: moment()
       format: 'DD/MM/YYYY'
       locale: 'es'
-      minDate: moment().subtract(1, 'weeks');
+      minDate: moment().subtract(@props.minDate, 'weeks');
     that = @
     $('#' + "#{@props.name}").on 'dp.change', (e) ->
       that.changed(e)
