@@ -40,7 +40,7 @@
             %li=estimate.concept + " " +  estimate.amount.to_s
         %p
           = link_to "Agregar", new_estimate_path(construction_id: @construction), class: 'pull-right'
-.rpw
+.row
   .col-md-4.col-xs-12
     %div{class: "panel panel-default"}
       %div{class: "panel-heading"}
@@ -50,7 +50,6 @@
         %p
           = link_to '(ver todas)', petty_cashes_path(construction_id: @construction)
   = render partial: 'requisitions_and_purchase_boxes'
-
 
 .row
   .col-md-4.col-xs-12

@@ -1,11 +1,3 @@
-.page-header
-  .row
-    .col-xs-12.col-md-6
-      %h4 Administración
-    .col-xs-12.col-md-6
-      %h6.pull-right
-        = ["Hoy es", spanish_formated_date(Date.today, false)].join(" ")
-
 = render partial: 'constructions/balance', locals: {expenses: @balance[:expenses], paid: @balance[:paid]}
 / %hr
 
