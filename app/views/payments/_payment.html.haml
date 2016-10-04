@@ -1,21 +1,30 @@
-%tr{class: "#{payment.get_color}"}
-  %td.no-break
-    =payment.try(:invoice).try(:invoice_date)
+%tr{class: "-#{payment.get_color}"}
   %td
-    %a{onclick: "window.createInvoices(#{payment.purchase_order.id},'#{payment.purchase_order.formated_folio}',#{payment.purchase_order.construction.id})", class: 'button btn-sm btn-info no-break', data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => 'Facuturas asociadas'}
+    %i{class: "fa fa-circle #{payment.get_color}"}
+  %td.no-break
+    = payment.try(:invoice).try(:invoice_date)
+  %td
+    %a{onclick: "window.createInvoices(#{payment.purchase_order.id},'#{payment.purchase_order.formated_folio}',#{payment.purchase_order.construction.id})", class: 'no-break', data: { toggle: 'tooltip', placement: 'top' }, title: 'Facturas asociadas'}
       = payment.invoice.folio
+      %i{class: 'fa fa-external-link-square'}
   %td
     - if payment.invoice
-      = link_to payment.invoice.receipt_folio, "/invoices/#{payment.invoice.id}/document", {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('invoice.pdf_message')}
-      = link_to payment.purchase_order.provider.name, provider_path(payment.purchase_order.provider)
+      = link_to truncate(payment.purchase_order.provider.name, length: 20), provider_path(payment.purchase_order.provider)
+      = link_to "/invoices/#{payment.invoice.id}/document", {class: "no-break pull-right", data: { toggle: 'tooltip', placement: 'top' }, title: t('invoice.pdf_message')} do
+        = payment.invoice.receipt_folio
+        %i{class: 'fa fa-file-pdf-o'}
   %td
     - if payment.purchase_order
-      = link_to payment.purchase_order.formated_folio, purchase_order_path(payment.purchase_order), {class: "button btn-sm btn-info no-break", type: "button",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => t('purchase_order.pdf_message')}
+      = link_to purchase_order_path(payment.purchase_order), {class: "no-break", type: "button",data: { toggle: 'tooltip', placement: 'top' }, title: t('purchase_order.pdf_message')} do
+        = payment.purchase_order.formated_folio
+        %i{class: 'fa fa-file-pdf-o'}
   %td
-    = link_to payment.requisition.formated_folio, requisition_path(payment.requisition), {class: "button btn-sm btn-info no-break",data: { 'toggle' => 'tooltip' ,'placement' => 'top' },'title' => 'Requisicion PDF'}
+    = link_to requisition_path(payment.requisition), {class: "no-break", data: { toggle: 'tooltip', placement: 'top' }, title: 'Requisición PDF'} do
+      = payment.requisition.formated_folio
+      %i{class: 'fa fa-file-pdf-o'}
 
   %td
     = number_to_currency payment.amount
   %td
-    %button{onclick: "window.createBillingAdjusment( #{payment.id},#{payment.amount}, #{payment.paid_amount}, #{payment.construction_id} )",class: 'btn btn-primary'}
-      Informacion de pagos
+    %button{onclick: "window.createBillingAdjusment( #{payment.id},#{payment.amount}, #{payment.paid_amount}, #{payment.construction_id} )",class: 'btn btn-primary circular'}
+      %i{class: 'fa fa-info'}

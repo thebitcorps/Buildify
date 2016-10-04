@@ -80,4 +80,8 @@ class User < ActiveRecord::Base
     add_role role
     puts roles
   end
+
+  def get_role
+    roles.first
+  end
 end

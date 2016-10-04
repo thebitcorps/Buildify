@@ -82,12 +82,13 @@ class Payment < ActiveRecord::Base
   }
 
   def get_color
-    if status == PAID_STATUS
-      'success'
-    elsif status == PARTIALLY_DUE_STATUS
-      'warning'
+    case status
+    when PAID_STATUS
+      :green
+    when PARTIALLY_DUE_STATUS
+      :yellow
     else
-      'danger'
+      :red
     end
   end
 

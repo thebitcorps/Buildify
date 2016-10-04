@@ -62,13 +62,13 @@ class ItemMaterial < ActiveRecord::Base
     elsif missed?
       'danger'
     else
-      'dafault'
+      'default'
     end
   end
 
 private
   def update_requisition_state
-    items_with_purchase =0
+    items_with_purchase = 0
     self.requisition.item_materials.each do |item|
       items_with_purchase += 1 if item.authorized?
     end
