@@ -23,4 +23,12 @@ module ApplicationHelper
       item_material.save
     end
   end
+
+  def are_you_signed_clack_or_not(boolean)
+    if boolean
+      content_tag(:i, nil, class: 'fa fa-check-square green', data: { toggle: 'tooltip', placement: 'bottom' }, title: 'Firmada')
+    else
+      content_tag(:i, nil, class: 'fa fa-check-minus red', data: { toggle: 'tooltip', placement: 'bottom' }, title: 'Sin firmar')
+    end
+  end
 end

@@ -13,7 +13,7 @@ class Payment < ActiveRecord::Base
   PARTIALLY_DUE_STATUS = 'partially'
   PAID_STATUS = 'paid'
   PETTY_CASH_STATUS = 'petty_cash'
-  STATUS = [DUE_STATUS,PARTIALLY_DUE_STATUS,'paid.no_petty_cash','all_construction',PETTY_CASH_STATUS]
+  STATUS = [DUE_STATUS, PARTIALLY_DUE_STATUS, 'paid.no_petty_cash', 'all_construction', PETTY_CASH_STATUS]
 
   # after_save :change_status_from_remaining!
 
@@ -29,7 +29,7 @@ class Payment < ActiveRecord::Base
     where.not purchase_order_id: purchase_order_id
   }
 
-  scope :active,-> (){
+  scope :active, -> (){
     ids = Construction.running.pluck(:id)
     includes(:invoice,:purchase_order).where construction_id: ids
   }
@@ -50,7 +50,7 @@ class Payment < ActiveRecord::Base
     end
   }
 
-  scope :partially,->(construction_id=nil){
+  scope :partially, ->(construction_id=nil){
     if construction_id
       all_construction(construction_id).where status:  :partially
     else
@@ -58,7 +58,7 @@ class Payment < ActiveRecord::Base
     end
   }
 
-  scope :due,->(construction_id=nil){
+  scope :due, ->(construction_id=nil){
     if construction_id
       all_construction(construction_id).where status:  :due
     else
@@ -92,11 +92,9 @@ class Payment < ActiveRecord::Base
     end
   end
 
-
   def remaining
     amount - paid_amount.to_f
   end
-
 
   def change_status_from_remaining!
     if paid_amount == amount
@@ -108,6 +106,4 @@ class Payment < ActiveRecord::Base
     end
     self.update_attribute 'status',status
   end
-
-
 end
