@@ -22,8 +22,11 @@
 
 
 .list-group#requisitions
-  = render partial: 'requisition', collection: @requisitions
-  = paginate @requisitions,theme: 'twitter-bootstrap-3',remote: true
+  .col-md-12
+    = paginate @requisitions,theme: 'twitter-bootstrap-3',remote: true
+  .col-md-12
+    = render partial: 'requisition', collection: @requisitions
+
   - if @requisitions.empty?
     .well
       No hay requisiciones

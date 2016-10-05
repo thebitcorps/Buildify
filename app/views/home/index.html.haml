@@ -1,3 +1,12 @@
-= render partial: "#{current_user.roles.first.to_s}_home"
+.page-header
+  .row
+    .col-md-6.col-xs-12
+      %h5
+        Hola 
+        = link_to current_user.name, user_path(current_user)
+    .col-md-6.col-xs-12
+      %h6.pull-right
+        = ["Hoy es", spanish_formated_date(Date.today, false)].join(" ")
+= render partial: "#{current_user.get_role}_home"
 #invoices
 

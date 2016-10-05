@@ -1,24 +1,19 @@
-admin = User.create(name: "TheBitCorps", phone: '4498961443', email: "dev@thebitcorps.com", password: "12345678", password_confirmation: "12345678")
-admin.administrator!
+User.create(name: "TheBitCorps", phone: '4498961443', email: "dev@thebitcorps.com", password: "12345678", password_confirmation: "12345678").administrator!
+User.create(name: 'SubordinateCorps', phone: '0001234567', email: 'sub@thebitcorps.com', password: '12345678', password_confirmation: '12345678').subordinate!
+User.create(name: 'Secretary', phone: '0001231234', email: 'sec@thebitcorps.com', password: '12345678', password_confirmation: '12345678').secretary!
 
-sub = User.create(name: 'SubordinateCorps', phone: '0001234567', email: 'sub@thebitcorps.com', password: '12345678', password_confirmation: '12345678')
-sub.subordinate!
-
-hot_secretary = User.create(name: 'Secretary', phone: '0001231234', email: 'sec@thebitcorps.com', password: '12345678', password_confirmation: '12345678')
-hot_secretary.secretary!
-
-unit1 = MeasureUnit.create(unit: 'Kilogramo', abbreviation: 'Kg')
-unit2 = MeasureUnit.create(unit: 'Pieza', abbreviation: 'Pza')
-unit3 = MeasureUnit.create(unit: 'Rollo', abbreviation: 'Rollo')
-unit4 = MeasureUnit.create(unit: '', abbreviation: 'Ml')
-unit5 = MeasureUnit.create(unit: 'Metro cuadrados', abbreviation: 'M2')
-unit6 = MeasureUnit.create(unit: 'Metro cubicos', abbreviation: 'M3')
-unit7 = MeasureUnit.create(unit: '', abbreviation: 'Pt')
-unit8 = MeasureUnit.create(unit: 'Litro', abbreviation: 'Lt')
-unit9 = MeasureUnit.create(unit: 'Hoja', abbreviation: 'Hoja')
-unit10 = MeasureUnit.create(unit: 'Cubeta', abbreviation: 'Cubeta')
-unit11 = MeasureUnit.create(unit: 'Caja', abbreviation: 'Caja')
-unit12 = MeasureUnit.create(unit: 'Saco', abbreviation: 'Saco')
+MeasureUnit.create(unit: 'Kilogramo', abbreviation: 'Kg')
+MeasureUnit.create(unit: 'Pieza', abbreviation: 'Pza')
+MeasureUnit.create(unit: 'Rollo', abbreviation: 'Rollo')
+MeasureUnit.create(unit: '', abbreviation: 'Ml')
+MeasureUnit.create(unit: 'Metro cuadrados', abbreviation: 'M2')
+MeasureUnit.create(unit: 'Metro cubicos', abbreviation: 'M3')
+MeasureUnit.create(unit: '', abbreviation: 'Pt')
+MeasureUnit.create(unit: 'Litro', abbreviation: 'Lt')
+MeasureUnit.create(unit: 'Hoja', abbreviation: 'Hoja')
+MeasureUnit.create(unit: 'Cubeta', abbreviation: 'Cubeta')
+MeasureUnit.create(unit: 'Caja', abbreviation: 'Caja')
+MeasureUnit.create(unit: 'Saco', abbreviation: 'Saco')
 
 Material.create(name: 'Canal de acero Mon-Ten', description: '4" x 2" cal. 14 (3.30 kg/m)', measure_unit_ids: unit1.id)
 Material.create(name: 'Canal de acero Mon-Ten', description: '6" x 2 1/2" cal. 10 (7.80 kg/m)', measure_unit_ids: unit1.id)

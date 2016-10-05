@@ -17,8 +17,10 @@
     = link_to 'Autorizadas', purchase_orders_path(type_list: 'stamped', construction_id: params[:construction_id]), remote: true
 
 .list-group#purchase_orders
-  = render partial: 'purchase_order', collection: @purchase_orders
-  = paginate @purchase_orders, theme: 'twitter-bootstrap-3', remote: true
+  .col-md-12
+    = paginate @purchase_orders, theme: 'twitter-bootstrap-3', remote: true
+  .col-md-12
+    = render partial: 'purchase_order', collection: @purchase_orders
   - if @purchase_orders.empty?
     .well
       No hay ordenes de compra

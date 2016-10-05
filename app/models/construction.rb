@@ -7,7 +7,7 @@ class Construction < ActiveRecord::Base
   has_many :payments
   has_many :estimates
   has_many :extensions
-  has_many :petty_cashes,dependent: :destroy
+  has_many :petty_cashes, dependent: :destroy
   has_many :invoiced_payments, through: :invoices, source: :payment
   has_many :construction_users, dependent: :destroy
   has_many :residents, class_name: 'User', through: :construction_users, foreign_key: :user_id, source: :user
@@ -17,8 +17,8 @@ class Construction < ActiveRecord::Base
   # note database default is 'running' not associated with this constant of change change db default also
   # when construction is in progress
   # when the construction is successfully finished
-  STATUS_OPTIONS = {'En proceso' => :running,'Detenida ' => :stopped,'Termindada' => :finished}
-  STATUS = [:running,:stopped,:finished]
+  STATUS_OPTIONS = { 'En proceso': :running, 'Detenida': :stopped, 'Terminada': :finished}
+  STATUS = [:running, :stopped, :finished]
   ROLES = %w[velador ayudante]
 
   after_create :create_initial_petty_cash
@@ -29,7 +29,7 @@ class Construction < ActiveRecord::Base
   validate :validate_contract_amount
 
   def create_initial_petty_cash
-    PettyCash.create construction_id: id,amount: PettyCash::DEFAULT_AMOUNT
+    PettyCash.create construction_id: id, amount: PettyCash::DEFAULT_AMOUNT
   end
 
   def validate_contract_amount
@@ -59,12 +59,11 @@ class Construction < ActiveRecord::Base
 
   def validate_dates_logic_relation
     if finish_date.nil?
-      errors.add(:finish_date,"Can't be blank")
+      errors.add(:finish_date, "Can't be blank")
       return
-
     end
     if start_date.nil?
-      errors.add(:start_date,"Can't be blank")
+      errors.add(:start_date, "Can't be blank")
       return
     end
     errors.add(:finish_date, 'Finish date must be greater than start date') if finish_date < start_date
@@ -75,10 +74,15 @@ class Construction < ActiveRecord::Base
   scope :finished, ->{(where status: :finished).order(created_at: :asc)}
   scope :all_constructions,-> {(where type: nil).order(created_at: :asc)}
 
+  def self.owned_by(person)
+    where(manager: person)
+  end
+
   ##################  METHODS   ##################
   def active_petty_cash
     petty_cashes.last
   end
+
   def expenses
     payments.sum :amount
   end
@@ -92,17 +96,12 @@ class Construction < ActiveRecord::Base
   end
 
   def extensions_amount
-    budget  = 0
-    self.extensions.each do |extension|
-      budget += extension.amount
-    end
-    budget
+    extensions.inject(0, :amount) { |sum, x| sum + x }
   end
 
   def total_budget
     extensions_amount + contract_amount
   end
-
 
   def invoiced_purchases_orders
     # purchase_orders.select { |po| !po.invoice.waiting?}
@@ -126,7 +125,6 @@ class Construction < ActiveRecord::Base
     status == 'stopped'
   end
 
-
   def days_passed
     (DateTime.now.to_date - start_date).to_i
   end
@@ -143,6 +141,4 @@ class Construction < ActiveRecord::Base
       where("title ilike ?", "%#{query}%").order(title: :asc)
     end
   end
-
-
 end

@@ -1,20 +1,14 @@
-= link_to purchase_order, class: "list-group-item construction-special-row" do
-  .row
-    .col-md-12
-      %h4.pull-right
-        %small
-          = purchase_order.completed? ? "Enviada a proveedor" : "Pendiente"
-      %table
-        %tr
-          %td
-            %h4
-              %span{class: "label label-#{purchase_order.get_color}"}
-                = purchase_order.formated_folio
-          %td
-            %h4
-              %small
-                = item_materials_status_message purchase_order.item_materials_status_count
-          %td
-            %h4
-              %span{class: "label label-info"}
-                = purchase_order.stamp.blank? ? "Sin firmar" : "Firmada"
+.col-xs-12.col-md-4
+  %div{class: "panel panel-#{purchase_order.get_color}"}
+    %div{class: 'panel-heading'}
+      %h3{class: 'panel-title'}
+        = link_to purchase_order.formated_folio, purchase_order, class: ""
+        / # %i{class: "fa fa-circle #{purchase_order.get_color2}"}
+        = are_you_signed_clack_or_not(purchase_order.stamp.present?)
+    %div{class: 'panel-body'}
+      %p
+        Estado:
+        = purchase_order.completed? ? "Enviada a proveedor" : "Pendiente"
+      %p 
+        Motivos:
+        = item_materials_status_message purchase_order.item_materials_status_count

@@ -31,3 +31,17 @@
 .pdf-icon{
   width: 30px;
 }
+
+/*temporary colors, since flux kicked in, take colors from materials guide*/
+.green{
+  color: green;
+}
+
+.yellow{
+  color: yellow;
+}
+
+.red{
+  color: red;
+}
+
