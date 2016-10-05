@@ -22,14 +22,11 @@ class HomeController < ApplicationController
   # method that extract all the expenses from the given construction array
   # return: hash with keys expeneses and paid with the sum of all the expeneses and paid
   def get_expenses(constructions)
-    information = {}
-    information[:expenses] = 0
-    information[:paid] = 0
+    information = {expenses: 0, paid: 0}
     constructions.each do |construction|
       information[:expenses] += construction.expenses
       information[:paid] += construction.paid
     end
     information
   end
-
 end
