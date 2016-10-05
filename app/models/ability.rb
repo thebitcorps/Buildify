@@ -23,6 +23,7 @@ class Ability
       can :manage, Invoice
       can :manage, Material
       can :read, PettyCash
+      can :manage, Payment
       can :read, PettyCashExpense
       can :manage, Notification
     end
