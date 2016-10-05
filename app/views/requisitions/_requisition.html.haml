@@ -2,7 +2,7 @@
   %div{class: "panel panel-#{requisition.status_color}"}
     %div{class: "panel-heading"}
       %h4{class: "panel-title"}
-        = requisition.formated_folio
+        = link_to requisition.formated_folio, requisition
     %div{class: "panel-body"}
       %p
         - if requisition.complete? || requisition.partially?
@@ -11,3 +11,6 @@
           = distance_of_time_in_words(Time.now , requisition.requisition_date)
       %p
         = item_materials_status_message requisition.item_materials_status_count
+      = link_to requisition, class: 'btn btn-default pull-right' do
+        %i{class: 'fa fa-eye'}
+        Ver

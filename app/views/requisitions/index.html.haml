@@ -1,33 +1,40 @@
 .page-header
-  %ol.breadcrumb
-    %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
-    %li.active Requisiciones
-  %h1
-    %small
-      Requisiciones
-      .pull-right
-        = link_to 'Nueva requisicion', new_requisition_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
+  .row
+    .col-xs-12
+      %ol.breadcrumb
+        %li= link_to @construction.title, current_user.administrator? ? construction_path(@construction) : constructions_path(mode: params[:mode])
+        %li.active Requisiciones
+      %h1
+        %small
+          Requisiciones
+        .pull-right
+          = link_to 'Nueva requisicion', new_requisition_path(construction_id: @construction.id), {class: "btn btn-primary", type: "button"}
 
-%ul.nav.nav-tabs
-  %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
-    = link_to 'Todos', requisitions_path(type_list: 'all', construction_id: params[:construction_id], mode: params[:mode]), remote: true
-  %li{id: 'sent', class: " #{'active' if params[:type_list] == 'sent' }"}
-    = link_to 'Enviadas', requisitions_path(type_list: 'sent', construction_id: params[:construction_id], mode: params[:mode]), remote: true
-  %li{id: 'pending', class: " #{'active' if params[:type_list] == 'pending' }"}
-    = link_to 'Guardadas', requisitions_path(type_list: 'pending', construction_id: params[:construction_id], mode: params[:mode]), remote: true
-  %li{id: 'partially', class: " #{'active' if params[:type_list] == 'partially'}"}
-    = link_to 'Parcialmente', requisitions_path(type_list: 'partially', construction_id: params[:construction_id], mode: params[:mode]), remote: true
-  %li{id: 'complete', class: " #{'active' if params[:type_list] == 'complete'}"}
-    = link_to 'Completas', requisitions_path(type_list: 'complete', construction_id: params[:construction_id],  mode: params[:mode]), remote: true
+.row
+  .col-md-12.col-xs-12
+    %ul.nav.nav-tabs
+      %li{id: 'all',class: " #{'active' if params[:type_list] == 'all'  or params[:type_list].nil? }"}
+        = link_to 'Todos', requisitions_path(type_list: 'all', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+      %li{id: 'sent', class: " #{'active' if params[:type_list] == 'sent' }"}
+        = link_to 'Enviadas', requisitions_path(type_list: 'sent', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+      %li{id: 'pending', class: " #{'active' if params[:type_list] == 'pending' }"}
+        = link_to 'Guardadas', requisitions_path(type_list: 'pending', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+      %li{id: 'partially', class: " #{'active' if params[:type_list] == 'partially'}"}
+        = link_to 'Parcialmente', requisitions_path(type_list: 'partially', construction_id: params[:construction_id], mode: params[:mode]), remote: true
+      %li{id: 'complete', class: " #{'active' if params[:type_list] == 'complete'}"}
+        = link_to 'Completas', requisitions_path(type_list: 'complete', construction_id: params[:construction_id],  mode: params[:mode]), remote: true
 
-
-.list-group#requisitions
-  = render partial: 'requisition', collection: @requisitions
-  = paginate @requisitions,theme: 'twitter-bootstrap-3',remote: true
-  - if @requisitions.empty?
-    .well
-      No hay requisiciones
+.row
+  .col-md-12
+    .list-group#requisitions
+      .row
+        = render @requisitions
+        = paginate @requisitions, theme: 'twitter-bootstrap-3', remote: true
+      - if @requisitions.empty?
+        .well
+          No hay requisiciones
 - if current_user.subordinate?
-  #mod
-  = react_component 'PettyCashApp',petty_cash: @petty_cash,petty_cash_expenses: @petty_cash.petty_cash_expenses
-
+  .row
+    .col-md-12
+      #mod
+= react_component 'PettyCashApp',petty_cash: @petty_cash,petty_cash_expenses: @petty_cash.petty_cash_expenses
