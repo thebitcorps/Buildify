@@ -19,7 +19,7 @@
       / = @purchase_order.stamp
       / maybe an icon with a tooltip for the leyend, name and date ??
     - else
-      = link_to 'Autorizar', stamp_purchase_order_path(@purchase_order), class: 'btn', method: :post
+      = link_to 'Autorizar', stamp_purchase_order_path(@purchase_order), class: 'btn', method: :post if current_user.administrator?
       / new stamp route idea in progress, working :)
   .row
     .col-md-4

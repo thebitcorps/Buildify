@@ -93,9 +93,11 @@ pdf.table rows, width: pdf.bounds.width - 20
 pdf.move_down 5.mm
 
 obs_cell = pdf.make_cell content: "Observaciones:"
-obs_cell.style inline_format: true, borders: [:top, :right, :bottom, :left], border_widths: [2, 2, 2, 2], size: 10, padding: [5, 5, 5, 5]
+obs_cell.style inline_format: true, borders: [:top, :right, :bottom, :left], border_widths: [2, 0, 2, 2], size: 10, padding: [5, 5, 5, 5]
+obs = pdf.make_cell content: "#{@invoice.observations}"
+obs.style inline_format: true, borders: [:top, :right, :bottom, :left], border_widths: [2, 2, 2, 0], size: 10, padding: [5, 5, 5, 5]
 
-pdf.table [[obs_cell]], width: pdf.bounds.width
+pdf.table [[obs_cell, obs]], width: pdf.bounds.width, column_widths: {1 => 640}
 
 pdf.move_down 2.mm
 

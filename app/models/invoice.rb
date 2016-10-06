@@ -8,6 +8,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :provider
   include PublicActivity::Common
   #status when the invoice is create in db
+  validate :amount, :invoice_date, :receipt_folio
 
   paginates_per 25
   WAITING_STATUS = 'waiting'
