@@ -58,7 +58,7 @@
       -#payments for that provider
     .tab-content
       #purchase_orders.tab-pane.fade.active.in
-        = render partial: 'providers/purchase_order', collection: @provider.purchase_orders
+        = render @provider.purchase_orders
       #payments.tab-pane.fade
         .panel.panel-default
           %table.table
