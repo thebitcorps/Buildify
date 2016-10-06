@@ -11,6 +11,9 @@
           = distance_of_time_in_words(Time.now , requisition.requisition_date)
       %p
         = item_materials_status_message requisition.item_materials_status_count
+      = link_to document_requisition_path(requisition), class: 'btn btn-danger pull-right' ,target: '_blank' do
+        %i{class: 'fa fa-file-pdf-o'}
+        PDF
       = link_to requisition, class: 'btn btn-default pull-right' do
         %i{class: 'fa fa-eye'}
         Ver
