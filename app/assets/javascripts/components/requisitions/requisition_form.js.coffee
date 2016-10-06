@@ -3,6 +3,7 @@
   getInitialState: ->
     itemMaterials: @props.itemMaterials
     errors: []
+    observations: ''
     #this is for the key props thath react uses for childs views
     #has the count of item material added to the requisiiton is the sam
     itemMaterialsIdCount: 0
@@ -42,6 +43,7 @@
       @setState errors: ['You need to select at least one item']
       return
     data =
+      observations: @state.observations
       requisition_date: @state.requisition_date
       construction_id: @props.construction_id
       item_materials_attributes: @state.itemMaterials
@@ -69,6 +71,7 @@
       className: 'requisition-form'
       React.createElement ErrorBox, errorsArray: @state.errors
       React.createElement DateInput,label: 'Cuando se necesita el material',placeholder: 'Fecha',name: 'requisition_date',changed: @handleInputChange,today:  moment().format('DD/MM/YYYY')
+      React.createElement LabelInput,label: 'Observaciones',placeholder: 'Obsevaciones',name: 'observations',changed: @handleInputChange
       React.createElement ItemMaterialForm, handleNewItemMaterial: @addNewItemMaterial
       React.DOM.div
         className: 'table-responsive '

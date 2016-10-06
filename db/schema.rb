@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 20161006141930) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "formated_folio"
+    t.text     "observations",     default: ""
   end
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree
