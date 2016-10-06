@@ -2,10 +2,10 @@ var InvoiceForm = React.createClass({
     getInitialState: function () {
         if(this.props.invoice != null){
             this.editing = true;
-            return {receipt_folio: this.props.invoice.receipt_folio, invoice_date: this.props.invoice.invoice_date, amount: this.props.invoice.amount};
+            return {receipt_folio: this.props.invoice.receipt_folio, invoice_date: this.props.invoice.invoice_date, amount: this.props.invoice.amount,observations: this.props.invoice.observations};
         }
         this.editing = false;
-      return {receipt_folio: '', invoice_date: '', amount: 0};
+      return {receipt_folio: '', invoice_date: '', amount: 0, observations: ''};
     },
     inputChange: function(name,value){
         var inputResponse = {};
@@ -58,6 +58,7 @@ var InvoiceForm = React.createClass({
              <LabelInput name="receipt_folio" label="Folio de factura" changed={this.inputChange} value={this.state.receipt_folio} />
              <LabelInput addon="$" name="amount" label="Cantidad" changed={this.inputChange} type="number" value={this.state.amount}/>
              <DateInput name="invoice_date" label="Fecha de recibida" changed={this.inputChange} value={this.state.invoice_date}/>
+             <LabelInput name="observations" label="Observaciones" changed={this.inputChange} value={this.state.observations}/>
              <button className="btn btn-primary" onClick={this.addInvoice} disabled={!this.isValidInvoice()}>Agregar invoice</button>
              <button className="btn btn-default" onClick={this.props.cancelForm}>Cancelar</button>
          </div>  

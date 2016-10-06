@@ -125,13 +125,13 @@ pdf.table [[high_inf_cell]], width: pdf.bounds.width
 pdf.move_down 2.mm
 
 made_empty_cell = pdf.make_cell content: "Elaboró:"
-made_empty_cell.style inline_format: true, align: :center, borders: [:left, :top], border_widths: [2, 2, 2, 2], height: 50, size: 11
+made_empty_cell.style inline_format: true, align: :center, borders: [:left, :top], border_widths: [2, 2, 2, 2], height: 50, size: 11,width: 180
 request_empty_cell = pdf.make_cell content: "Solicitó:"
-request_empty_cell.style inline_format: true, align: :center, borders: [:top], border_widths: [2, 2, 2, 2], height: 50, size: 11
+request_empty_cell.style inline_format: true, align: :center, borders: [:top], border_widths: [2, 2, 2, 2], height: 50, size: 11,width: 180
 review_empty_cell = pdf.make_cell content: "Revisó:"
-review_empty_cell.style inline_format: true, align: :center, borders: [:top], border_widths: [2, 2, 2, 2], height: 50, size: 11
-auth_empty_cell = pdf.make_cell content: "Autorizó:"
-auth_empty_cell.style inline_format: true, align: :center, borders: [:right, :top], border_widths: [2, 2, 2, 2], height: 50, size: 11
+review_empty_cell.style inline_format: true, align: :center, borders: [:top], border_widths: [2, 2, 2, 2], height: 50, size: 11,width: 180
+auth_empty_cell = pdf.make_cell content: "Autorizó:\n #{@purchase_order.stamp}"
+auth_empty_cell.style inline_format: true, align: :center, borders: [:right, :top], border_widths: [2, 2, 2, 2], height: 50, size: 11,width: 180
 
 pdf.table [[made_empty_cell, request_empty_cell, review_empty_cell, auth_empty_cell]], width: pdf.bounds.width
 

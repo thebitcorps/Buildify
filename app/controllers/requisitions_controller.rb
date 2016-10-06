@@ -90,7 +90,7 @@ class RequisitionsController < ApplicationController
   end
 
   def requisition_params
-    params.require(:requisition).permit(:construction_id, :requisition_date, item_materials_attributes: [:material_id, :measure_unit, :requested])
+    params.require(:requisition).permit(:construction_id, :requisition_date, :observations, item_materials_attributes: [:material_id, :measure_unit, :requested])
   end
 
   def sanitized_locked_param

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922162955) do
+ActiveRecord::Schema.define(version: 20161006141930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20160922162955) do
     t.string   "receipt_folio"
     t.integer  "consecutive_folio"
     t.integer  "construction_id"
+    t.text     "observations",      default: ""
   end
 
   add_index "invoices", ["construction_id"], name: "index_invoices_on_construction_id", using: :btree
@@ -257,6 +258,7 @@ ActiveRecord::Schema.define(version: 20160922162955) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "formated_folio"
+    t.text     "observations",     default: ""
   end
 
   add_index "requisitions", ["construction_id"], name: "index_requisitions_on_construction_id", using: :btree

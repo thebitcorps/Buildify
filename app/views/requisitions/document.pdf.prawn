@@ -92,7 +92,18 @@ items_title10.style inline_format: true, align: :center, borders: [:top], border
 
 rows<<[items_title6, items_title7, items_title8, items_title9, items_title10]
 
+
 pdf.table rows, width: pdf.bounds.width
+
+obs_cell = pdf.make_cell content: "Observaciones:"
+obs_cell.style inline_format: true, borders: [:top, :right, :bottom, :left], border_widths: [2, 0, 2, 2], size: 10, padding: [5, 5, 5, 5]
+obs = pdf.make_cell content: "#{@requisition.observations}"
+obs.style inline_format: true, borders: [:top, :right, :bottom, :left], border_widths: [2, 2, 2, 0], size: 10, padding: [5, 5, 5, 5]
+
+pdf.table [[obs_cell, obs]], width: pdf.bounds.width, column_widths: {1 => 640}
+
+pdf.move_down 2.mm
+
 
 made_empty_cell = pdf.make_cell content: "Elaboró:"
 made_empty_cell.style inline_format: true, align: :center, borders: [:left, :top], border_widths: [2, 2, 2, 2], height: 50, size: 11

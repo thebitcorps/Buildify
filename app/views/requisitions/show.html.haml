@@ -11,6 +11,7 @@
       = link_to image_tag('pdf-icon.png',class: 'pdf-icon', target: "_blank"),document_requisition_path(@requisition), target: "_blank"
   - if @requisition.pending?
     = link_to 'Terminar requisicion',requisition_path(@requisition,requisition: {status: 'sent'}),method: :patch, data: { confirm: t('requisition.sent_warning')},class: 'btn btn-warning'
+  ="Observaciones: #{@requisition.observations}"
   - if current_user.administrator? and @requisition.empty?
     = link_to 'Borrar',  @requisition,  method: :delete, data: { confirm: 'Desea borrar la requisicion' }, class: 'btn btn-danger'
 
