@@ -10,6 +10,8 @@
 #@props.onRemoveToken: funtion to notify the parent of the item was remove the function it recives should have one param
 #                       this will be the token was removed
 #@props.withDescription: will format li result item iwth description with the response
+
+#IMPORTANT THISIS FOR PROVIDER USE CHECK component did maount to see the display of the options if need modify
 @TokenInput = React.createClass
   displayName: 'Token input'
   getDefaultProps: ->
@@ -22,7 +24,7 @@
     #refactor this so we can include a function that return the element
     if @props.withDescription
       formater = (item) ->
-        return "<li> #{item.name} <p> #{item.description} </p> </li>"
+        return "<li> #{item.compound_name} <p> #{item.description} </p> </li>"
     else
       formater = (item) ->
         return "<li> #{item.name} </li>"

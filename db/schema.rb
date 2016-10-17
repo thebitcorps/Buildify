@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006141930) do
+ActiveRecord::Schema.define(version: 20161017192739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,6 +227,7 @@ ActiveRecord::Schema.define(version: 20161006141930) do
     t.string   "neighborhood", default: ""
     t.string   "number",       default: ""
     t.string   "city",         default: ""
+    t.string   "nickname"
   end
 
   create_table "purchase_orders", force: :cascade do |t|

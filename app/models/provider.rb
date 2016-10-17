@@ -6,6 +6,7 @@ class Provider < ActiveRecord::Base
   paginates_per 15
   # validations for provider
   validates :name, presence: true
+  before_update :humanize_attr
   scope :all_alphabetical, -> { all.order("LOWER(name)") }
 
   # validates :zipcode, numericality: {message: 'Código postal debe ser numérico'}, length: {is: 5, message: 'Código postal debe contener 5 digitos'}
@@ -15,10 +16,20 @@ class Provider < ActiveRecord::Base
   before_save :humanize_attr
 
   def humanize_attr
-    self.name = name.humanize
+    self.name = name.titleize
+    self.nickname = nickname.titleize
     self.neighborhood = neighborhood.humanize
     self.city = city.humanize
     self.street = street.humanize
+  end
+
+  def natural_name
+    nickname.blank?  ? name : nickname
+  end
+
+  def compound_name
+    nick = nickname.blank?  ? "" : "(#{nickname})"
+    "#{nick} #{name}"
   end
 
   def payments
@@ -43,7 +54,8 @@ class Provider < ActiveRecord::Base
     if query.empty?
       all
     else
-      where('name ilike ?', "%#{query}%")
+      q = "%#{query}%"
+      where('name ilike ? OR nickname ilike ?', q, q)
     end
   end
 

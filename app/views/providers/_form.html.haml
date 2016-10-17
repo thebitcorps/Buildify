@@ -1,5 +1,7 @@
 =  simple_form_for(@provider, html: { class: 'form-horizontal' }) do |f|
-  = f.input :name, label: 'Nombre'
+
+  = f.input :name, label: 'Razon social'
+  = f.input :nickname, label: 'Nombre corto'
   = f.input :telephone, label: 'Teléfono'
   = f.input :street, label: 'Calle'
   = f.input :number, label: 'Número de edificio'
