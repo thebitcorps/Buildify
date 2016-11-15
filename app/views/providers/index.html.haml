@@ -1,13 +1,13 @@
 .page-header
   %h1 Proveedores
+  = link_to 'Nuevo proveedor', new_provider_path, class: 'btn btn-primary'
   #search
 
 .row
+  #paginate
+    = paginate @providers, theme: 'twitter-bootstrap-3', remote: true
   .col-md-12
     %ul.list-group#providers
       = render @providers
-    #paginate
-      = paginate @providers, theme: 'twitter-bootstrap-3', remote: true
-    = link_to 'Nuevo proveedor', new_provider_path, class: 'btn btn-primary'
 
 = javascript_tag "ReactDOM.render( React.createElement(SearchInput,{url: '#{providers_path}',queryParam: 'search'}),document.getElementById('search'));"

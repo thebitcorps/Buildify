@@ -9,7 +9,7 @@
       %i{class: 'fa fa-external-link-square'}
   %td
     - if payment.invoice
-      = link_to truncate(payment.purchase_order.provider.name, length: 20), provider_path(payment.purchase_order.provider)
+      = link_to truncate(payment.purchase_order.provider.natural_name, length: 20), provider_path(payment.purchase_order.provider)
       = link_to "/invoices/#{payment.invoice.id}/document", {class: "no-break pull-right", data: { toggle: 'tooltip', placement: 'top' }, title: t('invoice.pdf_message')} do
         = payment.invoice.receipt_folio
         %i{class: 'fa fa-file-pdf-o'}
