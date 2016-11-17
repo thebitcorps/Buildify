@@ -24,15 +24,12 @@
       %li{id: 'complete', class: " #{'active' if params[:type_list] == 'complete'}"}
         = link_to 'Completas', requisitions_path(type_list: 'complete', construction_id: params[:construction_id],  mode: params[:mode]), remote: true
 .row
-  .col-md-12
-    #requisitions
-      .col-md-12
-        = render @requisitions
-      .col-md-12
-        = paginate @requisitions, theme: 'twitter-bootstrap-3', remote: true
-      - if @requisitions.empty?
-        .well
-          No hay requisiciones
+  #requisitions
+    = render @requisitions
+    = paginate @requisitions, theme: 'twitter-bootstrap-3', remote: true
+    - if @requisitions.empty?
+      .well
+        No hay requisiciones
 - if current_user.subordinate?
   .row
     .col-md-12
