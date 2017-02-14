@@ -11,6 +11,6 @@ test:
   database: Buildify_test
 production:
   <<: *default
-  database: Buildify_production
-  username: Buildify
+  database: buildify_allpino_pg
+  username: <%= ENV['BUILDIFY_USERNAME'] %>
   password: <%= ENV['BUILDIFY_DATABASE_PASSWORD'] %>

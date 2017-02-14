@@ -11,6 +11,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'devise'
 gem 'royce'
 gem 'cancancan', '~> 1.10'
+gem 'dotenv'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'jquery-rails'
 # gem 'turbolinks'
